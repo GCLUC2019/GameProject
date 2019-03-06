@@ -34,6 +34,7 @@ void MainLoop(void) {
 	TaskManager::GetInstance()->RenderAll();
 
 	
+	
 
 	//ë¨Ç∑Ç¨ñhé~
 	Sleep(1);

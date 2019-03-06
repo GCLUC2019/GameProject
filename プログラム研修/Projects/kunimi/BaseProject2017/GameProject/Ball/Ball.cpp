@@ -7,7 +7,7 @@ Ball::Ball(const CVector2D& pos):Task(eId_Ball,eUp_Ball,eRd_Ball)
 
 }
 
-CVector2D point_data[] = {
+CVector2D point_data[POINT_MAX] = {
 	CVector2D(64,64),
 	CVector2D(80,64),
 	CVector2D(90,64),
@@ -16,7 +16,8 @@ CVector2D point_data[] = {
 };
 Ball::Ball() :Task(eId_Ball, eUp_Ball, eRd_Ball)
 {
-	int r = rand() % 5;
+
+	int r = rand() % POINT_MAX;
 	m_pos = point_data[r];
 	m_vec = CVector2D(0, -20);
 }
@@ -27,10 +28,14 @@ Ball::~Ball()
 
 void Ball::Update(float delta_time)
 {
+
+	DEBUG_PRINT("デバッグ中");
+
 	//Global.h参照
 	m_vec.y += GRAVITY * SPF;
 	m_pos += m_vec;
 
+	
 	if (m_pos.y > SCREEN_HEIGHT) SetKill();
 }
 
