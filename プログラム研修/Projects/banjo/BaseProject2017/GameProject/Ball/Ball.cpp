@@ -10,8 +10,7 @@ CVector2D point_data[] = {
 };
 Ball::Ball() :Task(eId_Ball, eUp_Ball, eRd_Ball)
 {
-	int a = Utility::Rand(0, 5);
-	m_pos = point_data[a];
+	m_pos = point_data[Utility::Rand(0, 5)];
 	m_vec = CVector2D(0, -20);
 }
 Ball::Ball(const CVector2D& pos):Task(eId_Ball,eUp_Ball,eRd_Ball)
