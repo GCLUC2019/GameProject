@@ -3,6 +3,7 @@
 
 class CCharacterEnemy : public CCharacter {
 private:
+	CImage m_enemy_img;
 public:
 	CCharacterEnemy();
 	~CCharacterEnemy();
