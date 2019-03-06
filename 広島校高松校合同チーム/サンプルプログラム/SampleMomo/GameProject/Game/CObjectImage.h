@@ -1,5 +1,6 @@
 #pragma once
 #include "CObject.h"
+#include "../Global.h"
 
 class CObjectImage : public CObject {
 private:
