@@ -13,15 +13,9 @@ CVector2D point_data[] = {
 
 Ball::Ball() : Task(eId_Ball, eUp_Ball, eRd_Ball)
 {
-	DEBUG_PRINT("float %d\n", sizeof(float));
-	DEBUG_PRINT("bool %d\n", sizeof(bool));
-	DEBUG_PRINT("size %d\n", sizeof(point_data));
+	DEBUG_PRINT("デバッグ中です。\n");
 	int point_data_num = sizeof(point_data) / sizeof(point_data[0]);
-	DEBUG_PRINT("array_size %d\n", ARRAY_SIZE(point_data));
-
-	//int point_data_num = POINT_MAX;
 	int r = Utility::Rand(0, point_data_num);
-	DEBUG_PRINT("r %d\n", r);
 	m_pos = point_data[r];
 	m_vec = CVector2D(0, -20);
 }
