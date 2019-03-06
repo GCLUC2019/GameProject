@@ -1,0 +1,8 @@
+フォルダ
+ .vs(隠しフォルダ)
+ Release
+ Debug
+ x64
+ファイル
+.db
+.sdf
