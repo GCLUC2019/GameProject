@@ -6,6 +6,14 @@ Ball::Ball(const CVector2D& pos):Task(eId_Ball,eUp_Ball,eRd_Ball)
 	m_vec = CVector2D(0, -20);
 }
 
+//出現位置の数
+#define ARRAY_SIZE(a) (sizeof(a)/sizeof(a[0]))
+
+#ifdef _DEBUG
+	#define DEBUG_PRINT(s) printf(s)
+#else
+	#define DEBUG_PRINT(s)
+#endif 
 
 CVector2D point_data[] = {
 	CVector2D(123,456),
@@ -14,9 +22,17 @@ CVector2D point_data[] = {
 	CVector2D(323,356),
 	CVector2D(823,656)
 };
+
+int point_data_size = ARRAY_SIZE(point_data);
 Ball::Ball() :Task(eId_Ball, eUp_Ball, eRd_Ball)
 {
-	int i = rand() % 5 + 0;
+	DEBUG_PRINT("デバッグ中です");
+
+	int i = rand() % point_data_size;
+#ifdef _DEBUG
+	printf("%d番目にボールを出現させました\n", i+1);
+#endif // _DEBUG
+
 	m_pos = point_data[i];
 	m_vec = CVector2D(0, -20);
 }
