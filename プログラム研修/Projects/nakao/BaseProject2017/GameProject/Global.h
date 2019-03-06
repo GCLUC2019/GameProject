@@ -12,3 +12,12 @@
 #define GRAVITY (9.8f*10)
 // 1/60•b
 #define SPF		(1.0f/60.0f)
+
+#define ARRAY_SIZE(a)  (sizeof(a)/sizeof(a[0]))
+
+
+#ifdef _DEBUG
+	#define DEBUG_PRINT(a) printf(a)
+#else
+ #define DEBUG_PRINT(a) 
+#endif 
