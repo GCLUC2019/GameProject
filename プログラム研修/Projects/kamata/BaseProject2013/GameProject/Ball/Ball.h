@@ -12,10 +12,15 @@ public:
 	**/
 	Ball(const CVector2D& pos);
 	/*!
+	@brief	デフォルトコンストラクタ
+	**/
+	Ball();
+	/*!
 		@brief	デストラクタ
 	**/
 	~Ball();
 	/*!
+
 		@brief	更新処理
 		@param	delta_time			[in] 前回の更新からの経過時間
 	**/
