@@ -30,6 +30,7 @@ Ball::Ball() :Task(eId_Ball, eUp_Ball, eRd_Ball)
 }
 Ball::~Ball()
 {
+	DEBUG_PRINT("”jŠü\n");
 }
 
 void Ball::Update(float delta_time)
