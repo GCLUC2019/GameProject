@@ -3,7 +3,7 @@
 
 class CCharacterPlayer : public CCharacter {
 private:
-	CImage * m_player_image_p;
+	CImage* m_player_image_p;
 public:
 	CCharacterPlayer();
 	~CCharacterPlayer();

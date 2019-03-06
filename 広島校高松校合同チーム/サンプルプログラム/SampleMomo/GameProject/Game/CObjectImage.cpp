@@ -16,6 +16,7 @@ void CObjectImage::Update(float delta_time)
 void CObjectImage::Render()
 {
 	if (m_image_p == nullptr) return;
+	m_image_p->SetSize(m_size.x, m_size.y);
 	m_image_p->SetPos(m_pos.x,m_pos.y + m_pos.z);
 	m_image_p->Draw();
 }
