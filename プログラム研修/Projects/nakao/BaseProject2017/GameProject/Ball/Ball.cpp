@@ -15,12 +15,12 @@ CVector2D point_data[] = {
 	CVector2D(52,300),
 	CVector2D(1220,100)
 };
-
+int point_data_size = ARRAY_SIZE(point_data);
 Ball::Ball() :Task(eId_Ball, eUp_Ball, eRd_Ball)
 {
 	int n;
 	// n = Utility::Rand(0, 4);
-	n = rand() % 5;
+	n = rand() % point_data_size;
 	m_pos = point_data[n];
 	//m_pos = CVector2D(Utility::Rand(0, 1280), Utility::Rand(0, 520));
 	/*int i = Utility::Rand(-10, 10);
@@ -34,6 +34,8 @@ Ball::~Ball()
 
 void Ball::Update(float delta_time)
 {
+	DEBUG_PRINT("334\n");
+
 
 	m_vec.y += GRAVITY * SPF;
 	m_pos += m_vec;
