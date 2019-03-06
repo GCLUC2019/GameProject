@@ -34,6 +34,7 @@ void MainLoop(void) {
 	TaskManager::GetInstance()->RenderAll();
 
 	
+	
 
 	//速すぎ防止
 	Sleep(1);
@@ -41,6 +42,8 @@ void MainLoop(void) {
 }
 void Init(void)
 {
+	DEBUG_PRINT("デバッグ中です。");
+
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 
 	glEnable(GL_DEPTH_TEST);
