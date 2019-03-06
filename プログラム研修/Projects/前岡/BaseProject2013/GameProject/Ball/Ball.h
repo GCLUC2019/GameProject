@@ -14,6 +14,7 @@ public:
 	/*!
 		@brief	デストラクタ
 	**/
+	Ball();
 	~Ball();
 	/*!
 		@brief	更新処理
