@@ -30,7 +30,7 @@ void Ball::Update(float delta_time)
 	//d—Í‚Ì—Ž‰º‘¬“x
 	m_vec.y += GRAVITY * SPF;
 	m_pos += m_vec;
-	if (m_pos.y > 660)m_vec = m_vec * -1;
+	//if (m_pos.y > 660)m_vec = m_vec * -1;
 	if (m_pos.y > SCREEN_HEIGHT) SetKill();
 }
 
