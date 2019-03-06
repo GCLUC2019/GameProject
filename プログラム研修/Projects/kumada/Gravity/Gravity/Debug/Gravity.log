@@ -1,0 +1,9 @@
+﻿  main.cpp
+c:\users\akira\source\repos\gravity\gravity\main.cpp(10): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+c:\users\akira\source\repos\gravity\gravity\main.cpp(11): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+c:\users\akira\source\repos\gravity\gravity\main.cpp(12): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+c:\users\akira\source\repos\gravity\gravity\main.cpp(16): warning C4244: '=': 'double' から 'int' への変換です。データが失われる可能性があります。
+c:\users\akira\source\repos\gravity\gravity\main.cpp(16): warning C4390: ';': 制御が空の文が見つかりました。意図した記述でしょうか?
+c:\users\akira\source\repos\gravity\gravity\main.cpp(8): warning C4101: 'v': ローカル変数は 1 度も使われていません。
+c:\users\akira\source\repos\gravity\gravity\main.cpp(9): warning C4101: 't': ローカル変数は 1 度も使われていません。
+  Gravity.vcxproj -> C:\Users\akira\source\repos\Gravity\Debug\Gravity.exe
