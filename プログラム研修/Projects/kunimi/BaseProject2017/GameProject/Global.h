@@ -23,7 +23,6 @@
 	#define DEBUG_PRINT(s)
 #endif
 
-#ifdef _DEBUG
-	#define GAME_SEANE 0
-#else
-#endif
+#define PLUS(a,b) (a+b)
+#define MINUS(a,b) (a-b)
+
