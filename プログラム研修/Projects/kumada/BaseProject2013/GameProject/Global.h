@@ -7,6 +7,9 @@
 
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 720
+#define DEBUG_PRINT(s)
+
+
 
 
 #define GRAVITY (9.8f*10)
@@ -14,7 +17,7 @@
 #define SPF		(1.0f/60.0f)
 
 #ifdef _DEBUG
-#define DEBUG_PRINT(s) print(s)
+#define DEBUG_PRINT(s) printf(s)
 #else
 #define DEBUG_PRINT(s)
 #endif
