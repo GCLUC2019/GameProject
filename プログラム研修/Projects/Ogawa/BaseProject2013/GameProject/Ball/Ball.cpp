@@ -15,7 +15,7 @@ CVector2D point_data[] = {
 	CVector2D(512, 256),
 	CVector2D(256, 512),
 };
-int point_data_size = ARRAY_SIZE(point_data);
+int point_data_size = ARRAYSIZE(point_data);
 Ball::Ball() :Task(eId_Ball, eUp_Ball, eRd_Ball)
 {
 	int r = rand() % point_data_size;
@@ -30,7 +30,7 @@ Ball::~Ball()
 
 void Ball::Update(float delta_time)
 {
-	DEBUG_PRINT("デバッグ中\n")
+	printf("デバッグ中");
 	m_vec.y += GRAVITY* SPF;
 	m_pos += m_vec;
 	if (m_pos.y > SCREEN_HEIGHT) SetKill();
