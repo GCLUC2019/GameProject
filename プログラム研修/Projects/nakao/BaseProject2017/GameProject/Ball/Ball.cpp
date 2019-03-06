@@ -10,19 +10,23 @@ Ball::Ball(const CVector2D& pos):Task(eId_Ball,eUp_Ball,eRd_Ball)
 
 CVector2D point_data[] = {
 	CVector2D(100,100),
-	CVector2D(200,70),
-	CVector2D(500,60),
-	CVector2D(52,30),
-	CVector2D(120,50)
+	CVector2D(200,60),
+	CVector2D(500,250),
+	CVector2D(52,300),
+	CVector2D(1220,100)
 };
 
 Ball::Ball() :Task(eId_Ball, eUp_Ball, eRd_Ball)
 {
-	//m_pos = point_data[Utility::Rand(0, 5)];
-	m_pos = CVector2D(Utility::Rand(0, 1280), Utility::Rand(0, 520));
-	int i = Utility::Rand(-10, 10);
+	int n;
+	// n = Utility::Rand(0, 4);
+	n = rand() % 5;
+	m_pos = point_data[n];
+	//m_pos = CVector2D(Utility::Rand(0, 1280), Utility::Rand(0, 520));
+	/*int i = Utility::Rand(-10, 10);
 	int j = Utility::Rand(-50, -20);
-	m_vec = CVector2D(i, j);
+	m_vec = CVector2D(i, j);*/
+	m_vec = CVector2D(0, -20);
 }
 Ball::~Ball()
 {
