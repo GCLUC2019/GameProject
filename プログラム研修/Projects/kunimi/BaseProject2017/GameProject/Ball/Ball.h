@@ -12,6 +12,10 @@ public:
 	**/
 	Ball(const CVector2D& pos);
 	/*!
+	@brief	デフォルトコンストラクタ
+	**/
+	Ball();
+	/*!
 		@brief	デストラクタ
 	**/
 	~Ball();

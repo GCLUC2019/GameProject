@@ -10,6 +10,7 @@ public:
 		@brief	コンストラクタ
 		@param	pos			[in] 出現位置
 	**/
+	Ball();
 	Ball(const CVector2D& pos);
 	/*!
 		@brief	デストラクタ

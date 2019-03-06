@@ -7,6 +7,10 @@ private:
 	CVector2D m_vec;		//ボールの移動量
 public:
 	/*!
+	@brief	コンストラクタ
+	**/
+	Ball();
+	/*!
 		@brief	コンストラクタ
 		@param	pos			[in] 出現位置
 	**/
