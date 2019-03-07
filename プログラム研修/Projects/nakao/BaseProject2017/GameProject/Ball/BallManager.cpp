@@ -22,7 +22,7 @@ void BallManager::Update(float delta_time)
 			//マウスの位置を取得
 			CVector2D pos = CInput::GetMousePoint();
 			//マウスの位置に玉を生成
-			new Ball(pos);
+			new Ball(/*pos*/);
 		}
 	}
 }

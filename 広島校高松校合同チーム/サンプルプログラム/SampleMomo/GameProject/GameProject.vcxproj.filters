@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="System\Task.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="System\TaskLinker.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="System\TaskManager.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="Ball\Ball.cpp">
+      <Filter>Ball</Filter>
+    </ClCompile>
+    <ClCompile Include="Ball\BallManager.cpp">
+      <Filter>Ball</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CSetupGame.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CObject.cpp">
+      <Filter>Game\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CCharacterPlayer.cpp">
+      <Filter>Game\Object\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CCharacterEnemy.cpp">
+      <Filter>Game\Object\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CCharacter.cpp">
+      <Filter>Game\Object\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CObjectImage.cpp">
+      <Filter>Game\Object</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GID.h" />
+    <ClInclude Include="Global.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="System\Task.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\TaskLinker.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\TaskManager.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="Ball\Ball.h">
+      <Filter>Ball</Filter>
+    </ClInclude>
+    <ClInclude Include="Ball\BallManager.h">
+      <Filter>Ball</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CSetupGame.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CObject.h">
+      <Filter>Game\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CCharacterPlayer.h">
+      <Filter>Game\Object\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CCharacterEnemy.h">
+      <Filter>Game\Object\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CCharacter.h">
+      <Filter>Game\Object\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CObjectImage.h">
+      <Filter>Game\Object</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="System">
+      <UniqueIdentifier>{8de986c6-b15b-4a1e-bdf3-2d85ff6b47f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ball">
+      <UniqueIdentifier>{682a4078-1040-420d-bfd4-0937b094e58e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{1f486dbd-6703-49b3-937e-544955bd9a0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object">
+      <UniqueIdentifier>{7bd2e3d3-7b50-41dc-8870-c88c6bd77a91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\Character">
+      <UniqueIdentifier>{f701148d-7e9a-48c4-b872-3355b3f5b99b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
