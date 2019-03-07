@@ -17,13 +17,13 @@ CVector2D point_data[] = {
 };
 
 #define P_MAX 5
-int point_data_size = ARRAY_SIZE(point_data);
+const int point_data_size = ARRAY_SIZE(point_data);
 Ball::Ball() :Task(eId_Ball, eUp_Ball, eRd_Ball)
 {
 	int n;
 	// n = Utility::Rand(0, 4);
 	n = rand() % point_data_size;
-	static_assert(1/*条件式　満たされなければエラーが出る*/, "要素数オーバー");
+	static_assert(P_MAX == point_data_size/*条件式　満たされなければエラーが出る*/, "要素数オーバー");
 	assert(n < point_data_size);
 	m_pos = point_data[n];
 	//m_pos = CVector2D(Utility::Rand(0, 1280), Utility::Rand(0, 520));
@@ -42,8 +42,8 @@ void Ball::Update(float delta_time)
 	DEBUG_PRINT("334\n");
 
 
-	m_vec.y += GRAVITY * SPF;
-	m_pos += m_vec;
+	m_vec.y += GRAVITY * delta_time;
+	m_pos += m_vec * delta_time;
 
 	
 	if (m_pos.y > SCREEN_HEIGHT) SetKill();
@@ -54,8 +54,3 @@ void Ball::Render()
 	Utility::DrawQuad(m_pos, CVector2D(32.0f,32.0f), CVector4D(1.0f, 0, 0, 1));
 }
 
-void Ball::SetVecter(/*const int& x*/const CVector2D& _vec)
-{
-	//m_vec += CVector2D(x, -20);
-	m_vec = _vec;
-}
