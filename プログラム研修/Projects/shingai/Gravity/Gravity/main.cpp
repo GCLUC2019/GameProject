@@ -18,7 +18,7 @@ private:
 	Task * m_next_task = nullptr;
 public:
 	Task();
-	void Draw();
+	virtual void Draw();
 	static void DrawAll();
 	void SetNextTask(Task* _next) { m_next_task = _next; };
 	Task* GetNextTask() { return m_next_task; };
@@ -43,6 +43,20 @@ public:
 	}
 };
 
+class A : public Task {
+private:
+public:
+	A();
+	void Draw();
+};
+
+A::A() : Task(){
+
+}
+
+void A::Draw() {
+	printf("AƒNƒ‰ƒX Draw\n");
+}
 
 void Task::DrawAll() {
 	Task* t = Task::GetHead();
@@ -71,6 +85,7 @@ int main() {
 	//head = new Task;
 
 
+	new A();
 	for (int i = 0; i < 4; i++) {
 		new Task();
 		//Task::AddTask(new Task);
