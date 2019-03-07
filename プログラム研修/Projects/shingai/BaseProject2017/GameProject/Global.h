@@ -10,6 +10,25 @@
 
 
 #define GRAVITY (9.8f*10)
+
+/*
+namespace Global {
+	const float gravity = (9.8f * 10);
+}
+
+Global::gravity;
+
+*/
+
+class Global {
+private:
+	static const float gravity;
+	static const float fps;
+};
+
+const int fps = 60;
+const float spf = (1.0f / 60.0f);
+
 // 1/60•b
 #define SPF		(1.0f/60.0f)
 
