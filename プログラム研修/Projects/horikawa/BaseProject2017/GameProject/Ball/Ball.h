@@ -31,4 +31,16 @@ public:
 		@brief	描画処理
 	**/
 	void Render();
+
+	/*!
+	@brief	ボールの移動量を設定
+	@param	vec			[in] 移動量
+	**/
+	void SetVector(const CVector2D& vec) {           //ポインタを使用し処理を軽くする、短い処理はヘッダーに作り動作を軽くする(インライン関数
+		m_vec = vec;
+	}
+
+	CVector2D GetVector() const {    //constは中身を変えさせない
+		return m_vec;
+	}
 };
