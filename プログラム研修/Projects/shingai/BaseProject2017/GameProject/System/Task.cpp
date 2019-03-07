@@ -12,7 +12,7 @@ Task::Task() :
 	
 }
 
-Task::Task(int id, int updatePrio, int renderPrio) :
+Task::Task(int id, int updatePrio, int renderPrio)	 :
 	m_updateLink(updatePrio,this),
 	m_renderLink(renderPrio,this),
 	m_id(id),

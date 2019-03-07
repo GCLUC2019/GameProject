@@ -25,7 +25,8 @@ void BallManager::Update(float delta_time)
 			//new Ball(pos);
 
 			//ƒ{[ƒ‹‚ðì¬
-			new Ball();
+			Ball* b = new Ball();
+			b->SetVector(CVector2D(Utility::Rand(-10,10),-20));
 		}
 	}
 }
