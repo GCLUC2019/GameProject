@@ -83,6 +83,67 @@ void TaskManager::UpdateAll()
 	}
 }
 
+void TaskManager::UpdateAllSort()
+{
+	//配列を作成(callocで領域確保)
+
+	//Taskポインタ型配列(配列を表す為にTaskポインタ型ポインタを利用する)
+	Task** task_array = (Task**)calloc(m_task_num, sizeof(Task*));
+
+
+	//int型配列
+	int* task_up_array = (int*)calloc(m_task_num, sizeof(int));
+
+
+	//あとはソートしていくだけ
+
+	//とりあえずソート用の情報を集める
+	Task* t = GetHead();
+
+
+	//ここで宣言してるので取り扱い注意
+	int i = 0;
+	while (true) {
+		task_array[i] = t;
+		task_up_array[i] = t->GetUpdatePriority();
+		t = t->GetNextTask();
+		i++;
+		if (t == nullptr) break;
+	}
+
+
+	//ソート作業する(バブルソート)
+	for (int i = 0; i < m_task_num; i++) {
+		for (int k = 0; k < m_task_num; k++) {
+			if (task_up_array[i] > task_up_array[k]) {
+
+				//更新順番配列の入れ替え
+				int work = task_up_array[i];
+				task_up_array[i] = task_up_array[k];
+				task_up_array[k] = work;
+
+				//ポインタの入れ替え
+				Task* work_task_p = task_array[i];
+				task_array[i] = task_array[k];
+				task_array[k] = work_task_p;
+
+			}
+		}
+	}
+
+	for (int i = 0; i < m_task_num; i++) {
+		printf("%d番目のTask up %d\n", i, task_up_array[i]);
+		task_array[i]->Draw();
+	}
+
+
+	//とりあえず取得したデータを確認
+
+	//callocで取得した領域を解放
+	free(task_array);
+	free(task_up_array);
+}
+
 void TaskManager::DrawAll()
 {
 	Task* t = GetHead();
