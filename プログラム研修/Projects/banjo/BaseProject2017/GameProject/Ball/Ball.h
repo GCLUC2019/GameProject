@@ -32,5 +32,13 @@ public:
 	@brief	ボールの移動量を設定
 	@param	[in] 移動量
 	**/
-	void SetVector(const CVector2D &b);
+	//1行しかない関数はヘッダーで書いたほうが良い
+	void SetVector(const CVector2D &b) {
+		m_vec = b;
+	}
+
+	//末尾にconstをつけることでデータを返す時にデータが変わらない
+	CVector2D GetVector()const {
+		return m_vec;
+	}
 };
