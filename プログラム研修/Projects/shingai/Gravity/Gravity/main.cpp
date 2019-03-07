@@ -10,8 +10,12 @@
 
 */
 
+class Task;
+static Task* head_task = nullptr;
 
 class Task {
+
+
 private:
 	Task * m_next_task = nullptr;
 public:
@@ -19,7 +23,16 @@ public:
 	void Draw();
 	void SetNextTask(Task* _next) { m_next_task = _next; };
 	Task* GetNextTask() { return m_next_task; };
+	static Task* GetHead(){return head_task; };
+	static void AddTask(Task* _task) {
+		if (head_task == nullptr) {
+			head_task = _task;
+			return;
+		}
+	}
 };
+
+
 
 Task::Task() {
 	
@@ -45,7 +58,7 @@ int main() {
 	}
 
 	t = head;
-	for (int i = 0; i < 3;i++) {
+	for (int i = 0; i < 4;i++) {
 		t->Draw();
 		t = t->GetNextTask();
 	}
