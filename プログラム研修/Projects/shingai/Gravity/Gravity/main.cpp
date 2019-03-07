@@ -80,13 +80,13 @@ int main() {
 
 	//Task* t = head;
 	//3‚Â‚Ìƒ^ƒXƒN‚ğ’Ç‰Á
-	for (int i = 0; i < 3; i++) {
-		/*
-		t->SetNextTask(new Task());
-		t = t->GetNextTask();
-		*/
-		//Task::AddTask(new Task);
-	}
+	//for (int i = 0; i < 3; i++) {
+	//	/*
+	//	t->SetNextTask(new Task());
+	//	t = t->GetNextTask();
+	//	*/
+	//	//Task::AddTask(new Task);
+	//}
 
 
 	/*
