@@ -17,7 +17,7 @@ public:
 	CCharacterEnemy();
 	~CCharacterEnemy();
 	void Update(float delta_time);
-	void Render();
+	void Draw();
 
 	void Gravity() {
 		m_enemy_vec.y += GRAVITY * SPF;
@@ -28,3 +28,7 @@ public:
 		}
 	}
 };
+
+/*
+2019/03/06 クラス定義。基本機能実装。 by shingai
+*/

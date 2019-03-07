@@ -2,6 +2,7 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "Task.h"
+#include "CFPS.h"
 
 static bool s_is_init = false;
 static TaskManager* s_task_manager_p[eTaskManagerMax];
@@ -78,7 +79,7 @@ void TaskManager::UpdateAll()
 {
 	Task* t = GetHead();
 	while (true) {
-		t->Update();
+		t->Update(CFPS::GetDeltaTime());
 		t = t->GetNextTask();
 		if (t == nullptr) break;
 	}
@@ -134,7 +135,7 @@ void TaskManager::UpdateAllSort()
 
 	for (int i = 0; i < m_task_num; i++) {
 		printf("%d”Ô–Ú‚ÌTask up %d\n", i, task_up_array[i]);
-		task_array[i]->Update();
+		task_array[i]->Update(CFPS::GetDeltaTime());
 	}
 
 

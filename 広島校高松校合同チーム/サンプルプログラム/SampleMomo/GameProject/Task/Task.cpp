@@ -22,7 +22,7 @@ Task::~Task()
 }
 
 
-void Task::Update()
+void Task::Update(float _delta_time)
 {
 }
 

@@ -21,7 +21,7 @@ public:
 	Task(int _task_manager_id,int _task_id,int _update_priority = 0,int _draw_priority = 0);
 	~Task();
 
-	virtual void Update();
+	virtual void Update(float _delta_time);
 	virtual void Draw();
 	
 	void SetDrawPriority(int _priority) { m_draw_priority = _priority; };
