@@ -27,6 +27,13 @@ public:
 	void Render();
 	/*!
 	@brief	ƒ{[ƒ‹‚ÌˆÚ“®—Êİ’è
+	@param	_vec			[in] ˆÚ“®—Ê
 	**/
-	void SetVecter(/*const int& x*/const CVector2D& _vec);
+	void SetVecter(/*const int& x*/const CVector2D& _vec) {
+		//m_vec += CVector2D(x, -20);
+		m_vec = _vec;
+	}
+	const CVector2D& GetVecter()const{
+		return m_vec;
+	}
 };
