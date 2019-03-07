@@ -10,8 +10,48 @@
 
 */
 
-int main() {
 
+class Task {
+private:
+	Task * m_next_task = nullptr;
+public:
+	Task();
+	void Draw();
+	void SetNextTask(Task* _next) { m_next_task = _next; };
+	Task* GetNextTask() { return m_next_task; };
+};
+
+Task::Task() {
+	
+}
+
+
+void Task::Draw() {
+	printf("TaskDraw\n");
+}
+
+
+Task* head;
+
+int main() {
+	//タスクを1つ生成
+	head = new Task;
+
+	Task* t = head;
+	//3つのタスクを追加
+	for (int i = 0; i < 3; i++) {
+		t->SetNextTask(new Task());
+		t = t->GetNextTask();
+	}
+
+	t = head;
+	while (true) {
+		t->Draw();
+		t = t->GetNextTask();
+	}
+	
+
+	/*
 	double g = (-9.8);
 	double v0 = 4.9;//初速度
 	double h0 = 29.4;
@@ -27,6 +67,7 @@ int main() {
 		double h = h0 + v0 * i + (g / 2.0) *(i*i);
 		printf("%d秒後%lfm\n", i,h);
 	}
+	*/
 	
 
 	getchar();
