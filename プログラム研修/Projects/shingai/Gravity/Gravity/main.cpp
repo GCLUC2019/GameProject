@@ -55,7 +55,7 @@ void Task::DrawAll() {
 
 
 Task::Task() {
-	
+	Task::AddTask(this);
 }
 
 
@@ -72,7 +72,8 @@ int main() {
 
 
 	for (int i = 0; i < 4; i++) {
-		Task::AddTask(new Task);
+		new Task();
+		//Task::AddTask(new Task);
 	}
 
 	Task::DrawAll();
