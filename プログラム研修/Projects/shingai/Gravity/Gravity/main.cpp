@@ -45,7 +45,7 @@ int main() {
 	}
 
 	t = head;
-	while (true) {
+	for (int i = 0; i < 3;i++) {
 		t->Draw();
 		t = t->GetNextTask();
 	}
