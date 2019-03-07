@@ -17,7 +17,7 @@ public:
 	CCharacterEnemy();
 	~CCharacterEnemy();
 	void Update(float delta_time);
-	void Render();
+	void Draw();
 
 	void Gravity() {
 		m_enemy_vec.y += GRAVITY * SPF;
