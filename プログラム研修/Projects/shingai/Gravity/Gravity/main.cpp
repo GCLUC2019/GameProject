@@ -9,60 +9,86 @@
 
 
 */
+#include "Task.h"
+#include "TaskManager.h"
 
-class Task;
-static Task* head_task = nullptr;
-
-class Task {
-
-
+class A : public Task {
 private:
-	Task * m_next_task = nullptr;
 public:
-	Task();
+	A();
 	void Draw();
-	void SetNextTask(Task* _next) { m_next_task = _next; };
-	Task* GetNextTask() { return m_next_task; };
-	static Task* GetHead(){return head_task; };
-	static void AddTask(Task* _task) {
-		if (head_task == nullptr) {
-			head_task = _task;
-			return;
-		}
-	}
 };
 
+A::A() : Task(eTaskManagerIdGeneral,eTaskIdNone,1,2){
 
+}
 
-Task::Task() {
-	
+void A::Draw() {
+	printf("Aクラス Draw\n");
 }
 
 
-void Task::Draw() {
-	printf("TaskDraw\n");
-}
 
-
-Task* head;
+//Task* head;
 
 int main() {
 	//タスクを1つ生成
-	head = new Task;
+	//head = new Task;
 
-	Task* t = head;
-	//3つのタスクを追加
-	for (int i = 0; i < 3; i++) {
-		t->SetNextTask(new Task());
-		t = t->GetNextTask();
+
+	new A();
+	
+	//Task* p = new Task();
+	//p->SetTaskId(eTaskIdPlayer);
+
+	new Task(eTaskManagerIdGeneral,eTaskIdPlayer,0,1);
+	new Task(eTaskManagerIdGeneral, eTaskIdPlayer,4,2);
+
+	Task* t[4];
+
+	for (int i = 0; i < 4; i++) {
+		t[i] = new Task(eTaskManagerIdGeneral,eTaskIdNone,6,3);
+		//Task::AddTask(new Task);
 	}
 
+	TaskManager::GetTaskManagerPointer(eTaskManagerIdGeneral)->DrawAllSort();
+	TaskManager::GetTaskManagerPointer(eTaskManagerIdGeneral)->UpdateAllSort();
+
+	
+	//タスク検索
+	TaskManager::GetTaskManagerPointer(eTaskManagerIdGeneral)->FindTask(eTaskIdPlayer)->Delete();
+	TaskManager::GetTaskManagerPointer(eTaskManagerIdGeneral)->FindTask(eTaskIdPlayer)->Delete();
+
+
+	
+
+
+	//タスク削除
+	for (int i = 0; i < 3; i++) {
+		t[i]->Delete();
+	}
+
+	TaskManager::GetTaskManagerPointer(eTaskManagerIdGeneral)->DrawAll();
+
+	//Task* t = head;
+	//3つのタスクを追加
+	//for (int i = 0; i < 3; i++) {
+	//	/*
+	//	t->SetNextTask(new Task());
+	//	t = t->GetNextTask();
+	//	*/
+	//	//Task::AddTask(new Task);
+	//}
+
+
+	/*
 	t = head;
 	while(true) {
 		t->Draw();
 		t = t->GetNextTask();
 		if (t == nullptr) break;
 	}
+	*/
 	
 
 	/*
