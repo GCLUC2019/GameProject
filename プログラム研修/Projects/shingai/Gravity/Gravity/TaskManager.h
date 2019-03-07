@@ -2,10 +2,8 @@
 
 class Task;
 
-enum {
-	eTaskManagerIdGeneral,
-	eTaskManagerMax,
-};
+//挿入ができれば描画順番とかをバブルソートとか負荷の高い事をしなくてよい
+
 
 class TaskManager {
 private:
@@ -18,13 +16,11 @@ public:
 	void DeleteTask(Task* _task);
 
 	void UpdateAll();
-	void UpdateAllSort();
 	void DrawAll();
-	void DrawAllSort();
-	
+	void Sort();
 
-	static void CheckInit();
-	static TaskManager* GetTaskManagerPointer(int _task_manager_id);
+	static TaskManager* GetInstance();
+	static void ClearInstance();
 };
 
 /*

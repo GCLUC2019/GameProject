@@ -24,7 +24,7 @@ public:
 	void Draw();
 };
 
-A::A() : Task(eTaskManagerIdGeneral,eTaskIdNone,1,2){
+A::A() : Task(eTaskIdNone,1){
 
 }
 
@@ -47,23 +47,23 @@ int main() {
 	//Task* p = new Task();
 	//p->SetTaskId(eTaskIdPlayer);
 
-	new Task(eTaskManagerIdGeneral,eTaskIdPlayer,0,1);
-	new Task(eTaskManagerIdGeneral, eTaskIdPlayer,4,2);
+	new Task(eTaskIdPlayer,0);
+	new Task(eTaskIdPlayer,4);
 
 	Task* t[4];
 
 	for (int i = 0; i < 4; i++) {
-		t[i] = new Task(eTaskManagerIdGeneral,eTaskIdNone,6,3);
+		t[i] = new Task(eTaskIdNone,6);
 		//Task::AddTask(new Task);
 	}
 
-	TaskManager::GetTaskManagerPointer(eTaskManagerIdGeneral)->DrawAllSort();
-	TaskManager::GetTaskManagerPointer(eTaskManagerIdGeneral)->UpdateAllSort();
+	TaskManager::GetInstance()->DrawAll();
+	TaskManager::GetInstance()->UpdateAll();
 
 	
 	//タスク検索
-	TaskManager::GetTaskManagerPointer(eTaskManagerIdGeneral)->FindTask(eTaskIdPlayer)->Delete();
-	TaskManager::GetTaskManagerPointer(eTaskManagerIdGeneral)->FindTask(eTaskIdPlayer)->Delete();
+	TaskManager::GetInstance()->FindTask(eTaskIdPlayer)->Delete();
+	TaskManager::GetInstance()->FindTask(eTaskIdPlayer)->Delete();
 
 
 	
@@ -74,7 +74,7 @@ int main() {
 		t[i]->Delete();
 	}
 
-	TaskManager::GetTaskManagerPointer(eTaskManagerIdGeneral)->DrawAll();
+	TaskManager::GetInstance()->DrawAll();
 
 	//Task* t = head;
 	//3つのタスクを追加
