@@ -9,39 +9,8 @@
 
 
 */
-
-class Task;
-static Task* head_task = nullptr;
-
-class Task {
-private:
-	Task * m_next_task = nullptr;
-public:
-	Task();
-	virtual void Draw();
-	static void DrawAll();
-	void SetNextTask(Task* _next) { m_next_task = _next; };
-	Task* GetNextTask() { return m_next_task; };
-	static Task* GetHead(){return head_task; };
-	static void AddTask(Task* _task) {
-		if (head_task == nullptr) {
-			head_task = _task;
-			return;
-		}
-
-		Task* t = head_task;
-		while (true) {
-			if (t->GetNextTask() != nullptr) {
-				t = t->GetNextTask();
-			}
-			else {
-				t->SetNextTask(_task);
-				break;
-			}
-		}
-		
-	}
-};
+#include "Task.h"
+#include "TaskManager.h"
 
 class A : public Task {
 private:
@@ -50,7 +19,7 @@ public:
 	void Draw();
 };
 
-A::A() : Task(){
+A::A() : Task(eTaskManagerIdGeneral,eTaskIdNone,2){
 
 }
 
@@ -58,27 +27,9 @@ void A::Draw() {
 	printf("Aクラス Draw\n");
 }
 
-void Task::DrawAll() {
-	Task* t = Task::GetHead();
-	while (true) {
-		t->Draw();
-		t = t->GetNextTask();
-		if (t == nullptr) break;
-	}
-}
 
 
-Task::Task() {
-	Task::AddTask(this);
-}
-
-
-void Task::Draw() {
-	printf("TaskDraw\n");
-}
-
-
-Task* head;
+//Task* head;
 
 int main() {
 	//タスクを1つ生成
@@ -86,13 +37,37 @@ int main() {
 
 
 	new A();
+	
+	//Task* p = new Task();
+	//p->SetTaskId(eTaskIdPlayer);
+
+	new Task(eTaskManagerIdGeneral,eTaskIdPlayer,1);
+	new Task(eTaskManagerIdGeneral, eTaskIdPlayer,2);
+
+	Task* t[4];
+
 	for (int i = 0; i < 4; i++) {
-		new Task();
+		t[i] = new Task(eTaskManagerIdGeneral,eTaskIdNone,3);
 		//Task::AddTask(new Task);
 	}
 
-	Task::DrawAll();
+	TaskManager::GetTaskManagerPointer(eTaskManagerIdGeneral)->DrawAllSort();
+
 	
+	//タスク検索
+	TaskManager::GetTaskManagerPointer(eTaskManagerIdGeneral)->FindTask(eTaskIdPlayer)->Delete();
+	TaskManager::GetTaskManagerPointer(eTaskManagerIdGeneral)->FindTask(eTaskIdPlayer)->Delete();
+
+
+	
+
+
+	//タスク削除
+	for (int i = 0; i < 3; i++) {
+		t[i]->Delete();
+	}
+
+	TaskManager::GetTaskManagerPointer(eTaskManagerIdGeneral)->DrawAll();
 
 	//Task* t = head;
 	//3つのタスクを追加
