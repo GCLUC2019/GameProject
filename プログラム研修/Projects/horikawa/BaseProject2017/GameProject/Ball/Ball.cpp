@@ -49,8 +49,8 @@ Ball::~Ball()
 void Ball::Update(float delta_time)
 {
 
-	m_vec.y += GRAVITY * SPF;
-	m_pos += m_vec;
+	m_vec.y += GRAVITY * delta_time;
+	m_pos += m_vec * delta_time;
 	if (m_pos.y > SCREEN_HEIGHT) SetKill();
 }
 
@@ -59,7 +59,4 @@ void Ball::Render()
 	Utility::DrawQuad(m_pos, CVector2D(32.0f,32.0f), CVector4D(1.0f, 0, 0, 1));
 }
 
-void Ball::SetVector(const CVector2D& vec)
-{
-	m_vec = vec;
-}
+

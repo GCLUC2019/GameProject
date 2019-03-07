@@ -16,7 +16,7 @@ class GLOBAL
 .cppÇ…ãLèq
 const float  GLOBAL::gravity = 9.8f * 10;
 */
-#define GRAVITY (9.8f*10)
+#define GRAVITY (9.8f*50)
 // 1/60ïb
 #define SPF		(1.0f/60.0f)
 
