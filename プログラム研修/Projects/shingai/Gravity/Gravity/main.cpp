@@ -58,9 +58,10 @@ int main() {
 	}
 
 	t = head;
-	for (int i = 0; i < 4;i++) {
+	while(true) {
 		t->Draw();
 		t = t->GetNextTask();
+		if (t == nullptr) break;
 	}
 	
 
