@@ -28,5 +28,5 @@ public:
 	/*!
 	@brief	ƒ{[ƒ‹‚ÌˆÚ“®—Êİ’è
 	**/
-	void SetVecter(int x);
+	void SetVecter(/*const int& x*/const CVector2D& _vec);
 };

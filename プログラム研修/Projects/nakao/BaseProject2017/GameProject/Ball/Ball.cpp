@@ -54,7 +54,8 @@ void Ball::Render()
 	Utility::DrawQuad(m_pos, CVector2D(32.0f,32.0f), CVector4D(1.0f, 0, 0, 1));
 }
 
-void Ball::SetVecter(int x)
+void Ball::SetVecter(/*const int& x*/const CVector2D& _vec)
 {
-	m_vec += CVector2D(x, -20);
+	//m_vec += CVector2D(x, -20);
+	m_vec = _vec;
 }
