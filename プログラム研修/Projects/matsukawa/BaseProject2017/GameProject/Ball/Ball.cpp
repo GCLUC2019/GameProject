@@ -30,7 +30,8 @@ Ball::Ball(const CVector2D& pos):Task(eId_Ball,eUp_Ball,eRd_Ball)
 {
 	int r = rand() % point_data_size;
 	static_assert(POINT_MAX == point_data_size,"要素数オーバー");
-	m_pos = point_data[r];
+	m_pos = pos;
+	/*m_pos = point_data[r];*/
 	/*m_vec = CVector2D(0, -20);*/
 
 }
