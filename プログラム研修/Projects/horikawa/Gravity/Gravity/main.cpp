@@ -1,51 +1,41 @@
 #include <stdio.h>
 #include <iostream>
+#include "Task.h"
 
-class Task {
+
+
+class A :public Task {
 public:
-	Task*  pre_point;
-	Task*  next_point;
-public:
-	Task();
 	void Draw();
 };
-
-Task::Task()
+void A::Draw()
 {
-	pre_point = NULL;
-	next_point = NULL;
-}
-
-void Task::Draw()
-{
-	printf("TaskDraw\n");
+	printf("ADraw\n");
 }
 
 Task* head;
 
-
 int main() {
 	//タスクを一つ生成
 	head = new Task();
+
 	//３つのタスクを追加
 	for (int i = 0; i < 3; ++i) {
-		Task *t = new Task();
+		Task *t = new A();
 		//タスクをつなげる
-		Task* search = head;
-		while (search->next_point != NULL) {
-			search = search->next_point;
+		Task *search = head;
+		while (search->mp_next) {
+			search = search->mp_next;
 		}
-		if (search->next_point == NULL) {
-			search->next_point = t;
-			t->pre_point = search;
-		}
+		search->mp_next = t;
+		t->mp_prev = search;
 	}
 
-	//headから最後のタスクのDraw関数を
+	//headから最後のタスクのDraw関数を呼び出す
 	Task *t = head;
-	while (t->next_point != NULL){
+	while (t->mp_next){
 		t->Draw();
-		t = t->next_point;
+		t = t->mp_next;
 	}
 	t->Draw();
 
