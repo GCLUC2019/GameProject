@@ -8,6 +8,15 @@
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 720
 
+//Global.h‚ÅˆÈ‰º‚ğéŒ¾‚·‚é
+//class Global {
+//	static const float gravity;
+//	static const float fps;
+//};
+//
+////Global.cpp‚ÅˆÈ‰º‚ğ’è‹`‚·‚é
+//const float Global::gravity=9.8f;
+//const float Global::fps=60;
 
 #define GRAVITY (9.8f*10)
 // 1/60•b
