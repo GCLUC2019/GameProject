@@ -32,5 +32,5 @@ public:
 	**/
 	void Render();
 
-	void SetVector(const CVector2D vec);
+	void SetVector(const CVector2D&vec);
 };

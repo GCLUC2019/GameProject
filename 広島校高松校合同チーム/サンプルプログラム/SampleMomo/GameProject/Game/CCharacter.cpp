@@ -1,6 +1,6 @@
 #include "CCharacter.h"
 
-CCharacter::CCharacter(int _id, int _up, int _rd) : CObject(_id, _up, _rd)
+CCharacter::CCharacter(int _task_manager_id, int _task_id, int _update_priority, int _draw_priority) : CObject(_task_manager_id, _task_id, _update_priority, _draw_priority)
 {
 
 }
@@ -14,6 +14,6 @@ void CCharacter::Update(float delta_time)
 {
 }
 
-void CCharacter::Render()
+void CCharacter::Draw()
 {
 }

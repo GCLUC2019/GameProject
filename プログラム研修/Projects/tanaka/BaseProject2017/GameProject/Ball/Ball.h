@@ -28,5 +28,12 @@ public:
     @brief	外部から移動量の変更
     @param  [in]移動量
     **/
-    void SetVector(const CVector2D &vec);
+    void SetVector(const CVector2D &vec) {
+        m_vec = vec;
+    }
+    //行数の少ない関数やあまり呼び出されないものはインライン関数としてもよい
+
+    CVector2D GetVector()const {
+        return m_vec;
+    }
 };
