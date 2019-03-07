@@ -12,6 +12,11 @@
 #include "Task.h"
 #include "TaskManager.h"
 
+enum {
+	eTaskIdNone,
+	eTaskIdPlayer,
+};
+
 class A : public Task {
 private:
 public:
@@ -26,6 +31,7 @@ A::A() : Task(eTaskManagerIdGeneral,eTaskIdNone,1,2){
 void A::Draw() {
 	printf("AƒNƒ‰ƒX Draw\n");
 }
+
 
 
 

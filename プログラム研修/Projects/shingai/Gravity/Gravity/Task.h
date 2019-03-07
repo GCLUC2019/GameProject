@@ -1,11 +1,6 @@
 #pragma once
+#include "TaskManager.h"
 
-class TaskManager;
-
-enum {
-	eTaskIdNone = 0,
-	eTaskIdPlayer,
-};
 
 class Task {
 private:

@@ -1,10 +1,12 @@
 #pragma once
-#include "Task.h"
+
+class Task;
 
 enum {
 	eTaskManagerIdGeneral,
 	eTaskManagerMax,
 };
+
 class TaskManager {
 private:
 	int m_task_num = 0;

@@ -1,6 +1,7 @@
 #include "TaskManager.h"
 #include "stdio.h"
 #include "stdlib.h"
+#include "Task.h"
 
 static bool s_is_init = false;
 static TaskManager* s_task_manager_p[eTaskManagerMax];
@@ -133,7 +134,7 @@ void TaskManager::UpdateAllSort()
 
 	for (int i = 0; i < m_task_num; i++) {
 		printf("%d”Ô–Ú‚ÌTask up %d\n", i, task_up_array[i]);
-		task_array[i]->Draw();
+		task_array[i]->Update();
 	}
 
 
