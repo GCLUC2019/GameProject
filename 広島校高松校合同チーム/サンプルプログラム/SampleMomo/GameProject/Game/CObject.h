@@ -35,3 +35,7 @@ public:
 	CVector3D GetVec() { return m_vec; };
 	CVector2D GetSize() { return m_size; };
 };
+
+/*
+2019/03/06 クラス定義。基本機能実装。 by shingai
+*/
