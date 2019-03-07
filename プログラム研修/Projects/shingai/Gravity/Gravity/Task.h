@@ -17,10 +17,13 @@ private:
 	//‚‚¢’ö—Dæ‚µ‚Ä•`‰æ‚³‚ê‚é == Œã‚©‚ç•`‰æ‚³‚ê‚é(—Dæ“x‚ª‚‚¢’ö ‰æ–Ê‚Ì‘O‚Éo‚â‚·‚­‚È‚é)
 	int m_draw_priority = 0;
 
+	//‚‚¯‚ê‚Î‚‚¢’öAXV‚Ì‡”Ô‚ª‘‚¢
+	int m_update_priority = 0;
+
 	Task * m_before_task = nullptr;
 	Task * m_next_task = nullptr;
 public:
-	Task(int _task_manager_id,int _task_id,int _draw_priority = 0);
+	Task(int _task_manager_id,int _task_id,int _update_priority = 0,int _draw_priority = 0);
 	~Task();
 
 	virtual void Update();
@@ -28,6 +31,9 @@ public:
 	
 	void SetDrawPriority(int _priority) { m_draw_priority = _priority; };
 	int GetDrawPriority() { return m_draw_priority; };
+
+	void SetUpdatePriority(int _priority) { m_update_priority = _priority; };
+	int GetUpdatePriority() { return m_update_priority; };
 
 	void SetTaskId(int _task_id) { m_task_id = _task_id; };
 	int GetTaskId() { return m_task_id; };
@@ -39,16 +45,6 @@ public:
 	Task* GetNextTask() { return m_next_task; };
 
 	void Delete();
-
-
-	/*
-	static void UpdateAll();
-	static void DrawAll();
-	static Task* GetHead() { return s_head_task; };
-	static void AddTask(Task* _task);
-	static Task* FindTask(int _task_id);
-	static void DeleteTask(Task* _task);
-	*/
 };
 
 /*

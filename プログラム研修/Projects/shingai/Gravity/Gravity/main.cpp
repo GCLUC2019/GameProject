@@ -19,7 +19,7 @@ public:
 	void Draw();
 };
 
-A::A() : Task(eTaskManagerIdGeneral,eTaskIdNone,2){
+A::A() : Task(eTaskManagerIdGeneral,eTaskIdNone,1,2){
 
 }
 
@@ -41,17 +41,18 @@ int main() {
 	//Task* p = new Task();
 	//p->SetTaskId(eTaskIdPlayer);
 
-	new Task(eTaskManagerIdGeneral,eTaskIdPlayer,1);
-	new Task(eTaskManagerIdGeneral, eTaskIdPlayer,2);
+	new Task(eTaskManagerIdGeneral,eTaskIdPlayer,0,1);
+	new Task(eTaskManagerIdGeneral, eTaskIdPlayer,4,2);
 
 	Task* t[4];
 
 	for (int i = 0; i < 4; i++) {
-		t[i] = new Task(eTaskManagerIdGeneral,eTaskIdNone,3);
+		t[i] = new Task(eTaskManagerIdGeneral,eTaskIdNone,6,3);
 		//Task::AddTask(new Task);
 	}
 
 	TaskManager::GetTaskManagerPointer(eTaskManagerIdGeneral)->DrawAllSort();
+	TaskManager::GetTaskManagerPointer(eTaskManagerIdGeneral)->UpdateAllSort();
 
 	
 	//ƒ^ƒXƒNŒŸõ
