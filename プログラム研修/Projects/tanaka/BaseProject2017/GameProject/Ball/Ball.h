@@ -11,7 +11,6 @@ public:
 		@param	pos			[in] 出現位置
 	**/
 	Ball(const CVector2D& pos);
-	Ball();
 	/*!
 		@brief	デストラクタ
 	**/
@@ -25,8 +24,9 @@ public:
 		@brief	描画処理
 	**/
 	void Render();
-	/*!
-	@brief	ボールの移動量設定
-	**/
-	void SetVecter(/*const int& x*/const CVector2D& _vec);
+    /*!
+    @brief	外部から移動量の変更
+    @param  [in]移動量
+    **/
+    void SetVector(const CVector2D &vec);
 };

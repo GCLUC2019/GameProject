@@ -1,21 +1,20 @@
 #pragma once
 #include "../stdafx.h"
 #include "../System/Task.h"
-class Ball : public Task {
+class BallManager : public Task {
 private:
-	CVector2D m_pos;		//ボールの位置
-	CVector2D m_vec;		//ボールの移動量
+	
+	float m_time; //!時間計測用
+
 public:
 	/*!
 		@brief	コンストラクタ
-		@param	pos			[in] 出現位置
 	**/
-	Ball(const CVector2D& pos);
-	Ball();
+	BallManager();
 	/*!
 		@brief	デストラクタ
 	**/
-	~Ball();
+	~BallManager();
 	/*!
 		@brief	更新処理
 		@param	delta_time			[in] 前回の更新からの経過時間
@@ -25,8 +24,4 @@ public:
 		@brief	描画処理
 	**/
 	void Render();
-	/*!
-	@brief	ボールの移動量設定
-	**/
-	void SetVecter(/*const int& x*/const CVector2D& _vec);
 };
