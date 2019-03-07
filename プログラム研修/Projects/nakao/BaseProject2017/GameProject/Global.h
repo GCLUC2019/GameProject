@@ -7,8 +7,15 @@
 
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 720
-
-
+/*
+.hに記述
+class GLOBAL
+{
+	static const float gravity;
+};
+.cppに記述
+const float  GLOBAL::gravity = 9.8f * 10;
+*/
 #define GRAVITY (9.8f*10)
 // 1/60秒
 #define SPF		(1.0f/60.0f)
