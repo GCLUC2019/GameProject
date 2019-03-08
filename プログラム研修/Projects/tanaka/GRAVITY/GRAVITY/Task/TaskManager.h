@@ -42,5 +42,11 @@ public:
     @param	Task* t2			[in] 入れ替えたいオブジェクトのポインタ
     **/
     static void Swap(Task* t1, Task* t2);
+    /*!
+    @brief	入れ替え関数　t1とt2を入れ替える 
+    @param  [in]falseで前に挿入、trueで後ろに挿入
+    @param	Task* t1			[in] 入れ替えたいオブジェクトのポインタ
+    @param	Task* t2			[in] 挿入したい場所のポインタ
+    **/
     static void ReLink(bool _fb, Task* t1, Task* t2);
 };
