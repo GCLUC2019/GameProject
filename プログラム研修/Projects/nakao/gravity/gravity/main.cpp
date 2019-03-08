@@ -4,49 +4,131 @@
 
 class Task {
 private:
-	
-	
+	Task * prev;
+	Task* next;
 public:
-	Task * old;
-	Task * next;
+	Task * GetPrev() {
+		return prev;
+	}
+	Task* GetNext() {
+		return next;
+	}
+	void SetPrev(Task * p) {
+		prev = p;
+	}
+	void SetNext(Task * n) {
+		next = n;
+	}
 	Task();
-	void Doraw();
+	virtual void Draw();
 
 };
 
 
-Task::Task(){
+Task::Task():
+	prev(nullptr),
+next(nullptr)
+{
 
 }
-
-void Task::Doraw() {
-	printf("TaskDoraw\n");
+void Task::Draw() {
+	printf("TaskDraw\n");
 }
 
+class A :public Task {
+private:
+
+public:
+	void Draw();
+};
+
+void A::Draw() {
+	printf("ADraw\n");
+}
+
+class TaskManager {
+private:
+	static Task * head;
+	
+public:
+	TaskManager();
+	static void Addf(Task* t);
+	static void Add(Task* t);
+
+	static void DrawAll(Task* t,bool f);
+};
+TaskManager::TaskManager()
+{
+}
+void TaskManager:: Addf(Task* t) {
+	
+}
+
+void TaskManager::Add(Task* t) {
+	if (head == nullptr) {
+		head = t;
+		return;
+	}
+	Task* n = head;
+	while (n->GetNext() != nullptr) {
+		n = n->GetNext();
+	}
+	;
+	n->SetNext(t);
+	t->SetPrev(n);
+}
+void TaskManager::DrawAll(Task* t, bool f) {
+	if (f) {
+		while (t->GetPrev() != nullptr) {
+			t = t->GetPrev();
+		}
+		while (t) {
+			t->Draw();
+			t = t->GetNext();
+		}
+	}
+	else {
+		while (t->GetNext() != nullptr) {
+			t = t->GetNext();
+		}
+		while (t) {
+			t->Draw();
+			t = t->GetPrev();
+		}
+	}
+
+}
+Task* head;
+Task* last;
 int main() {
-	Task* head;
+	head;
 	//タスクをひとつ生成
 	head = new Task();
 	//タスクを追加
-	Task* last = head;
+	last = head;
 	for (int i = 0; i < 3;++i) {
-		Task *t = new Task();
-		last->next = t;
+		TaskManager::Add(new A);
+	/*
+		Task *t = new A();
+		Task* n = head;
+		while ( n->GetNext() != nullptr) {
+			n = n->GetNext();
+		}
+		n->SetNext(t);
+		t->SetPrev(n);
+		last = t;*/
+		/*last->next = t;
 		t->old = last;
-		last = t;
+		last = t;*/
 	}
-	last->next = nullptr;
+	
+	
+	//headから最後のタスクまでのDoraw関数を呼び出す
 	Task *t = head;
-	while (t!=nullptr)
-	{
-		t->Doraw();
-		t = t->next;
-	}
-	//headから最後のタスクのDoraw関数を呼び出す
-
-
-
-
+	TaskManager::DrawAll(t, true);
+	printf("\n終了\n\n");
+	 t = last;
+	 TaskManager::DrawAll(t, false);
 	//float Gravity = -9.8;
 	//float spd, spd_0, h, h_0;
 	//int time;

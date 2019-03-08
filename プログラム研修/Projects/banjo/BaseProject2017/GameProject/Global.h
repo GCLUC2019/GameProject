@@ -18,7 +18,7 @@
 //const float Global::gravity=9.8f;
 //const float Global::fps=60;
 
-#define GRAVITY (9.8f*10)
+#define GRAVITY (9.8f*50)
 // 1/60•b
 #define SPF		(1.0f/60.0f)
 
