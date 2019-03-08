@@ -132,24 +132,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Ball\Ball.h" />
-    <ClInclude Include="Ball\BallManager.h" />
-    <ClInclude Include="Ball\Bullet.h" />
+    <ClInclude Include="Base\Task.h" />
+    <ClInclude Include="Base\TaskManager.h" />
     <ClInclude Include="GID.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="System\Task.h" />
-    <ClInclude Include="System\TaskLinker.h" />
-    <ClInclude Include="System\TaskManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Ball\Ball.cpp" />
-    <ClCompile Include="Ball\BallManager.cpp" />
-    <ClCompile Include="Ball\Bullet.cpp" />
+    <ClCompile Include="Base\Task.cpp" />
+    <ClCompile Include="Base\TaskManager.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="System\Task.cpp" />
-    <ClCompile Include="System\TaskLinker.cpp" />
-    <ClCompile Include="System\TaskManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,13 +1,14 @@
-
+#include<stdio.h>
 #include"TaskManager.h"
 
 Task* TaskManager::m_head = nullptr;
  Task*  TaskManager::m_last = nullptr;
+ Task*  TaskManager::m_exclude = nullptr;
 TaskManager::TaskManager()
 {
 }
 void TaskManager::Addf(Task* t) {
-	if (m_head == nullptr&&m_head == nullptr) {
+	if (m_head == nullptr&&m_last == nullptr) {
 		m_head = t;
 		m_last = t;
 		return;
@@ -18,11 +19,12 @@ void TaskManager::Addf(Task* t) {
 	}
 	n->SetPrev(t);
 	t->SetNext(n);
+	t->SetPrev(nullptr);
 	SetHead(t);
 }
 
 void TaskManager::Add(Task* t) {
-	if (m_head == nullptr&&m_head == nullptr) {
+	if (m_head == nullptr&&m_last == nullptr) {
 		m_head = t;
 		m_last = t;
 		return;
@@ -33,6 +35,7 @@ void TaskManager::Add(Task* t) {
 	}
 	n->SetNext(t);
 	t->SetPrev(n);
+	t->SetNext(nullptr);
 	SetLast(t);
 }
 void TaskManager::TaskSort(bool f)
@@ -75,6 +78,54 @@ void TaskManager::Swap(Task * t1, Task * t2)
 		SetHead(t2);
 	else
 		s1->SetNext(t2);
+}
+void TaskManager::Exclusion(Task * t)
+{
+	if (t == nullptr)
+		return;
+	Task *s;
+	if (t == m_head) {
+		s = t->GetNext();
+		s->SetPrev(nullptr);
+		SetHead(s);
+		t->SetNext(nullptr);
+	}else if (t == m_last) {
+		s = t->GetPrev();
+		s->SetNext(nullptr);
+		SetLast(s);
+		t->SetPrev(nullptr);
+	}
+	else {
+		s = t->GetPrev();
+		s->SetNext(t->GetNext());
+		s = t->GetNext();
+		s->SetPrev(t->GetPrev());
+		t->SetPrev(nullptr);
+		t->SetNext(nullptr);
+	}
+	
+	if (m_exclude == nullptr)
+		m_exclude = t;
+	else
+	{
+		s = m_exclude;
+		while (s->GetNext()!=nullptr)
+		{
+			s = s->GetNext();
+		}
+		s->SetNext(t);
+	}
+}
+void TaskManager::ExclusionDelete()
+{
+	Task *s = m_exclude;
+	while (s) {
+		m_exclude = m_exclude->GetNext();
+		delete (s);
+		printf("íœ\n");
+		s = m_exclude;
+	}
+	m_exclude = nullptr;
 }
 void TaskManager::DrawAll(Task* t, bool f) {
 	if (f) {
