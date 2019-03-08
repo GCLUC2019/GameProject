@@ -22,6 +22,7 @@ Task::~Task()
 
 void Task::Update()
 {
+
 }
 
 void Task::Draw() {

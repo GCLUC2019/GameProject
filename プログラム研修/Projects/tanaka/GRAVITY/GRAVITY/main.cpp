@@ -1,31 +1,23 @@
 #include <stdio.h>
 #include <list>
 #include "Task/Task.h"
+#include "Task/TaskManager.h"
 #define GRAVITY -9.8f
 
 int main() {  
-    Task::Add(new A());
-    //head = new Task();
-    //for (int i = 0; i < 3; ++i) {
-    //    Task*t = new A();
-    //    Task*n = head;
-    //    //タスクをつなげる
-    //    //headにnextがあれば次のやつその次のやつにも次があればその次みたいな
-    //    while (n->GetNext()) {
-    //        n = n->GetNext();
-    //    }
-    //    //最後尾のタスクにnextを追加
-    //    n->SetNext(t);
-    //    t->SetPrev(n);
-    //    last = t;
-    //}
-
-    //headからタスクのDraw関数を呼び出す
-    Task*t = head;
-    while (t) {
-        t->Draw();
-        t = t->GetNext();
+    for (int i = 0; i < 3; ++i) {
+        TaskManager::Add(new Task(1, 1, 1));
     }
+    TaskManager::Insert(new Task(1, 2, 1));
+    TaskManager::Insert(new Task(1, 5, 1));
+
+    TaskManager::DrawAll();
+    ////headからタスクのDraw関数を呼び出す
+    //Task*t = head;
+    //while (t) {
+    //    t->Draw();
+    //    t = t->GetNext();
+    //}
     ////後ろから表示
     //t = last;
     //while (t) {
