@@ -1,47 +1,14 @@
 #include "Task.h"
-
-Task::Task() {
+Task::Task(int _eType, int _eUpdatePrio, int _eDrawPrio) :
+    m_type(_eType),
+    m_updateprio(_eUpdatePrio),
+    m_drawprio(_eDrawPrio),
+    mp_next(nullptr),
+    mp_prev(nullptr)
+{
+    
 }
 
 void Task::Draw() {
-    printf("TaskDraw\n");
+    printf("%d\n",GetUpdatePrio());
 }
-
-void Task::Add(Task*_t)
-{
-    //headがnullならheadに_tを入れて返す
-    if (head == nullptr) {
-        head = _t;
-        return;
-    }
-    Task*t = _t;
-    Task*n = head;
-    //タスクをつなげる
-    //headにnextがあれば次のやつその次のやつにも次があればその次みたいな
-    while (n->GetNext()) {
-        n = n->GetNext();
-    }
-    //最後尾のタスクにnext,prevを追加
-    n->SetNext(t);
-    t->SetPrev(n);
-    last = t;
-
-}
-
-void Task::TaskSort(float _comp)
-{
-
-}
-
-void Task::Insert(Task * _t, int _in)
-{
-    Task*t = _t;
-    Task*n = head;
-    for (int i = 0; i < _in; ++i) {
-
-    }
-
-}
-
-
-
