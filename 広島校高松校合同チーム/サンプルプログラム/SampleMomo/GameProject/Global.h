@@ -20,3 +20,9 @@
 #else
 	#define DEBUG_PRINT(s)
 #endif
+
+enum {
+	eTaskIdNone = 0,
+	eTaskIdPlayer,
+	eTaskIdEnemy,
+};

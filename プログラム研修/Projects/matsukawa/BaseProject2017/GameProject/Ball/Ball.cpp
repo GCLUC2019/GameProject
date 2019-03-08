@@ -42,8 +42,8 @@ Ball::~Ball()
 
 void Ball::Update(float delta_time)
 {
-	m_vec.y += GRAVITY * SPF;
-	m_pos += m_vec;
+	m_vec.y += GRAVITY * delta_time;
+	m_pos += m_vec * delta_time;
 	if (m_pos.y > SCREEN_HEIGHT) SetKill();
 }
 

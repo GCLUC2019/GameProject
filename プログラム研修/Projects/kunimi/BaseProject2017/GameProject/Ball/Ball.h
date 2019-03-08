@@ -32,5 +32,11 @@ public:
 	/*!
 	@brief	ƒ{[ƒ‹‚ÌˆÚ“®—Ê‚ğİ’è
 	**/
-	void SetVector(const CVector2D& vec);
+	void SetVector(const CVector2D& vec) {
+		m_vec = vec;
+	}
+	CVector2D GetVector() const{
+		return m_vec;
+	}
+
 };
