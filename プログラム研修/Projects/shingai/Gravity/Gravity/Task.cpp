@@ -2,18 +2,16 @@
 #include <stdio.h>
 #include "TaskManager.h"
 
-Task::Task(int _task_manager_id, int _task_id, int _update_priority, int _draw_priority)
+Task::Task(int _task_id, int _draw_priority)
 {
-	m_task_manager_id = _task_manager_id;
 	m_task_id = _task_id;
-	m_update_priority = _update_priority;
 	m_draw_priority = _draw_priority;
-	TaskManager::GetTaskManagerPointer(_task_manager_id)->AddTask(this);
+	TaskManager::GetInstance()->AddTask(this);
 }
 
 void Task::Delete()
 {
-	TaskManager::GetTaskManagerPointer(m_task_manager_id)->DeleteTask(this);
+	TaskManager::GetInstance()->DeleteTask(this);
 }
 
 Task::~Task()
@@ -27,5 +25,5 @@ void Task::Update()
 }
 
 void Task::Draw() {
-	printf("TaskDraw\n");
+	printf("TaskDraw Dp %d\n",m_draw_priority);
 }

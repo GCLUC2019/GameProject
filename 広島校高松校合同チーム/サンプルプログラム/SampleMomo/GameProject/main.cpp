@@ -8,8 +8,7 @@
 
 #include "stdafx.h"
 #include "Global.h"
-#include "GID.h"
-#include "System/TaskManager.h"
+#include "Task/TaskManager.h"
 #include "Game/CSetUpGame.h"
 
 //--------------------------------------------
@@ -23,15 +22,12 @@ void MainLoop(void) {
 	//ゲーム中はこの関数_を1秒間に60回呼び出している
 	//--------------------------------------------------------------
 
-	//削除チェック
-	TaskManager::GetInstance()->KillAppoint();
-
-	//すべて更新
-	TaskManager::GetInstance()->UpdateAll();
+	//更新(ソート)
+	TaskManager::GetTaskManagerPointer(eTaskManagerIdGeneral)->UpdateAllSort();
 
 
-	//すべて描画
-	TaskManager::GetInstance()->RenderAll();
+	//描画(ソート)
+	TaskManager::GetTaskManagerPointer(eTaskManagerIdGeneral)->DrawAllSort();
 
 	//速すぎ防止
 	Sleep(1);

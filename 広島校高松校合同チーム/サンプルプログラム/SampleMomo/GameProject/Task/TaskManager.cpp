@@ -2,8 +2,10 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "Task.h"
+#include "CFPS.h"
 
-static TaskManager* s_instance_p = nullptr;
+static bool s_is_init = false;
+static TaskManager* s_task_manager_p[eTaskManagerMax];
 
 void TaskManager::AddTask(Task * _task)
 {
@@ -25,7 +27,6 @@ void TaskManager::AddTask(Task * _task)
 			break;
 		}
 	}
-	Sort();
 }
 
 Task * TaskManager::FindTask(int _task_id)
@@ -66,7 +67,6 @@ void TaskManager::DeleteTask(Task * _task)
 
 			delete _task;
 			m_task_num--;
-			Sort();
 			return;
 		}
 
@@ -79,10 +79,71 @@ void TaskManager::UpdateAll()
 {
 	Task* t = GetHead();
 	while (true) {
-		t->Update();
+		t->Update(CFPS::GetDeltaTime());
 		t = t->GetNextTask();
 		if (t == nullptr) break;
 	}
+}
+
+void TaskManager::UpdateAllSort()
+{
+	//配列を作成(callocで領域確保)
+
+	//Taskポインタ型配列(配列を表す為にTaskポインタ型ポインタを利用する)
+	Task** task_array = (Task**)calloc(m_task_num, sizeof(Task*));
+
+
+	//int型配列
+	int* task_up_array = (int*)calloc(m_task_num, sizeof(int));
+
+
+	//あとはソートしていくだけ
+
+	//とりあえずソート用の情報を集める
+	Task* t = GetHead();
+
+
+	//ここで宣言してるので取り扱い注意
+	int i = 0;
+	while (true) {
+		task_array[i] = t;
+		task_up_array[i] = t->GetUpdatePriority();
+		t = t->GetNextTask();
+		i++;
+		if (t == nullptr) break;
+	}
+
+
+	//ソート作業する(バブルソート)
+	for (int i = 0; i < m_task_num; i++) {
+		for (int k = 0; k < m_task_num; k++) {
+			if (task_up_array[i] > task_up_array[k]) {
+
+				//更新順番配列の入れ替え
+				int work = task_up_array[i];
+				task_up_array[i] = task_up_array[k];
+				task_up_array[k] = work;
+
+				//ポインタの入れ替え
+				Task* work_task_p = task_array[i];
+				task_array[i] = task_array[k];
+				task_array[k] = work_task_p;
+
+			}
+		}
+	}
+
+	for (int i = 0; i < m_task_num; i++) {
+		printf("%d番目のTask up %d\n", i, task_up_array[i]);
+		task_array[i]->Update(CFPS::GetDeltaTime());
+	}
+
+
+	//とりあえず取得したデータを確認
+
+	//callocで取得した領域を解放
+	free(task_array);
+	free(task_up_array);
 }
 
 void TaskManager::DrawAll()
@@ -96,23 +157,21 @@ void TaskManager::DrawAll()
 }
 
 
-//タスクを描画優先度に合わせてソートする。
-//新規タスク追加時 タスク削除時に呼ばれる。
-
 //Zソートとしても使えるソート
-//描画順番は後の方が優先度が高い(前に表示される)ので値が大きい程順番を後にする。
+//描画順番は後の方が優先度が高い(前に表示される)
+//ので値が大きい程順番を後にする。
 //なので昇順ソート
 
-void TaskManager::Sort()
+void TaskManager::DrawAllSort()
 {
 	//配列を作成(callocで領域確保)
-
+	
 	//Taskポインタ型配列(配列を表す為にTaskポインタ型ポインタを利用する)
-	Task** task_array = (Task**)calloc(m_task_num, sizeof(Task*));
+	Task** task_array = (Task**)calloc(m_task_num,sizeof(Task*));
 
 
 	//int型配列
-	int* task_dp_array = (int*)calloc(m_task_num, sizeof(int));
+	int* task_dp_array = (int*)calloc(m_task_num,sizeof(int));
 
 
 	//あとはソートしていくだけ
@@ -136,7 +195,7 @@ void TaskManager::Sort()
 	for (int i = 0; i < m_task_num; i++) {
 		for (int k = 0; k < m_task_num; k++) {
 			if (task_dp_array[i] < task_dp_array[k]) {
-
+				
 				//描画順番配列の入れ替え
 				int work = task_dp_array[i];
 				task_dp_array[i] = task_dp_array[k];
@@ -151,40 +210,31 @@ void TaskManager::Sort()
 		}
 	}
 
-
-	//タスクリストを再構成
-	m_head_task = task_array[0];
-	m_head_task->SetBeforeTask(nullptr);
-	Task* tp;
 	for (int i = 0; i < m_task_num; i++) {
-		tp = task_array[i];
-		if (i == m_task_num - 1) {
-			tp->SetNextTask(nullptr);
-		}
-		else {
-			tp->SetNextTask(task_array[i + 1]);
-			task_array[i + 1]->SetBeforeTask(tp);
-		}
-
-		
+		printf("%d番目のTask dp %d\n",i, task_dp_array[i]);
+		task_array[i]->Draw();
 	}
 
 
 	//とりあえず取得したデータを確認
+
 	//callocで取得した領域を解放
 	free(task_array);
 	free(task_dp_array);
 }
 
-TaskManager * TaskManager::GetInstance()
+void TaskManager::CheckInit()
 {
-	if (s_instance_p == nullptr) s_instance_p = new TaskManager();
-	return s_instance_p;
+	if (s_is_init == false) {
+		s_is_init = true;
+		for (int i = 0; i < eTaskManagerMax; i++) {
+			s_task_manager_p[i] = new TaskManager();
+		}
+	}
 }
 
-void TaskManager::ClearInstance()
+TaskManager * TaskManager::GetTaskManagerPointer(int _task_manager_id)
 {
-	if (s_instance_p == nullptr) return;
-	delete s_instance_p;
-	s_instance_p = nullptr;
+	CheckInit();
+	return s_task_manager_p[_task_manager_id];
 }

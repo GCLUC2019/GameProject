@@ -36,7 +36,7 @@ void MainLoop(void) {
 	
 
 	//ë¨Ç∑Ç¨ñhé~
-	Sleep(1);
+	Sleep(rand()%20);
 
 }
 void Init(void)

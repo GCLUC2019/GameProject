@@ -7,7 +7,15 @@
 void CSetupGame::Setup()
 {
 	ADD_RESOURCE("Stage_Background_0", CImage::LoadImage("haikei.png"));
-	new CObjectImage(GET_RESOURCE("Stage_Background_0", CImage*));
-	new CCharacterPlayer();
-	new CCharacterEnemy();
+	CObjectImage* stage_p = new CObjectImage(GET_RESOURCE("Stage_Background_0", CImage*));
+	stage_p->SetSize(1280,720);
+
+	CCharacterPlayer* player_p = new CCharacterPlayer();
+	player_p->SetSize(600, 600);
+	player_p->SetPos(300, 0,300);
+
+	/*
+	CCharacterEnemy* enemy_p = new CCharacterEnemy();
+	enemy_p->SetSize(300, 300);
+	*/
 }
