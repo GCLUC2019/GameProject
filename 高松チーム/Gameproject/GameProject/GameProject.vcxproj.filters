@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Base\Task.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\TaskManager.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GID.h" />
+    <ClInclude Include="Global.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Base\Task.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\TaskManager.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Base">
+      <UniqueIdentifier>{418eafba-ce4a-4e99-b6c6-f80bd82f0399}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{59690f6f-87c8-474c-98ce-551183004add}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

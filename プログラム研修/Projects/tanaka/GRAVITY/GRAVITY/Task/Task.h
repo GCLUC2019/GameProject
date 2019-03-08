@@ -7,12 +7,17 @@ protected:
     int m_drawprio;
     Task * mp_next;
     Task * mp_prev;
+    void SetNext(Task*t) {
+        mp_next = t;
+    }
+    void SetPrev(Task*t) {
+        mp_prev = t;
+    }
 public:
     Task(int _eType,int _eUpdatePrio,int _eDrawPrio);
     virtual void Draw();
     
     Task*GetNext() {
-        if(mp_next)
         return mp_next;
     }
     Task*GetPrev() {
@@ -27,12 +32,7 @@ public:
     int GetDrawPrio() {
         return m_drawprio;
     }
-    void SetNext(Task*t) {
-        mp_next = t;
-    }
-    void SetPrev(Task*t) {
-        mp_prev = t;
-    }
+    friend class TaskManager;
 };
 
 //class A :public Task {

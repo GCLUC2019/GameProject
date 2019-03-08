@@ -18,6 +18,10 @@ public:
 
 	//即座に該当タスクを削除する
 	void DeleteTask(Task* _task);
+	void DeleteAllTask();
+
+	//削除フラグがtrueになっているタスクを全て削除する
+	void CheckDeleteAll();
 
 	void UpdateAll();
 	void CollisionAll();
@@ -30,5 +34,6 @@ public:
 };
 
 /*
-2019/03/07 TaskManagerクラス定義。基本機能実装。 by shingai
+2019/03/07 TaskManagerクラス定義。基本機能実装。by shingai
+2019/03/08 バグ修正やソート部分をクイックソートに変更。 by shingai
 */
