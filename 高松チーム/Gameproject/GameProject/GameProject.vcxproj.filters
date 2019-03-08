@@ -3,21 +3,21 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Base\Task.cpp">
-      <Filter>Base</Filter>
+      <Filter>Task</Filter>
     </ClCompile>
     <ClCompile Include="Base\TaskManager.cpp">
-      <Filter>Base</Filter>
+      <Filter>Task</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GID.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="Base\Task.h">
-      <Filter>Base</Filter>
-    </ClInclude>
     <ClInclude Include="Base\TaskManager.h">
-      <Filter>Base</Filter>
+      <Filter>Task</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Task.h">
+      <Filter>Task</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -26,6 +26,9 @@
     </Filter>
     <Filter Include="Base">
       <UniqueIdentifier>{418eafba-ce4a-4e99-b6c6-f80bd82f0399}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Task">
+      <UniqueIdentifier>{83245302-264c-47e2-be1d-16344cbd0d45}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
