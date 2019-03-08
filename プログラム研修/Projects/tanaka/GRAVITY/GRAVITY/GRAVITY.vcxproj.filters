@@ -24,9 +24,15 @@
     <ClCompile Include="Task\Task.cpp">
       <Filter>ソース ファイル\Task</Filter>
     </ClCompile>
+    <ClCompile Include="Task\TaskManager.cpp">
+      <Filter>ソース ファイル\Task</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Task\Task.h">
+      <Filter>ソース ファイル\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="Task\TaskManager.h">
       <Filter>ソース ファイル\Task</Filter>
     </ClInclude>
   </ItemGroup>

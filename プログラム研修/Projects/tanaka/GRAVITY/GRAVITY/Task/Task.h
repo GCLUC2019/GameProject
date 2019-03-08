@@ -1,34 +1,30 @@
 #pragma once
 #include <stdio.h>
 class Task {
-private:
+protected:
+    int m_type;
+    int m_updateprio;
+    int m_drawprio;
     Task * mp_next;
     Task * mp_prev;
 public:
-    Task();
+    Task(int _eType,int _eUpdatePrio,int _eDrawPrio);
     virtual void Draw();
-    /*
-    @brief          新規タスクを末尾に追加
-    @param  [in]    追加するタスク
-    */
-    static void Add(Task*_t);
-    /*
-    @brief          連結順番を変更する
-    @param  [in]    比較対象
-    */
-    static void TaskSort(float _comp);
-    /*
-    @brief          新たなタスクを挿入する
-    @param  [in]    挿入するタスク
-    @param  [in]    挿入する場所
-    */
-    static void Insert(Task*_t, int _in);
-
-    Task*GetNext() {//
+    
+    Task*GetNext() {
         return mp_next;
     }
     Task*GetPrev() {
         return mp_prev;
+    }
+    int GetType() {
+        return m_type;
+    }
+    int GetUpdatePrio() {
+        return m_updateprio;
+    }
+    int GetDrawPrio() {
+        return m_drawprio;
     }
     void SetNext(Task*t) {
         mp_next = t;
@@ -38,14 +34,11 @@ public:
     }
 };
 
-Task*head = nullptr;
-Task*last = nullptr;
-
-class A :public Task {
-private:
-public:
-    void Draw();
-};
-void A::Draw() {
-    printf("ADraw\n");
-}
+//class A :public Task {
+//private:
+//public:
+//    void Draw();
+//};
+//void A::Draw() {
+//    printf("ADraw\n");
+//}

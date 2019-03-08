@@ -12,6 +12,9 @@ private:
 	//‚‚¢’ö—Dæ‚µ‚Ä•`‰æ‚³‚ê‚é == Œã‚©‚ç•`‰æ‚³‚ê‚é(—Dæ“x‚ª‚‚¢’ö ‰æ–Ê‚Ì‘O‚Éo‚â‚·‚­‚È‚é)
 	int m_draw_priority = 0;
 
+	//
+	//bool m_is_kill = false;
+
 	Task * m_before_task = nullptr;
 	Task * m_next_task = nullptr;
 
@@ -21,6 +24,7 @@ public:
 
 	virtual void Update();
 	virtual void Draw();
+	virtual void CollisionCheck(Task* _collision_task);
 	
 	void SetDrawPriority(int _priority) { m_draw_priority = _priority; };
 	int GetDrawPriority() { return m_draw_priority; };
@@ -34,7 +38,7 @@ public:
 	void SetNextTask(Task* _next) { m_next_task = _next; };
 	Task* GetNextTask() { return m_next_task; };
 
-	void Delete();
+	void Delete();//‘¦À‚É©•ª‚ğíœ‚·‚éB
 };
 
 /*

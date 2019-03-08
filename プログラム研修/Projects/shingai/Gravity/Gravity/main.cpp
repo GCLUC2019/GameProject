@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+#include <stdlib.h>
 /*
 実践問題
 5秒間放物線のシミュレーションを行う
@@ -29,7 +29,7 @@ A::A() : Task(eTaskIdNone,1){
 }
 
 void A::Draw() {
-	printf("Aクラス Draw\n");
+	printf("Task A Draw\n");
 }
 
 
@@ -49,32 +49,39 @@ int main() {
 
 	new Task(eTaskIdPlayer,0);
 	new Task(eTaskIdPlayer,4);
+	new Task(eTaskIdPlayer,3);
+	new Task(eTaskIdPlayer, 1);
+	new Task(eTaskIdPlayer, 2);
+	new Task(eTaskIdPlayer, 5);
+	new Task(eTaskIdPlayer, 24);
+	new Task(eTaskIdPlayer, 500);
+	new Task(eTaskIdPlayer, 2424);
+	new Task(eTaskIdPlayer, 54);
+	new Task(eTaskIdPlayer, 78);
+	new Task(eTaskIdPlayer, 32);
+	new Task(eTaskIdPlayer, 66);
+	new Task(eTaskIdPlayer, 22);
 
-	Task* t[4];
-
-	for (int i = 0; i < 4; i++) {
-		t[i] = new Task(eTaskIdNone,6);
-		//Task::AddTask(new Task);
-	}
-
+	TaskManager::GetInstance()->Sort();//ソートする
 	TaskManager::GetInstance()->DrawAll();
 	TaskManager::GetInstance()->UpdateAll();
+	TaskManager::GetInstance()->CollisionAll();
 
+
+	Task** players = TaskManager::GetInstance()->FindTaskArray(eTaskIdPlayer);
 	
-	//タスク検索
-	TaskManager::GetInstance()->FindTask(eTaskIdPlayer)->Delete();
-	TaskManager::GetInstance()->FindTask(eTaskIdPlayer)->Delete();
-
-
 	
-
-
-	//タスク削除
-	for (int i = 0; i < 3; i++) {
-		t[i]->Delete();
+	//プレイヤーだけ削除
+	for (int i = 0; players[i] != nullptr;i++) {
+		players[i]->Delete();
 	}
+	free(players);//配列の情報を破棄
+	
 
-	TaskManager::GetInstance()->DrawAll();
+
+	//タスク検索
+	//TaskManager::GetInstance()->FindTask(eTaskIdPlayer)->Delete();
+	//TaskManager::GetInstance()->FindTask(eTaskIdPlayer)->Delete();
 
 	//Task* t = head;
 	//3つのタスクを追加
