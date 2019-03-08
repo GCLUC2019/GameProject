@@ -22,10 +22,14 @@ public:
     /*
     @brief          新たなタスクを挿入する
     @param  [in]    挿入するタスク
-    @param  [in]    挿入する場所
     */
     static void Insert(Task*_t);
-
+    Task* GetHead() {
+        return mp_head;
+    }
+    Task* GetLast() {
+        return mp_last;
+    }
     static void SetHead(Task* t) {
         mp_head = t;
     }
@@ -38,4 +42,5 @@ public:
     @param	Task* t2			[in] 入れ替えたいオブジェクトのポインタ
     **/
     static void Swap(Task* t1, Task* t2);
+    static void ReLink(bool _fb, Task* t1, Task* t2);
 };
