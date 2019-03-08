@@ -12,7 +12,6 @@ public:
     virtual void Draw();
     
     Task*GetNext() {
-        if(mp_next)
         return mp_next;
     }
     Task*GetPrev() {

@@ -26,4 +26,16 @@ public:
     */
     static void Insert(Task*_t);
 
+    static void SetHead(Task* t) {
+        mp_head = t;
+    }
+    static void SetLast(Task* t) {
+        mp_last = t;
+    }
+    /*!
+    @brief	入れ替え関数　t1とt2を入れ替える
+    @param	Task* t1			[in] 入れ替えたいオブジェクトのポインタ
+    @param	Task* t2			[in] 入れ替えたいオブジェクトのポインタ
+    **/
+    static void Swap(Task* t1, Task* t2);
 };

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <iostream>
 #include "Task.h"
+#include "TaskManager.h"
 
 
 
@@ -10,38 +11,58 @@ public:
 };
 void A::Draw()
 {
-	printf("ADraw\n");
+	printf("ADraw%d\n", m_id);
 }
 
-Task* head;
+//Task* head;
 
 int main() {
 	//タスクを一つ生成
-	head = new Task();
+	/*head = new Task();*/
 
 	//３つのタスクを追加
 	for (int i = 0; i < 3; ++i) {
-		Task *t = new A();
-		//タスクをつなげる
-		Task *search = head;
-		while (search->mp_next) {
-			search = search->mp_next;
-		}
-		search->mp_next = t;
-		t->mp_prev = search;
+		new A();
+		////タスクをつなげる
+		//Task *search = head;
+		//while (search->mp_next) {
+		//	search = search->mp_next;
+		//}
+		//search->mp_next = t;
+		//t->mp_prev = search;
 	}
 
+	A* d = new A();
+	TaskManager::GetInstance()->Delete(d);
+
 	//headから最後のタスクのDraw関数を呼び出す
-	Task *t = head;
+	TaskManager::GetInstance()->DrawAll();
+
+
+	
+	SearchID* b = TaskManager::GetInstance()->Search(6);
+	while (b->s_next) {
+		b = b->s_next;
+		TaskManager::GetInstance()->Delete(b->s_point);
+	}
+	
+	//headから最後のタスクのDraw関数を呼び出す
+	TaskManager::GetInstance()->DrawAll();
+
+
+
+
+
+	/*Task *t = head;
 	while (t->mp_next){
 		t->Draw();
 		t = t->mp_next;
 	}
-	t->Draw();
+	t->Draw();*/
 
 	//float t = 0;
-	///*printf("計測したい秒数を入力してください");
-	//scanf_s("%f", &t);*/
+	/*printf("計測したい秒数を入力してください");
+	scanf_s("%f", &t);*/
 	//float P = 29.4 - 4.9 * t * (t - 1);
 	///*printf("%f", P);*/
 	//for (int i = 0; i < 6; ++i) {
