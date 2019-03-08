@@ -50,15 +50,15 @@ void TaskManager::Insert(Task * _t)
     //head‚ªnull‚È‚çhead‚É_t‚ð“ü‚ê‚Ä•Ô‚·
     if (mp_head == nullptr) {
         mp_head = _t;
-        mp_last = _t;
         return;
     }
     else {
         Task*t = _t;
         Task*n = mp_head;
-
-        while (n->GetNext()&&t->GetUpdatePrio() > n->GetUpdatePrio()) {
+        bool check = false;
+        while (t->GetUpdatePrio() > n->GetUpdatePrio() ) {
             n = n->GetNext();
+            if (n == mp_last)break;
         }
         
         t->SetNext(n);
@@ -69,9 +69,39 @@ void TaskManager::Insert(Task * _t)
             t->SetPrev(nullptr);
             mp_head = t;
         }
+        
+        n->GetPrev()->SetPrev(t);
         n->SetPrev(t);
     }
 }
 
-
+void TaskManager::Swap(Task * t1, Task * t2)
+{
+    if (t1 == t2 || t1 == nullptr || t2 == nullptr)
+        return;
+    Task *s1 = t1->GetNext();
+    Task *s2 = t2->GetNext();
+    t1->SetNext(s2);
+    if (s2 == nullptr)
+        SetLast(t1);
+    else
+        s2->SetPrev(t1);
+    t2->SetNext(s1);
+    if (s1 == nullptr)
+        SetLast(t2);
+    else
+        s1->SetPrev(t2);
+    s1 = t1->GetPrev();
+    s2 = t2->GetPrev();
+    t1->SetPrev(s2);
+    if (s2 == nullptr)
+        SetHead(t1);
+    else
+        s2->SetNext(t1);
+    t2->SetPrev(s1);
+    if (s1 == nullptr)
+        SetHead(t2);
+    else
+        s1->SetNext(t2);
+}
 
