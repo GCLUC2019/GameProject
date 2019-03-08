@@ -1,29 +1,77 @@
 #include<stdio.h>
 #include<iostream>
-#include<string>
+#include<list>
 
 using namespace std;
 
-int main(){
-	
-
-	float v0, h0, g;
-	float h = 0;
-	int t;
-	v0 = 4.9;
-	g = 9.8;
-	h0 = 29.4;
-
-	for (int t = 0; t < 6; t++){
-		if (h = h0 + v0*t + 0.5* (-g)*t*t){
-			cout << t << "秒の時の高さは" << h << "です"<<"\n";
-		}
-	}
-	
-
-
-	//getchar();
-	system("pause");
-	return 0;
+class Task{
+public:
+	Task*mp_next;
+public:
+	Task();
+	virtual void Draw();
+};
+Task::Task():mp_next(nullptr){
 }
+
+void Task::Draw(){
+	printf("TaskDraw\n");
+}
+
+class TaskManager{
+private:
+	Task*head;
+	static TaskManager*instance;
+public:
+	TaskManager();
+	void DrawAll();
+	void Add(Task*t);
+	void Delete(Task*t);
+
+};
+
+TaskManager::TaskManager(){
+
+}
+
+class A :public Task{
+public:
+	void Draw();
+};
+
+void A::Draw(){
+	printf("ADraw\n");
+}
+
+
+Task*head;
+
+int main(){
+	//タスクを１つ生成
+	head = new Task();
+
+	//３つのタスクを追加
+	for (int i = 0; i < 3; ++i){
+		Task*t = new A();
+		Task*n = head;
+		//末尾のタスクまで進める
+		while (n->mp_next){
+			n = n->mp_next;
+		}
+		n->mp_next = t;
+		//タスクをつなげる
+
+	}
+
+	//headから最後のタスクのDraw関数を呼び出す
+	Task*t = head;
+	while (t){
+		t->Draw();
+		t = t->mp_next;
+	}
+	system(" pause");
+	return 0;
+	
+}
+
 
