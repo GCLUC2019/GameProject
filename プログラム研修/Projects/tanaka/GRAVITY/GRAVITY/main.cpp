@@ -5,10 +5,12 @@
 #define GRAVITY -9.8f
 
 int main() {  
+    for (int i = 0; i < 3; ++i) {
+        TaskManager::Add(new Task(1, 1, 1));
+    }
     TaskManager::Insert(new Task(1, 2, 1));
-    TaskManager::Insert(new Task(1, 3, 1));
-    TaskManager::Insert(new Task(1, 7, 1));
     TaskManager::Insert(new Task(1, 5, 1));
+
     TaskManager::DrawAll();
     ////headからタスクのDraw関数を呼び出す
     //Task*t = head;

@@ -10,7 +10,7 @@ public:
 	void Draw();
 };
 void A::Draw() {
-	printf("ADraw\n");
+	printf("A Draw\n");
 }
 
 
@@ -20,11 +20,14 @@ int main()
 	////タスクを一つ生成
 	//head = new Task();
 
+	TaskManager::AddTask(new A());
+	//TaskManager::AddTask(new Task());
 	////3つのタスクを追加
 	for (int i = 0; i < 5; ++i) {
+		TaskManager::GetInstance()->DrawAll();
 	//	t[i] = TaskManager::Add(Task());
 	}
-
+	
 
 
 	////headから最後のタスクのDraw関数を呼び出す

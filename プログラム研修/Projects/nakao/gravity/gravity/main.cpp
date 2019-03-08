@@ -2,9 +2,9 @@
 #include"Task/Task.h"
 #include"Task/TaskManager.h"
 
-
-
-
+#define T_MN TaskManager
+#define T_AD(n) TaskManager::Add(n)
+#define T_ADF(n) TaskManager::Addf(n)
 
 
 //class A :public Task {
@@ -21,11 +21,11 @@
 int main() {
 	
 	//タスクをひとつ生成
-	TaskManager::Add(new Task());
+	T_AD(new Task());
 	//タスクを追加
 	
 	for (int i = 0; i < 5;++i) {
-		TaskManager::Addf(new Task(i));
+		T_AD(new Task(i));
 	/*
 		Task *t = new A();
 		Task* n = head;
@@ -42,10 +42,18 @@ int main() {
 	
 	
 	//headから最後のタスクまでのDoraw関数を呼び出す
-	TaskManager::DrawAll(TaskManager::GetHead() , true);
+	T_MN::DrawAll(T_MN::GetHead() , true);
 	printf("\n終了\n\n");
-	TaskManager::Swap(TaskManager::GetLast()->GetPrev(), TaskManager::GetHead()->GetNext());
-	 TaskManager::DrawAll(TaskManager::GetHead(), true);
+	//TaskManager::Swap(TaskManager::GetLast()->GetPrev(), TaskManager::GetHead()->GetNext());
+	T_MN::Exclusion(T_MN::GetHead()->GetNext());
+	T_MN::DrawAll(T_MN::GetHead(), true);
+	printf("\n終了\n\n");
+	T_MN::Exclusion(T_MN::GetHead());
+	T_MN::Exclusion(T_MN::GetLast());
+	T_AD(new Task(10));
+	T_ADF(new Task(10));
+	T_MN::DrawAll(T_MN::GetHead()->GetNext()->GetNext(), true);
+
 	//float Gravity = -9.8;
 	//float spd, spd_0, h, h_0;
 	//int time;
@@ -60,6 +68,7 @@ int main() {
 
 	
 	printf("\n終了\n");
+	T_MN::ExclusionDelete();
 	getchar();
 	return 0;
 }
