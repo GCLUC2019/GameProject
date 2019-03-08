@@ -44,6 +44,7 @@ int main() {
 	while (b->s_next) {
 		b = b->s_next;
 		TaskManager::GetInstance()->Delete(b->s_point);
+
 	}
 	
 	//headから最後のタスクのDraw関数を呼び出す
