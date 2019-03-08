@@ -62,21 +62,27 @@ int main() {
 	new Task(eTaskIdPlayer, 66);
 	new Task(eTaskIdPlayer, 22);
 
+
+	
+
 	TaskManager::GetInstance()->Sort();//ソートする
 	TaskManager::GetInstance()->DrawAll();
 	TaskManager::GetInstance()->UpdateAll();
 	TaskManager::GetInstance()->CollisionAll();
 
 
-	Task** players = TaskManager::GetInstance()->FindTaskArray(eTaskIdPlayer);
 	
-	
+	/*
 	//プレイヤーだけ削除
-	for (int i = 0; players[i] != nullptr;i++) {
-		players[i]->Delete();
+	Task** players = TaskManager::GetInstance()->FindTaskArray(eTaskIdPlayer);
+	if (players != nullptr) {
+		for (int i = 0; players[i] != nullptr; i++) {
+			players[i]->Delete();
+		}
+		free(players);//配列の情報を破棄
 	}
-	free(players);//配列の情報を破棄
-	
+	*/
+	//TaskManager::GetInstance()->DeleteAllTask();
 
 
 	//タスク検索

@@ -45,6 +45,8 @@ Task** TaskManager::FindTaskArray(int _task_id)
 	
 	//該当タスクの個数を調べる
 	Task* t = GetHead();
+	if (t == nullptr) return nullptr;
+
 	while (true) {
 		if (t->GetTaskId() == _task_id) task_num++;
 		t = t->GetNextTask();
@@ -108,35 +110,61 @@ void TaskManager::DeleteTask(Task * _task)
 	}
 }
 
+void TaskManager::DeleteAllTask()
+{
+	Task* t = GetHead();
+	while (true) {
+		if (t == nullptr) break;
+		Task* t_next = t->GetNextTask();//UpdateでDeleteが実行されても大丈夫なように
+		t->Delete();
+		t = t_next;
+	}
+}
+
+void TaskManager::CheckDeleteAll()
+{
+	Task* t = GetHead();
+	while (true) {
+		if (t == nullptr) break;
+		Task* t_next = t->GetNextTask();//UpdateでDeleteが実行されても大丈夫なように
+		if(t->GetIsDelete() == true) t->Delete();
+		t = t_next;
+	}
+}
+
 void TaskManager::UpdateAll()
 {
 	Task* t = GetHead();
 	while (true) {
-		t->Update();
-		t = t->GetNextTask();
 		if (t == nullptr) break;
+		Task* t_next = t->GetNextTask();//UpdateでDeleteが実行されても大丈夫なように
+		t->Update();
+		t = t_next;
 	}
 }
 
 void TaskManager::CollisionAll()
 {
 	Task* t = GetHead();
+
 	while (true) {
+		if (t == nullptr) break;
+		Task* t_next = t->GetNextTask();//CollisionCheckでDeleteが実行されても大丈夫なように
 		Task* t_c = GetHead();
 		while (true) {
-
+			if (t_c == nullptr) break;
+			Task* t_c_next = t_c->GetNextTask();//CollisionCheckでDeleteが実行されても大丈夫なように
 			//同じインスタンス同士なら順番を飛ばす
 			if (t == t_c) {
-				t_c = t_c->GetNextTask();
-				break;
+				t_c = t_c_next;
+				if (t_c == nullptr) break;
+				continue;
 			}
 
 			t->CollisionCheck(t_c);
-			t_c = t_c->GetNextTask();
-			if (t_c == nullptr) break;
+			t_c = t_c_next;
 		}
-		t = t->GetNextTask();
-		if (t == nullptr) break;
+		t = t_next;
 	}
 	
 }
@@ -145,9 +173,10 @@ void TaskManager::DrawAll()
 {
 	Task* t = GetHead();
 	while (true) {
-		t->Draw();
-		t = t->GetNextTask();
 		if (t == nullptr) break;
+		Task* t_next = t->GetNextTask();//DrawでDeleteが実行されても大丈夫なように
+		t->Draw();
+		t = t_next;
 	}
 }
 
@@ -180,11 +209,11 @@ void TaskManager::Sort()
 	//ここで宣言してるので取り扱い注意
 	int i = 0;
 	while (true) {
+		if (t == nullptr) break;
 		task_array[i] = t;
 		task_dp_array[i] = t->GetDrawPriority();
 		t = t->GetNextTask();
 		i++;
-		if (t == nullptr) break;
 	}
 
 	//ソート作業する(バブルソート)
