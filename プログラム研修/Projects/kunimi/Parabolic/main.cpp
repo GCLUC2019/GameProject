@@ -1,6 +1,7 @@
 //放物線シミュレーション
 #include <stdio.h>
 #include "Task.h"
+#include "TaskManager.h"
 
 class A : public Task  {
 private:
@@ -13,20 +14,18 @@ void A::Draw() {
 }
 
 
-
-
-int main() 
+int main()
 {
-	Task::LinkDraw(new A(), 5);
+	//Task::LinkDraw(new A(), 5);
 	////タスクを一つ生成
 	//head = new Task();
 
 	////3つのタスクを追加
-	//for (int i = 0; i < 5; ++i) {
-	//	
-	//	
-	//	
-	//	
+	for (int i = 0; i < 5; ++i) {
+	//	t[i] = TaskManager::Add(Task());
+	}
+
+
 
 	////headから最後のタスクのDraw関数を呼び出す
 	//Task *t = head;
