@@ -97,6 +97,80 @@ void TaskManager::Swap(Task * t1, Task * t2)
 		s1->SetNext(t2);
 }
 
+void TaskManager::TaskSort(float _comp)
+{
+
+}
+
+void TaskManager::Insert(Task * _t)
+{
+	//head‚ªnull‚È‚çhead‚É_t‚ğ“ü‚ê‚Ä•Ô‚·
+	if (mp_head == nullptr) {
+		mp_head = _t;
+		mp_last = _t;
+		return;
+	}
+	else {
+		Task*t = _t;
+		Task*n = mp_head;
+		bool check = false;
+		while (t->m_updateprio > n->m_updateprio) {
+			if (n == mp_last) {
+				//mp_last = t;
+				check = true;
+				break;
+			}
+			if (n->GetNext())
+				n = n->GetNext();
+			else
+				break;
+		}
+		ReLink(check, t, n);
+
+		/*t->SetNext(n);
+		if (n->GetPrev()) {
+		t->SetPrev(n->GetPrev());
+		}
+		else {
+		t->SetPrev(nullptr);
+		mp_head = t;
+		}
+
+		n->GetPrev()->SetPrev(t);
+		n->SetPrev(t);*/
+	}
+}
+
+void TaskManager::ReLink(bool _fb, Task*_t1, Task * _t2)
+{
+	Task*t1 = _t1;
+	Task*t2 = _t2;
+	//‘O‚É’Ç‰Á‚µ‚Ä‚Â‚È‚¬‚È‚¨‚·
+	if (_fb == false) {
+		t1->SetNext(t2);
+		if (t2->GetPrev() == nullptr) {
+			t1->SetPrev(nullptr);
+			mp_head = t1;
+		}
+		else
+			t1->SetPrev(t2->GetPrev());
+
+		t2->SetPrev(t1);
+	}
+	//Œã‚ë‚É’Ç‰Á‚µ‚Ä‚Â‚È‚¬‚È‚¨‚·
+	if (_fb == true) {
+		t1->SetPrev(t2);
+		if (t2->GetNext() == nullptr) {
+			t1->SetNext(nullptr);
+			mp_last = t1;
+		}
+		else
+			t1->SetNext(t2->GetNext());
+
+		t2->SetNext(t1);
+	}
+}
+
 TaskManager * TaskManager::GetInstance()
 {
 	if (mp_instance == nullptr)mp_instance = new TaskManager();
