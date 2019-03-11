@@ -1,31 +1,3 @@
-﻿2019/03/11 15:56:33 にビルドを開始しました。
-     1>ノード 2 上のプロジェクト "C:\Users\akira\Desktop\GC2019 GC\GameProject\Fukuyama\福山チーム\セーサク\GameProgramming\GameProgramming.vcxproj" (Build ターゲット)。
-     1>Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\akira\Desktop\GC2019 GC\GameProject\Fukuyama\福山チーム\セーサク\Debug\GameProgramming.exe" /INCREMENTAL /NOLOGO glew32.lib glfw3.lib glfw3dll.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\akira\Desktop\GC2019 GC\GameProject\Fukuyama\福山チーム\セーサク\Debug\GameProgramming.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\akira\Desktop\GC2019 GC\GameProject\Fukuyama\福山チーム\セーサク\Debug\GameProgramming.lib" /MACHINE:X86 Debug\CBoss.obj
-         Debug\CBullet.obj
-         Debug\CCollider.obj
-         Debug\CEnemyTank.obj
-         Debug\CExplosion.obj
-         Debug\CFPS.obj
-         Debug\CHpBar.obj
-         Debug\CMain.obj
-         Debug\CMatrix33.obj
-         Debug\CPlayerTank.obj
-         Debug\CRectangle.obj
-         Debug\CSceneGame.obj
-         Debug\CTank.obj
-         Debug\CTask.obj
-         Debug\CTexture.obj
-         Debug\CVector2.obj
-         Debug\main.obj
-         Debug\Task.obj
-         Debug\TaskLinker.obj
-         Debug\TaskManager.obj
-     1>LINK : warning LNK4098: defaultlib 'MSVCRT' は他のライブラリの使用と競合しています。/NODEFAULTLIB:library を使用してください。
-     1>CSceneGame.obj : error LNK2001: 外部シンボル ""class CBoss * Boss" (?Boss@@3PAVCBoss@@A)" は未解決です。
-     1>C:\Users\akira\Desktop\GC2019 GC\GameProject\Fukuyama\福山チーム\セーサク\Debug\GameProgramming.exe : fatal error LNK1120: 1 件の未解決の外部参照
-     1>プロジェクト "C:\Users\akira\Desktop\GC2019 GC\GameProject\Fukuyama\福山チーム\セーサク\GameProgramming\GameProgramming.vcxproj" (Build ターゲット) のビルドが終了しました -- 失敗。
-
-ビルドに失敗しました。
-
-経過時間 00:00:00.45
+﻿LINK : warning LNK4098: defaultlib 'MSVCRT' は他のライブラリの使用と競合しています。/NODEFAULTLIB:library を使用してください。
+CSceneGame.obj : error LNK2001: 外部シンボル ""class CBoss * Boss" (?Boss@@3PAVCBoss@@A)" は未解決です。
+C:\Users\akira\Desktop\GC2019 GC\GameProject\Fukuyama\福山チーム\セーサク\Debug\GameProgramming.exe : fatal error LNK1120: 1 件の未解決の外部参照
