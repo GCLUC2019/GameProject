@@ -189,7 +189,7 @@ void CCharacterEnemy::CharacterBeforeCollisionCheck()
 	CCharacterPlayer* p = dynamic_cast<CCharacterPlayer*>(TaskManager::GetInstance()->FindTask(eTaskIdPlayer));
 	p_pos = p->GetPos();
 	CVector2D l_vec = CVector2D(p_pos.x - m_pos.x, p_pos.z - m_pos.z);
-	if (l_vec.Length() < 10) {
+	if (l_vec.Length() < 150) {
 		m_attack_chance = true;
 	}
 	else m_attack_chance = false;
