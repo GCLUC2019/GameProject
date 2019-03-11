@@ -7,16 +7,22 @@
 #define T_ADF(n) TaskManager::Addf(n)
 
 
-//class A :public Task {
-//private:
-//
-//public:
-//	void Draw();
-//};
-//
-//void A::Draw() {
-//	printf("ADraw\n");
-//}
+class A :public Task {
+private:
+
+public:
+	A();
+	void Draw();
+};
+
+A::A():Task()
+{
+	
+}
+
+void A::Draw() {
+	printf("A_%d\n",m_S_Weigh);
+}
 
 int main() {
 	
@@ -25,7 +31,7 @@ int main() {
 	//タスクを追加
 	
 	for (int i = 0; i < 5;++i) {
-		T_AD(new Task(i));
+		T_AD(new Task(i, eBack));
 	/*
 		Task *t = new A();
 		Task* n = head;
@@ -50,7 +56,7 @@ int main() {
 	printf("\n終了\n\n");
 	T_MN::Exclusion(T_MN::GetHead());
 	T_MN::Exclusion(T_MN::GetLast());
-	T_AD(new Task(10));
+	T_AD(new A());
 	T_ADF(new Task(10));
 	T_MN::DrawAll(T_MN::GetHead()->GetNext()->GetNext(), true);
 
