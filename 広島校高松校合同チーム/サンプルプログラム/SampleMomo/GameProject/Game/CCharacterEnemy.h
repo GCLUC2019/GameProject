@@ -46,7 +46,8 @@ private:
 	int m_AI_cnt;            //状態が変化するまでのカウント
 	bool is_damage;          //ダメージを受けていいかどうかのフラグ
 	bool m_attack_chance;    //攻撃が当たる距離かのフラグ
-	int attack_cnt;   //一時的に利用する攻撃のカウント(当たり判定が完成するまで)
+	CVector3D p_pos;		 //プレイヤーの座標を記憶
+	CVector2D p_vec;         //プレイヤー方向へのベクトル
 public:
 	CCharacterEnemy();
 	~CCharacterEnemy();
