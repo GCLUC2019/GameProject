@@ -119,6 +119,17 @@ void TaskManager::CheckDeleteAll()
 	}
 }
 
+void TaskManager::BeforeUpdateAll()
+{
+	Task* t = GetHead();
+	while (true) {
+		if (t == nullptr) break;
+		Task* t_next = t->GetNextTask();
+		t->BeforeUpdate();
+		t = t_next;
+	}
+}
+
 void TaskManager::UpdateAll()
 {
 	Task* t = GetHead();
@@ -126,6 +137,28 @@ void TaskManager::UpdateAll()
 		if (t == nullptr) break;
 		Task* t_next = t->GetNextTask();//Update‚ÅDelete‚ªŽÀs‚³‚ê‚Ä‚à‘åä•v‚È‚æ‚¤‚É
 		t->Update();
+		t = t_next;
+	}
+}
+
+void TaskManager::AfterUpdateAll()
+{
+	Task* t = GetHead();
+	while (true) {
+		if (t == nullptr) break;
+		Task* t_next = t->GetNextTask();
+		t->AfterUpdate();
+		t = t_next;
+	}
+}
+
+void TaskManager::BeforeCollisionAll()
+{
+	Task* t = GetHead();
+	while (true) {
+		if (t == nullptr) break;
+		Task* t_next = t->GetNextTask();
+		t->BeforeCollisionCheck();
 		t = t_next;
 	}
 }

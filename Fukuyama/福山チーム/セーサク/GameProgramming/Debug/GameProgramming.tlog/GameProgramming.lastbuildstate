@@ -1,2 +1,6 @@
 #TargetFrameworkVersion=v4.0:PlatformToolSet=v120:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit
+<<<<<<< HEAD
 Debug|Win32|C:\Users\Kamata\Desktop\GCLUC2019\GameProject\Fukuyama\福山チーム\セーサク\|
+=======
+Debug|Win32|C:\Users\maeokahiroki\Desktop\GCLUC2019\GameProject\Fukuyama\福山チーム\セーサク\|
+>>>>>>> 2de4d0cee4f21d4a4249fab9ba8f41e6e5b575fc

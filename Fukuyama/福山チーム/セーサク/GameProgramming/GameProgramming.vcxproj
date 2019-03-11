@@ -84,6 +84,7 @@
     <ClCompile Include="CEnemy1.cpp" />
     <ClCompile Include="CEnemyTank.cpp" />
     <ClCompile Include="CExplosion.cpp" />
+    <ClCompile Include="CFPS.cpp" />
     <ClCompile Include="CHpBar.cpp" />
     <ClCompile Include="CMain.cpp" />
     <ClCompile Include="CMatrix33.cpp" />
@@ -95,6 +96,9 @@
     <ClCompile Include="CTexture.cpp" />
     <ClCompile Include="CVector2.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Task.cpp" />
+    <ClCompile Include="TaskLinker.cpp" />
+    <ClCompile Include="TaskManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CBullet.h" />
@@ -102,6 +106,7 @@
     <ClInclude Include="CEnemy1.h" />
     <ClInclude Include="CEnemyTank.h" />
     <ClInclude Include="CExplosion.h" />
+    <ClInclude Include="CFPS.h" />
     <ClInclude Include="CHpBar.h" />
     <ClInclude Include="CPlayerTank.h" />
     <ClInclude Include="CScene.h" />
@@ -113,6 +118,10 @@
     <ClInclude Include="CTexture.h" />
     <ClInclude Include="CVector2.h" />
     <ClInclude Include="CRectangle.h" />
+    <ClInclude Include="GID.h" />
+    <ClInclude Include="Task.h" />
+    <ClInclude Include="TaskLinker.h" />
+    <ClInclude Include="TaskManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

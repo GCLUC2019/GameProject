@@ -2,6 +2,7 @@
 #include "../GameProject/Game/Character/EnemyBase/EnemyBase.h"
 
 /*
+’S“–
   ”ÔŠ@Boss.cppp,h 
 */
 class BossHead :public EnemyBase{

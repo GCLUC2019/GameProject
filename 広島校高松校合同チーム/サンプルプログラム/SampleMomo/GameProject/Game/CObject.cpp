@@ -10,7 +10,19 @@ CObject::~CObject()
 {
 }
 
+void CObject::BeforeUpdate()
+{
+}
+
+void CObject::BeforeCollisionCheck()
+{
+}
+
 void CObject::Update()
+{
+}
+
+void CObject::AfterUpdate()
 {
 }
 

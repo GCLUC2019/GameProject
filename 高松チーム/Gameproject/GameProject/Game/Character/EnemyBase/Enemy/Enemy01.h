@@ -3,6 +3,15 @@
 /*
 ìcíÜÅ@
 */
+enum {
+    eMove,
+    eSearch,
+    eAttack,
+    eDamage,
+    eAnimMove,
+    eAnimAttack,
+    eAnimDamage,
+};
 class Enemy01: public EnemyBase{
 private:
     CVector2D m_vec;

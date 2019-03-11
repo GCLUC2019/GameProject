@@ -24,9 +24,19 @@ void MainLoop(void) {
 
 	//削除フラグ確認
 	TaskManager::GetInstance()->CheckDeleteAll();
+	
+	//更新(先に呼ばれるもの)
+	TaskManager::GetInstance()->BeforeUpdateAll();
 
 	//更新
 	TaskManager::GetInstance()->UpdateAll();
+
+	//更新(後から呼ばれるもの)
+	TaskManager::GetInstance()->AfterUpdateAll();
+
+	//当たり判定前更新
+	TaskManager::GetInstance()->BeforeCollisionAll();
+
 
 	//当たり判定チェック
 	TaskManager::GetInstance()->CollisionAll();
@@ -61,7 +71,7 @@ void Init(void)
 	//ボタンの設定
 	CInput::Init();
 	CInput::Init();
-	CInput::SetButton(0, CInput::eButton1, 'Z');
+	CInput::SetButton(0, CInput::eButton1, VK_SPACE);
 	CInput::SetButton(0, CInput::eButton2, 'X');
 	CInput::SetButton(0, CInput::eButton3, 'C');
 	CInput::SetButton(0, CInput::eButton4, 'V');
