@@ -1,6 +1,7 @@
 #pragma once
 #include "../../stdafx.h"
 #include "../Character/Anim/AnimData.h"
+#include "../Character/Anim/AnimDataPlayer.h"
 
 class Resource {
 public:
@@ -16,7 +17,8 @@ public:
 		@param b	[in] ì«Ç›çûÇ›ÇΩÇ¢ÉtÉ@ÉCÉãÇÃèÍèä
 		*/
 
-		ADD_RESOURCE("Player", CImage::LoadImage("../data/Image/chara_gauge_face.png"));
+		
+		ADD_RESOURCE("Player", CAnimImage::LoadImage("../data/Image/motion_player.png", PlayerAnimData, 512,512));
 		ADD_RESOURCE("Boss", CImage::LoadImage("../data/Image/moton_jaryu.png"));
 		ADD_RESOURCE("GameClear", CImage::LoadImage("../data/Image/push start.png"));
 		ADD_RESOURCE("Enemy01", CAnimImage::LoadImage("../data/Image/zako_chochin_motion.png", Enemy01AnimData,512,512));
