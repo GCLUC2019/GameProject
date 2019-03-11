@@ -1,7 +1,8 @@
 #include "Player.h"
 #include "../GameProject/Game/Resource/Resource.h"
-#define GRAVITY -4
-#define DEP_N 720
+#define GRAVITY -4//d—Í
+#define DEP_N 720//d—Í
+#define JUMP_SPD 50
 
 enum PlayerState
 {
@@ -15,7 +16,7 @@ enum PlayerState
 	eAttack04,	//
 };
 Player::Player() : CharacterBase(ePlayer),
-m_Spd(2.0f),
+m_Spd(4.0f),
 m_Squat_flg(false),
 m_Attack_flg(false),
 m_Jump_flg(false),
@@ -30,23 +31,25 @@ m_Jumpvec(0)
 void Player::Move()
 {
 	
-	
-	if (CInput::GetState(0, CInput::eHold, CInput::eButton1)) {
-		m_Squat_flg = true;
-	}
-	else
-		m_Squat_flg = false;
+	if (m_Jump_flg != true) {
+		if (CInput::GetState(0, CInput::eHold, CInput::eButton1)) {
+			m_Squat_flg = true;
+		}
+		else
+			m_Squat_flg = false;
 
 
-	if (CInput::GetState(0, CInput::eHold, CInput::eButton2)) {
-		m_Attack_flg = true;
+		if (CInput::GetState(0, CInput::eHold, CInput::eButton2)) {
+			m_Attack_flg = true;
+		}
+		else
+			m_Attack_flg = false;
+		if (CInput::GetState(0, CInput::eHold, CInput::eButton3)) {
+			m_Jump_flg = true;
+		}
 	}
-	else
-		m_Attack_flg = false;
-	if (CInput::GetState(0, CInput::eHold, CInput::eButton3)) {
-		m_Jump_flg = true;
-	}
-
+	else 
+		Jump();
 	if (m_Squat_flg || m_Attack_flg)
 		return;
 
@@ -68,7 +71,15 @@ void Player::Move()
 
 void Player::Jump()
 {
-
+	static float time = 1;
+	m_Jumpvec = 0 + JUMP_SPD * time + GRAVITY * (time*time) / 2;
+	m_Jumpvec *= -1;
+	time += 0.5f;
+	if (m_Jumpvec > 0) {
+		time = 0;
+		m_Jumpvec = 0;
+		m_Jump_flg = false;
+	}
 }
 
 
@@ -84,7 +95,11 @@ void Player::Update()
 
 void Player::Draw()
 {
-	Utility::DrawQuad(CVector2D(0,720/2), CVector2D(1280, 720), CVector4D(1.0f, 0, 0, 1));
+#ifdef _DEBUG
+	Utility::DrawQuad(CVector2D(0, 720 / 2), CVector2D(1280, 720), CVector4D(1.0f, 0, 0, 1));
+#endif // _DEBUG
+
+	
 #define SAIZE 150
 	m_img.SetSize(SAIZE *m_Depth, SAIZE *m_Depth);
 	m_img.SetCenter(SAIZE * m_Depth / 2, SAIZE * m_Depth / 2);
