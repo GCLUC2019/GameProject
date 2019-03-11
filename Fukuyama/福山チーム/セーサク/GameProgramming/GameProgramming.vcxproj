@@ -84,6 +84,7 @@
     <ClCompile Include="CBoss.cpp" />
     <ClCompile Include="CBullet.cpp" />
     <ClCompile Include="CCollider.cpp" />
+    <ClCompile Include="CEnemy1.cpp" />
     <ClCompile Include="CEnemyTank.cpp" />
     <ClCompile Include="CExplosion.cpp" />
     <ClCompile Include="CFPS.cpp" />
@@ -108,6 +109,7 @@
     <ClInclude Include="CBoss.h" />
     <ClInclude Include="CBullet.h" />
     <ClInclude Include="CCollider.h" />
+    <ClInclude Include="CEnemy1.h" />
     <ClInclude Include="CEnemyTank.h" />
     <ClInclude Include="CExplosion.h" />
     <ClInclude Include="CFPS.h" />
