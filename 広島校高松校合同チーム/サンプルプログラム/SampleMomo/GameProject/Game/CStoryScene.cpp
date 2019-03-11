@@ -1,6 +1,6 @@
 #include "CStoryScene.h"
 
-CStoryScene::CStoryScene()
+CStoryScene::CStoryScene() : CObject(0, 0)
 {
 }
 
