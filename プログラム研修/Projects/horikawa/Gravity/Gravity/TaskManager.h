@@ -1,6 +1,19 @@
 #pragma once
 class Task;
 
+
+//コメントを書きましょう
+//privateに大事な情報はしまう
+//コンストラクタでタイプと優先度を与えてやる
+//先頭から調べていき優先度が低くなるところへ挿入
+//フレンドクラスを利用して特定のオブジェクトには使用させる   friend class Task
+//friend class TaskManager
+//
+
+
+
+
+
 class TaskManager {
 public:
 	static TaskManager* mp_instance;
