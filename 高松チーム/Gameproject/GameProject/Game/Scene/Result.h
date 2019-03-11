@@ -3,7 +3,7 @@
 	çëå©Å@class GameClear
 */
 #include "../../Base/Task.h"
-#include "../GameProject/Game/Resource/Resource.h"Å@
+#include "../Resource/Resource.h"Å@
 
 class GameClear : public Task {
 private:
