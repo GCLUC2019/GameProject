@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "../GameProject/Game/Resource/Resource.h"
+#include <stdio.h>
 #define GRAVITY -4//重力
 #define DEP_N 720//重力
 #define JUMP_SPD 50
@@ -32,20 +33,24 @@ void Player::Move()
 {
 	
 	if (m_Jump_flg != true) {
-		if (CInput::GetState(0, CInput::eHold, CInput::eButton1)) {
+		if (CInput::GetState(0, CInput::eHold, CInput::eButton1) && m_Jump_flg == false) {
 			m_Squat_flg = true;
+			m_img.SetAng(DtoR(180));
+			m_State = eSquat;
 		}
 		else
 			m_Squat_flg = false;
 
 
-		if (CInput::GetState(0, CInput::eHold, CInput::eButton2)) {
+		if (CInput::GetState(0, CInput::ePush, CInput::eButton2) && m_Attack_flg == false) {
 			m_Attack_flg = true;
+			m_img.SetAng(DtoR(90));
+			m_State = eAttack01;
 		}
-		else
-			m_Attack_flg = false;
+		
 		if (CInput::GetState(0, CInput::eHold, CInput::eButton3)) {
 			m_Jump_flg = true;
+			m_State = eJump;
 		}
 	}
 	else 
@@ -56,16 +61,20 @@ void Player::Move()
 	if (CInput::GetState(0, CInput::eHold, CInput::eUp)) {
 		m_pos.y -= m_Spd;
 		m_Depth = m_pos.y / DEP_N;
+		m_State = eMove;
 	}
 	if (CInput::GetState(0, CInput::eHold, CInput::eDown)) {
 		m_pos.y += m_Spd;
 		m_Depth = m_pos.y / DEP_N;
+		m_State = eMove;
 	}
 	if (CInput::GetState(0, CInput::eHold, CInput::eRight)) {
 		m_pos.x += m_Spd;
+		m_State = eMove;
 	}
 	if (CInput::GetState(0, CInput::eHold, CInput::eLeft)) {
 		m_pos.x -= m_Spd;
+		m_State = eMove;
 	}
 }
 
@@ -82,11 +91,27 @@ void Player::Jump()
 	}
 }
 
+void Player::Attack()
+{
+	static int k = 120;
+	k--;
+	m_img.SetAng(DtoR(90));
+	if (k <= 0 || m_Squat_flg) {
+		k = 120;
+		m_Attack_flg = false;
+	}
+}
+
 
 void Player::Update()
 {
+	if (m_Squat_flg == false && m_Attack_flg == false && m_Jump_flg == false)
+		m_State = eIdol;
+	m_img.SetAng(DtoR(0));
 	m_pos_old = m_pos;
 	Move();
+	if (m_Attack_flg)
+		Attack();
 	if (m_pos.x < 0 || m_pos.x > 1280)
 		m_pos.x = m_pos_old.x;
 	if (m_pos.y < 720 / 2 || m_pos.y > 720)
@@ -97,6 +122,37 @@ void Player::Draw()
 {
 #ifdef _DEBUG
 	Utility::DrawQuad(CVector2D(0, 720 / 2), CVector2D(1280, 720), CVector4D(1.0f, 0, 0, 1));
+	/*switch (m_State)//状態デバック表示
+	{
+	case eIdol:
+		printf("eIdol");
+		break;
+	case	eMove:
+		printf("eMove");
+		break;
+	case	eJump:
+		printf("eJump");
+		break;
+	case	eSquat:	
+		printf("eSquat");
+		break;
+	case	eAttack01:	
+		printf("eAttack01");
+		break;
+	case	eAttack02:	
+		printf("eAttack02");
+		break;
+	case	eAttack03:	
+		printf("eAttack03");
+		break;
+	case	eAttack04:	
+		printf("eAttack04");
+		break;
+	default:
+		printf("null");
+		break;
+	}*/
+	
 #endif // _DEBUG
 
 	

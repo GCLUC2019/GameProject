@@ -4,8 +4,8 @@
 作成　中尾	
 　操作　暫定
  十字　	:移動
- zキー	:しゃがみ	（まだ）
- xキー	:攻撃　　	（まだ）
+ zキー	:しゃがみ	（画像が逆さ）
+ xキー	:攻撃　　	（画像が横）
  cキー	:ジャンプ
 */
 class Player : public CharacterBase {
@@ -29,6 +29,7 @@ public:
 	@brief ジャンプ制御関数
 	*/
 	void Jump();
+	void Attack();
 	void Update();
 	void Draw();
 };
