@@ -1,7 +1,9 @@
 #pragma once
 #include "../GameProject/Game/Character/EnemyBase/EnemyBase.h"
 
-
+/*
+  ”ÔŠ@Boss.cppp,h 
+*/
 class BossHead :public EnemyBase{
 protected:
 
