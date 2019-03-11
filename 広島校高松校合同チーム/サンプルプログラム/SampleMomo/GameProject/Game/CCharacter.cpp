@@ -28,17 +28,14 @@ void CCharacter::CollisionCheck(Task * _collision_task)
 
 	if (CollisionCheck3D(CVector3D(m_pos.x,m_pos_old.y,m_pos_old.z),m_rads,ob_pos,ob_rads)) {
 		m_pos.x = m_pos_old.x;
-		printf("‚Ô‚Â‚©‚Á‚½\n");
 	};
 
 	if (CollisionCheck3D(CVector3D(m_pos_old.x, m_pos.y, m_pos_old.z), m_rads, ob_pos, ob_rads)) {
 		m_pos.y = m_pos_old.y;
-		printf("‚Ô‚Â‚©‚Á‚½\n");
 	};
 
 	if (CollisionCheck3D(CVector3D(m_pos_old.x, m_pos_old.y, m_pos.z), m_rads, ob_pos, ob_rads)) {
 		m_pos.z = m_pos_old.z;
-		printf("‚Ô‚Â‚©‚Á‚½\n");
 	};
 
 	CollisionCheckCharacter(_collision_task);
