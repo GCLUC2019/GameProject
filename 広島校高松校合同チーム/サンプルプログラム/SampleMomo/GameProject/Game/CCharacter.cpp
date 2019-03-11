@@ -104,6 +104,7 @@ void CCharacter::DrawShadow()
 
 void CCharacter::DrawAnimImage()
 {
+	if (m_anim_image_p[m_play_anim_image] == nullptr) return;
 	m_anim_image_p[m_play_anim_image]->SetFlipH(m_is_flip);
 	m_anim_image_p[m_play_anim_image]->SetSize(m_size.x, m_size.y);
 	CVector2D draw_pos = CVector2D(m_pos.x, m_pos.y + m_pos.z) - GetScroll();
