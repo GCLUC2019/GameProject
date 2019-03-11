@@ -1,6 +1,6 @@
 #include "CCharacter.h"
 #include "../Global.h"
-
+#include "CGameScene.h"
 
 CCharacter::CCharacter(int _task_id, int _draw_priority) : CObject(_task_id, _draw_priority)
 {
@@ -141,4 +141,12 @@ void CCharacter::CollisionCheck(Task * _collision_task)
 
 void CCharacter::CollisionCheckCharacter(Task * _collision_task)
 {
+}
+
+void CCharacter::MoveLimit()
+{
+	//とりあえずテスト用なので
+	//CVector3D limit_pos = CGameScene::GetInstance()->GetGameSceneLimitPos();
+	//if (m_pos.z < m_size.y / 2.0) m_pos.z = m_size.y / 2.0;
+	//if (m_pos.z > limit_pos.z - m_size.y / 2.0) m_pos.z = limit_pos.z - m_size.y / 2.0;
 }

@@ -17,9 +17,6 @@
     <ClCompile Include="Game\CCharacter.cpp">
       <Filter>Game\Object\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Game\CObjectImage.cpp">
-      <Filter>Game\Object</Filter>
-    </ClCompile>
     <ClCompile Include="Task\Task.cpp">
       <Filter>Task</Filter>
     </ClCompile>
@@ -35,6 +32,15 @@
     <ClCompile Include="Game\CStoryScene.cpp">
       <Filter>Game\Object\Interface</Filter>
     </ClCompile>
+    <ClCompile Include="Game\CGameScene.cpp">
+      <Filter>Game\Object\GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CLoadResorce.cpp">
+      <Filter>Game\Object\LoadResorce</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CObjectImage.cpp">
+      <Filter>Game\Object\CObjectImage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Global.h" />
@@ -45,17 +51,11 @@
     <ClInclude Include="Game\CObject.h">
       <Filter>Game\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Game\CCharacterPlayer.h">
-      <Filter>Game\Object\Character</Filter>
-    </ClInclude>
     <ClInclude Include="Game\CCharacterEnemy.h">
       <Filter>Game\Object\Character</Filter>
     </ClInclude>
     <ClInclude Include="Game\CCharacter.h">
       <Filter>Game\Object\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\CObjectImage.h">
-      <Filter>Game\Object</Filter>
     </ClInclude>
     <ClInclude Include="Task\Task.h">
       <Filter>Task</Filter>
@@ -71,6 +71,18 @@
     </ClInclude>
     <ClInclude Include="Game\CStoryScene.h">
       <Filter>Game\Object\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CGameScene.h">
+      <Filter>Game\Object\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CLoadResorce.h">
+      <Filter>Game\Object\LoadResorce</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CObjectImage.h">
+      <Filter>Game\Object\CObjectImage</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CCharacterPlayer.h">
+      <Filter>Game\Object\Character</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +103,15 @@
     </Filter>
     <Filter Include="Game\Object\Interface">
       <UniqueIdentifier>{a985dae5-6772-441f-80b2-20c635a9fa37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\GameScene">
+      <UniqueIdentifier>{6c3009a0-4c60-4ab3-bcf7-e4d57066d353}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\LoadResorce">
+      <UniqueIdentifier>{c81dd1c0-1d0f-47d7-9883-7a2f6b04e664}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\CObjectImage">
+      <UniqueIdentifier>{7f4cc649-4573-4ac9-ac7d-8c7d22085daf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

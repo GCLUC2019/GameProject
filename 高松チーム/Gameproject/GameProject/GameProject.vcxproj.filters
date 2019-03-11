@@ -38,6 +38,18 @@
     <ClCompile Include="Game\Character\EnemyBase\Enemy\Enemy05.cpp">
       <Filter>Game\Character\EnemyBase\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Character\Effect\PlayerEffect.cpp">
+      <Filter>Game\Character\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Character\Effect\EnemyEffect.cpp">
+      <Filter>Game\Character\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Character\Effect\BossEffect.cpp">
+      <Filter>Game\Character\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Character\EnemyBase\Enemy\Enemy02.cpp">
+      <Filter>Game\Character\EnemyBase\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GID.h" />
@@ -79,6 +91,18 @@
     <ClInclude Include="Game\Character\EnemyBase\Enemy\Enemy05.h">
       <Filter>Game\Character\EnemyBase\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Character\Effect\PlayerEffect.h">
+      <Filter>Game\Character\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Character\Effect\EnemyEffect.h">
+      <Filter>Game\Character\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Character\Effect\BossEffect.h">
+      <Filter>Game\Character\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Character\EnemyBase\Enemy\Enemy02.h">
+      <Filter>Game\Character\EnemyBase\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game">
@@ -110,6 +134,9 @@
     </Filter>
     <Filter Include="Game\Scene">
       <UniqueIdentifier>{3f4fbc74-5a7d-4a17-bff3-a0f66a4a7a17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Character\Effect">
+      <UniqueIdentifier>{3b613b0f-e734-4dcf-ac24-8627318815d6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
