@@ -1,5 +1,6 @@
 #pragma once
 #include "../EnemyBase.h"
+#include "../../Player.h"
 /*
 ìcíÜÅ@
 */
@@ -12,7 +13,6 @@ private:
         eAttack,
         eDamage,
     };
-    CVector2D m_vec;
     int m_state;
     bool m_search_flg;
     bool m_move_dir_flg;
@@ -22,5 +22,6 @@ public:
 	void Draw();
     void Move();
     void Search();
-    void PlayerCheck();
+    void Attack();
+    bool PlayerCheck(Task*p, Task*e);
 };

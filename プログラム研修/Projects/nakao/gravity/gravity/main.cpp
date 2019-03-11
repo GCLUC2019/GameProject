@@ -57,7 +57,7 @@ int main() {
 	T_MN::Exclusion(T_MN::GetHead());
 	T_MN::Exclusion(T_MN::GetLast());
 	T_AD(new A());
-	T_ADF(new Task(10));
+	//T_ADF(new Task(10));
 	T_MN::DrawAll(T_MN::GetHead()->GetNext()->GetNext(), true);
 
 	//float Gravity = -9.8;

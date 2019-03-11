@@ -1,7 +1,6 @@
 #include "Enemy01.h"
 #include "../GameProject/Game/Character/Player.h"
 #define MOVE_SPEED 3.0f
-#define IMAGE_SIZE 100
 Enemy01::Enemy01() : EnemyBase(eEnemy01)
 {
     m_img = COPY_RESOURCE("Player", CImage*);
@@ -58,8 +57,18 @@ void Enemy01::Search()
         if (m_pos.x < IMAGE_SIZE / 2)
             m_move_dir_flg = false;
     }
+
+    Player*p=
+    /*if (PlayerCheck(Player*p, this)) {
+
+    }*/
 }
 
-void Enemy01::PlayerCheck()
+void Enemy01::Attack()
 {
+}
+
+bool Enemy01::PlayerCheck(Task*p, Task*e)
+{
+    return false;
 }

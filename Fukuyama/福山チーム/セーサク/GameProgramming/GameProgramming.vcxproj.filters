@@ -64,7 +64,11 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <ClCompile Include="CEnemy1.cpp">
+=======
+    <ClCompile Include="CBoss.cpp">
+>>>>>>> 8641c28c65bbd2d5c4b4a2a734b86ab170e58322
       <Filter>ソース ファイル</Filter>
 =======
     <ClCompile Include="Task.cpp">
@@ -78,7 +82,11 @@
     </ClCompile>
     <ClCompile Include="CFPS.cpp">
       <Filter>System</Filter>
+<<<<<<< HEAD
 >>>>>>> 2de4d0cee4f21d4a4249fab9ba8f41e6e5b575fc
+=======
+>>>>>>> c184a9e8346865b82791bbcf73ce4a05725f1917
+>>>>>>> 8641c28c65bbd2d5c4b4a2a734b86ab170e58322
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -128,7 +136,11 @@
       <Filter>ソース ファイル</Filter>
     </ClInclude>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <ClInclude Include="CEnemy1.h">
+=======
+    <ClInclude Include="CBoss.h">
+>>>>>>> 8641c28c65bbd2d5c4b4a2a734b86ab170e58322
       <Filter>ソース ファイル</Filter>
 =======
     <ClInclude Include="Task.h">
@@ -145,7 +157,11 @@
     </ClInclude>
     <ClInclude Include="GID.h">
       <Filter>System</Filter>
+<<<<<<< HEAD
 >>>>>>> 2de4d0cee4f21d4a4249fab9ba8f41e6e5b575fc
+=======
+>>>>>>> c184a9e8346865b82791bbcf73ce4a05725f1917
+>>>>>>> 8641c28c65bbd2d5c4b4a2a734b86ab170e58322
     </ClInclude>
   </ItemGroup>
 </Project>
