@@ -6,7 +6,14 @@
 
 class Enemy05 : public EnemyBase {
 private:
-	
+	enum {
+		eMove,
+		eSearch,
+		eAttack,
+		eDamage,
+	};
+private:
+
 public:
 	Enemy05();
 	void Move();

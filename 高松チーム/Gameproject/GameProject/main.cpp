@@ -11,10 +11,7 @@
 #include "GID.h"
 #include "Base\Task.h"
 #include "Base\TaskManager.h"
-#include "../GameProject/Game/Resource/Resource.h"
-#include "../GameProject/Game/Character/Player.h"
-#include "../GameProject/Game/Character/EnemyBase/Enemy/Enemy01.h"
-#include "Boss.h"
+#include "Game\Scene\GameScene.h"
 
 
 //--------------------------------------------
@@ -88,11 +85,7 @@ void Init(void)
 	//‰Šú‰»‚Ì–½—ß‚ð‘‚­
 	//ƒQ[ƒ€‹N“®Žž‚Éˆê“x‚¾‚¯ŒÄ‚Î‚ê‚é
 	//-----------------------------------------------------
-	new Resource();
-	TaskManager::GetInstance()->AddTask(new Player());
-	TaskManager::GetInstance()->AddTask(new Enemy01());
-	TaskManager::GetInstance()->AddTask(new BossHead());
-
+	new GameScene();
 
 }
 
