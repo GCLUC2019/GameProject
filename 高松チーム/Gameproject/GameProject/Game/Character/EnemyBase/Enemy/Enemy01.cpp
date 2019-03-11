@@ -58,7 +58,7 @@ void Enemy01::Search()
             m_move_dir_flg = false;
     }
 
-    Player*p=
+    //Player*p=
     /*if (PlayerCheck(Player*p, this)) {
 
     }*/
