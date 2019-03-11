@@ -8,6 +8,7 @@ Task::Task(int _task_id, int _draw_priority)
 	m_draw_priority = _draw_priority;
 }
 
+
 void Task::Delete()
 {
 	TaskManager::GetInstance()->DeleteTask(this);

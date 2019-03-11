@@ -8,28 +8,36 @@ enum {
 	eEAttack01,
 	eEDamage01,
 	eEDeath01,
+};
 
+enum {
 	//Enemy02
 	eEIdile02,
 	eEMove02,
 	eEAttack02,
 	eEDamage02,
 	eEDeath02,
+};
 
+enum {
 	//Enemy03
 	eEIdile03,
 	eEMove03,
 	eEAttack03,
 	eEDamage03,
 	eEDeath03,
+};
 
+enum {
 	//Enemy04
 	eEIdile04,
 	eEMove04,
 	eEAttack04,
 	eEDamage04,
 	eEDeath04,
+};
 
+enum {
 	//Enemy05
 	eEIdile05,
 	eEMove05,
