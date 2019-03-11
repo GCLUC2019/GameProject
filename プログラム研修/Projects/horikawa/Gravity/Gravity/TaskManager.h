@@ -25,15 +25,19 @@ public:
 		//それを返す
 		return mp_instance;
 	}
-
+	//Taskを継承したオブジェクトを作成した時に呼ばれ、最後尾に追加する
 	void Add(Task* a);
+	//全てのオブジェクトの描画処理
 	void DrawAll();
+	//引数で与えたオブジェクトの削除
 	void Delete(Task* a);
+	//引数で与えたIDを持つオブジェクトを単方向リストの構造体でまとめ、その先頭を返す
 	struct SearchID* Search(int id);
 };
 
+//指定されたオブジェクトを見つけ単方向リストでまとめていく構造体
 struct SearchID
 {
-	Task* s_point = nullptr;
-	SearchID* s_next = nullptr;
+	Task* point = nullptr;
+	SearchID* next = nullptr;
 };

@@ -134,11 +134,16 @@
   <ItemGroup>
     <ClInclude Include="Base\Task.h" />
     <ClInclude Include="Base\TaskManager.h" />
+    <ClInclude Include="Boss.h" />
+    <ClInclude Include="Game\Character\Anim\AnimData.h" />
     <ClInclude Include="Game\Character\CharacterBase.h" />
     <ClInclude Include="Game\Character\EnemyBase\EnemyBase.h" />
     <ClInclude Include="Game\Character\EnemyBase\Enemy\Enemy01.h" />
+    <ClInclude Include="Game\Character\EnemyBase\Enemy\Enemy05.h" />
     <ClInclude Include="Game\Character\Player.h" />
     <ClInclude Include="Game\Resource\Resource.h" />
+    <ClInclude Include="Game\Scene\GameScene.h" />
+    <ClInclude Include="Game\Scene\Result.h" />
     <ClInclude Include="GID.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="stdafx.h" />
@@ -146,11 +151,16 @@
   <ItemGroup>
     <ClCompile Include="Base\Task.cpp" />
     <ClCompile Include="Base\TaskManager.cpp" />
+    <ClCompile Include="Boss.cpp" />
+    <ClCompile Include="Game\Character\Anim\AnimData.cpp" />
     <ClCompile Include="Game\Character\CharacterBase.cpp" />
     <ClCompile Include="Game\Character\EnemyBase\EnemyBase.cpp" />
     <ClCompile Include="Game\Character\EnemyBase\Enemy\Enemy01.cpp" />
+    <ClCompile Include="Game\Character\EnemyBase\Enemy\Enemy05.cpp" />
     <ClCompile Include="Game\Character\Player.cpp" />
     <ClCompile Include="Game\Resource\Resource .cpp" />
+    <ClCompile Include="Game\Scene\GameScene.cpp" />
+    <ClCompile Include="Game\Scene\Result.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
