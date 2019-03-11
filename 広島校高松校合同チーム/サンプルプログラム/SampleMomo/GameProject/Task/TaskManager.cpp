@@ -89,8 +89,13 @@ void TaskManager::DeleteTask(Task * _task)
 	Task* before = _task->GetBeforeTask();
 
 	if (before != nullptr) {
-		before->SetNextTask(next);
-		if (next != nullptr) next->SetBeforeTask(before);
+		if(next != nullptr) before->SetNextTask(next);
+		else before->SetNextTask(nullptr);
+	}
+
+	if (next != nullptr) {
+		if(before != nullptr) next->SetBeforeTask(before);
+		else next->SetBeforeTask(nullptr);
 	}
 
 	delete _task;
@@ -125,7 +130,7 @@ void TaskManager::BeforeUpdateAll()
 	while (true) {
 		if (t == nullptr) break;
 		Task* t_next = t->GetNextTask();
-		t->BeforeUpdate();
+		if (t->GetIsDelete() == false) t->BeforeUpdate();
 		t = t_next;
 	}
 }
@@ -136,7 +141,7 @@ void TaskManager::UpdateAll()
 	while (true) {
 		if (t == nullptr) break;
 		Task* t_next = t->GetNextTask();//UpdateでDeleteが実行されても大丈夫なように
-		t->Update();
+		if (t->GetIsDelete() == false) t->Update();
 		t = t_next;
 	}
 }
@@ -147,7 +152,7 @@ void TaskManager::AfterUpdateAll()
 	while (true) {
 		if (t == nullptr) break;
 		Task* t_next = t->GetNextTask();
-		t->AfterUpdate();
+		if (t->GetIsDelete() == false) t->AfterUpdate();
 		t = t_next;
 	}
 }
@@ -158,7 +163,7 @@ void TaskManager::BeforeCollisionAll()
 	while (true) {
 		if (t == nullptr) break;
 		Task* t_next = t->GetNextTask();
-		t->BeforeCollisionCheck();
+		if (t->GetIsDelete() == false) t->BeforeCollisionCheck();
 		t = t_next;
 	}
 }
@@ -181,7 +186,7 @@ void TaskManager::CollisionAll()
 				continue;
 			}
 
-			t->CollisionCheck(t_c);
+			if (t->GetIsDelete() == false&& t_c->GetIsDelete() == false) t->CollisionCheck(t_c);
 			t_c = t_c_next;
 		}
 		t = t_next;
@@ -195,7 +200,7 @@ void TaskManager::DrawAll()
 	while (true) {
 		if (t == nullptr) break;
 		Task* t_next = t->GetNextTask();//DrawでDeleteが実行されても大丈夫なように
-		t->Draw();
+		if (t->GetIsDelete() == false) t->Draw();
 		t = t_next;
 	}
 }
@@ -210,6 +215,8 @@ void TaskManager::DrawAll()
 
 void TaskManager::Sort()
 {
+	if (m_head_task == nullptr) return;
+
 	//配列を作成(callocで領域確保)
 
 	//Taskポインタ型配列(配列を表す為にTaskポインタ型ポインタを利用する)

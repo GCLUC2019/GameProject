@@ -54,7 +54,6 @@ public:
 	void Move();
 	void Update();
 	void CharacterDraw();
-	void MoveLimit();
 	void CalcScroll();
 };
 

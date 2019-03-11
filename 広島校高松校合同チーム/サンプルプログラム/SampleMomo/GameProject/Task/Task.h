@@ -23,6 +23,9 @@ private:
 
 	void SetNextTask(Task* _next) { m_next_task = _next; };
 	Task* GetNextTask() { return m_next_task; };
+
+	//@brief タスクを即座に削除する。
+	void Delete();
 public:
 	//@brief タスククラスコンストラクタ
 	//@param [in] _task_id タスク識別用のID
@@ -66,8 +69,7 @@ public:
 	//@brief タスクIDの取得
 	int GetTaskId() { return m_task_id; };
 
-	//@brief タスクを即座に削除する。
-	void Delete();
+	
 
 	//@brief タスクに削除フラグを設定する。(更新処理が終了後、一括に削除される)
 	void SetIsDelete() {m_is_delete = true; };//削除フラグをオンにする
