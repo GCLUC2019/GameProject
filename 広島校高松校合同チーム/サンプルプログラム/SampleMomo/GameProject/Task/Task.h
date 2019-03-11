@@ -32,11 +32,21 @@ public:
 	//@brief タスククラスデストラクタ
 	virtual ~Task();
 
+	//@brief 更新用関数(更新の前に呼ばれる更新処理)
+	virtual void BeforeUpdate();
+
 	//@brief 更新用関数
 	virtual void Update();
 
+	//@brief 更新用関数(後に呼ばれる更新処理)
+	virtual void AfterUpdate();
+
 	//@brief 描画更新用関数
 	virtual void Draw();
+
+	//@brief 衝突チェック前更新関数
+	virtual void BeforeCollisionCheck();
+
 
 	//@brief 衝突チェック用関数
 	virtual void CollisionCheck(Task* _collision_task);
@@ -69,4 +79,5 @@ public:
 /*
 2019/03/07 Taskクラス定義。基本機能実装。 by shingai
 2019/03/08 TaskManagerクラスへの修正に合わせた小規模な修正。 by shingai
+2019/03/11 BeforeUpdate等、ゲームの制御に役に立つメンバ関数追加。
 */

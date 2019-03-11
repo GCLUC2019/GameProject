@@ -35,8 +35,18 @@ public:
 	//@brief 削除フラグを確認し、削除フラグが設定されているタスクを全て削除する
 	void CheckDeleteAll();
 
+	//@brief 全てのタスクのBeforeUpdate関数を実行する。
+	void BeforeUpdateAll();
+
 	//@brief 全てのタスクのUpdate関数を実行する。
 	void UpdateAll();
+
+	//@brief 全てのタスクのAfterUpdate関数を実行する。
+	void AfterUpdateAll();
+
+
+	//@brief 全てのタスクのBeforeCollisionCheck関数を実行する。
+	void BeforeCollisionAll();
 
 	//@brief 全てのタスクに対してCollisionCheck関数を実行する。
 	void CollisionAll();
@@ -57,4 +67,5 @@ public:
 /*
 2019/03/07 TaskManagerクラス定義。基本機能実装。by shingai
 2019/03/08 バグ修正やソート部分をクイックソートに変更。 by shingai
+2019/03/11 BeforeUpdate等追加に合わせた関数追加。
 */
