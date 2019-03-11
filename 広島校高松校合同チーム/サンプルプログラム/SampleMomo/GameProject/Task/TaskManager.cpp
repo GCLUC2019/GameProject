@@ -89,8 +89,13 @@ void TaskManager::DeleteTask(Task * _task)
 	Task* before = _task->GetBeforeTask();
 
 	if (before != nullptr) {
-		before->SetNextTask(next);
-		if (next != nullptr) next->SetBeforeTask(before);
+		if(next != nullptr) before->SetNextTask(next);
+		else before->SetNextTask(nullptr);
+	}
+
+	if (next != nullptr) {
+		if(before != nullptr) next->SetBeforeTask(before);
+		else next->SetBeforeTask(nullptr);
 	}
 
 	delete _task;
@@ -210,6 +215,8 @@ void TaskManager::DrawAll()
 
 void TaskManager::Sort()
 {
+	if (m_head_task == nullptr) return;
+
 	//配列を作成(callocで領域確保)
 
 	//Taskポインタ型配列(配列を表す為にTaskポインタ型ポインタを利用する)

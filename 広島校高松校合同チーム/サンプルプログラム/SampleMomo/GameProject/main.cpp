@@ -10,6 +10,7 @@
 #include "Global.h"
 #include "Task/TaskManager.h"
 #include "Game/CSetUpGame.h"
+#include "Game/CLoadResorce.h"
 
 //--------------------------------------------
 //グローバル変数領域
@@ -98,7 +99,10 @@ void Init(void)
 	//初期化の命令を書く
 	//ゲーム起動時に一度だけ呼ばれる
 	//-----------------------------------------------------
+	
+	CLoadResorce::GetInstance()->LoadResorce();
 	CSetupGame::Setup();
+
 	
 
 }
