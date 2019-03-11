@@ -10,6 +10,7 @@
 #include "Global.h"
 #include "Task/TaskManager.h"
 #include "Game/CSetUpGame.h"
+#include "Game/CLoadResorce.h"
 
 //--------------------------------------------
 //グローバル変数領域
@@ -22,12 +23,30 @@ void MainLoop(void) {
 	//ゲーム中はこの関数_を1秒間に60回呼び出している
 	//--------------------------------------------------------------
 
-	//更新(ソート)
-	TaskManager::GetTaskManagerPointer(eTaskManagerIdGeneral)->UpdateAllSort();
+	//削除フラグ確認
+	TaskManager::GetInstance()->CheckDeleteAll();
+	
+	//更新(先に呼ばれるもの)
+	TaskManager::GetInstance()->BeforeUpdateAll();
+
+	//更新
+	TaskManager::GetInstance()->UpdateAll();
+
+	//更新(後から呼ばれるもの)
+	TaskManager::GetInstance()->AfterUpdateAll();
+
+	//当たり判定前更新
+	TaskManager::GetInstance()->BeforeCollisionAll();
 
 
-	//描画(ソート)
-	TaskManager::GetTaskManagerPointer(eTaskManagerIdGeneral)->DrawAllSort();
+	//当たり判定チェック
+	TaskManager::GetInstance()->CollisionAll();
+
+	//描画順ソート
+	TaskManager::GetInstance()->Sort();
+
+	//描画
+	TaskManager::GetInstance()->DrawAll();
 
 	//速すぎ防止
 	Sleep(1);
@@ -53,7 +72,7 @@ void Init(void)
 	//ボタンの設定
 	CInput::Init();
 	CInput::Init();
-	CInput::SetButton(0, CInput::eButton1, 'Z');
+	CInput::SetButton(0, CInput::eButton1, VK_SPACE);
 	CInput::SetButton(0, CInput::eButton2, 'X');
 	CInput::SetButton(0, CInput::eButton3, 'C');
 	CInput::SetButton(0, CInput::eButton4, 'V');
@@ -80,7 +99,10 @@ void Init(void)
 	//初期化の命令を書く
 	//ゲーム起動時に一度だけ呼ばれる
 	//-----------------------------------------------------
+	
+	CLoadResorce::GetInstance()->LoadResorce();
 	CSetupGame::Setup();
+
 	
 
 }

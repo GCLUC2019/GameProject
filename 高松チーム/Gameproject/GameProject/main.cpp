@@ -9,8 +9,9 @@
 #include "stdafx.h"
 #include "Global.h"
 #include "GID.h"
-#include "Task\Task.h"
-#include "Task\TaskManager.h"
+#include "Base\Task.h"
+#include "Base\TaskManager.h"
+#include "Game\Scene\GameScene.h"
 
 
 //--------------------------------------------
@@ -23,8 +24,10 @@ void MainLoop(void) {
 	//ゲーム中の動きはここに書く
 	//ゲーム中はこの関数_を1秒間に60回呼び出している
 	//--------------------------------------------------------------
-
 	
+	TaskManager::GetInstance()->UpdateAll();
+
+	TaskManager::GetInstance()->DrawAll();
 
 	
 
@@ -82,8 +85,7 @@ void Init(void)
 	//初期化の命令を書く
 	//ゲーム起動時に一度だけ呼ばれる
 	//-----------------------------------------------------
-
-
+	new GameScene();
 
 }
 

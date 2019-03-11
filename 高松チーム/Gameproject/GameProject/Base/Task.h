@@ -1,9 +1,12 @@
 #pragma once
 #include <stdio.h>
+#include "../stdafx.h"
 #include "TaskManager.h"
 
 class Task {
 private:
+	int m_updateprio;
+	int m_drawprio;
 	Task *mp_next = nullptr;
 	Task *mp_prev = nullptr;
 
@@ -17,5 +20,7 @@ public:
 	Task *GetPrev()   { return mp_prev; }
 	void SetNext(Task *_var) { mp_next = _var; }
 	void SetPrev(Task *_var)   { mp_prev = _var; }
+
+	friend class TaskManager;
 
 };

@@ -10,6 +10,7 @@
 extern CPlayerTank*Tank;
 
 void CEnemyTank::Init(){
+	
 	mFireIntervar = FIREINTERVER_E;
 	CTank::Init();
 	SetColor(0.6f, 0.0f, 0.0f, 1.0f);
