@@ -7,18 +7,28 @@
 */
 enum {
 	eEnemy01,
+	eEnemy02,
+	eEnemy03,
+	eEnemy04,
+	eEnemy05,
+	eBossHead,
 };
 
 class EnemyBase : public Task {
 private:
 protected:
 	
-	CVector2D m_pos;
-	CImage m_img;
-	int m_type;
-
+	CVector2D m_pos;	//“GˆÊ’u
+	CVector2D m_vec;	//“GƒxƒNƒgƒ‹
+	CImage m_img;		//“G‰æ‘œ
+	int m_type;			//“GŽ¯•ÊŽq
+	int m_e_hp;			//“G‘Ì—Í
+	float m_ang;		//“G•ûŒü
+	
 public:
 	EnemyBase(int _type);
+	virtual void Move();
+	virtual void Attack();
 	virtual void Update();
 	virtual void Draw();
 
