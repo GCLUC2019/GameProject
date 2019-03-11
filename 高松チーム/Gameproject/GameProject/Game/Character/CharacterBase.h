@@ -20,5 +20,7 @@ public:
 	CharacterBase(int _type);
 	virtual void Update();
 	virtual void Draw();
-
+    CVector2D GetPos(){
+        return m_pos;
+    }
 };

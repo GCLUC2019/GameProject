@@ -14,6 +14,7 @@
     <ProjectGuid>{8802AF2F-2920-4700-89F2-CA6778727283}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>GameProgramming</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -79,12 +80,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CArrow.cpp" />
+    <ClCompile Include="CBoss.cpp" />
     <ClCompile Include="CBullet.cpp" />
     <ClCompile Include="CCollider.cpp" />
+    <ClCompile Include="CEnemy1.cpp" />
     <ClCompile Include="CEnemyTank.cpp" />
     <ClCompile Include="CExplosion.cpp" />
     <ClCompile Include="CFPS.cpp" />
     <ClCompile Include="CHpBar.cpp" />
+    <ClCompile Include="CItem.cpp" />
     <ClCompile Include="CMain.cpp" />
     <ClCompile Include="CMatrix33.cpp" />
     <ClCompile Include="CPlayerTank.cpp" />
@@ -100,12 +105,16 @@
     <ClCompile Include="TaskManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CArrow.h" />
+    <ClInclude Include="CBoss.h" />
     <ClInclude Include="CBullet.h" />
     <ClInclude Include="CCollider.h" />
+    <ClInclude Include="CEnemy1.h" />
     <ClInclude Include="CEnemyTank.h" />
     <ClInclude Include="CExplosion.h" />
     <ClInclude Include="CFPS.h" />
     <ClInclude Include="CHpBar.h" />
+    <ClInclude Include="CItem.h" />
     <ClInclude Include="CPlayerTank.h" />
     <ClInclude Include="CScene.h" />
     <ClInclude Include="CSceneGame.h" />

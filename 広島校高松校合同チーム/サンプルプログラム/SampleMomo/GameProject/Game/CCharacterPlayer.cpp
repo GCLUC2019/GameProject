@@ -11,7 +11,8 @@ CCharacterPlayer::CCharacterPlayer() :CCharacter(eTaskIdPlayer, 0)
 
 	SetIsShowShadow(true);
 	SetShadowSize(CVector2D(100, 50));
-	SetShadowAdjPos(CVector2D(15.0, -20.0));
+	SetDrawAdjPos(CVector2D(-15, 20.0f));
+	SetRads(75,200,10);
 }
 
 CCharacterPlayer::~CCharacterPlayer()
@@ -60,6 +61,7 @@ void CCharacterPlayer::LoadAnimImage()
 
 void CCharacterPlayer::Update()
 {
+	//printf("x %lf y %lf z %lf\n", m_pos.x, m_pos.y, m_pos.z);
 	m_will_play_anim_id = ePlayerAnimIdIdle;
 	InputMove();
 	InputJump();
@@ -99,6 +101,7 @@ void CCharacterPlayer::InputMove()
 void CCharacterPlayer::InputJump()
 {
 	if (CInput::GetState(0, CInput::ePush, CInput::eButton1) && m_is_jumping == false && m_is_landing == true) {
+		//SetIsDelete();
 		m_will_play_anim_id = ePlayerAnimIdMove;
 		m_is_jumping = true;
 		m_jumping_count = 30;
@@ -130,15 +133,7 @@ void CCharacterPlayer::CharacterDraw()
 	
 }
 
-void CCharacterPlayer::MoveLimit()
-{
-	//とりあえずテスト用なので
-	if (m_pos.z <= 180.0f) m_pos.z = 180.0f;
-	if (m_pos.z >= 480.0f) m_pos.z = 480.0f;
-
-}
-
 void CCharacterPlayer::CalcScroll()
 {
-	SetScroll(CVector2D(m_pos.x - 200,0));
+	SetScroll(CVector2D(m_pos.x - 100,0));
 }

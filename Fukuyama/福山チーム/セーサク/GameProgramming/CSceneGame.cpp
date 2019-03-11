@@ -1,6 +1,7 @@
 #include "CSceneGame.h"
 #include "CMain.h"
 #include "Windows.h"
+#include"CBoss.h"
 
 void CSceneGame::Init(){
 	Tank = new CPlayerTank();
