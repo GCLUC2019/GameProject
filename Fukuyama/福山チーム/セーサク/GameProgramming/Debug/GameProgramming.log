@@ -1,6 +1,0 @@
-﻿cl : コマンド ライン warning D9028: 簡易リビルド時のエラーです、通常のビルドに戻します
-  CBoss.cpp
-  CSceneGame.cpp
-  コードを生成中...
-LINK : warning LNK4098: defaultlib 'MSVCRT' は他のライブラリの使用と競合しています。/NODEFAULTLIB:library を使用してください。
-  GameProgramming.vcxproj -> C:\Users\akira\Desktop\GC2019 GC\GameProject\Fukuyama\福山チーム\セーサク\Debug\GameProgramming.exe

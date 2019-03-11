@@ -50,6 +50,12 @@
     <ClCompile Include="Game\Character\EnemyBase\Enemy\Enemy02.cpp">
       <Filter>Game\Character\EnemyBase\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Character\Anim\AnimBoss.cpp">
+      <Filter>Game\Character\Anim</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Character\Anim\AnimDataPlayer.cpp">
+      <Filter>Game\Character\Anim</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GID.h" />
@@ -102,6 +108,12 @@
     </ClInclude>
     <ClInclude Include="Game\Character\EnemyBase\Enemy\Enemy02.h">
       <Filter>Game\Character\EnemyBase\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Character\Anim\AnimBoss.h">
+      <Filter>Game\Character\Anim</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Character\Anim\AnimDataPlayer.h">
+      <Filter>Game\Character\Anim</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
