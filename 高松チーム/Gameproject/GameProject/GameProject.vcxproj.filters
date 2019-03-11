@@ -17,6 +17,12 @@
     <ClCompile Include="Game\Resource\Resource .cpp">
       <Filter>Game\Resource</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Character\EnemyBase\EnemyBase.cpp">
+      <Filter>Game\Character\EnemyBase</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Character\EnemyBase\Enemy\Enemy01.cpp">
+      <Filter>Game\Character\EnemyBase\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GID.h" />
@@ -37,6 +43,12 @@
     <ClInclude Include="Game\Resource\Resource.h">
       <Filter>Game\Resource</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Character\EnemyBase\EnemyBase.h">
+      <Filter>Game\Character\EnemyBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Character\EnemyBase\Enemy\Enemy01.h">
+      <Filter>Game\Character\EnemyBase\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game">
@@ -53,6 +65,12 @@
     </Filter>
     <Filter Include="Game\Resource">
       <UniqueIdentifier>{3cc91f20-4117-440c-8ed2-ba8161a42a5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Character\EnemyBase">
+      <UniqueIdentifier>{076c0e64-55fa-4ccb-a877-0c0cc63a5b9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Character\EnemyBase\Enemy">
+      <UniqueIdentifier>{e649f859-82ba-4eeb-bbdb-5a1c8d61b181}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

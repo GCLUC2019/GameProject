@@ -136,6 +136,8 @@
     <ClInclude Include="Game\CCharacterEnemy.h" />
     <ClInclude Include="Game\CCharacterPlayer.h" />
     <ClInclude Include="Game\CCommonObject.h" />
+    <ClInclude Include="Game\CStoryScene.h" />
+    <ClInclude Include="Game\CTitle.h" />
     <ClInclude Include="Game\CObject.h" />
     <ClInclude Include="Game\CObjectImage.h" />
     <ClInclude Include="Game\CSetupGame.h" />
@@ -152,6 +154,8 @@
     <ClCompile Include="Game\CObject.cpp" />
     <ClCompile Include="Game\CObjectImage.cpp" />
     <ClCompile Include="Game\CSetupGame.cpp" />
+    <ClCompile Include="Game\CStoryScene.cpp" />
+    <ClCompile Include="Game\CTitle.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Task\Task.cpp" />
     <ClCompile Include="Task\TaskManager.cpp" />
