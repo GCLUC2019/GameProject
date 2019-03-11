@@ -18,14 +18,26 @@ Task::~Task()
 	//printf("task_id %d ƒ^ƒXƒNíœ\n",m_task_id);
 }
 
+void Task::BeforeUpdate()
+{
+}
+
 
 void Task::Update()
 {
 
 }
 
+void Task::AfterUpdate()
+{
+}
+
 void Task::Draw() {
 	//printf("TaskDraw Dp %d\n",m_draw_priority);
+}
+
+void Task::BeforeCollisionCheck()
+{
 }
 
 void Task::CollisionCheck(Task * _collision_task)

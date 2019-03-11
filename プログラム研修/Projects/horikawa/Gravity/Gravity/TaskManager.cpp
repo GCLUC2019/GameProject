@@ -58,15 +58,15 @@ SearchID* TaskManager::Search(int id)
 	SearchID* b = a;
 	while (s->mp_next) {
 		if (s->m_id == id) {
-			a->s_next = new SearchID;
-			a->s_next->s_point = s;
-			a = a->s_next;
+			a->next = new SearchID;
+			a->next->point = s;
+			a = a->next;
 		}
 		s = s->mp_next;
 	}if (s->m_id == id) {
-		a->s_next = new SearchID;
-		a->s_next->s_point = s;
-		a = a->s_next;
+		a->next = new SearchID;
+		a->next->point = s;
+		a = a->next;
 	}
 
 	/*++c;

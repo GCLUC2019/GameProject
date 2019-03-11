@@ -2,14 +2,19 @@
 #define MOVE_SPEED 5.0f
 Enemy01::Enemy01() : EnemyBase(eEnemy01)
 {
+    m_img = COPY_RESOURCE("Player", CImage*);
     m_pos = CVector2D(200, 200);
     m_vec = CVector2D(0, 0);
-    m_img = COPY_RESOURCE("Player", CImage*);
+    m_search_flg = false;
+
 }
 
 void Enemy01::Update()
 {
-    Move();
+    if (m_search_flg == false)
+        Search();
+    else
+        Move();
     m_pos += m_vec;
 }
 
