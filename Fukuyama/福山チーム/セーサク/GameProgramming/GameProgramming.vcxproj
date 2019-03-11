@@ -80,6 +80,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CArrow.cpp" />
     <ClCompile Include="CBoss.cpp" />
     <ClCompile Include="CBullet.cpp" />
     <ClCompile Include="CCollider.cpp" />
@@ -87,6 +88,7 @@
     <ClCompile Include="CExplosion.cpp" />
     <ClCompile Include="CFPS.cpp" />
     <ClCompile Include="CHpBar.cpp" />
+    <ClCompile Include="CItem.cpp" />
     <ClCompile Include="CMain.cpp" />
     <ClCompile Include="CMatrix33.cpp" />
     <ClCompile Include="CPlayerTank.cpp" />
@@ -102,6 +104,7 @@
     <ClCompile Include="TaskManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CArrow.h" />
     <ClInclude Include="CBoss.h" />
     <ClInclude Include="CBullet.h" />
     <ClInclude Include="CCollider.h" />
@@ -109,6 +112,7 @@
     <ClInclude Include="CExplosion.h" />
     <ClInclude Include="CFPS.h" />
     <ClInclude Include="CHpBar.h" />
+    <ClInclude Include="CItem.h" />
     <ClInclude Include="CPlayerTank.h" />
     <ClInclude Include="CScene.h" />
     <ClInclude Include="CSceneGame.h" />
