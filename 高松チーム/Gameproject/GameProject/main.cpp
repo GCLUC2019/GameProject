@@ -11,6 +11,8 @@
 #include "GID.h"
 #include "Base\Task.h"
 #include "Base\TaskManager.h"
+#include "../GameProject/Game/Resource/Resource.h"
+#include "../GameProject/Game/Character/Player.h"
 
 
 //--------------------------------------------
@@ -23,8 +25,10 @@ void MainLoop(void) {
 	//ƒQ[ƒ€’†‚Ì“®‚«‚Í‚±‚±‚É‘‚­
 	//ƒQ[ƒ€’†‚Í‚±‚ÌŠÖ”_‚ð1•bŠÔ‚É60‰ñŒÄ‚Ño‚µ‚Ä‚¢‚é
 	//--------------------------------------------------------------
-
 	
+	TaskManager::GetInstance()->UpdateAll();
+
+	TaskManager::GetInstance()->DrawAll();
 
 	
 
@@ -82,7 +86,8 @@ void Init(void)
 	//‰Šú‰»‚Ì–½—ß‚ð‘‚­
 	//ƒQ[ƒ€‹N“®Žž‚Éˆê“x‚¾‚¯ŒÄ‚Î‚ê‚é
 	//-----------------------------------------------------
-
+	new Resource();
+	TaskManager::GetInstance()->AddTask(new Player());
 
 
 }

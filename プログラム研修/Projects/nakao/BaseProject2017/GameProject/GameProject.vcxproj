@@ -134,6 +134,7 @@
   <ItemGroup>
     <ClInclude Include="Ball\Ball.h" />
     <ClInclude Include="Ball\BallManager.h" />
+    <ClInclude Include="Ball\Barrett.h" />
     <ClInclude Include="GID.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="stdafx.h" />
@@ -144,6 +145,7 @@
   <ItemGroup>
     <ClCompile Include="Ball\Ball.cpp" />
     <ClCompile Include="Ball\BallManager.cpp" />
+    <ClCompile Include="Ball\Barrett.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="System\Task.cpp" />
     <ClCompile Include="System\TaskLinker.cpp" />

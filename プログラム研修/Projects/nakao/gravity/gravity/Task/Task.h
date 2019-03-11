@@ -14,12 +14,15 @@ enum Type
 	e_TypeMax,
 };
 class Task {
-private:
+protected:
 	int m_type;
 	Task * m_prev;
 	Task* m_next;
 	int m_S_Weigh;
 public:
+	Task();
+	Task(int _m_S_Weigh, int _m_type);
+
 	Task * GetPrev() {
 		return m_prev;
 	}
@@ -41,12 +44,11 @@ public:
 	void MinusWeigh(int Weigh) {
 		m_S_Weigh -= Weigh;
 	}
-	
+
 	int GetWeigh() {
 		return m_S_Weigh;
 	}
-	Task();
-	Task(int _m_S_Weigh);
+	
 	virtual void Draw();
-
+	virtual ~Task();
 };
