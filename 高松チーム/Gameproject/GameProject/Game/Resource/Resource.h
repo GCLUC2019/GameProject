@@ -16,6 +16,8 @@ public:
 		*/
 
 		ADD_RESOURCE("Player", CImage::LoadImage("../data/Image/chara_gauge_face.png"));
+		ADD_RESOURCE("Boss", CImage::LoadImage("../data/Image/moton_jaryu.png"));
+		ADD_RESOURCE("GameClear", CImage::LoadImage("../data/Image/push start.png"));
 
 	}
 };

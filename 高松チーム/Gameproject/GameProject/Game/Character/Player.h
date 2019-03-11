@@ -3,6 +3,7 @@
 
 class Player : public CharacterBase {
 private:
+	CImage m_Shadow;
 public:
 	Player();
 	void Update();
