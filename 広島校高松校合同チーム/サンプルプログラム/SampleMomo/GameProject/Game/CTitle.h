@@ -4,6 +4,7 @@
 
 class CTitle : public CObject {
 private:
+	CImage m_back;;
 public:
 	CTitle();
 	~CTitle();
