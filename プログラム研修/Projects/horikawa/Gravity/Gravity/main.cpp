@@ -40,10 +40,10 @@ int main() {
 
 
 	
-	SearchID* b = TaskManager::GetInstance()->Search(6);
-	while (b->s_next) {
-		b = b->s_next;
-		TaskManager::GetInstance()->Delete(b->s_point);
+	SearchID* b = TaskManager::GetInstance()->Search(4);
+	while (b->next) {
+		b = b->next;
+		TaskManager::GetInstance()->Delete(b->point);
 
 	}
 	
