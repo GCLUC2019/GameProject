@@ -64,6 +64,8 @@ public:
 	void SetIsShowShadow(bool _is) { m_is_show_shadow = _is; };
 	void SetShadowSize(CVector2D _size) { m_shadow_size = _size; };
 	void SetShadowAdjPos(CVector2D _pos) { m_shadow_adj_pos = _pos; };
+
+	void MoveLimit();
 };
 
 
