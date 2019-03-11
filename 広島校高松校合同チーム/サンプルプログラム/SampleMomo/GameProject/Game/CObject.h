@@ -17,7 +17,10 @@ protected:
 public:
 	CObject(int _task_id, int _draw_priority);
 	virtual ~CObject();
+	virtual void BeforeUpdate();
+	virtual void BeforeCollisionCheck();
 	virtual void Update();
+	virtual void AfterUpdate();
 	virtual void Draw();
 
 	void SetSpeed(float _speed) { m_speed = _speed; };
