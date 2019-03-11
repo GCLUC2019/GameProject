@@ -7,6 +7,7 @@
 */
 enum {
 	eEnemy01,
+	eBossHead,
 };
 
 class EnemyBase : public Task {
