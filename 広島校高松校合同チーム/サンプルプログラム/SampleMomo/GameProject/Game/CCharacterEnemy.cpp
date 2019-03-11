@@ -1,6 +1,6 @@
 #include "CCharacterEnemy.h"
 
-CCharacterEnemy::CCharacterEnemy() :CCharacter(eId_CharacterPlayer, eUp_CharacterPlayer, eRd_CharacterPlayer)
+CCharacterEnemy::CCharacterEnemy() :CCharacter(eTaskManagerIdGeneral, eTaskIdEnemy, 0, 0)
 {
 	ADD_RESOURCE("Enemy", CImage::LoadImage("enemy.png"));
 	m_enemy_img = COPY_RESOURCE("Enemy", CImage*);
@@ -33,9 +33,8 @@ void CCharacterEnemy::Update(float delta_time)
 	Gravity();
 }
 
-void CCharacterEnemy::Render()
-{
-	
+void CCharacterEnemy::Draw()
+{	
 	m_enemy_img.SetPos(m_enemy_pos.x, m_enemy_pos.y + m_enemy_pos.z);
 	m_enemy_img.Draw();
 }

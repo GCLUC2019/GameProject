@@ -132,24 +132,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Ball\Ball.h" />
-    <ClInclude Include="Ball\BallManager.h" />
     <ClInclude Include="Game\CCharacter.h" />
     <ClInclude Include="Game\CCharacterEnemy.h" />
     <ClInclude Include="Game\CCharacterPlayer.h" />
     <ClInclude Include="Game\CObject.h" />
     <ClInclude Include="Game\CObjectImage.h" />
     <ClInclude Include="Game\CSetupGame.h" />
-    <ClInclude Include="GID.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="System\Task.h" />
-    <ClInclude Include="System\TaskLinker.h" />
-    <ClInclude Include="System\TaskManager.h" />
+    <ClInclude Include="Task\Task.h" />
+    <ClInclude Include="Task\TaskManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Ball\Ball.cpp" />
-    <ClCompile Include="Ball\BallManager.cpp" />
     <ClCompile Include="Game\CCharacter.cpp" />
     <ClCompile Include="Game\CCharacterEnemy.cpp" />
     <ClCompile Include="Game\CCharacterPlayer.cpp" />
@@ -157,9 +151,8 @@
     <ClCompile Include="Game\CObjectImage.cpp" />
     <ClCompile Include="Game\CSetupGame.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="System\Task.cpp" />
-    <ClCompile Include="System\TaskLinker.cpp" />
-    <ClCompile Include="System\TaskManager.cpp" />
+    <ClCompile Include="Task\Task.cpp" />
+    <ClCompile Include="Task\TaskManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

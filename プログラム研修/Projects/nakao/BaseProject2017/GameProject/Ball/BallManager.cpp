@@ -1,6 +1,7 @@
 #include "BallManager.h"
 #include "Ball.h"
 #include "../Global.h"
+#include "Barrett.h"
 BallManager::BallManager():Task(eId_Ball,eUp_Ball,eRd_Ball)
 {
 
@@ -22,6 +23,7 @@ void BallManager::Update(float delta_time)
 			//マウスの位置を取得
 			CVector2D pos = CInput::GetMousePoint();
 			//マウスの位置に玉を生成
+			new Barrett(pos);
 			//new Ball(/*pos*/);
 			Ball*b= new Ball(pos);
 			b->SetVecter(/*Utility::Rand(-20, 20)*/CVector2D(Utility::Rand(-200, 200),-200));

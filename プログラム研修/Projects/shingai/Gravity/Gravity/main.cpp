@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+#include <stdlib.h>
 /*
 実践問題
 5秒間放物線のシミュレーションを行う
@@ -12,6 +12,11 @@
 #include "Task.h"
 #include "TaskManager.h"
 
+enum {
+	eTaskIdNone,
+	eTaskIdPlayer,
+};
+
 class A : public Task {
 private:
 public:
@@ -19,13 +24,14 @@ public:
 	void Draw();
 };
 
-A::A() : Task(eTaskManagerIdGeneral,eTaskIdNone,2){
+A::A() : Task(eTaskIdNone,1){
 
 }
 
 void A::Draw() {
-	printf("Aクラス Draw\n");
+	printf("Task A Draw\n");
 }
+
 
 
 
@@ -41,33 +47,47 @@ int main() {
 	//Task* p = new Task();
 	//p->SetTaskId(eTaskIdPlayer);
 
-	new Task(eTaskManagerIdGeneral,eTaskIdPlayer,1);
-	new Task(eTaskManagerIdGeneral, eTaskIdPlayer,2);
+	new Task(eTaskIdPlayer,0);
+	new Task(eTaskIdPlayer,4);
+	new Task(eTaskIdPlayer,3);
+	new Task(eTaskIdPlayer, 1);
+	new Task(eTaskIdPlayer, 2);
+	new Task(eTaskIdPlayer, 5);
+	new Task(eTaskIdPlayer, 24);
+	new Task(eTaskIdPlayer, 500);
+	new Task(eTaskIdPlayer, 2424);
+	new Task(eTaskIdPlayer, 54);
+	new Task(eTaskIdPlayer, 78);
+	new Task(eTaskIdPlayer, 32);
+	new Task(eTaskIdPlayer, 66);
+	new Task(eTaskIdPlayer, 22);
 
-	Task* t[4];
-
-	for (int i = 0; i < 4; i++) {
-		t[i] = new Task(eTaskManagerIdGeneral,eTaskIdNone,3);
-		//Task::AddTask(new Task);
-	}
-
-	TaskManager::GetTaskManagerPointer(eTaskManagerIdGeneral)->DrawAllSort();
 
 	
+
+	TaskManager::GetInstance()->Sort();//ソートする
+	TaskManager::GetInstance()->DrawAll();
+	TaskManager::GetInstance()->UpdateAll();
+	TaskManager::GetInstance()->CollisionAll();
+
+
+	
+	/*
+	//プレイヤーだけ削除
+	Task** players = TaskManager::GetInstance()->FindTaskArray(eTaskIdPlayer);
+	if (players != nullptr) {
+		for (int i = 0; players[i] != nullptr; i++) {
+			players[i]->Delete();
+		}
+		free(players);//配列の情報を破棄
+	}
+	*/
+	//TaskManager::GetInstance()->DeleteAllTask();
+
+
 	//タスク検索
-	TaskManager::GetTaskManagerPointer(eTaskManagerIdGeneral)->FindTask(eTaskIdPlayer)->Delete();
-	TaskManager::GetTaskManagerPointer(eTaskManagerIdGeneral)->FindTask(eTaskIdPlayer)->Delete();
-
-
-	
-
-
-	//タスク削除
-	for (int i = 0; i < 3; i++) {
-		t[i]->Delete();
-	}
-
-	TaskManager::GetTaskManagerPointer(eTaskManagerIdGeneral)->DrawAll();
+	//TaskManager::GetInstance()->FindTask(eTaskIdPlayer)->Delete();
+	//TaskManager::GetInstance()->FindTask(eTaskIdPlayer)->Delete();
 
 	//Task* t = head;
 	//3つのタスクを追加
