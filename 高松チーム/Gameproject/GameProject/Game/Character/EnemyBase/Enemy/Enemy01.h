@@ -15,9 +15,10 @@ private:
         eAttack,
         eDamage,
     };
-    int m_state;
-    bool m_search_flg;
-    bool m_move_dir_flg;
+    int m_state;//状態
+    float m_hover;//浮遊を表現するための変数
+    bool m_search_flg;//プレイヤーを見つけたかどうかのフラグ
+    bool m_move_dir_flg;//方向：false右、true左
 
 public:
 	Enemy01();
@@ -26,5 +27,7 @@ public:
     void Move();//プレイヤー発見時の動き
     void Search();//探索中の動き
     void Attack();//攻撃
+    void Damage();//ダメージ
+    void MoveControl();
     bool PlayerCheck(Player*p, Task*e,float _l);//プレイヤーを検知する
 };

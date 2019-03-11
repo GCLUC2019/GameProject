@@ -23,14 +23,16 @@ protected:
 	CAnimImage m_img;	//“G‰æ‘œ
 	CVector2D m_pos_old;//“G‘OˆÊ’u
 	int m_type;			//“G¯•Êq
-	int m_e_hp;			//“G‘Ì—Í
+	int m_hp;			//“G‘Ì—Í
 	int m_state;		//“Gó‘Ô
 	float m_ang;		//“G•ûŒü
+	float m_depth;		//‰œs‚«
 	
 public:
 	EnemyBase(int _type);
 	virtual void Move();
 	virtual void Attack();
+	virtual void Damage();
 	virtual void Update();
 	virtual void Draw();
 	/*
