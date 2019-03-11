@@ -13,6 +13,7 @@
 #include "Base\TaskManager.h"
 #include "../GameProject/Game/Resource/Resource.h"
 #include "../GameProject/Game/Character/Player.h"
+#include "../GameProject/Game/Character/EnemyBase/Enemy/Enemy01.h"
 
 
 //--------------------------------------------
@@ -88,6 +89,7 @@ void Init(void)
 	//-----------------------------------------------------
 	new Resource();
 	TaskManager::GetInstance()->AddTask(new Player());
+	TaskManager::GetInstance()->AddTask(new Enemy());
 
 
 }
