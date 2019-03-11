@@ -2,7 +2,8 @@
 
 Enemy05::Enemy05() : EnemyBase(eEnemy05)
 {
-
+	//m_pos = CVector2D
+	m_img = COPY_RESOURCE("Player", CImage*);
 }
 
 void Enemy05::Move()
