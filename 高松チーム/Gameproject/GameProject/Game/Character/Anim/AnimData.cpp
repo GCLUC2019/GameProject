@@ -1,5 +1,9 @@
 #include "AnimData.h"
 
+/*Å@íSìñ
+	çëå©Å@Enemy01Å`05
+*/
+
 /*
 	Enemy 01
 */
@@ -9,19 +13,21 @@ static TexAnim EnemyIdle01[] = {
 };
 
 static TexAnim EnemyMove01[] = {
-	{0,30},
+	{ 0,50 },
+{ 1,50 },
 };
 
 static TexAnim EnemyAttack01[] = {
-	{0,30},
+	{ 4,50 },
+{ 5,50 },
 };
 
 static TexAnim EnemyDamage01[] = {
-	{0,30},
+	{ 2,50 },
 };
 
 static TexAnim EnemyDeath01[] = {
-	{0,30},
+	{ 3,50 },
 };
 
 TexAnimData Enemy01AnimData[] = {
@@ -42,19 +48,21 @@ static TexAnim EnemyIdle02[] = {
 };
 
 static TexAnim EnemyMove02[] = {
-	{ 0,30 },
+	{ 0,50 },
+{ 1,50 },
 };
 
 static TexAnim EnemyAttack02[] = {
-	{ 0,30 },
+	{ 4,50 },
+{ 5,50 },
 };
 
 static TexAnim EnemyDamage02[] = {
-	{ 0,30 },
+	{ 2,50 },
 };
 
 static TexAnim EnemyDeath02[] = {
-	{ 0,30 },
+	{ 3,50 },
 };
 
 TexAnimData Enemy02AnimData[] = {
@@ -75,19 +83,21 @@ static TexAnim EnemyIdle03[] = {
 };
 
 static TexAnim EnemyMove03[] = {
-	{ 0,30 },
+	{ 0,50 },
+{ 1,50 },
 };
 
 static TexAnim EnemyAttack03[] = {
-	{ 0,30 },
+	{ 4,50 },
+{ 5,50 },
 };
 
 static TexAnim EnemyDamage03[] = {
-	{ 0,30 },
+	{ 2,50 },
 };
 
 static TexAnim EnemyDeath03[] = {
-	{ 0,30 },
+	{ 3,50 },
 };
 
 TexAnimData Enemy03AnimData[] = {
@@ -108,19 +118,21 @@ static TexAnim EnemyIdle04[] = {
 };
 
 static TexAnim EnemyMove04[] = {
-	{ 0,30 },
+	{ 0,50 },
+{ 1,50 },
 };
 
 static TexAnim EnemyAttack04[] = {
-	{ 0,30 },
+	{ 4,50 },
+{ 5,50 },
 };
 
 static TexAnim EnemyDamage04[] = {
-	{ 0,30 },
+	{ 2,50 },
 };
 
 static TexAnim EnemyDeath04[] = {
-	{ 0,30 },
+	{ 3,50 },
 };
 
 TexAnimData Enemy04AnimData[] = {
@@ -136,24 +148,27 @@ TexAnimData Enemy04AnimData[] = {
 	Enemy 05
 */
 static TexAnim EnemyIdle05[] = {
-	{ 0,30 },
+	{ 0,50 },
+	{ 1,50 },
 
 };
 
 static TexAnim EnemyMove05[] = {
-	{ 0,30 },
+	{ 0,50 },
+	{ 1,50 },
 };
 
 static TexAnim EnemyAttack05[] = {
-	{ 0,30 },
+	{ 4,50 },
+	{ 5,50 },
 };
 
 static TexAnim EnemyDamage05[] = {
-	{ 0,30 },
+	{ 2,50 },
 };
 
 static TexAnim EnemyDeath05[] = {
-	{ 0,30 },
+	{ 3,50 },
 };
 
 TexAnimData Enemy05AnimData[] = {

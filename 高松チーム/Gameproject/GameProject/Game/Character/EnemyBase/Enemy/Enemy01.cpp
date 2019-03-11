@@ -1,7 +1,8 @@
 #include "Enemy01.h"
 #include "../GameProject/Game/Character/Player.h"
+#include "../../Anim/AnimData.h"
+
 #define MOVE_SPEED 3.0f
-#define IMAGE_SIZE 100
 Enemy01::Enemy01() : EnemyBase(eEnemy01)
 {
     m_img = COPY_RESOURCE("Player", CImage*);
@@ -16,6 +17,7 @@ Enemy01::Enemy01() : EnemyBase(eEnemy01)
 
 void Enemy01::Update()
 {
+    m_vec = CVector2D(0, 0);
     switch (m_state) {
     case eMove:
         Move();
@@ -31,6 +33,7 @@ void Enemy01::Update()
         break;
     }
     m_pos += m_vec;
+    
 }
 
 void Enemy01::Draw()
@@ -43,7 +46,7 @@ void Enemy01::Draw()
 
 void Enemy01::Move()
 {
-   
+    
 }
 
 void Enemy01::Search()
@@ -58,8 +61,23 @@ void Enemy01::Search()
         if (m_pos.x < IMAGE_SIZE / 2)
             m_move_dir_flg = false;
     }
+    Player*p = nullptr;
+    if (PlayerCheck(p, this,300.0f)) {
+        m_state = eMove;
+    }
 }
 
-void Enemy01::PlayerCheck()
+void Enemy01::Attack()
 {
+}
+
+bool Enemy01::PlayerCheck(Player*p, Task*e, float _l)
+{
+    /*CVector2D vec= p->GetPos() - m_pos;
+    float length = sqrt(vec.x*vec.x + vec.y*vec.y);
+    if (length <= _l)
+        return true;
+    else
+        return false;*/
+    return false;
 }
