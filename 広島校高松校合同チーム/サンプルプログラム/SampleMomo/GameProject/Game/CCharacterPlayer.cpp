@@ -3,7 +3,7 @@
 
 #define PLAYER_SPEED (3.0f)
 
-CCharacterPlayer::CCharacterPlayer() :CCharacter(eTaskManagerIdGeneral, eTaskIdPlayer, 0, 0)
+CCharacterPlayer::CCharacterPlayer() :CCharacter(eTaskIdPlayer, 0)
 {
 	m_speed = PLAYER_SPEED;
 	SetAnim(ePlayerAnimIdIdle);
@@ -30,39 +30,49 @@ void CCharacterPlayer::LoadAnimImage()
 
 
 
-	ADD_RESOURCE("Player_Move_Anim_0", CImage::LoadImage("momotaro_run_anim_0.png"));
+	ADD_RESOURCE("Player_Move_Anim_0", CImage::LoadImage("momotaro_move_anim_0.png"));
 	m_player_image_p[ePlayerAnimMove0] = GET_RESOURCE("Player_Move_Anim_0", CImage*);
 
-	ADD_RESOURCE("Player_Move_Anim_1", CImage::LoadImage("momotaro_run_anim_1.png"));
+	ADD_RESOURCE("Player_Move_Anim_1", CImage::LoadImage("momotaro_move_anim_1.png"));
 	m_player_image_p[ePlayerAnimMove1] = GET_RESOURCE("Player_Move_Anim_1", CImage*);
 
-	ADD_RESOURCE("Player_Move_Anim_2", CImage::LoadImage("momotaro_run_anim_2.png"));
+	ADD_RESOURCE("Player_Move_Anim_2", CImage::LoadImage("momotaro_move_anim_2.png"));
 	m_player_image_p[ePlayerAnimMove2] = GET_RESOURCE("Player_Move_Anim_2", CImage*);
 
-	ADD_RESOURCE("Player_Move_Anim_3", CImage::LoadImage("momotaro_run_anim_3.png"));
+	ADD_RESOURCE("Player_Move_Anim_3", CImage::LoadImage("momotaro_move_anim_3.png"));
 	m_player_image_p[ePlayerAnimMove3] = GET_RESOURCE("Player_Move_Anim_3", CImage*);
 
-	ADD_RESOURCE("Player_Move_Anim_4", CImage::LoadImage("momotaro_run_anim_4.png"));
+	ADD_RESOURCE("Player_Move_Anim_4", CImage::LoadImage("momotaro_move_anim_4.png"));
 	m_player_image_p[ePlayerAnimMove4] = GET_RESOURCE("Player_Move_Anim_4", CImage*);
 
-	ADD_RESOURCE("Player_Move_Anim_5", CImage::LoadImage("momotaro_run_anim_5.png"));
+	ADD_RESOURCE("Player_Move_Anim_5", CImage::LoadImage("momotaro_move_anim_5.png"));
 	m_player_image_p[ePlayerAnimMove5] = GET_RESOURCE("Player_Move_Anim_5", CImage*);	
+
+	ADD_RESOURCE("Player_Move_Anim_6", CImage::LoadImage("momotaro_move_anim_6.png"));
+	m_player_image_p[ePlayerAnimMove6] = GET_RESOURCE("Player_Move_Anim_6", CImage*);
+
+	ADD_RESOURCE("Player_Move_Anim_7", CImage::LoadImage("momotaro_move_anim_7.png"));
+	m_player_image_p[ePlayerAnimMove7] = GET_RESOURCE("Player_Move_Anim_7", CImage*);
+
 }
 
 
 
 
-void CCharacterPlayer::Update(float delta_time)
+void CCharacterPlayer::Update()
 {
-	
 	m_will_play_anim_id = ePlayerAnimIdIdle;
-	
 	InputMove();
+	InputJump();
+	Gravity();
+	Jumping();
 	Move();
 	MoveLimit();
+	CalcScroll();
 
 	SetAnim(m_will_play_anim_id);
 	PlayAnim();
+	SetDrawPriority(m_pos.z);
 }
 
 void CCharacterPlayer::SetAnim(int _anim_id)
@@ -128,6 +138,12 @@ void CCharacterPlayer::PlayAnimMove()
 		m_play_anim_image = ePlayerAnimMove5;
 		break;
 	case ePlayerAnimMove5:
+		m_play_anim_image = ePlayerAnimMove6;
+		break;
+	case ePlayerAnimMove6:
+		m_play_anim_image = ePlayerAnimMove7;
+		break;
+	case ePlayerAnimMove7:
 		m_play_anim_image = ePlayerAnimMove0;
 		break;
 	default:
@@ -162,16 +178,46 @@ void CCharacterPlayer::InputMove()
 
 }
 
+void CCharacterPlayer::InputJump()
+{
+	if (CInput::GetState(0, CInput::ePush, CInput::eButton1) && m_is_jumping == false) {
+		m_will_play_anim_id = ePlayerAnimIdMove;
+		m_is_jumping = true;
+		m_jumping_count = 30;
+	}
+}
+
+void CCharacterPlayer::Jumping()
+{
+	if (m_is_jumping == true) {
+		if (m_jumping_count-- <= 0) {
+			m_is_jumping = false;
+		}
+
+
+		m_vec.y -= 0.1 + GRAVITY;
+		if (m_vec.y <= -3.0) m_vec.y = -3.0;
+	}
+}
+
 void CCharacterPlayer::Move()
 {
+	m_pos_old = m_pos;
 	m_pos += m_vec * m_speed;
+}
+
+void CCharacterPlayer::Gravity()
+{
+	m_vec.y += GRAVITY;
+	if (m_vec.y >= 3.0) m_vec.y = 3.0;
 }
 
 void CCharacterPlayer::Draw()
 {
 	m_player_image_p[m_play_anim_image]->SetFlipH(m_is_flip);
 	m_player_image_p[m_play_anim_image]->SetSize(m_size.x, m_size.y);
-	m_player_image_p[m_play_anim_image]->SetPos(m_pos.x, m_pos.y + m_pos.z);
+	CVector2D draw_pos = CVector2D(m_pos.x, m_pos.y + m_pos.z) - GetScroll();
+	m_player_image_p[m_play_anim_image]->SetPos(draw_pos);
 	m_player_image_p[m_play_anim_image]->SetCenter(m_size.x / 2.0,m_size.y / 2.0);
 	m_player_image_p[m_play_anim_image]->Draw();
 }
@@ -179,11 +225,12 @@ void CCharacterPlayer::Draw()
 void CCharacterPlayer::MoveLimit()
 {
 	//とりあえずテスト用なので
-
-	if (m_pos.x <= 180.0f) m_pos.x = 180.0f;
-	if (m_pos.x >= 1100.0f) m_pos.x = 1100.0f;
-
 	if (m_pos.z <= 180.0f) m_pos.z = 180.0f;
 	if (m_pos.z >= 480.0f) m_pos.z = 480.0f;
 
+}
+
+void CCharacterPlayer::CalcScroll()
+{
+	SetScroll(CVector2D(m_pos.x - 200,0));
 }

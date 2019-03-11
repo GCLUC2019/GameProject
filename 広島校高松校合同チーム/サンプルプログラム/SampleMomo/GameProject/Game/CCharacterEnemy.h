@@ -16,7 +16,7 @@ private:
 public:
 	CCharacterEnemy();
 	~CCharacterEnemy();
-	void Update(float delta_time);
+	void Update();
 	void Draw();
 
 	void Gravity() {

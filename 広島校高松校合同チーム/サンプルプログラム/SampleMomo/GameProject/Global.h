@@ -25,4 +25,5 @@ enum {
 	eTaskIdNone = 0,
 	eTaskIdPlayer,
 	eTaskIdEnemy,
+	eTaskIdCommonObject,
 };

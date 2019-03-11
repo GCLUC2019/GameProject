@@ -1,6 +1,6 @@
 #include "CCharacterEnemy.h"
 
-CCharacterEnemy::CCharacterEnemy() :CCharacter(eTaskManagerIdGeneral, eTaskIdEnemy, 0, 0)
+CCharacterEnemy::CCharacterEnemy() :CCharacter(eTaskIdEnemy, 0)
 {
 	ADD_RESOURCE("Enemy", CImage::LoadImage("enemy.png"));
 	m_enemy_img = COPY_RESOURCE("Enemy", CImage*);
@@ -16,7 +16,7 @@ CCharacterEnemy::~CCharacterEnemy()
 	printf("íœ‚³‚ê‚Ü‚µ‚½");
 }
 
-void CCharacterEnemy::Update(float delta_time)
+void CCharacterEnemy::Update()
 {
 
 	switch (m_enemy_state) {

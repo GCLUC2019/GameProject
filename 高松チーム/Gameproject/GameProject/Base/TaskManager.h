@@ -23,6 +23,13 @@ public:
 	static void KillAll();
 	static void Search();
 	static void Swap(Task* t1, Task* t2);
+	static void TaskSort(float _comp);
+	/*
+	@brief          新たなタスクを挿入する
+	@param  [in]    挿入するタスク
+	*/
+	static void Insert(Task*_t);
+	static void ReLink(bool _fb, Task* t1, Task* t2);
 
 	static TaskManager* GetInstance();
 	static void ClearInstance();
