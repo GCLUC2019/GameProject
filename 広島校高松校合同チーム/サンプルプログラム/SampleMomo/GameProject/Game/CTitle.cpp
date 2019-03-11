@@ -14,9 +14,12 @@ CTitle::~CTitle()
 
 void CTitle::Update()
 {
+
 }
 
 void CTitle::Draw()
 {
 	m_back.Draw();
 }
+
+//更新履歴2019/03/11 タイトルを追加
