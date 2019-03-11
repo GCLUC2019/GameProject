@@ -135,6 +135,8 @@
     <ClInclude Include="Base\Task.h" />
     <ClInclude Include="Base\TaskManager.h" />
     <ClInclude Include="Game\Character\CharacterBase.h" />
+    <ClInclude Include="Game\Character\EnemyBase\EnemyBase.h" />
+    <ClInclude Include="Game\Character\EnemyBase\Enemy\Enemy01.h" />
     <ClInclude Include="Game\Character\Player.h" />
     <ClInclude Include="Game\Resource\Resource.h" />
     <ClInclude Include="GID.h" />
@@ -145,6 +147,8 @@
     <ClCompile Include="Base\Task.cpp" />
     <ClCompile Include="Base\TaskManager.cpp" />
     <ClCompile Include="Game\Character\CharacterBase.cpp" />
+    <ClCompile Include="Game\Character\EnemyBase\EnemyBase.cpp" />
+    <ClCompile Include="Game\Character\EnemyBase\Enemy\Enemy01.cpp" />
     <ClCompile Include="Game\Character\Player.cpp" />
     <ClCompile Include="Game\Resource\Resource .cpp" />
     <ClCompile Include="main.cpp" />
