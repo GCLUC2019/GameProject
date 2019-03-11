@@ -134,6 +134,7 @@
   <ItemGroup>
     <ClInclude Include="Base\Task.h" />
     <ClInclude Include="Base\TaskManager.h" />
+    <ClInclude Include="Boss.h" />
     <ClInclude Include="Game\Character\CharacterBase.h" />
     <ClInclude Include="Game\Character\EnemyBase\EnemyBase.h" />
     <ClInclude Include="Game\Character\EnemyBase\Enemy\Enemy01.h" />
@@ -146,6 +147,7 @@
   <ItemGroup>
     <ClCompile Include="Base\Task.cpp" />
     <ClCompile Include="Base\TaskManager.cpp" />
+    <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Game\Character\CharacterBase.cpp" />
     <ClCompile Include="Game\Character\EnemyBase\EnemyBase.cpp" />
     <ClCompile Include="Game\Character\EnemyBase\Enemy\Enemy01.cpp" />

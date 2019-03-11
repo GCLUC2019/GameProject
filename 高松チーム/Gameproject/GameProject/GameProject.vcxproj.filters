@@ -23,6 +23,9 @@
     <ClCompile Include="Game\Character\EnemyBase\Enemy\Enemy01.cpp">
       <Filter>Game\Character\EnemyBase\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>Game\Character\EnemyBase\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GID.h" />
@@ -47,6 +50,9 @@
       <Filter>Game\Character\EnemyBase</Filter>
     </ClInclude>
     <ClInclude Include="Game\Character\EnemyBase\Enemy\Enemy01.h">
+      <Filter>Game\Character\EnemyBase\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
       <Filter>Game\Character\EnemyBase\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
