@@ -3,15 +3,20 @@
 #include "Windows.h"
 #include"CBoss.h"
 
+extern CBoss*Boss;
+
 void CSceneGame::Init(){
 	Tank = new CPlayerTank();
 	EnemyTank = new CEnemyTank();
 	Tank->Init();
 	EnemyTank->Init();
 	EnemyTank->mPosition = CVector2(-400.0f, 250.0f);
+	Boss->mPosition = CVector2(400.0f, -250.0f);
 	EnemyTank->mRotation = 270.0f;
+	Boss->mRotation = -270.0f;
 	CTaskManager::Get()->Add(Tank);
 	CTaskManager::Get()->Add(EnemyTank);
+	CTaskManager::Get()->Add(Boss);
 	Texture.Load("exp.tga");
 }
 
