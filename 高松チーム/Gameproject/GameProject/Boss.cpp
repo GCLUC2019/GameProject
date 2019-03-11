@@ -1,14 +1,17 @@
 #include "Boss.h"
-#include "../GameProject/Game/Resource/Resource.h"Å@
+#include "Game/Resource/Resource.h"
 
-BossHead::BossHead()
+BossHead::BossHead():EnemyBase(eBossHead)
 {
+
 }
 
 void BossHead::Update()
 {
+
 }
 
 void BossHead::Draw()
 {
+
 }
