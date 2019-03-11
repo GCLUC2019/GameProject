@@ -11,7 +11,8 @@ CCharacterPlayer::CCharacterPlayer() :CCharacter(eTaskIdPlayer, 0)
 
 	SetIsShowShadow(true);
 	SetShadowSize(CVector2D(100, 50));
-	SetShadowAdjPos(CVector2D(15.0, -20.0));
+	SetDrawAdjPos(CVector2D(-15, 20.0f));
+	SetRads(75,200,10);
 }
 
 CCharacterPlayer::~CCharacterPlayer()
@@ -60,6 +61,7 @@ void CCharacterPlayer::LoadAnimImage()
 
 void CCharacterPlayer::Update()
 {
+	//printf("x %lf y %lf z %lf\n", m_pos.x, m_pos.y, m_pos.z);
 	m_will_play_anim_id = ePlayerAnimIdIdle;
 	InputMove();
 	InputJump();
@@ -133,5 +135,5 @@ void CCharacterPlayer::CharacterDraw()
 
 void CCharacterPlayer::CalcScroll()
 {
-	SetScroll(CVector2D(m_pos.x - 200,0));
+	SetScroll(CVector2D(m_pos.x - 100,0));
 }
