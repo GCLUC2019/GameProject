@@ -2,7 +2,7 @@
 #include "../GameProject/Game/Resource/Resource.h"
 #include <stdio.h>
 #define GRAVITY -4//重力
-#define DEP_N 720//重力
+#define DEP_N 1200//奥行重石
 #define JUMP_SPD 50
 
 enum PlayerState
@@ -48,7 +48,7 @@ void Player::Move()
 			m_State = eAttack01;
 		}
 		
-		if (CInput::GetState(0, CInput::eHold, CInput::eButton3)) {
+		if (CInput::GetState(0, CInput::ePush, CInput::eButton3) && m_Squat_flg == false && m_Attack_flg == false) {
 			m_Jump_flg = true;
 			m_State = eJump;
 		}
@@ -156,7 +156,7 @@ void Player::Draw()
 #endif // _DEBUG
 
 	
-#define SAIZE 150
+#define SAIZE 200
 	m_img.SetSize(SAIZE *m_Depth, SAIZE *m_Depth);
 	m_img.SetCenter(SAIZE * m_Depth / 2, SAIZE * m_Depth / 2);
 	m_img.SetPos(m_pos+CVector2D(0,m_Jumpvec));
