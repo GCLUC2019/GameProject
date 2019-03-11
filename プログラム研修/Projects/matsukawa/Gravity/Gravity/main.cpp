@@ -1,36 +1,45 @@
 #include "stdio.h"
+#include "TaskManagement.h"
+#include "TaskManager.h"
+#include "Task.h"
+#include "TaskA.h"
 
+//TaskManager* head;
 
-
-class Task {
-public:
-	Task * prev;
-	Task* next;
-	bool killFlag;
-	Task();
-	void Add(Task *_mp);
-	virtual void Draw();
-	void DrawAll();
-};
-
-class TaskA :public Task {
-public:
-	TaskA();
-	void Draw();
-};
-
-Task* head;
 
 int main() {
-
-    head = new Task();
 	
 	for (int i = 0; i < 3; ++i) {
-		head->Add(new TaskA());
+	/*	TaskManager::GetInstance()->AddTask(new TaskA());*/
+		TaskManagement::GetIns()->Add(new TaskA());
 	}
-	//headから最後のタスクのDraw関数を呼び出す。
-	head->DrawAll();
+	for (int i = 0; i < 4; ++i) {
+		/*TaskManager::GetInstance()->AddTask(new Task());*/
+		TaskManagement::GetIns()->Add(new Task());
+	}
+	for (int i = 0; i < 3; ++i) {
+	/*	TaskManager::GetInstance()->AddTask(new TaskA());*/
+		TaskManagement::GetIns()->Add(new TaskA());
+	}
+	for (int i = 0; i < 4; ++i) {
+	/*	TaskManager::GetInstance()->AddTask(new Task());*/
+		TaskManagement::GetIns()->Add(new Task());
+	}
 
+	//headから最後のタスクのDraw関数を呼び出す。
+	/*TaskManager::GetInstance()->UpdateAll();
+	TaskManager::GetInstance()->DrawAll();
+	TaskManager::GetInstance()->KillAll();
+	TaskManager::GetInstance()->DrawAll();*/
+	TaskManagement::GetIns()->UpdateAll();
+	TaskManagement::GetIns()->DrawAll();
+	printf("\n");
+	TaskManagement::GetIns()->DrawTailAll();
+	//TaskManagement::GetIns()->KillFlagAll();
+	//TaskManagement::GetIns()->FlagKill();
+	TaskManagement::GetIns()->KillAll();
+	
+	printf("終了\n");
 
 	/*double v, v0;
 	double g, ti;
@@ -52,45 +61,8 @@ int main() {
 	return 0;
 }
 
-Task::Task():
-prev(nullptr),
-next(nullptr)
-{
-}
 
-void Task::Add(Task  *_mp)
-{
-	Task *t = _mp;
-	Task*p = head;
-	while (p->next != nullptr)
-	{
-		p = p->next;
-	}
-	
-	p->next = t;
-	t->prev = p;
-	t->killFlag = false;
-}
 
-void Task::Draw()
-{
-	printf("TaskDraw\n");
-}
 
-void Task::DrawAll()
-{
-	Task *t = head;
-	while (t) {
-		t->Draw();
-		t = t->next;
-	}
-}
 
-TaskA::TaskA()
-{
-}
 
-void TaskA::Draw()
-{
-	printf("TaskA\n");
-}
