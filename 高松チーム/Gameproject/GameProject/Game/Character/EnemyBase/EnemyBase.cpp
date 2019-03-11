@@ -12,6 +12,10 @@ void EnemyBase::Attack()
 {
 }
 
+void EnemyBase::Damage()
+{
+}
+
 void EnemyBase::Update()
 {
 	m_pos_old = m_pos;

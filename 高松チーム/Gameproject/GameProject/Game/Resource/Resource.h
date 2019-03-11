@@ -25,6 +25,7 @@ public:
 		ADD_RESOURCE("Enemy04", CAnimImage::LoadImage("../data/Image/zako_kamaitachi_motion.png", Enemy04AnimData, 512, 512));
 		ADD_RESOURCE("Enemy05", CAnimImage::LoadImage("../data/Image/zako_niku_motion.png", Enemy05AnimData, 512, 512));
 		ADD_RESOURCE("BossFire", CImage::LoadImage("../data/Image/pipo-btleffect162.png"));
+		ADD_RESOURCE("Title", CImage::LoadImage("../data/Image/title.png"));
 
 	}
 };
