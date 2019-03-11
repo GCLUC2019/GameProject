@@ -7,6 +7,7 @@ public:
 public:
 	Task();
 	virtual void Draw();
+	virtual void Delete();
 };
 
 Task::Task() :mp_next(nullptr){
@@ -15,6 +16,53 @@ Task::Task() :mp_next(nullptr){
 void Task::Draw(){
 	printf("TaskDraw\n");
 }
+void Task::Delete(){
+	printf("TaskDelete\n");
+}
+
+class TaskManager{
+private:
+	Task*head;
+	static TaskManager*instance;
+public:
+	TaskManager();
+	static TaskManager*GetInstance();
+	static void ClearInstance();
+
+	void DrawAll();
+	void Add(Task*t);
+	void DeleteAll(Task*t);
+};
+TaskManager*TaskManager::instance = nullptr;
+
+TaskManager::TaskManager() :head(nullptr){
+}
+
+TaskManager*TaskManager::GetInstance(){
+	if (instance == nullptr)instance = new TaskManager();
+	return instance;
+}
+void TaskManager::ClearInstance(){
+	if (instance == nullptr)return;
+	delete instance;
+}
+void TaskManager::DrawAll(){
+	//headから最後のタスクのDraw関数を呼び出す
+	Task*t = head;
+	while (t){
+		t->Draw();
+		t = t->mp_next;
+	}
+}
+
+void TaskManager::Add(Task*t){
+
+}
+
+void TaskManager::DeleteAll(Task*t){
+
+}
+
 class A :public Task{
 public:
 	void Draw();
@@ -29,26 +77,15 @@ Task*head;
 using namespace std;
 
 int main(){
+	TaskManager m;
+	m.Add(new Task());
 	//タスクを1つ作成
-	head = new Task();
 
 	//3つのタスクを追加
 	for (int i = 0; i < 3; ++i){
-		Task*t = new A();
-		Task*n = head;
-		//末尾のタスクまで進める
-		while(n->mp_next){
-			n = n->mp_next;
-		}
-		//タスクをつなげる
-		n->mp_next = t;
+		m.Add(new A());
 	}
-	//headから最後のタスクのDraw関数を呼び出す
-	Task*t = head;
-	while (t){
-		t->Draw();
-		t = t->mp_next;
-	}
+	
 		system("pause");
 		return 0;
 

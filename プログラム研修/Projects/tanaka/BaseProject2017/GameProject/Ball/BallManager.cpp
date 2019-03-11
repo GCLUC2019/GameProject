@@ -1,5 +1,6 @@
 #include "BallManager.h"
 #include "Ball.h"
+#include "Bullet.h"
 #include "../Global.h"
 BallManager::BallManager():Task(eId_Ball,eUp_Ball,eRd_Ball)
 {
@@ -23,7 +24,7 @@ void BallManager::Update(float delta_time)
 			CVector2D pos = CInput::GetMousePoint();
 			//マウスの位置に玉を生成
 			//new Ball(pos);
-
+            new Bullet(pos);
             Ball*b = new Ball(pos);
             b->SetVector(CVector2D(Utility::Rand(-200, 200), -200));
 		}
