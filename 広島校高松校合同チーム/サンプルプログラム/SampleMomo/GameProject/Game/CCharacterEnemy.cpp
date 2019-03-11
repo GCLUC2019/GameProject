@@ -20,8 +20,8 @@ CCharacterEnemy::CCharacterEnemy() :CCharacter(eTaskIdEnemy, 0)
 	m_enemy_hp = 100;
 
 	m_vec = CVector3D(0, 0, 0);
-	m_pos = CVector3D(500, -50, 380);  //初期値のy軸は地面に埋まらないように少し浮かせる
-	m_rads = CVector3D(10,10,10);
+	m_pos = CVector3D(1000, -50, 500);  //初期値のy軸は地面に埋まらないように少し浮かせる
+	m_rads = CVector3D(75,150,10);
 	SetSize(300, 300);
 
 	is_damage = true;
@@ -34,7 +34,7 @@ CCharacterEnemy::CCharacterEnemy() :CCharacter(eTaskIdEnemy, 0)
 	SetAnim(eEnemyAnimIdIdle);
 	SetIsShowShadow(true);
 	SetShadowSize(CVector2D(100, 50));
-	SetShadowAdjPos(CVector2D(-8.0, -50.0));
+	SetDrawAdjPos(CVector2D(5.0, -50.0));
 }
 
 CCharacterEnemy::~CCharacterEnemy()
@@ -153,8 +153,8 @@ void CCharacterEnemy::MovePos()
 	m_pos_old = m_pos;
 	m_pos += m_vec;
 	//とりあえずテスト用なので
-	if (m_pos.z <= 280.0f) m_pos.z = 280.0f;
-	if (m_pos.z >= 580.0f) m_pos.z = 580.0f;
+	/*if (m_pos.z <= 280.0f) m_pos.z = 280.0f;
+	if (m_pos.z >= 580.0f) m_pos.z = 580.0f;*/
 }
 
 void CCharacterEnemy::AiChange(int ai_cnt)

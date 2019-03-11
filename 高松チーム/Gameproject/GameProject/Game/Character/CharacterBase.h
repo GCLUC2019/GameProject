@@ -13,7 +13,7 @@ class CharacterBase : public Task {
 private:
 protected:
 	CVector2D m_pos;
-	CImage m_img;
+	CAnimImage m_img;
 	int m_type;
 
 public:
