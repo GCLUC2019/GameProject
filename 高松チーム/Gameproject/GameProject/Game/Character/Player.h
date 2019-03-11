@@ -2,6 +2,11 @@
 #include "CharacterBase.h"
 /*
 作成　中尾	
+　操作　暫定
+ 十字　	:移動
+ zキー	:しゃがみ	（まだ）
+ xキー	:攻撃　　	（まだ）
+ cキー	:ジャンプ
 */
 class Player : public CharacterBase {
 private:
@@ -20,6 +25,9 @@ public:
 	@brief 移動制御関数
 	*/
 	void Move();
+	/*
+	@brief ジャンプ制御関数
+	*/
 	void Jump();
 	void Update();
 	void Draw();
