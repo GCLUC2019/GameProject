@@ -22,6 +22,7 @@ m_speed(4.0f),
 m_squat_flg(false),
 m_attack_flg(false),
 m_jump_flg(false),
+m_flip(false),
 m_jump_vec(0)
 {
 	m_pos = CVector2D(1280/2, 540);
@@ -76,10 +77,12 @@ void Player::Move()
 	}
 	if (CInput::GetState(0, CInput::eHold, CInput::eRight)) {
 		m_pos.x += m_speed;
+		m_flip = false;
 		m_state = eMove;
 	}
 	if (CInput::GetState(0, CInput::eHold, CInput::eLeft)) {
 		m_pos.x -= m_speed;
+		m_flip = true;
 		m_state = eMove;
 	}
 }
@@ -99,16 +102,66 @@ void Player::Jump()
 
 void Player::Attack()
 {
-	static int k = 120;
+	static int k = 0;
 	switch (m_state)
 	{
 	case eAttack01:
+		if (k <= 30) {
+			if (m_flip)
+				Utility::DrawQuad(m_pos + CVector2D(25, 0), CVector2D(50, 50), CVector4D(1.0f, 0, 0, 1));
+			else
+				Utility::DrawQuad(m_pos - CVector2D(25, 0), CVector2D(50, 50), CVector4D(1.0f, 0, 0, 1));
+		}
+		if (CInput::GetState(0, CInput::ePush, CInput::eButton2)&&k>10) {
+			m_state = eAttack02;
+			k = 0;
+		}
+		if (k >= 60 || m_squat_flg) {
+			k = 0;
+			m_attack_flg = false;
+		}
 		break;
 	case eAttack02:
+		if (k <= 30) {
+			if (m_flip)
+				Utility::DrawQuad(m_pos + CVector2D(25, 0), CVector2D(50, 50), CVector4D(1.0f, 0, 1, 1));
+			else
+				Utility::DrawQuad(m_pos - CVector2D(25, 0), CVector2D(50, 50), CVector4D(1.0f, 0, 1, 1));
+		}
+		if (CInput::GetState(0, CInput::ePush, CInput::eButton2) && k>10) {
+			m_state = eAttack03;
+			k = 0;
+		}
+		if (k >= 60 || m_squat_flg) {
+			k = 0;
+			m_attack_flg = false;
+		}
 		break;
 	case eAttack03:
+		if (k <= 30) {
+			if (m_flip)
+				Utility::DrawQuad(m_pos + CVector2D(25, 0), CVector2D(50, 50), CVector4D(1.0f, 1, 0, 1));
+			else
+				Utility::DrawQuad(m_pos - CVector2D(25, 0), CVector2D(50, 50), CVector4D(1.0f, 1, 0, 1));
+		}
+	
+		if (k >= 60 || m_squat_flg) {
+			k = 0;
+			m_attack_flg = false;
+		}
 		break;
 	case eAttack04:
+		if (k <= 3) {
+			if (m_flip)
+				Utility::DrawQuad(m_pos + CVector2D(25, 0), CVector2D(100, 100), CVector4D(1.0f, 1, 1, 1));
+			else
+				Utility::DrawQuad(m_pos - CVector2D(25, 0), CVector2D(100, 100), CVector4D(1.0f, 1, 1, 1));
+		}
+
+		if (k >= 20 || m_squat_flg) {
+			k = 0;
+			m_attack_flg = false;
+		}
 		break;
 	default:
 		printf("null");
@@ -117,11 +170,8 @@ void Player::Attack()
 #ifdef _DEBUG//後でアニメーション設定に変更
 	m_img.SetAng(DtoR(90));
 #endif // _DEBUG
-	if (k <= 0 || m_squat_flg) {
-		k = 120;
-		m_attack_flg = false;
-	}
-	k--;
+	
+	k++;
 }
 
 
@@ -151,7 +201,7 @@ void Player::Update()
 void Player::Draw()
 {
 #ifdef _DEBUG
-	Utility::DrawQuad(CVector2D(0, 720 / 2), CVector2D(1280, 720), CVector4D(1.0f, 0, 0, 1));
+	//Utility::DrawQuad(CVector2D(0, 720 / 2), CVector2D(1280, 720), CVector4D(1.0f, 0, 0, 1));
 	/*switch (m_State)//状態デバック表示
 	{
 	case eIdol:
@@ -190,8 +240,9 @@ void Player::Draw()
 	m_img.SetSize(SAIZE *m_depth, SAIZE *m_depth);
 	m_img.SetCenter(SAIZE * m_depth / 2, SAIZE * m_depth / 2);
 	m_img.SetPos(m_pos+CVector2D(0, m_jump_vec));
+	m_img.SetFlipH(m_flip);
 	m_img.Draw();
 #define _DEBUG
-	//Utility::DrawQuad(m_pos, CVector2D(50, 50), CVector4D(1.0f, 0, 0, 1));
+	
 }
 

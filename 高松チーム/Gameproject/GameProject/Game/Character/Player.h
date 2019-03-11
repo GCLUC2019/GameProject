@@ -11,11 +11,13 @@
 class Player : public CharacterBase {
 private:
 	CImage m_shadow;		//
+
 	CVector2D m_pos_old;	//前座標
 	float m_speed;			//移動速度
 	int m_state;			// 状態
 	int m_jump_vec;			//ジャンプ値
 	float m_depth;			//描画奥行き
+	bool m_flip;			//反転フラグ
 	bool m_jump_flg;		//ジャンプフラグ
 	bool m_squat_flg;		//しゃがみフラグ
 	bool m_attack_flg;		//攻撃フラグ
