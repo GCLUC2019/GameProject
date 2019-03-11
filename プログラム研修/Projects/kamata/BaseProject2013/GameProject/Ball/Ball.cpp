@@ -2,12 +2,12 @@
 #include "../Global.h"
 Ball::Ball(const CVector2D& pos):Task(eId_Ball,eUp_Ball,eRd_Ball)
 {
-	m_pos = pos;
+	m_pos = pos+CVector2D(50,0);
 	m_vec = CVector2D(0, -120);
 }
-
 //出現位置の数
 #define POINT_MAX 5
+//const int point_data_size=5;
 
 CVector2D point_data[POINT_MAX] = {
 	CVector2D(64, 64),
@@ -17,11 +17,16 @@ CVector2D point_data[POINT_MAX] = {
 	CVector2D(256, 512),
 };
 
+const int point_data_size = ARRAY_SIZE(point_data);
+const float default_speed = -20.0f;
 Ball::Ball():Task(eId_Ball, eUp_Ball, eRd_Ball)
 {
-	int r = rand() % POINT_MAX;
+	int r = rand() % point_data_size;
+	//01234   5 
+	//static_assert(POINT_MAX == point_data_size, "要素数オーバー");
+	assert(r < point_data_size);
 	m_pos = point_data[r];
-	m_vec = CVector2D(0, -20);
+	m_vec = CVector2D(0, default_speed);
 }
 
 //int GetSize(const CVector2D*array){
@@ -37,9 +42,13 @@ Ball::~Ball()
 void Ball::Update(float delta_time)
 {
 	DEBUG_PRINT("デバック中");
-	m_vec.y += GRAVITY * SPF;
-	m_pos += m_vec;
+	m_vec.y += GRAVITY * delta_time;
+	m_pos += m_vec*delta_time;
 	if (m_pos.y > SCREEN_HEIGHT) SetKill();
+}
+
+void Ball::SetVector(const CVector2D&vec){
+	m_vec = vec;
 }
 
 void Ball::Render()

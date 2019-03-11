@@ -16,14 +16,20 @@ void Task::Delete()
 
 Task::~Task()
 {
-	printf("タスク削除\n");
+	printf("task_id %d タスク削除\n",m_task_id);
 }
 
 
 void Task::Update()
 {
+
 }
 
 void Task::Draw() {
 	printf("TaskDraw Dp %d\n",m_draw_priority);
+}
+
+void Task::CollisionCheck(Task * _collision_task)
+{
+
 }

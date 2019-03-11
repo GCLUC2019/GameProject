@@ -1,113 +1,37 @@
 #include <stdio.h>
+#include"Task/Task.h"
+#include"Task/TaskManager.h"
 
+#define T_MN TaskManager
+#define T_AD(n) TaskManager::Add(n)
+#define T_ADF(n) TaskManager::Addf(n)
 
-
-class Task {
-private:
-	Task * prev;
-	Task* next;
-public:
-	Task * GetPrev() {
-		return prev;
-	}
-	Task* GetNext() {
-		return next;
-	}
-	void SetPrev(Task * p) {
-		prev = p;
-	}
-	void SetNext(Task * n) {
-		next = n;
-	}
-	Task();
-	virtual void Draw();
-
-};
-
-
-Task::Task():
-	prev(nullptr),
-next(nullptr)
-{
-
-}
-void Task::Draw() {
-	printf("TaskDraw\n");
-}
 
 class A :public Task {
 private:
 
 public:
+	A();
 	void Draw();
 };
 
-void A::Draw() {
-	printf("ADraw\n");
-}
-
-class TaskManager {
-private:
-	static Task * head;
-	
-public:
-	TaskManager();
-	static void Addf(Task* t);
-	static void Add(Task* t);
-
-	static void DrawAll(Task* t,bool f);
-};
-TaskManager::TaskManager()
+A::A():Task()
 {
-}
-void TaskManager:: Addf(Task* t) {
 	
 }
 
-void TaskManager::Add(Task* t) {
-	if (head == nullptr) {
-		head = t;
-		return;
-	}
-	Task* n = head;
-	while (n->GetNext() != nullptr) {
-		n = n->GetNext();
-	}
-	;
-	n->SetNext(t);
-	t->SetPrev(n);
+void A::Draw() {
+	printf("A_%d\n",m_S_Weigh);
 }
-void TaskManager::DrawAll(Task* t, bool f) {
-	if (f) {
-		while (t->GetPrev() != nullptr) {
-			t = t->GetPrev();
-		}
-		while (t) {
-			t->Draw();
-			t = t->GetNext();
-		}
-	}
-	else {
-		while (t->GetNext() != nullptr) {
-			t = t->GetNext();
-		}
-		while (t) {
-			t->Draw();
-			t = t->GetPrev();
-		}
-	}
 
-}
-Task* head;
-Task* last;
 int main() {
-	head;
+	
 	//タスクをひとつ生成
-	head = new Task();
+	T_AD(new Task());
 	//タスクを追加
-	last = head;
-	for (int i = 0; i < 3;++i) {
-		TaskManager::Add(new A);
+	
+	for (int i = 0; i < 5;++i) {
+		T_AD(new Task(i, eBack));
 	/*
 		Task *t = new A();
 		Task* n = head;
@@ -124,11 +48,18 @@ int main() {
 	
 	
 	//headから最後のタスクまでのDoraw関数を呼び出す
-	Task *t = head;
-	TaskManager::DrawAll(t, true);
+	T_MN::DrawAll(T_MN::GetHead() , true);
 	printf("\n終了\n\n");
-	 t = last;
-	 TaskManager::DrawAll(t, false);
+	//TaskManager::Swap(TaskManager::GetLast()->GetPrev(), TaskManager::GetHead()->GetNext());
+	T_MN::Exclusion(T_MN::GetHead()->GetNext());
+	T_MN::DrawAll(T_MN::GetHead(), true);
+	printf("\n終了\n\n");
+	T_MN::Exclusion(T_MN::GetHead());
+	T_MN::Exclusion(T_MN::GetLast());
+	T_AD(new A());
+	T_ADF(new Task(10));
+	T_MN::DrawAll(T_MN::GetHead()->GetNext()->GetNext(), true);
+
 	//float Gravity = -9.8;
 	//float spd, spd_0, h, h_0;
 	//int time;
@@ -143,6 +74,7 @@ int main() {
 
 	
 	printf("\n終了\n");
+	T_MN::ExclusionDelete();
 	getchar();
 	return 0;
 }
