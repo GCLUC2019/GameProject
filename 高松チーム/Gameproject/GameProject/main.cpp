@@ -89,7 +89,7 @@ void Init(void)
 	//-----------------------------------------------------
 	new Resource();
 	TaskManager::GetInstance()->AddTask(new Player());
-	TaskManager::GetInstance()->AddTask(new Enemy());
+	TaskManager::GetInstance()->AddTask(new Enemy01());
 
 
 }
