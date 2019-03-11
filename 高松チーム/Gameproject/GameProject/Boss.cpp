@@ -4,23 +4,20 @@
 #define BOSS_X_SIZE 768
 #define BOSS_Y_SIZE 768
 
-
-
 BossHead::BossHead():EnemyBase(eBossHead)
 {
 	m_img = COPY_RESOURCE("Boss", CImage*);
-	m_img2 = COPY_RESOURCE("Boss", CImage*);
 	m_img.SetSize(BOSS_X_SIZE / 3, BOSS_Y_SIZE / 3);
-	m_img2.SetSize(BOSS_X_SIZE / 3, BOSS_Y_SIZE / 3);
+	//プレイヤー座標取得可能後
+	//m_pos = CVector2D(1280 - BOSS_X_SIZE / 3, Player_pos.y);
 	m_pos = CVector2D(1280 - BOSS_X_SIZE / 3, BOSS_Y_SIZE - BOSS_Y_SIZE /3);
-	m_pos2 = CVector2D(1280 - BOSS_X_SIZE / 3, BOSS_Y_SIZE - BOSS_Y_SIZE / 3);
 	m_state = eIdle;
 }
 
 
 void BossHead::Update()
 {
-	if (CInput::GetState(0, CInput::eHold, CInput::eButton1)) {
+	if (CInput::GetState(0, CInput::ePush, CInput::eButton1)) {
 		m_state = eAttack;
 	}
 	switch (m_state) {
@@ -41,23 +38,27 @@ void BossHead::Update()
 
 void BossHead::Idle()
 {
-	
+	m_state = eIdle;
 }
 
 void BossHead::Attack()
 {
+	TaskManager::GetInstance()->AddTask(new BossEffect(m_pos));
+	//m_state = eIdle;
 }
 
 
 void BossHead::Draw()
 {
-	m_img.SetRect(0, BOSS_Y_SIZE * 4, BOSS_X_SIZE, BOSS_Y_SIZE * 5);
-	m_img2.SetRect(BOSS_X_SIZE, BOSS_Y_SIZE * 4, BOSS_X_SIZE * 2, BOSS_Y_SIZE * 5);
-	m_img.SetPos(m_pos);
-	m_img2.SetPos(m_pos2);
-	if (CInput::GetState(0, CInput::eHold, CInput::eButton1)) {
-		m_img2.Draw();
-		TaskManager::GetInstance()->AddTask(new BossEffect(m_pos));
-	}else m_img.Draw();
+	if (m_state == eIdle) {
+		m_img.SetRect(0, BOSS_Y_SIZE * 4, BOSS_X_SIZE, BOSS_Y_SIZE * 5);
+		m_img.SetPos(m_pos);
+		m_img.Draw();
+	}
+	if (m_state == eAttack) {
+		m_img.SetRect(BOSS_X_SIZE, BOSS_Y_SIZE * 4, BOSS_X_SIZE * 2, BOSS_Y_SIZE * 5);
+		m_img.SetPos(m_pos);
+		m_img.Draw();
+	}
 }
 
