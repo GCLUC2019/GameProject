@@ -42,6 +42,7 @@ public:
 	void AfterUpdate();
 	virtual void CharacterAfterUpdate();
 
+	void SetWillPlayAnim(int _anim_id) { m_will_play_anim_id = _anim_id; };
 	void SetAnim(int _anim_id);
 	void PlayAnim();
 

@@ -6,6 +6,7 @@
 #define BOX_POSISHON CVector2D(100, 630)
 #define TEXT_SIZE CVector2D(1100,70)
 #define TEXT_POSISHON CVector2D(130, 635)
+#define TEXT_DEF_SIZE CVector2D(30,50)
 
 CStoryScene::CStoryScene() : CObject(0, 0)
 {
@@ -17,6 +18,9 @@ CStoryScene::CStoryScene() : CObject(0, 0)
 	SetStory(name);
 	SetTextBox();
 	SetText(t_name);
+
+	rect_cnt = 0;
+    dis_cnt = 0;
 }
 
 CStoryScene::~CStoryScene()
@@ -25,6 +29,7 @@ CStoryScene::~CStoryScene()
 
 void CStoryScene::Update()
 {
+	UpdateText(24);
 }
 
 void CStoryScene::Draw()
@@ -52,5 +57,21 @@ void CStoryScene::SetText(char text_name[])
 {
 	m_text= COPY_RESOURCE(text_name, CImage*);
 	m_text.SetPos(TEXT_POSISHON);
-	m_text.SetSize(TEXT_SIZE);
+	//êÿÇËéÊÇËèâä˙à íu
+	m_text.SetRect(0,0,30,40);
+	m_text.SetSize(TEXT_DEF_SIZE);
+}
+
+void CStoryScene::UpdateText(int word)
+{
+	
+	if (dis_cnt == 5) {
+		if (rect_cnt <= rect_cnt * word) {
+			m_text.SetRect(0, 0, 30 + rect_cnt, 40);
+			m_text.SetSize(30 + rect_cnt, 50);
+			rect_cnt += 30;
+		}
+		dis_cnt = 0;
+	}
+	dis_cnt++;
 }
