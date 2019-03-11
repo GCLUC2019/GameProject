@@ -27,6 +27,8 @@ CCharacterEnemy::CCharacterEnemy() :CCharacter(eTaskIdEnemy, 0)
 	is_damage = true;
 	m_attack_chance = false;
 	m_AI_cnt = 0;
+	p_pos = CVector3D(0, 0, 0);
+	p_vec = CVector2D(0, 0);
 	LoadAnimImage();
 
 	SetAnim(eEnemyAnimIdIdle);
@@ -106,13 +108,15 @@ void CCharacterEnemy::LoadAnimImage()
 
 	m_anim_info[eEnemyAnimIdDamage].image_num = 1;
 	m_anim_info[eEnemyAnimIdDamage].image_id = eEnemyAnimDamage1;
-	m_anim_info[eEnemyAnimIdDamage].delay = 1000;
+	m_anim_info[eEnemyAnimIdDamage].delay = 100;
 }
 
 void CCharacterEnemy::Idle()
 {
 	SetWillPlayAnim(eEnemyAnimIdIdle);
 	is_damage = true;
+	p_vec = CVector2D(p_pos.x - m_pos.x, p_pos.z - m_pos.z);
+	p_vec = p_vec/p_vec.Length();
 	m_vec = CVector3D(0, m_vec.y, 0);
 	AiChange(200);
 }
@@ -121,7 +125,7 @@ void CCharacterEnemy::Move()
 {
 	SetWillPlayAnim(eEnemyAnimIdMove);
 	is_damage = true;
-	m_vec = CVector3D(-1, m_vec.y, -1);
+	m_vec = CVector3D(p_vec.x, m_vec.y, p_vec.y);
 	AiChange(200);
 }
 
@@ -183,8 +187,10 @@ void CCharacterEnemy::AiChange(int ai_cnt)
 void CCharacterEnemy::CharacterBeforeCollisionCheck()
 {
 	CCharacterPlayer* p = dynamic_cast<CCharacterPlayer*>(TaskManager::GetInstance()->FindTask(eTaskIdPlayer));
-	CVector3D p_pos = p->GetPos();
-	if (m_pos.x - p_pos.x < 100) {
+	p_pos = p->GetPos();
+	CVector2D l_vec = CVector2D(p_pos.x - m_pos.x, p_pos.z - m_pos.z);
+	if (l_vec.Length() < 150) {
 		m_attack_chance = true;
 	}
+	else m_attack_chance = false;
 }
