@@ -20,3 +20,6 @@
 #include <Utility.h>
 #include <CResource.h>
 #include <CAnimImage.h>
+
+#define ZERO 0
+#define IMAGE_SIZE 100
