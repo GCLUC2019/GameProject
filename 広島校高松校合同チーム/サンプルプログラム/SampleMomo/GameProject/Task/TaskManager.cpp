@@ -130,7 +130,7 @@ void TaskManager::BeforeUpdateAll()
 	while (true) {
 		if (t == nullptr) break;
 		Task* t_next = t->GetNextTask();
-		t->BeforeUpdate();
+		if (t->GetIsDelete() == false) t->BeforeUpdate();
 		t = t_next;
 	}
 }
@@ -141,7 +141,7 @@ void TaskManager::UpdateAll()
 	while (true) {
 		if (t == nullptr) break;
 		Task* t_next = t->GetNextTask();//UpdateでDeleteが実行されても大丈夫なように
-		t->Update();
+		if (t->GetIsDelete() == false) t->Update();
 		t = t_next;
 	}
 }
@@ -152,7 +152,7 @@ void TaskManager::AfterUpdateAll()
 	while (true) {
 		if (t == nullptr) break;
 		Task* t_next = t->GetNextTask();
-		t->AfterUpdate();
+		if (t->GetIsDelete() == false) t->AfterUpdate();
 		t = t_next;
 	}
 }
@@ -163,7 +163,7 @@ void TaskManager::BeforeCollisionAll()
 	while (true) {
 		if (t == nullptr) break;
 		Task* t_next = t->GetNextTask();
-		t->BeforeCollisionCheck();
+		if (t->GetIsDelete() == false) t->BeforeCollisionCheck();
 		t = t_next;
 	}
 }
@@ -186,7 +186,7 @@ void TaskManager::CollisionAll()
 				continue;
 			}
 
-			t->CollisionCheck(t_c);
+			if (t->GetIsDelete() == false&& t_c->GetIsDelete() == false) t->CollisionCheck(t_c);
 			t_c = t_c_next;
 		}
 		t = t_next;
@@ -200,7 +200,7 @@ void TaskManager::DrawAll()
 	while (true) {
 		if (t == nullptr) break;
 		Task* t_next = t->GetNextTask();//DrawでDeleteが実行されても大丈夫なように
-		t->Draw();
+		if (t->GetIsDelete() == false) t->Draw();
 		t = t_next;
 	}
 }
