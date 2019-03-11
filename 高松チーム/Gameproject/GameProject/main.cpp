@@ -9,8 +9,8 @@
 #include "stdafx.h"
 #include "Global.h"
 #include "GID.h"
-#include "Base\Task.h"
-#include "Base\TaskManager.h"
+#include "Task\Task.h"
+#include "Task\TaskManager.h"
 
 
 //--------------------------------------------

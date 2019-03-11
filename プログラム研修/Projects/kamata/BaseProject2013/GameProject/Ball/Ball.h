@@ -29,4 +29,9 @@ public:
 		@brief	•`‰æˆ—
 	**/
 	void Render();
+	/*!
+	@brief	ƒ{[ƒ‹‚ÌˆÚ“®—Ê‚ğİ’è
+	**/
+	void SetVector(const CVector2D& vec);
+
 };

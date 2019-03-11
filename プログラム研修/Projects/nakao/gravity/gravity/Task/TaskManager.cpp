@@ -122,7 +122,6 @@ void TaskManager::ExclusionDelete()
 	while (s) {
 		m_exclude = m_exclude->GetNext();
 		delete (s);
-		printf("íœ\n");
 		s = m_exclude;
 	}
 	m_exclude = nullptr;
