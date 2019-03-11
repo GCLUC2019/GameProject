@@ -22,12 +22,20 @@ void MainLoop(void) {
 	//ゲーム中はこの関数_を1秒間に60回呼び出している
 	//--------------------------------------------------------------
 
-	//更新(ソート)
-	TaskManager::GetTaskManagerPointer(eTaskManagerIdGeneral)->UpdateAllSort();
+	//削除フラグ確認
+	TaskManager::GetInstance()->CheckDeleteAll();
 
+	//更新
+	TaskManager::GetInstance()->UpdateAll();
 
-	//描画(ソート)
-	TaskManager::GetTaskManagerPointer(eTaskManagerIdGeneral)->DrawAllSort();
+	//当たり判定チェック
+	TaskManager::GetInstance()->CollisionAll();
+
+	//描画順ソート
+	TaskManager::GetInstance()->Sort();
+
+	//描画
+	TaskManager::GetInstance()->DrawAll();
 
 	//速すぎ防止
 	Sleep(1);

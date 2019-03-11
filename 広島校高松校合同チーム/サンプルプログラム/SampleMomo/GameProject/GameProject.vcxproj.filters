@@ -26,6 +26,9 @@
     <ClCompile Include="Task\TaskManager.cpp">
       <Filter>Task</Filter>
     </ClCompile>
+    <ClCompile Include="Game\CCommonObject.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Global.h" />
@@ -53,6 +56,9 @@
     </ClInclude>
     <ClInclude Include="Task\TaskManager.h">
       <Filter>Task</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CCommonObject.h">
+      <Filter>Game\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
