@@ -1,4 +1,7 @@
 #pragma once
+/*@’S“–
+	‘Œ©@class Enemy05
+*/
 #include "../EnemyBase.h"
 
 class Enemy05 : public EnemyBase {
