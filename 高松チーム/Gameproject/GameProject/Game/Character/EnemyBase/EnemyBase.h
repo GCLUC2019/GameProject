@@ -12,6 +12,7 @@ enum {
 	eEnemy04,
 	eEnemy05,
 	eBossHead,
+	eBossHund
 };
 
 class EnemyBase : public Task {
