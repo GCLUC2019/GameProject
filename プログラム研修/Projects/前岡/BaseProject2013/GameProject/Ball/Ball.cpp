@@ -21,7 +21,10 @@ CVector2D point_deta[POINT_MAX] = {
 Ball::Ball():Task(eId_Ball,eUp_Ball,eRd_Ball)
 {
 
-	int r=rand() % POINT_MAX;
+	int r = rand () % POINT_MAX;
+	const int a = 9;
+	static_assert( POINT_MAX==5,"要素数オーバー");
+	assert(r < POINT_MAX);
 	m_pos = point_deta[r];
 	m_vec = CVector2D(0, -20);
 }
@@ -29,9 +32,9 @@ Ball::Ball():Task(eId_Ball,eUp_Ball,eRd_Ball)
 void Ball::Update(float delta_time)
 {
 	DEBUG_PRINT("デバッグ中");
-
-	m_vec.y += GRAVITY*SPF;
-	m_pos += m_vec;
+	
+	m_vec.y += GRAVITY*delta_time;
+	m_pos += m_vec*delta_time;
 	if (m_pos.y > SCREEN_HEIGHT)SetKill();
 }
 

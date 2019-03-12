@@ -41,24 +41,23 @@ static TexAnim PlayerDamage[] = {
 };
 
 static TexAnim PlayerDeath[] = {
-	{17,30},
-{18,30},
-{19,30},
+	{50,30},
+{51,30},
+{52,30},
 };
 
 static TexAnim PlayerJumpUp[] = {
-	{20,30},
-{21,30},
+	{60,30},
 };
 
 static TexAnim PlayerJumpDown[] = {
-	{21,30},
-{22,30},
+	{61,10},
+{62,30},
 };
 
 static TexAnim PlayerUp[] = {
-	{23,30},
-{24,30},
+	{70,30},
+{71,30},
 };
 
 static TexAnim PlayerRun[] = {
@@ -71,7 +70,7 @@ static TexAnim PlayerRun[] = {
 };
 
 static TexAnim PlayerCrouch[] = {
-	{90,30},
+	{90,5},
 {91,30},
 };
 
