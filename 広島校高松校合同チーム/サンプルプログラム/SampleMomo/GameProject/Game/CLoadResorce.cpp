@@ -39,5 +39,4 @@ void CLoadResorce::LoadResorce()
 	ADD_RESOURCE("Enemy_Move_0", CImage::LoadImage("Enemy_move1.png"));
 	ADD_RESOURCE("Enemy_Attack_0", CImage::LoadImage("Enemy_attack1.png"));
 	ADD_RESOURCE("Enemy_Damage_0", CImage::LoadImage("Enemy_damage1.png"));
-
 }

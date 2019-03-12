@@ -34,9 +34,7 @@ CCharacterEnemy::CCharacterEnemy() :CCharacter(eTaskIdEnemy, 0)
 	SetAnim(eEnemyAnimIdIdle);
 	SetIsShowShadow(true);
 	SetShadowSize(CVector2D(100, 50));
-	
-	SetDrawAdjPos(CVector2D(0, -50.0f));
-	//SetShadowAdjPos(CVector2D(0.0, 0.0));
+	SetDrawAdjPos(CVector2D(5.0, -50.0));
 }
 
 CCharacterEnemy::~CCharacterEnemy()
@@ -69,7 +67,7 @@ void CCharacterEnemy::CharacterUpdate()
 
 #endif // _DEBUG
 	MovePos();
-	MoveLimit();
+	
 }
 
 void CCharacterEnemy::CharacterDraw()
@@ -154,6 +152,9 @@ void CCharacterEnemy::MovePos()
 {
 	m_pos_old = m_pos;
 	m_pos += m_vec;
+	//とりあえずテスト用なので
+	/*if (m_pos.z <= 280.0f) m_pos.z = 280.0f;
+	if (m_pos.z >= 580.0f) m_pos.z = 580.0f;*/
 }
 
 void CCharacterEnemy::AiChange(int ai_cnt)

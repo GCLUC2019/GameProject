@@ -9,8 +9,12 @@ private:
 public:
 	CTitle();
 	~CTitle();
+	int m_count_txt;
+	int m_count_txt2;
+	bool m_draw_txt = true;
+	bool m_flash_txt = true;
 	void Update();
 	void Draw();
-	void next_scene();
+	void NextScene();
 };
 
