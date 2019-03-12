@@ -192,6 +192,20 @@ void TaskManager::ReLink(bool _fb, Task*_t1, Task * _t2)
 		t2->SetNext(t1);
 	}
 }
+/*’S“–
+“c’†*/
+Task * TaskManager::FindObject(int _type)
+{
+    Task*t = mp_head;
+    while (t->GetType() != _type) {
+
+        if (t->GetNext())
+            t = t->GetNext();
+        else
+            return nullptr;
+    }
+    return t;
+}
 
 TaskManager * TaskManager::GetInstance()
 {

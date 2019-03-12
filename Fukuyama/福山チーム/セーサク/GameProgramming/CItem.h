@@ -4,10 +4,11 @@
 #define CITEM_H
 
 #include "CRectangle.h"
+#include "Task.h"
 #include "CCollider.h"
 #include <stdlib.h>
 
-class CItem :public CRectangle{
+class CItem :public CRectangle, Task{
 public:
 	int mType;
 	CItem()

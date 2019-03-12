@@ -12,12 +12,14 @@ enum {
 	eEnemy04,
 	eEnemy05,
 	eBossHead,
+	eBossHund
 };
 
 class EnemyBase : public Task {
 private:
 protected:
-	
+
+	CRect m_rect;		//敵矩形
 	CVector2D m_pos;	//敵位置
 	CVector2D m_vec;	//敵ベクトル
 	CAnimImage m_img;	//敵画像
@@ -26,6 +28,7 @@ protected:
 	int m_state;		//敵状態
 	float m_ang;		//敵方向
 	float m_depth;		//奥行き
+	bool m_flip;		//反転フラグ
 	
 public:
 	EnemyBase(int _type);
@@ -35,6 +38,8 @@ public:
 	virtual void Update();
 	virtual void Draw();
 	virtual void HitCheck(Task* _t);
+	static bool CollisionCheckRect(EnemyBase* b1, EnemyBase* b2);
+	static bool CollitionCheckflip(int fliptype, EnemyBase* b1, EnemyBase*b2);
 	/*
 	@drief オブジェクトの画面移動を制限する
 	*/

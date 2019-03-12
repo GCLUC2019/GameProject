@@ -11,9 +11,12 @@ enum {
 };
 enum {
 	eBossFireEffect,
-	//eBossLazerEffect,
+};
+enum {
+	eBossLazerEffect,
 };
 
 extern TexAnimData BossAnimData[];
 extern TexAnimData BossFireEffectAnimData[];
+extern TexAnimData BossLazerEffectAnimData[];
 
