@@ -136,7 +136,7 @@ void Enemy02::Attack()
     }
     
     if (m_img.CheckAnimationEnd()) {
-        SetKill();
+        //SetKill();
         m_state = eSearch;
         
     }
