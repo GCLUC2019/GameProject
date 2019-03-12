@@ -2,12 +2,24 @@
 #include "../GameProject/Base/Task.h"
 
 
-class BossEffect : public Task {
+class BossFireEffect : public Task {
 private:
 	CAnimImage m_img;
 	CVector2D m_pos;
 public:
-	BossEffect(CVector2D& pos);
+	BossFireEffect(const CVector2D& pos);
+
+	void Update();
+
+	void Draw();
+};
+
+class BossLazerEffect : public Task {
+private:
+	CAnimImage m_img;
+	CVector2D m_pos;
+public:
+	BossLazerEffect(const CVector2D& pos);
 
 	void Update();
 

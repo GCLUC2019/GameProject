@@ -7,18 +7,12 @@
 */
 class BossHead :public EnemyBase {
 private:
-	enum {
-		eIdle,
-		eMove,
-		eAttack
-	};
-	CImage m_img2; //‰¡ƒuƒŒƒXUŒ‚img
-
 	CVector2D m_center;
 
-	float m_rot;
-	float m_r;
-	int m_state;
+	float m_rot;//‰~ü—¦
+	float m_r;  //”¼Œa
+
+	bool m_anim_flag;
 protected:
 
 
@@ -27,10 +21,6 @@ public:
 
 	void Update();
 
-	void Idle();
-
-	void Attack();
-
 	void Draw();
 
 };
@@ -38,17 +28,11 @@ public:
 
 class BossHand :public EnemyBase {
 private:
-	enum {
-		eIdle,
-		eMove,
-		eAttack
-	};
 
 	CVector2D m_center;
 
 	float m_rot;
 	float m_r;
-	int m_state;
 protected:
 
 
@@ -56,10 +40,6 @@ public:
 	BossHand();
 
 	void Update();
-
-	void Idle();
-
-	void Attack();
 
 	void Draw();
 

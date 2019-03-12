@@ -56,6 +56,12 @@
     <ClCompile Include="Game\Character\Anim\AnimDataPlayer.cpp">
       <Filter>Game\Character\Anim</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Character\EnemyBase\EnemyManager.cpp">
+      <Filter>Game\Character\EnemyBase</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Character\EnemyBase\Boss\BossManager.cpp">
+      <Filter>Game\Character\EnemyBase\Boss</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GID.h" />
@@ -115,6 +121,12 @@
     <ClInclude Include="Game\Character\Anim\AnimDataPlayer.h">
       <Filter>Game\Character\Anim</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Character\EnemyBase\EnemyManager.h">
+      <Filter>Game\Character\EnemyBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Character\EnemyBase\Boss\BossManager.h">
+      <Filter>Game\Character\EnemyBase\Boss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game">
@@ -149,6 +161,9 @@
     </Filter>
     <Filter Include="Game\Character\Effect">
       <UniqueIdentifier>{3b613b0f-e734-4dcf-ac24-8627318815d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Character\EnemyBase\Boss">
+      <UniqueIdentifier>{605d13e2-a924-4c7a-9324-fc622e01de7b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

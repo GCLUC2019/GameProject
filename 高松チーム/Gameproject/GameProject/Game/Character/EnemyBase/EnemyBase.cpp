@@ -25,6 +25,10 @@ void EnemyBase::Draw()
 {
 }
 
+void EnemyBase::HitCheck(Task * _t)
+{
+}
+
 void EnemyBase::MoveControl()
 {
 

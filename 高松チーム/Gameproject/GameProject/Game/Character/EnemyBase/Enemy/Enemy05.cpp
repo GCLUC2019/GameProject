@@ -1,9 +1,14 @@
 #include "Enemy05.h"
 #include "../../Anim/AnimData.h"
 #include "../GameProject/Game/Resource/Resource.h"
+#include "../../CharacterBase.h"
+#include "../../Player.h"
 #define MOVE_ 360
 
-Enemy05::Enemy05() : EnemyBase(eEnemy05)
+#define MOVE_ 360
+
+Enemy05::Enemy05() : EnemyBase(eEnemy05),
+m_move_cnt(0)
 {
 	//‰Šú‰»
 	m_img = COPY_RESOURCE("Enemy05", CAnimImage*);
@@ -44,7 +49,6 @@ void Enemy05::MoveManagement(int _type)
 		break;
 
 	case 1:
-		
 		break;
 	case 2:
 		break;
@@ -101,4 +105,16 @@ void Enemy05::Draw()
 	m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
 	m_img.SetPos(m_pos);
 	m_img.Draw();
+}
+
+void Enemy05::HitCheck(Task * _t)
+{
+	switch (_t->GetType()) {
+	case ePlayer:
+		
+		printf("player‚ğæ“¾");
+		break;
+	default:
+		break;
+	}
 }

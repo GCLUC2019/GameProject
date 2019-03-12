@@ -50,6 +50,28 @@ void TaskManager::DrawAll()
 	}
 }
 
+void TaskManager::HitCheckAll()
+{
+	//Task* d = mp_head;
+	//Task* d2 = d->GetNext();
+	////‘“–‚½‚è‚È‚ç‚±‚ê‚Å‚¢‚¯‚éH
+	//while (d) {
+	//	while (d2) {
+	//		d->HitCheck(d2);
+	//		d2->GetNext();
+	//	}		
+	//	d = d->GetNext();
+	//}
+
+	Task* d = mp_head;
+	Task* d2 = d->GetNext();
+
+	while (d) {
+		d->HitCheck(d2);
+		d = d->GetNext();
+	}
+}
+
 void TaskManager::Kill(Task * _t)
 {
 	Task* k = mp_head;

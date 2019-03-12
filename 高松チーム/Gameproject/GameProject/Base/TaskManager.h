@@ -19,6 +19,7 @@ public:
 	static void AddTask(Task *_t);
 	static void UpdateAll();
 	static void DrawAll();
+	static void HitCheckAll();
 	static void Kill(Task* _t);
 	static void KillAll();
 	static void Search();

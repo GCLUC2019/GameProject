@@ -14,6 +14,7 @@ private:
 	};
 private:
 	int m_move_cnt;	//‰¼UŒ‚ƒJƒEƒ“ƒg•Ï”
+	int mp_hp;
 public:
 	Enemy05();
 	void Move();
@@ -26,5 +27,6 @@ public:
 	void Damage();
 	void Update();
 	void Draw();
+	void HitCheck(Task* _t);
 	
 };
