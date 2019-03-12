@@ -88,15 +88,27 @@ void TaskManager::KillAll()
 */
 void TaskManager::CheckKillAll()
 {
+    Task*next = nullptr;
     Task* k = mp_head;
     do {
         //キルフラグがtrueなら
         if (k->m_kill_flg) {
             //前後を繋ぎなおす
-            Task*prev = k->GetPrev();
-            Task*next = k->GetNext();
-            prev->SetNext(next);
-            next->SetPrev(prev);
+            if (k== mp_head) {
+                mp_head = k->mp_next;
+                k->mp_next->SetPrev(nullptr);
+                next = k->mp_next;
+            }
+            else if (k == mp_last) {
+                mp_last = k->mp_prev;
+                k->mp_prev->SetNext(nullptr);
+                next = nullptr;
+            }
+            else {
+                k->mp_prev->SetNext(k->mp_next);
+                k->mp_next->SetPrev(k->mp_prev);
+                next = k->mp_next;
+            }
             //削除
             delete k;
             //次のタスク
@@ -105,8 +117,7 @@ void TaskManager::CheckKillAll()
         else
             //次のタスク
             k = k->GetNext();
-    } 
-    while (k);
+    } while (k);
 }
 
 void TaskManager::Search()
