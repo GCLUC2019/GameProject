@@ -22,11 +22,11 @@ BossHead::BossHead() :EnemyBase(eBossHead)
 
 void BossHead::Update()
 {
-	m_img.ChangeAnimation(eBossFireAttack, false);
+	m_img.ChangeAnimation(eBossFireAttackMotion, false);
 	m_img.UpdateAnimation();
 	m_img.CheckAnimationEnd();
 	//TaskManager::GetInstance()->AddTask(new BossEffect(m_pos));
-	m_rot += 0.1;
+	m_rot += 0.05;
 	if (m_rot >= PIE * 2)m_rot = 0;
 	m_pos = m_center + CVector2D(sin(m_rot), cos(m_rot))*m_r;
 }
@@ -42,12 +42,6 @@ void BossHead::Attack()
 
 void BossHead::Draw()
 {
-	/*if (m_state == eIdle) {
-	m_img.SetRect(0, BOSS_Y_SIZE * 4, BOSS_X_SIZE, BOSS_Y_SIZE * 5);
-	m_img.SetPos(m_pos);
-	m_img.Draw();
-	}*/
-
 	m_img.SetRect(BOSS_X_SIZE, BOSS_Y_SIZE * 4, BOSS_X_SIZE * 2, BOSS_Y_SIZE * 5);
 	m_img.SetPos(m_pos);
 	m_img.Draw();
