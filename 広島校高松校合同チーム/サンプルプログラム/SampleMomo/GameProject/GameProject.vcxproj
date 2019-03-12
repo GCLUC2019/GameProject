@@ -132,6 +132,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Game\CBar.h" />
     <ClInclude Include="Game\CCharacter.h" />
     <ClInclude Include="Game\CCharacterBoss.h" />
     <ClInclude Include="Game\CCharacterEnemy.h" />
@@ -150,6 +151,7 @@
     <ClInclude Include="Task\TaskManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Game\CBar.cpp" />
     <ClCompile Include="Game\CCharacter.cpp" />
     <ClCompile Include="Game\CCharacterEnemy.cpp" />
     <ClCompile Include="Game\CCharacterPlayer.cpp" />

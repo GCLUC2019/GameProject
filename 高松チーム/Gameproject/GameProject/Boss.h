@@ -3,9 +3,9 @@
 
 /*
 担当
-  番條　Boss.cppp,h 
+番條　Boss.cppp,h
 */
-class BossHead :public EnemyBase{
+class BossHead :public EnemyBase {
 private:
 	enum {
 		eIdle,
@@ -13,10 +13,11 @@ private:
 		eAttack
 	};
 	CImage m_img2; //横ブレス攻撃img
-	CVector2D m_pos2; //横ブレスpos 1枚1280,960サイズ
+
+	CVector2D m_center;
 
 	float m_rot;
-
+	float m_r;
 	int m_state;
 protected:
 
@@ -33,3 +34,34 @@ public:
 	void Draw();
 
 };
+
+
+class BossHand :public EnemyBase {
+private:
+	enum {
+		eIdle,
+		eMove,
+		eAttack
+	};
+
+	CVector2D m_center;
+
+	float m_rot;
+	float m_r;
+	int m_state;
+protected:
+
+
+public:
+	BossHand();
+
+	void Update();
+
+	void Idle();
+
+	void Attack();
+
+	void Draw();
+
+};
+

@@ -1,5 +1,0 @@
-﻿  CSceneGame.cpp
-c:\users\akira\desktop\gc2019 gc\gameproject\fukuyama\福山チーム\セーサク\gameprogramming\cboss.h(14): error C2071: 'CBoss::Boss' : ストレージ クラスが正しくありません。
-  CBoss.cpp
-c:\users\akira\desktop\gc2019 gc\gameproject\fukuyama\福山チーム\セーサク\gameprogramming\cboss.h(14): error C2071: 'CBoss::Boss' : ストレージ クラスが正しくありません。
-  コードを生成中...
