@@ -28,8 +28,8 @@ private:
 
 	bool complete_flg;
 
-	char name[1024];
-	char t_name[3][1024];
+	char name[2][1024];
+	char t_name[6][1024];
 public:
 	CStoryScene();
 	~CStoryScene();
@@ -38,13 +38,24 @@ public:
 	void SetParam();
 	void SetTextBox();
 	void SetIcon();
-	void SetStory(char story_name[], rect_pos_size pos_a);
+	void SetStory(char story_name[], rect_pos_size values);
+	void SetStory2(rect_pos_size pos_a);
 	void SetText(char text_name[]);
 	void SetAll();
+	//次の画像を表示する関数
+	void NextStory(char story_name[][1024],int sub, rect_pos_size values);
 	//次のテキストを表示する関数
 	void NextText(char text_name[][1024]);
 	//表示したい文章の文字数と文章数
 	void UpdateText(int word,int limit);
+	//現在の構造体と次の構造体
+	void UpdateStory(rect_pos_size& pos_now,rect_pos_size& pos_next);
+	//変更まとめ関数
+	void ChangeAll(rect_pos_size& pos_a, rect_pos_size& pos_b);
+	//切り取り位置変更関数(引数は現在と次の値と変化値）
+	int ChangeRect(int& now, int& next);
+	//座標及びサイズ変更関数
+	CVector2D ChangeVector(CVector2D& now, CVector2D& next);
 	//アイコンを点滅させて表示する
 	void IconDraw();
 	void RectUp();
