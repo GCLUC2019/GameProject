@@ -10,12 +10,16 @@ enum PlayerState
 {
 	eIdle,		//待機
 	eMove,		//移動
-	eJump,		//ジャンプ
+	eJumpUp,	//ジャンプ
+	eJumpDown,	//ジャンプ
 	eSquat,		//しゃがみ
 	eAttack01,	//近距離攻撃
 	eAttack02,	//
 	eAttack03,	//
 	eAttack04,	//遠距離攻撃
+	eDamage,	//ダメージ
+	eDeath,		//死亡
+	eUp,		//起き上がり
 	eSpecial,	//必殺
 };
 Player::Player() : CharacterBase(ePlayer),
@@ -31,7 +35,7 @@ m_state_old(m_state)
 	m_pos = CVector2D(1280/2, 540);
 	m_img = COPY_RESOURCE("Player",CAnimImage*);
 	m_depth = m_pos.y / DEP_N;
-	m_img.ChangeAnimation(ePIdle);
+	SetAnim();
 
 }
 
@@ -52,10 +56,13 @@ void Player::Move()
 			m_attack_flg = true;			
 			m_state = eAttack01;
 		}
-		
+		if (CInput::GetState(0, CInput::ePush, CInput::eButton4) && m_attack_flg == false) {
+			m_attack_flg = true;
+			m_state = eAttack04;
+		}
 		if (CInput::GetState(0, CInput::ePush, CInput::eButton3) && m_squat_flg == false && m_attack_flg == false) {
 			m_jump_flg = true;
-			m_state = eJump;
+			m_state = eJumpUp;
 		}
 	}
 	else 
@@ -98,8 +105,12 @@ void Player::Move()
 void Player::Jump()
 {
 	static float time = 1;
+	static int jump_vec_old = m_jump_vec;
+	jump_vec_old = m_jump_vec;
 	m_jump_vec = 0 + JUMP_SPD * time + GRAVITY * (time*time) / 2;
 	m_jump_vec *= -1;
+	if (jump_vec_old - m_jump_vec < 0)
+		m_state = eJumpDown;
 	time += 0.5f;
 	if (m_jump_vec > 0) {
 		time = 0;
@@ -198,11 +209,14 @@ void Player::SetAnim()
 	case	eMove://移動
 		m_img.ChangeAnimation(ePRun);
 	break;
-	case	eJump://ジャンプ
+	case	eJumpUp://ジャンプ
 		m_img.ChangeAnimation(ePJumpUp);
 	break;
+	case	eJumpDown://ジャンプ
+		m_img.ChangeAnimation(ePJumpDown);
+		break;
 	case	eSquat://しゃがみ
-		m_img.ChangeAnimation(ePCrouch);
+		m_img.ChangeAnimation(ePCrouch,false);
 	break;
 	case	eAttack01://近距離攻撃
 		m_img.ChangeAnimation(ePShortAttack01,false);
@@ -215,7 +229,19 @@ void Player::SetAnim()
 	break;
 	case	eAttack04://遠距離攻撃
 		m_img.ChangeAnimation(ePLongAttack, false);
-	break;
+	break; 	
+	case	eDamage://ダメージ
+		m_img.ChangeAnimation(ePDamage, false);
+		break;
+	case	eDeath://死亡
+		m_img.ChangeAnimation(ePDeath, false);
+		break;
+	case	eUp://起き上がり
+		m_img.ChangeAnimation(ePUp, false);
+		break;
+	case	eSpecial://必殺
+		m_img.ChangeAnimation(ePLongAttack, false);
+		break;
 	default:
 		m_img.ChangeAnimation(ePIdle);
 	break;
@@ -238,9 +264,7 @@ void Player::Update()
 	if (m_pos.y < 720 / 2 || m_pos.y > 720)
 		m_pos.y = m_pos_old.y;
 	if (m_squat_flg == false && m_attack_flg == false && m_jump_flg == false&& m_pos.x == m_pos_old.x&&m_pos.y == m_pos_old.y)
-	{
 		m_state = eIdle;
-	}
 	if (m_state != m_state_old)
 		SetAnim();
 	
