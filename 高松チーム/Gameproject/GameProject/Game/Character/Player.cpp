@@ -39,7 +39,7 @@ m_special(0)
 	m_pos = CVector2D(1280/2, 540);
 	m_img = COPY_RESOURCE("Player",CAnimImage*);
 	m_shadow= COPY_RESOURCE("Shadow", CImage*);
-	m_depth = m_pos.y / DEP_N;
+	m_depth = (m_pos.y - DEP_N)/3.5;
 	SetAnim();
 
 }
@@ -78,13 +78,13 @@ void Player::Move()
 
 	if (CInput::GetState(0, CInput::eHold, CInput::eUp)) {
 		m_pos.y -= m_speed;
-		m_depth = m_pos.y / DEP_N;
+		m_depth =( m_pos.y - DEP_N)/3.5;
 		if (m_jump_flg == false)
 			m_state = eMove;
 	}
 	if (CInput::GetState(0, CInput::eHold, CInput::eDown)) {
 		m_pos.y += m_speed;
-		m_depth = m_pos.y / DEP_N;
+		m_depth = (m_pos.y - DEP_N)/3.5;
 		if (m_jump_flg == false)
 			m_state = eMove;
 	}
@@ -346,15 +346,16 @@ void Player::Draw()
 
 	
 #define SAIZE 150
+#define SAIZE_SD 110
 	
 	m_img.UpdateAnimation();
 
-	m_img.SetSize(SAIZE *m_depth, SAIZE *m_depth);
-	m_img.SetCenter(SAIZE * m_depth / 2, SAIZE * m_depth );
+	m_img.SetSize(SAIZE + m_depth, SAIZE + m_depth);
+	m_img.SetCenter((SAIZE + m_depth) / 2, (SAIZE + m_depth));
 	m_img.SetPos(m_pos+CVector2D(0, m_jump_vec));
 	m_img.SetFlipH(m_flip);
-	m_shadow.SetSize(SAIZE *m_depth + m_jump_vec/3, SAIZE *m_depth + m_jump_vec/3);
-	m_shadow.SetCenter((SAIZE * m_depth + m_jump_vec/3) / 2, (SAIZE * m_depth + m_jump_vec/3) / 2);
+	m_shadow.SetSize(SAIZE_SD + m_depth+m_jump_vec/5, SAIZE_SD + m_depth + m_jump_vec / 5);
+	m_shadow.SetCenter((SAIZE_SD + m_depth + m_jump_vec / 5) / 2, (SAIZE_SD + m_depth + m_jump_vec / 5) / 2);
 	m_shadow.SetPos(m_pos);
 	m_shadow.Draw();
 	m_img.Draw();
