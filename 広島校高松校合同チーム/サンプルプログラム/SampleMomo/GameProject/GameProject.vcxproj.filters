@@ -44,6 +44,9 @@
     <ClCompile Include="Game\CBar.cpp">
       <Filter>Game\Object\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Game\CGameSceneWave.cpp">
+      <Filter>Game\Object\GameScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Global.h" />
@@ -92,6 +95,9 @@
     </ClInclude>
     <ClInclude Include="Game\CBar.h">
       <Filter>Game\Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CGameSceneWave.h">
+      <Filter>Game\Object\GameScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

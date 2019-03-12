@@ -78,7 +78,6 @@ static TexAnim BossFireEffect[] = {
 };
 
 TexAnimData BossFireEffectAnimData[] = {
-	//ANIMDATA(BossLazerEffect),
 	ANIMDATA(BossFireEffect),
 };
 

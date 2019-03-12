@@ -25,5 +25,8 @@ public:
 	void AddGameSceneObject(Task* _object);
 	void ClearGameSceneObject();
 
+	//ウェーブが完了したら呼ばれる
+	void WaveDone();
+
 	static CGameScene* GetInstance();
 };
