@@ -18,7 +18,8 @@ enum {
 class EnemyBase : public Task {
 private:
 protected:
-	
+
+	CRect m_rect;		//敵矩形
 	CVector2D m_pos;	//敵位置
 	CVector2D m_vec;	//敵ベクトル
 	CAnimImage m_img;	//敵画像
@@ -37,6 +38,8 @@ public:
 	virtual void Update();
 	virtual void Draw();
 	virtual void HitCheck(Task* _t);
+	static bool CollisionCheckRect(EnemyBase* b1, EnemyBase* b2);
+	static bool CollitionCheckflip(int fliptype, EnemyBase* b1, EnemyBase*b2);
 	/*
 	@drief オブジェクトの画面移動を制限する
 	*/
