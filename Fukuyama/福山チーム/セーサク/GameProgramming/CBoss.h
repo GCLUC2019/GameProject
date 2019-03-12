@@ -7,8 +7,11 @@
 #include<stdio.h>
 #include "CHpBar.h"
 
+
+
 class CBoss :public CTank {
 public:
+	extern CBoss*Boss;
 	int mFireIntervar;
 	void Init();
 	void Update();
