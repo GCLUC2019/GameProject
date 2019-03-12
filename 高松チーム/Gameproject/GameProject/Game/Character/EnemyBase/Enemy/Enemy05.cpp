@@ -116,7 +116,6 @@ void Enemy05::HitCheck(Task * _t)
 {
 	switch (_t->GetType()) {
 	case ePlayer:
-		
 		printf("player‚ğæ“¾");
 		break;
 	default:
