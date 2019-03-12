@@ -2,18 +2,22 @@
 #include "../GameProject/Game/Character/Player.h"
 #include "../../Anim/AnimData.h"
 #define MOVE_SPEED 2.5f
+#define DEP_N 1200
 Enemy02::Enemy02() : EnemyBase(eEnemy02),
 m_state(eSearch),
 m_hover(0.0f),
 m_search_flg(false),
-m_move_dir_flg(false)
+m_move_dir_flg(true)
 {
     m_img = COPY_RESOURCE("Enemy02", CAnimImage*);
     m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
     m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
     m_img.ChangeAnimation(eEMove02);
+    m_img.SetFlipH(m_move_dir_flg);
     m_pos = CVector2D(200, 200);
     m_vec = CVector2D(0, 0);
+    m_dir = CVector2D(0, 0);
+    m_depth = m_pos.y / DEP_N;
 }
 
 void Enemy02::Update()
@@ -40,31 +44,41 @@ void Enemy02::Update()
 
 void Enemy02::Draw()
 {
-    m_hover += 0.1f;//リセットしたほうがいい？
+    m_hover += 0.20f;//リセットしたほうがいい？
     m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
     m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
-    m_img.SetPos(CVector2D(m_pos.x, m_pos.y + sin(m_hover)*5.0f));
+    m_img.SetPos(CVector2D(m_pos.x, m_pos.y + sin(m_hover)*7.0f));
+    m_img.SetFlipH(m_move_dir_flg);
     m_img.Draw();
 }
 
 void Enemy02::Move()
 {
     m_img.ChangeAnimation(eEMove02);
+    /* CVector2D vec = p->GetPos() - m_pos;
+    float length = sqrt(vec.x*vec.x + vec.y*vec.y);
+    if (length < IMAGE_SIZE / 2)
+    m_state = eAttack;*/
 }
 
 void Enemy02::Search()
 {
     m_img.ChangeAnimation(eEMove02);
-    if (m_move_dir_flg == false) {
+    if (m_move_dir_flg == true) {
         m_vec.x = MOVE_SPEED;
         if (m_pos.x > 1280 - IMAGE_SIZE / 2)
-            m_move_dir_flg = true;
+            m_move_dir_flg = false;
     }
     else {
         m_vec.x = -MOVE_SPEED;
         if (m_pos.x < IMAGE_SIZE / 2)
-            m_move_dir_flg = false;
+            m_move_dir_flg = true;
     }
+    /*Player*p = nullptr;
+    if (PlayerCheck(p, this,300.0f)) {
+    m_dir=GetNormalize(playerpos-m_pos);
+    m_state = eMove;
+    }*/
 }
 
 void Enemy02::Attack()
