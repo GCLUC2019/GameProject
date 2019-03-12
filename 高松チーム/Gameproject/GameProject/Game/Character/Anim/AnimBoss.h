@@ -7,7 +7,7 @@ enum {
 	eBossHandAnim,
 	eBossTailAttackMotion,
 	eBossFireAttackMotion,
-	eBossLazerEffect,
+	//eBossLazerEffect,
 	eBossFireEffect
 };
 
