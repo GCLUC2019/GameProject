@@ -26,6 +26,26 @@ m_jump_flg(true)
     cnt = 0;
 }
 
+Enemy02::Enemy02(CVector2D _pos) : EnemyBase(eEnemy02),
+m_state(eAttack),
+m_jump_vec(0.0f),
+m_search_flg(false),
+m_move_dir_flg(true),
+m_jump_flg(true)
+{
+    m_img = COPY_RESOURCE("Enemy02", CAnimImage*);
+    m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
+    m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
+    m_img.ChangeAnimation(eEMove02);
+    m_img.SetFlipH(m_move_dir_flg);
+    m_pos = _pos;
+    m_vec = CVector2D(0, 0);
+    m_dir = CVector2D(0, 0);
+    m_depth = m_pos.y / DEP_N;
+
+    cnt = 0;
+}
+
 void Enemy02::Update()
 {
     if(m_jump_flg==false)
@@ -82,17 +102,17 @@ void Enemy02::Search()
 {
     m_img.ChangeAnimation(eEMove02);
     if (m_move_dir_flg == true) {
-        m_vec.x = MOVE_SPEED;
+        m_vec.x += MOVE_SPEED;
         if (m_pos.x > 1280 - IMAGE_SIZE / 2)
             m_move_dir_flg = false;
     }
     else {
-        m_vec.x = -MOVE_SPEED;
+        m_vec.x -= MOVE_SPEED;
         if (m_pos.x < IMAGE_SIZE / 2)
             m_move_dir_flg = true;
     }
     
-    /*Player*p = nullptr;
+    /*Player*p ;
     if (PlayerCheck(p, this,300.0f)) {
     m_dir=GetNormalize(playerpos-m_pos);
     m_state = eMove;

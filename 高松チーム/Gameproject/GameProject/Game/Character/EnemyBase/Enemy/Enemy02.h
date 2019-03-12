@@ -26,6 +26,7 @@ private:
     int cnt;
 public:
     Enemy02();
+    Enemy02(CVector2D _pos);
     void Update();
     void Draw();
     void Move();//ƒvƒŒƒCƒ„[”­Œ©‚Ì“®‚«
