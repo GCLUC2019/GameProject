@@ -2,6 +2,8 @@
 #include "../../stdafx.h"
 #include "../Character/Anim/AnimData.h"
 #include "../Character/Anim/AnimDataPlayer.h"
+#include "../Character/Anim/AnimBoss.h"
+
 
 class Resource {
 public:
@@ -19,7 +21,7 @@ public:
 
 		
 		ADD_RESOURCE("Player", CAnimImage::LoadImage("../data/Image/motion_player.png", PlayerAnimData, 512,512));
-		ADD_RESOURCE("Boss", CImage::LoadImage("../data/Image/moton_jaryu.png"));
+		ADD_RESOURCE("Boss", CAnimImage::LoadImage("../data/Image/moton_jaryu.png", BossAnimData, 768, 768));
 		ADD_RESOURCE("GameClear", CImage::LoadImage("../data/Image/push start.png"));
 		ADD_RESOURCE("Enemy01", CAnimImage::LoadImage("../data/Image/zako_chochin_motion.png", Enemy01AnimData,512,512));
 		ADD_RESOURCE("Enemy02", CAnimImage::LoadImage("../data/Image/zako_daruma_motion.png", Enemy02AnimData, 512, 512));

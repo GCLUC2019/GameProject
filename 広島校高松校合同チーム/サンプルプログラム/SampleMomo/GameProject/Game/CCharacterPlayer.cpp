@@ -56,6 +56,14 @@ void CCharacterPlayer::LoadAnimImage()
 
 }
 
+void CCharacterPlayer::InputAttack()
+{
+	if (m_is_attacking == true) return;
+	if (CInput::GetState(0, CInput::eHold, CInput::eButton2)) {
+
+	}
+}
+
 
 
 
@@ -63,6 +71,7 @@ void CCharacterPlayer::Update()
 {
 	//printf("x %lf y %lf z %lf\n", m_pos.x, m_pos.y, m_pos.z);
 	m_will_play_anim_id = ePlayerAnimIdIdle;
+	InputAttack();
 	InputMove();
 	InputJump();
 	Gravity();

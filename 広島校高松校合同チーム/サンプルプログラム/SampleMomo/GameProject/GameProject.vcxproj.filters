@@ -41,6 +41,9 @@
     <ClCompile Include="Game\CStoryScene.cpp">
       <Filter>Game\Object\Interface</Filter>
     </ClCompile>
+    <ClCompile Include="Game\CBar.cpp">
+      <Filter>Game\Object\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Global.h" />
@@ -87,6 +90,9 @@
     <ClInclude Include="Game\CCharacterBoss.h">
       <Filter>Game\Object\Character</Filter>
     </ClInclude>
+    <ClInclude Include="Game\CBar.h">
+      <Filter>Game\Object\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game">
@@ -115,6 +121,9 @@
     </Filter>
     <Filter Include="Game\Object\CObjectImage">
       <UniqueIdentifier>{7f4cc649-4573-4ac9-ac7d-8c7d22085daf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\UI">
+      <UniqueIdentifier>{f7115224-1130-43d2-b8df-1819d6ec2828}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -42,12 +42,15 @@ private:
 	bool m_is_jumping = false;
 	int m_jumping_count = 0;
 
+	bool m_is_attacking = false;
+	int m_attacking_count = 0;
 	
 	
 public:
 	CCharacterPlayer();
 	~CCharacterPlayer();
 	void LoadAnimImage();
+	void InputAttack();
 	void InputMove();
 	void InputJump();
 	void Jumping();
