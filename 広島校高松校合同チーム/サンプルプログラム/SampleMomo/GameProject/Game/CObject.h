@@ -43,6 +43,8 @@ public:
 
 	float GetSpeed() {return m_speed; };
 	CVector3D GetPos() { return m_pos; };
+	CVector3D GetPosOld() { return m_pos_old; };
+
 	CVector3D GetVec() { return m_vec; };
 	CVector3D GetRads() { return m_rads; };
 	CVector2D GetSize() { return m_size; };

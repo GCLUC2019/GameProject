@@ -359,7 +359,6 @@ void Player::Draw()
 	m_shadow.SetPos(m_pos);
 	m_shadow.Draw();
 	m_img.Draw();
-
-	
+		
 }
 

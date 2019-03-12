@@ -53,6 +53,7 @@ public:
 	~CCharacterEnemy();
 	void CharacterUpdate();
 	void CharacterDraw();
+	void ReceiveAttack();
 
 	void LoadAnimImage();
 	void Idle();
