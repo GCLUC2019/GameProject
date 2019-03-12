@@ -22,6 +22,7 @@ public:
 	static void HitCheckAll();
 	static void Kill(Task* _t);
 	static void KillAll();
+    static void CheckKillAll();
 	static void Search();
 	static void Swap(Task* t1, Task* t2);
 	static void TaskSort(float _comp);

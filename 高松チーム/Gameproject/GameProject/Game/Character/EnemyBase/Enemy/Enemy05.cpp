@@ -15,6 +15,7 @@ m_move_cnt(0)
 	m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
 	m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
 
+	//m_rect = 
 	m_pos = _pos;
 	m_vec = CVector2D(0, 0);
 	m_hp = 100;
