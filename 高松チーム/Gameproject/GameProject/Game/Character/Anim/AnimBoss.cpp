@@ -31,16 +31,16 @@ static TexAnim BossHand[] = {
 { 17,50 },
 };
 
-static TexAnim BossTailAttack[] = {
+static TexAnim BossTailAttackMotion[] = {
 	{ 24,50 },
 { 25,50 },
 { 26,50 },
 { 27,50 },
 };
 
-static TexAnim BossFireAttack[] = {
+static TexAnim BossFireAttackMotion[] = {
 	{ 32,50 },
-{ 33,50 },
+	{ 33,50 },
 };
 
 
@@ -48,20 +48,20 @@ TexAnimData BossAnimData[] = {
 	ANIMDATA(BossHead),
 	ANIMDATA(BossTail),
 	ANIMDATA(BossHand),
-	ANIMDATA(BossTailAttack),
-	ANIMDATA(BossFireAttack),
+	ANIMDATA(BossTailAttackMotion),
+	ANIMDATA(BossFireAttackMotion),
 };
 
-static TexAnim BossLazerEffect[] = {
-	{ 0,50 },
-	{ 1,50 },
-	{ 2,50 },
-	{ 3,50 },
-	{ 4,50 },
-	{ 5,50 },
-	{ 6,50 },
-	{ 7,50 },
-};
+//static TexAnim BossLazerEffect[] = {
+//	{ 0,50 },
+//	{ 1,50 },
+//	{ 2,50 },
+//	{ 3,50 },
+//	{ 4,50 },
+//	{ 5,50 },
+//	{ 6,50 },
+//	{ 7,50 },
+//};
 
 static TexAnim BossFireEffect[] = {
 	{ 0,50 },
@@ -88,6 +88,6 @@ static TexAnim BossFireEffect[] = {
 };
 
 TexAnimData BossFireEffectAnimData[] = {
-	ANIMDATA(BossLazerEffect),
+	//ANIMDATA(BossLazerEffect),
 	ANIMDATA(BossFireEffect),
 };
