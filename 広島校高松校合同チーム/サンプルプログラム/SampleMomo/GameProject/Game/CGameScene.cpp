@@ -32,14 +32,18 @@ void CGameScene::Setup()
 		AddGameSceneObject(new CObjectImage(GET_RESOURCE("Stage_Background_0", CImage*), CVector3D(1280 * i, 0, 0), CVector2D(1280, 720), -1));
 	}
 
-	SetGameSceneLimitPos(CVector3D(1280*6,720.0f,720.0f));
+	//AddGameSceneObject(new CCommonObject(nullptr, CVector3D(600, 0, 600), CVector2D(0, 0), CVector3D(50, 50, 50)));
+
+	SetGameSceneLimitPosMin(CVector3D(100.0f, 0.0f, 340.0f));
+
+	SetGameSceneLimitPosMax(CVector3D(1280.0f*6,720.0f,720.0f));
 
 	CCharacterPlayer* player_p = new CCharacterPlayer();
 	AddGameSceneObject(player_p);
 
 	player_p->SetSize(400, 400);
-	player_p->SetPos(300, -300, 300);
-	player_p->SetRads(10, 10, 10);
+	player_p->SetPos(500, -300, 500);
+	//player_p->SetRads(10, 10, 10);
 
 
 	CCharacterEnemy* enemy_p = new CCharacterEnemy();

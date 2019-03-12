@@ -9,9 +9,9 @@
 BossEffect::BossEffect(CVector2D& pos)
 {
 	m_img = COPY_RESOURCE("BossFire", CImage*);
-	
 	m_pos.x = 0;
-	m_pos.y = pos.y - ((BOSS_Y_SIZE - pos.y) / 9);
+	//512
+	m_pos.y = pos.y;
 }
 
 
@@ -22,7 +22,7 @@ void BossEffect::Update()
 
 void BossEffect::Draw()
 {
-	m_img.SetSize(FIRE_X_SIZE - BOSS_X_SIZE / 3, FIRE_Y_SIZE / 3);
+	m_img.SetSize(FIRE_X_SIZE - BOSS_X_SIZE / 3, FIRE_Y_SIZE / 4);
 	m_img.SetRect(FIRE_X_SIZE,0, FIRE_X_SIZE * 2, FIRE_Y_SIZE);
 	m_img.SetPos(m_pos);
 	m_img.Draw();

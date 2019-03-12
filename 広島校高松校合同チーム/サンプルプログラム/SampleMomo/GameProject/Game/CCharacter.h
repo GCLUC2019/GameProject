@@ -19,7 +19,6 @@ protected:
 
 	//影表示関連
 	CVector2D m_shadow_size;
-	CVector2D m_shadow_adj_pos;
 	CImage * m_shadow_p = nullptr;
 	bool m_is_show_shadow = false;
 
@@ -30,6 +29,9 @@ protected:
 	int m_will_play_anim_id = 0;
 	int m_play_anim_count = 0;
 	CImage* m_anim_image_p[ANIMATION_IMAGE_MAX];
+
+	//表示位置調整関連
+	CVector2D m_draw_adj;
 
 	//フラグ関連
 	bool m_is_landing = false;
@@ -63,7 +65,9 @@ public:
 
 	void SetIsShowShadow(bool _is) { m_is_show_shadow = _is; };
 	void SetShadowSize(CVector2D _size) { m_shadow_size = _size; };
-	void SetShadowAdjPos(CVector2D _pos) { m_shadow_adj_pos = _pos; };
+
+	void SetDrawAdjPos(CVector2D _adj_pos) { m_draw_adj = _adj_pos; };
+	CVector2D GetDrawAdjPos() { return m_draw_adj; };
 
 	void MoveLimit();
 };
