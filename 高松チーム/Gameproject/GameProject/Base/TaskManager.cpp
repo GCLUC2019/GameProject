@@ -83,6 +83,31 @@ void TaskManager::KillAll()
 	Task* k = mp_head;
 	
 }
+/*
+作成　田中
+*/
+void TaskManager::CheckKillAll()
+{
+    Task* k = mp_head;
+    do {
+        //キルフラグがtrueなら
+        if (k->m_kill_flg) {
+            //前後を繋ぎなおす
+            Task*prev = k->GetPrev();
+            Task*next = k->GetNext();
+            prev->SetNext(next);
+            next->SetPrev(prev);
+            //削除
+            delete k;
+            //次のタスク
+            k = next;
+        }
+        else
+            //次のタスク
+            k = k->GetNext();
+    } 
+    while (k);
+}
 
 void TaskManager::Search()
 {
