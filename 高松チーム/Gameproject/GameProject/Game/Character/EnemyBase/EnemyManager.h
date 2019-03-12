@@ -6,9 +6,9 @@
 
 class EnemyManager : public Task {
 private:
-
+	int m_wave_flg;
 protected:
-
+	CVector2D m_pos;	//“GˆÊ’u
 public:
 	EnemyManager();
 	void Update();

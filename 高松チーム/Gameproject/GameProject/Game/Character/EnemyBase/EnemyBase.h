@@ -26,6 +26,7 @@ protected:
 	int m_state;		//“Gó‘Ô
 	float m_ang;		//“G•ûŒü
 	float m_depth;		//‰œs‚«
+	bool m_flip;		//”½“]ƒtƒ‰ƒO
 	
 public:
 	EnemyBase(int _type);
