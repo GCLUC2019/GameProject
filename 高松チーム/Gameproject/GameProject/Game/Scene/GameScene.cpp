@@ -5,7 +5,7 @@
 #include "../GameProject/Boss.h"
 #include "../GameProject/Game/Character/EnemyBase/Boss/BossManager.h"
 
-GameScene::GameScene()
+GameScene::GameScene() : Task(eGameScene)
 {
 	new Resource();
 	TaskManager::GetInstance()->AddTask(new Player());
