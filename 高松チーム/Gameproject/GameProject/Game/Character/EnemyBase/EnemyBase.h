@@ -35,6 +35,7 @@ public:
 	virtual void Damage();
 	virtual void Update();
 	virtual void Draw();
+	virtual void HitCheck(Task* _t);
 	/*
 	@drief オブジェクトの画面移動を制限する
 	*/

@@ -16,10 +16,7 @@ m_move_cnt(0)
 	m_pos = CVector2D(600, 100);
 	m_vec = CVector2D(0, 0);
 	m_hp = 100;
-<<<<<<< HEAD
 	m_move_cnt = 0;
-=======
->>>>>>> e3ae11f8b443ee2222ce56a4c3ab760edec42d97
 	m_state = eMove;
 }
 
@@ -50,10 +47,6 @@ void Enemy05::MoveManagement(int _type)
 		break;
 
 	case 1:
-<<<<<<< HEAD
-		
-=======
->>>>>>> e3ae11f8b443ee2222ce56a4c3ab760edec42d97
 		break;
 	case 2:
 		break;
