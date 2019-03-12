@@ -8,7 +8,7 @@
 
 enum PlayerState
 {
-	eIdol,		//待機
+	eIdle,		//待機
 	eMove,		//移動
 	eJump,		//ジャンプ
 	eSquat,		//しゃがみ
@@ -25,7 +25,8 @@ m_attack_flg(false),
 m_jump_flg(false),
 m_flip(false),
 m_jump_vec(0),
-m_state(eIdol)
+m_state(eIdle),
+m_state_old(m_state)
 {
 	m_pos = CVector2D(1280/2, 540);
 	m_img = COPY_RESOURCE("Player",CAnimImage*);
@@ -41,9 +42,6 @@ void Player::Move()
 	if (m_jump_flg != true) {
 		if (CInput::GetState(0, CInput::eHold, CInput::eButton1) && m_jump_flg == false) {
 			m_squat_flg = true;
-#ifdef _DEBUG//後でアニメーション設定に変更
-			//m_img.SetAng(DtoR(180));
-#endif // _DEBUG
 			m_state = eSquat;
 		}
 		else
@@ -51,11 +49,7 @@ void Player::Move()
 
 
 		if (CInput::GetState(0, CInput::ePush, CInput::eButton2) && m_attack_flg == false) {
-			m_attack_flg = true;
-#ifdef _DEBUG//後でアニメーション設定に変更
-			//m_img.SetAng(DtoR(90));
-#endif // _DEBUG
-			
+			m_attack_flg = true;			
 			m_state = eAttack01;
 		}
 		
@@ -73,26 +67,32 @@ void Player::Move()
 		m_pos.y -= m_speed;
 		m_depth = m_pos.y / DEP_N;
 		m_img.ChangeAnimation(ePRun);
-		m_state = eMove;
+		if (m_jump_flg == false)
+			m_state = eMove;
 	}
 	if (CInput::GetState(0, CInput::eHold, CInput::eDown)) {
 		m_pos.y += m_speed;
 		m_depth = m_pos.y / DEP_N;
 		m_img.ChangeAnimation(ePRun);
-		m_state = eMove;
+		if (m_jump_flg == false)
+			m_state = eMove;
 	}
 	if (CInput::GetState(0, CInput::eHold, CInput::eRight)) {
 		m_pos.x += m_speed;
-		m_flip = false;
+		m_flip = true;
 		m_img.ChangeAnimation(ePRun);
-		m_state = eMove;
+		if (m_jump_flg == false)
+			m_state = eMove;
 	}
 	if (CInput::GetState(0, CInput::eHold, CInput::eLeft)) {
 		m_pos.x -= m_speed;
-		m_flip = true;
+		m_flip = false;
 		m_img.ChangeAnimation(ePRun);
-		m_state = eMove;
+		if (m_jump_flg == false)
+			m_state = eMove;
 	}
+
+	
 }
 
 void Player::Jump()
@@ -114,12 +114,11 @@ void Player::Attack()
 	switch (m_state)
 	{
 	case eAttack01:
-		if (k <= 30) {
+		if (k <= 10) {
 			if (m_flip)
 				Utility::DrawQuad(m_pos + CVector2D(25, 0), CVector2D(50, 50), CVector4D(1.0f, 0, 0, 1));
 			else
 				Utility::DrawQuad(m_pos - CVector2D(25, 0), CVector2D(50, 50), CVector4D(1.0f, 0, 0, 1));
-			m_img.ChangeAnimation(ePShortAttack01, false);
 		}
 		if (CInput::GetState(0, CInput::ePush, CInput::eButton2)&&k>10) {
 			m_state = eAttack02;
@@ -188,15 +187,48 @@ void Player::Special()
 {
 }
 
+void Player::SetAnim()
+{
+	switch (m_state)//状態デバック表示
+	{
+	case eIdle://待機
+		m_img.ChangeAnimation(ePIdle);
+
+	break;
+	case	eMove://移動
+		m_img.ChangeAnimation(ePRun);
+	break;
+	case	eJump://ジャンプ
+		m_img.ChangeAnimation(ePJumpUp);
+	break;
+	case	eSquat://しゃがみ
+		m_img.ChangeAnimation(ePCrouch);
+	break;
+	case	eAttack01://近距離攻撃
+		m_img.ChangeAnimation(ePShortAttack01,false);
+	break;
+	case	eAttack02:
+		m_img.ChangeAnimation(ePShortAttack02, false);
+	break;
+	case	eAttack03:
+		m_img.ChangeAnimation(ePShortAttack03, false);
+	break;
+	case	eAttack04://遠距離攻撃
+		m_img.ChangeAnimation(ePLongAttack, false);
+	break;
+	default:
+		m_img.ChangeAnimation(ePIdle);
+	break;
+	}
+
+
+}
+
 void Player::Update()
 {
-#ifdef _DEBUG
-	//m_img.SetAng(DtoR(0));
-#endif // _DEBUG
 	if (m_special_flg)
 		Special();
-	
-		
+	m_state_old = m_state;
 	m_pos_old = m_pos;
 	Move();
 	if (m_attack_flg)
@@ -205,60 +237,31 @@ void Player::Update()
 		m_pos.x = m_pos_old.x;
 	if (m_pos.y < 720 / 2 || m_pos.y > 720)
 		m_pos.y = m_pos_old.y;
-
-	if (m_squat_flg == false && m_attack_flg == false && m_jump_flg == false && m_pos_old.x != m_pos.x)
+	if (m_squat_flg == false && m_attack_flg == false && m_jump_flg == false&& m_pos.x == m_pos_old.x&&m_pos.y == m_pos_old.y)
 	{
-		m_state = eIdol;
-		m_img.ChangeAnimation(ePIdle);
+		m_state = eIdle;
 	}
-	m_img.UpdateAnimation();
+	if (m_state != m_state_old)
+		SetAnim();
+	
 }
 
 void Player::Draw()
 {
 #ifdef _DEBUG
 	//Utility::DrawQuad(CVector2D(0, 720 / 2), CVector2D(1280, 720), CVector4D(1.0f, 0, 0, 1));
-	/*switch (m_State)//状態デバック表示
-	{
-	case eIdol:
-		printf("eIdol");
-		break;
-	case	eMove:
-		printf("eMove");
-		break;
-	case	eJump:
-		printf("eJump");
-		break;
-	case	eSquat:	
-		printf("eSquat");
-		break;
-	case	eAttack01:	
-		printf("eAttack01");
-		break;
-	case	eAttack02:	
-		printf("eAttack02");
-		break;
-	case	eAttack03:	
-		printf("eAttack03");
-		break;
-	case	eAttack04:	
-		printf("eAttack04");
-		break;
-	default:
-		printf("null");
-		break;
-	}*/
 	
 #endif // _DEBUG
 
 	
 #define SAIZE 200
+	m_img.UpdateAnimation();
 	m_img.SetSize(SAIZE *m_depth, SAIZE *m_depth);
 	m_img.SetCenter(SAIZE * m_depth / 2, SAIZE * m_depth / 2);
 	m_img.SetPos(m_pos+CVector2D(0, m_jump_vec));
 	m_img.SetFlipH(m_flip);
 	m_img.Draw();
-#define _DEBUG
+
 	
 }
 
