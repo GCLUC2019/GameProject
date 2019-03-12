@@ -70,7 +70,7 @@ static TexAnim PlayerRun[] = {
 };
 
 static TexAnim PlayerCrouch[] = {
-	{90,30},
+	{90,5},
 {91,30},
 };
 

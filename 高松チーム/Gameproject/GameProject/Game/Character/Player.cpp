@@ -44,8 +44,9 @@ void Player::Move()
 	if (m_special_flg)
 		return;
 	if (m_jump_flg != true) {
-		if (CInput::GetState(0, CInput::eHold, CInput::eButton1) && m_jump_flg == false) {
+		if (CInput::GetState(0, CInput::eHold, CInput::eButton1) && m_jump_flg == false && m_attack_flg == false) {
 			m_squat_flg = true;
+
 			m_state = eSquat;
 		}
 		else
@@ -135,6 +136,12 @@ void Player::Attack()
 			m_state = eAttack02;
 			k = 0;
 		}
+		if (CInput::GetState(0, CInput::eHold, CInput::eButton1)) {
+			k = 0;
+			m_attack_flg = false;
+			m_squat_flg = true;
+			m_state = eSquat;
+		}
 		if (k >= 60 || m_squat_flg) {
 			k = 0;
 			m_attack_flg = false;
@@ -151,6 +158,12 @@ void Player::Attack()
 			m_state = eAttack03;
 			k = 0;
 		}
+		if (CInput::GetState(0, CInput::eHold, CInput::eButton1)) {
+			k = 0;
+			m_attack_flg = false;
+			m_squat_flg = true;
+			m_state = eSquat;
+		}
 		if (k >= 60 || m_squat_flg) {
 			k = 0;
 			m_attack_flg = false;
@@ -163,7 +176,12 @@ void Player::Attack()
 			else
 				Utility::DrawQuad(m_pos - CVector2D(25, 0), CVector2D(50, 50), CVector4D(1.0f, 1, 0, 1));
 		}
-	
+		if (CInput::GetState(0, CInput::eHold, CInput::eButton1)) {
+			k = 0;
+			m_attack_flg = false;
+			m_squat_flg = true;
+			m_state = eSquat;
+		}
 		if (k >= 60 || m_squat_flg) {
 			k = 0;
 			m_attack_flg = false;
@@ -176,7 +194,12 @@ void Player::Attack()
 			else
 				Utility::DrawQuad(m_pos - CVector2D(25, 0), CVector2D(100, 100), CVector4D(1.0f, 1, 1, 1));
 		}
-
+		if (CInput::GetState(0, CInput::eHold, CInput::eButton1)) {
+			k = 0;
+			m_attack_flg = false;
+			m_squat_flg = true;
+			m_state = eSquat;
+		}
 		if (k >= 100 || m_squat_flg) {
 			k = 0;
 			m_attack_flg = false;
