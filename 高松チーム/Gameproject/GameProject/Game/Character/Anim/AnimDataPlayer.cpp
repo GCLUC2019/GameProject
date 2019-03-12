@@ -88,3 +88,34 @@ TexAnimData PlayerAnimData[] = {
 	ANIMDATA(PlayerRun),
 	ANIMDATA(PlayerCrouch),
 };
+
+
+/*
+プレイヤーエフェクト
+*/
+static TexAnim PlayerEffectLongAttack[] = {
+	{ 11,30 },
+{ 12,30 },
+};
+
+static TexAnim PLayerEffectShortAttack01[] = {
+	{ 0,30 },
+{ 1,30 },
+};
+
+static TexAnim PLayerEffectShortAttack02[] = {
+	{ 2,30 },
+{ 3,30 },
+};
+
+static TexAnim PLayerEffectShortAttack03[] = {
+	{ 4,30 },
+{ 5,30 },
+};
+
+TexAnimData PlayerEffectAnimData[] = {
+	ANIMDATA(PlayerEffectLongAttack),
+	ANIMDATA(PLayerEffectShortAttack01),
+	ANIMDATA(PLayerEffectShortAttack02),
+	ANIMDATA(PLayerEffectShortAttack03),
+};
