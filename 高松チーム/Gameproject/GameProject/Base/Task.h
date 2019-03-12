@@ -23,7 +23,6 @@ public:
 	void SetNext(Task *_var) { mp_next = _var; }
 	void SetPrev(Task *_var)   { mp_prev = _var; }
 	int GetType() { return m_type; }
-
 	friend class TaskManager;
 
 };

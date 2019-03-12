@@ -32,6 +32,7 @@ public:
 	static void Insert(Task*_t);
 	static void ReLink(bool _fb, Task* t1, Task* t2);
 
+    static Task*FindObject(int _type);
 	static TaskManager* GetInstance();
 	static void ClearInstance();
 	

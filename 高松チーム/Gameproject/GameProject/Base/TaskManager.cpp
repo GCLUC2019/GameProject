@@ -193,6 +193,19 @@ void TaskManager::ReLink(bool _fb, Task*_t1, Task * _t2)
 	}
 }
 
+Task * TaskManager::FindObject(int _type)
+{
+    Task*t = mp_head;
+    while (t->GetType() != _type) {
+
+        if (t->GetNext())
+            t = t->GetNext();
+        else
+            return nullptr;
+    }
+    return t;
+}
+
 TaskManager * TaskManager::GetInstance()
 {
 	if (mp_instance == nullptr)mp_instance = new TaskManager();
