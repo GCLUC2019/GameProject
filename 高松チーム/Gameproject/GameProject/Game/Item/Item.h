@@ -16,8 +16,8 @@ class Item : public Task {
 	CVector2D m_pos;
 public:
 	/*
-	@brief 　			ダメージ関数
-	@param _damage	[in]与えるダメージ
+	@param _m_item_type	[in]作るアイテムの種類
+	@param  _m_pos		[in]座標
 	*/
 	Item(int _m_item_type,CVector2D _m_pos);
 	void Update();
