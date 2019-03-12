@@ -1,6 +1,6 @@
 #include "EnemyBase.h"
 
-EnemyBase::EnemyBase(int _type)
+EnemyBase::EnemyBase(int _type) : Task(eEnemyBase)
 {
 }
 

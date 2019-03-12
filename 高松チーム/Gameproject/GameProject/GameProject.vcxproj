@@ -148,10 +148,14 @@
     <ClInclude Include="Game\Character\EnemyBase\Enemy\Enemy01.h" />
     <ClInclude Include="Game\Character\EnemyBase\Enemy\Enemy02.h" />
     <ClInclude Include="Game\Character\EnemyBase\Enemy\Enemy05.h" />
+    <ClInclude Include="Game\Character\enum.h" />
     <ClInclude Include="Game\Character\Player.h" />
+    <ClInclude Include="Game\Item\Item.h" />
     <ClInclude Include="Game\Resource\Resource.h" />
     <ClInclude Include="Game\Scene\GameScene.h" />
     <ClInclude Include="Game\Scene\Result.h" />
+    <ClInclude Include="Game\Stage\ground.h" />
+    <ClInclude Include="Game\Tutorial\Tutorial.h" />
     <ClInclude Include="GID.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="stdafx.h" />
@@ -174,9 +178,12 @@
     <ClCompile Include="Game\Character\EnemyBase\Enemy\Enemy02.cpp" />
     <ClCompile Include="Game\Character\EnemyBase\Enemy\Enemy05.cpp" />
     <ClCompile Include="Game\Character\Player.cpp" />
+    <ClCompile Include="Game\Item\Item.cpp" />
     <ClCompile Include="Game\Resource\Resource .cpp" />
     <ClCompile Include="Game\Scene\GameScene.cpp" />
     <ClCompile Include="Game\Scene\Result.cpp" />
+    <ClCompile Include="Game\Stage\ground.cpp" />
+    <ClCompile Include="Game\Tutorial\Tutorial.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

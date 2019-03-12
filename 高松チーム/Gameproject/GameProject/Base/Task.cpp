@@ -2,8 +2,9 @@
 #include"TaskManager.h"
 
 
-Task::Task() {
-	
+Task::Task(int _type) {
+    m_type = _type;
+    printf("Task‚ª¶¬‚³‚ê‚Ü‚µ‚½\n");
 }
 
 void Task::Update()
