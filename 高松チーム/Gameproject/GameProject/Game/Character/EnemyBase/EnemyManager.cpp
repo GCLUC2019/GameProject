@@ -3,7 +3,7 @@
 #include "../EnemyBase/Enemy/Enemy02.h"
 #include "../EnemyBase/Enemy/Enemy05.h"
 
-EnemyManager::EnemyManager():
+EnemyManager::EnemyManager(): Task(eEnemyBase),
 	m_wave_flg(false),
 	m_appear_type(eWave1_1),
 	m_wave1_1_flg(false),

@@ -1,7 +1,10 @@
 #pragma once
 
 const enum {
-	ePlayer = 0,
+	eCharacterBase,
+	eEnemyBase,
+	eItem,
+	ePlayer,
 	eEnemy01,
 	eEnemy02,
 	eEnemy03,

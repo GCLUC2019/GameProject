@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "../stdafx.h"
 #include "TaskManager.h"
+#include "../Game/Character/enum.h"
 
 class Task {
 private:
