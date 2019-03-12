@@ -6,6 +6,7 @@
 
 
 #define DEFAULT_ANIM_DELAY (10)
+#define PLAYER_ANIM_RUN_DELAY (5)
 
 struct AnimInfo {
 	int image_id;
@@ -33,8 +34,14 @@ protected:
 	//表示位置調整関連
 	CVector2D m_draw_adj;
 
+	CVector2D m_shadow_pos_adj = CVector2D(0,0);
+
 	//フラグ関連
 	bool m_is_landing = false;
+
+
+	//近くに存在するエネミーオブジェクト
+	//CCharacterEnemy* m_near_enemy_p;
 	
 public:
 	CCharacter(int _task_id, int _draw_priority);
@@ -65,6 +72,10 @@ public:
 
 	void SetIsShowShadow(bool _is) { m_is_show_shadow = _is; };
 	void SetShadowSize(CVector2D _size) { m_shadow_size = _size; };
+
+
+	//影の位置が変わりすぎると当たり判定との差異が起こるので注意すること(X軸にずらすとかその程度にする)
+	void SetShadowPosAdj(CVector2D _pos) { m_shadow_pos_adj = _pos; };
 
 	void SetDrawAdjPos(CVector2D _adj_pos) { m_draw_adj = _adj_pos; };
 	CVector2D GetDrawAdjPos() { return m_draw_adj; };
