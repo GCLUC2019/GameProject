@@ -22,13 +22,9 @@ public:
 	void OnCollision(CBoxCollider*p);
 	CHpBar mHpBar;
 
-	static CBoss*GetBoss() {
-		if (Boss = nullptr) {
-			printf("É{ÉXÇ»Çµ");
-		}
-		return Boss;
+	
 	};
 
-}
+
 
 #endif
