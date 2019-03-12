@@ -53,7 +53,7 @@ void Init(void)
 	glEnable(GL_ALPHA_TEST);
 
 	//フレームレート設定
-	CFPS::SetFPS(60);
+	CFPS::SetFPS(999);
 	//フレーム制御初期化
 	CFPS::Init();
 	//ボタンの設定

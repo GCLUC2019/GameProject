@@ -5,9 +5,12 @@ enum {
 	eBossHeadAnim,
 	eBossTailAnim,
 	eBossHandAnim,
-	eBossTailAttack,
-	eBossFireAttack,
+	eBossTailAttackMotion,
+	eBossFireAttackMotion,
+	eBossLazerEffect,
+	eBossFireEffect
 };
 
 extern TexAnimData BossAnimData[];
+extern TexAnimData BossFireEffectAnimData[];
 
