@@ -8,7 +8,7 @@
 
 BossEffect::BossEffect(CVector2D& pos)
 {
-	m_img = COPY_RESOURCE("BossFire", CImage*);
+	m_img = COPY_RESOURCE("BossFire", CAnimImage*);
 	m_pos.x = 0;
 	//512
 	m_pos.y = pos.y;
@@ -17,7 +17,9 @@ BossEffect::BossEffect(CVector2D& pos)
 
 void BossEffect::Update()
 {
-	
+	/*m_img.ChangeAnimation(eBossFireEffect, false);
+	m_img.UpdateAnimation();
+	m_img.CheckAnimationEnd();*/
 }
 
 void BossEffect::Draw()

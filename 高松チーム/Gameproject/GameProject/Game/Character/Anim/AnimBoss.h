@@ -5,7 +5,6 @@ enum {
 	eBossHeadAnim,
 	eBossTailAnim,
 	eBossHandAnim,
-	eBossHandAttackMotion,
 	eBossTailAttackMotion,
 	eBossFireAttackMotion,
 	eBossLazerEffect,
