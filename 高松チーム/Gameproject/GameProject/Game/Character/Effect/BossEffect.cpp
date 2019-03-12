@@ -11,7 +11,7 @@
 #define LAZER_Y_SIZE 480
 
 
-BossFireEffect::BossFireEffect(const CVector2D& pos)
+BossFireEffect::BossFireEffect(const CVector2D& pos) : Task(eBossFireEffectc)
 {
 	m_img = COPY_RESOURCE("BossFire", CAnimImage*);
 	m_pos.x = 0;
@@ -38,7 +38,7 @@ void BossFireEffect::Draw()
 ///////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////ボスのレーザー攻撃////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
-BossLazerEffect::BossLazerEffect(const CVector2D& pos)
+BossLazerEffect::BossLazerEffect(const CVector2D& pos) : Task(eBossLazerEffectc)
 {
 	m_img = COPY_RESOURCE("BossLazer", CAnimImage*);
 	m_pos.x = 0;

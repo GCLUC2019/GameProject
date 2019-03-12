@@ -4,7 +4,7 @@
 
 #define BOSS_X_SIZE 768
 #define BOSS_Y_SIZE 768
-BossManager::BossManager()
+BossManager::BossManager() : Task(eBossManager)
 {
 	m_img = COPY_RESOURCE("Boss", CAnimImage*);
 	m_img2 = COPY_RESOURCE("Boss", CImage*);
