@@ -4,6 +4,7 @@
 
 #define MOVE_SPEED 2.0f
 #define DEP_N 1200
+
 Enemy01::Enemy01() : EnemyBase(eEnemy01),
 m_state(eSearch),
 m_hover(0.0f),
@@ -41,6 +42,7 @@ void Enemy01::Update()
     default:
         break;
     }
+    m_depth = m_pos.y / DEP_N;
     m_pos += m_vec;
     MoveControl();
     m_img.UpdateAnimation();
