@@ -66,7 +66,6 @@ public:
 	Player();
 	void Update();
 	void Draw();
-
 	int GetHP() {
 		return m_HP;
 	}
