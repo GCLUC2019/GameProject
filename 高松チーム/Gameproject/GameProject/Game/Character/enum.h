@@ -3,6 +3,7 @@
 const enum {
 	eGameScene,
 	eGameClear,
+	eGameTutorial,
 
 	eCharacterBase,
 	eEnemyBase,

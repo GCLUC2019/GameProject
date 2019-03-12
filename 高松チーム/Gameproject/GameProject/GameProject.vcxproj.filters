@@ -65,6 +65,9 @@
     <ClCompile Include="Game\Item\Item.cpp">
       <Filter>Game\Character\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Tutorial\Tutorial.cpp">
+      <Filter>Game\Tutorial</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GID.h" />
@@ -136,6 +139,9 @@
     <ClInclude Include="Game\Item\Item.h">
       <Filter>Game\Character\Item</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Tutorial\Tutorial.h">
+      <Filter>Game\Tutorial</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game">
@@ -176,6 +182,9 @@
     </Filter>
     <Filter Include="Game\Character\Item">
       <UniqueIdentifier>{3f0111ea-5e10-4fff-886e-589fb0969c19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Tutorial">
+      <UniqueIdentifier>{9b1e7435-fdd8-4dba-9a07-65124f8b49f6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
