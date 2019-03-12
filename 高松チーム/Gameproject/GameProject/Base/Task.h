@@ -14,6 +14,7 @@ private:
 public:
 	Task();
 	virtual void Update();
+	virtual void HitCheck(Task* _t);
 	virtual void Draw();
 	
 	Task *GetNext() { return mp_next; }
