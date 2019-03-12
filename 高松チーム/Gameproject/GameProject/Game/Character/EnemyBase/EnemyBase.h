@@ -6,7 +6,7 @@
 ここでCharacterType設定する
 */
 enum {
-	eEnemy01,
+	eEnemy01 = 1,
 	eEnemy02,
 	eEnemy03,
 	eEnemy04,
@@ -22,7 +22,6 @@ protected:
 	CVector2D m_vec;	//敵ベクトル
 	CAnimImage m_img;	//敵画像
 	CVector2D m_pos_old;//敵前位置
-	int m_type;			//敵識別子
 	int m_hp;			//敵体力
 	int m_state;		//敵状態
 	float m_ang;		//敵方向
@@ -40,5 +39,6 @@ public:
 	@drief オブジェクトの画面移動を制限する
 	*/
 	virtual void MoveControl();
+
 
 };

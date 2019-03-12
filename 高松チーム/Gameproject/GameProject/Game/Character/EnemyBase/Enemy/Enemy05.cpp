@@ -1,6 +1,7 @@
 #include "Enemy05.h"
 #include "../../Anim/AnimData.h"
 #include "../GameProject/Game/Resource/Resource.h"
+#include "../../CharacterBase.h"
 #define MOVE_ 360
 
 #define MOVE_ 360
@@ -107,5 +108,11 @@ void Enemy05::Draw()
 
 void Enemy05::HitCheck(Task * _t)
 {
-	
+	switch (_t->GetType()) {
+	case ePlayer:
+		printf("player‚ğæ“¾");
+		break;
+	default:
+		break;
+	}
 }
