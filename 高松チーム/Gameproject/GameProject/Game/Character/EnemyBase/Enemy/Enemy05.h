@@ -26,5 +26,6 @@ public:
 	void Damage();
 	void Update();
 	void Draw();
+	void HitCheck(Task* _t);
 	
 };
