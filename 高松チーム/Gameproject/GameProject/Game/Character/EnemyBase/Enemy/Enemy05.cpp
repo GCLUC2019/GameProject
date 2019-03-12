@@ -1,9 +1,11 @@
 #include "Enemy05.h"
 #include "../../Anim/AnimData.h"
 #include "../GameProject/Game/Resource/Resource.h"
+
 #define MOVE_ 360
 
-Enemy05::Enemy05() : EnemyBase(eEnemy05)
+Enemy05::Enemy05() : EnemyBase(eEnemy05),
+m_move_cnt(0)
 {
 	//èâä˙âª
 	m_img = COPY_RESOURCE("Enemy05", CAnimImage*);
@@ -13,7 +15,6 @@ Enemy05::Enemy05() : EnemyBase(eEnemy05)
 	m_pos = CVector2D(600, 100);
 	m_vec = CVector2D(0, 0);
 	m_hp = 100;
-	m_move_cnt = 0;
 	m_state = eMove;
 }
 
@@ -44,7 +45,6 @@ void Enemy05::MoveManagement(int _type)
 		break;
 
 	case 1:
-		
 		break;
 	case 2:
 		break;
