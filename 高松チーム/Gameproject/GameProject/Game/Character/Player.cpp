@@ -57,11 +57,11 @@ void Player::Move()
 			m_squat_flg = false;
 
 
-		if (CInput::GetState(0, CInput::ePush, CInput::eButton2) && m_attack_flg == false) {
-			m_attack_flg = true;			
+		if (CInput::GetState(0, CInput::ePush, CInput::eButton2) && m_attack_flg == false && m_squat_flg == false && m_damage_flg == false) {
+			m_attack_flg = true;
 			m_state = eAttack01;
 		}
-		if (CInput::GetState(0, CInput::ePush, CInput::eButton4) && m_attack_flg == false) {
+		if (CInput::GetState(0, CInput::ePush, CInput::eButton4) && m_attack_flg == false && m_squat_flg == false && m_damage_flg == false) {
 			m_attack_flg = true;
 			m_state = eAttack04;
 		}
@@ -143,7 +143,7 @@ void Player::Attack()
 			m_squat_flg = true;
 			m_state = eSquat;
 		}
-		if (k >= 60 || m_squat_flg) {
+		if (k >= 60 || m_squat_flg||m_damage_flg) {
 			k = 0;
 			m_attack_flg = false;
 		}
@@ -207,13 +207,15 @@ void Player::Attack()
 		}
 		break;
 	default:
-		printf("null");
+		k = 0;
+		m_attack_flg = false;
 		break;
 	}
-#ifdef _DEBUG//後でアニメーション設定に変更
-	//m_img.SetAng(DtoR(90));
-#endif // _DEBUG
-	
+	//if (m_damage_flg) {
+	//	k = 0;
+	//	m_attack_flg = false;
+	//}
+		
 	k++;
 }
 
@@ -225,7 +227,6 @@ void Player::Damage(int _damage)
 		m_state = eDeath;
 		SetAnim();
 	}
-		
 	m_HP -= _damage;
 	m_damage_flg = true;
 }
@@ -332,6 +333,7 @@ void Player::DamageState()
 	if (time < 0) {
 		time = 60;
 		m_damage_flg = false;
+		
 	}
 }
 void Player::Draw()
