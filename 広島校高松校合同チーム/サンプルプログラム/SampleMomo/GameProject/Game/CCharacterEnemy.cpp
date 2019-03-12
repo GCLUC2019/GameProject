@@ -35,6 +35,9 @@ CCharacterEnemy::CCharacterEnemy() :CCharacter(eTaskIdEnemy, 0)
 	SetIsShowShadow(true);
 	SetShadowSize(CVector2D(100, 50));
 	SetDrawAdjPos(CVector2D(5.0, -50.0));
+
+	m_hit_point = 3.0f;
+	m_hit_point_max = 3.0f;
 }
 
 CCharacterEnemy::~CCharacterEnemy()
@@ -73,6 +76,11 @@ void CCharacterEnemy::CharacterUpdate()
 void CCharacterEnemy::CharacterDraw()
 {	
 
+}
+
+void CCharacterEnemy::ReceiveAttack()
+{
+	printf("エネミー 攻撃があたった!\n");
 }
 
 void CCharacterEnemy::LoadAnimImage()
