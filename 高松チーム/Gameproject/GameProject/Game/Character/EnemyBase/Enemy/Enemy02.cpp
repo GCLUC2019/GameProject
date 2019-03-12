@@ -117,21 +117,6 @@ void Enemy02::Attack()
             m_jump_flg = false;
         }
     }
-    //if (m_jump_flg) {
-    //    static float time = 1;
-    //    static int jump_vec_old = m_jump_vec;
-    //    jump_vec_old = m_jump_vec;
-    //    m_jump_vec = 0 + JUMP_SPD * time + GRAVITY/10 * (time*time) / 2;
-    //    m_jump_vec *= -1;
-    //    /*if (jump_vec_old - m_jump_vec < 0)
-    //    m_state = eJumpDown;*/
-    //    time += 0.5f;
-    //    if (m_jump_vec > 0) {
-    //        time = 0;
-    //        m_jump_vec = 0;
-    //        m_jump_flg = false;
-    //    }
-    //}
     
     if (m_img.CheckAnimationEnd())
         m_state = eSearch;
