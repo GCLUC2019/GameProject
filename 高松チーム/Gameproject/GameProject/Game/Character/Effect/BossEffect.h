@@ -4,7 +4,7 @@
 
 class BossEffect : public Task {
 private:
-	CImage m_img;
+	CAnimImage m_img;
 	CVector2D m_pos;
 public:
 	BossEffect(CVector2D& pos);
