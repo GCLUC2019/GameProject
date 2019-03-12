@@ -294,7 +294,7 @@ void Player::Update()
 	if (CInput::GetState(0, CInput::eHold, CInput::eMouseL))
 		Damage(10);
 	if (CInput::GetState(0, CInput::eHold, CInput::eMouseR))
-		m_HP = 100;
+		SetKill();
 #endif // _DEBUG
 
 	if (m_HP < 0)

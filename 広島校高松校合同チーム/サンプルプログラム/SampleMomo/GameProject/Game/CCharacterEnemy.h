@@ -42,12 +42,12 @@ private:
 	};
 	int m_enemy_state;
 	int m_old_enemy_state;   //ダメージを受けた時に記憶する直前の状態
-	int m_enemy_hp;
 	int m_AI_cnt;            //状態が変化するまでのカウント
-	bool is_damage;          //ダメージを受けていいかどうかのフラグ
+	bool m_is_damage;          //ダメージを受けていいかどうかのフラグ
+	int m_damage_chance;    //攻撃を当てられた状態
 	bool m_attack_chance;    //攻撃が当たる距離かのフラグ
-	CVector3D p_pos;		 //プレイヤーの座標を記憶
-	CVector2D p_vec;         //プレイヤー方向へのベクトル
+	CVector3D m_player_pos;		 //プレイヤーの座標を記憶
+	CVector2D m_player_vec;         //プレイヤー方向へのベクトル
 public:
 	CCharacterEnemy();
 	~CCharacterEnemy();
