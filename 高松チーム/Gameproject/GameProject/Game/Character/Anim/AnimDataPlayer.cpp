@@ -21,19 +21,19 @@ static TexAnim PlayerLongAttack[] = {
 };
 
 static TexAnim PlayerShortAttack01[] = {
-	{20,30},
-{21,30},
-{22,30},
+	{20,15},
+{21,15},
+{22,15},
 };
 
 static TexAnim PlayerShortAttack02[] = {
-	{30,30},
-{31,30},
+	{30,15},
+{31,15},
 };
 
 static TexAnim PlayerShortAttack03[] = {
-	{40,30},
-{41,30},
+	{40,15},
+{41,15},
 };
 
 static TexAnim PlayerDamage[] = {
@@ -71,8 +71,8 @@ static TexAnim PlayerRun[] = {
 };
 
 static TexAnim PlayerCrouch[] = {
-	{31,30},
-{32,30},
+	{90,30},
+{91,30},
 };
 
 TexAnimData PlayerAnimData[] = {

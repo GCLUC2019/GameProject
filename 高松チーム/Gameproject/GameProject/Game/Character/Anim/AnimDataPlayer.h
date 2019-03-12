@@ -8,10 +8,11 @@ enum {
 	ePShortAttack02,
 	ePShortAttack03,
 	ePDamage,
-	ePJumpUp,
-	ePJumpDown,
-	ePUp,
-	ePRun,
+	ePDeath,
+	ePJumpUp,//
+	ePJumpDown,//
+	ePUp,//
+	ePRun,//
 	ePCrouch,
 };
 
