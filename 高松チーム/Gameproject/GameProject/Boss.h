@@ -11,6 +11,8 @@ private:
 
 	float m_rot;//‰~Žü—¦
 	float m_r;  //”¼Œa
+
+	bool m_anim_flag;
 protected:
 
 

@@ -16,6 +16,7 @@ BossHead::BossHead() :EnemyBase(eBossHead)
 	m_r = 100.0;
 	m_rot = 0;
 	m_center = CVector2D(m_pos.x + m_r, m_pos.y);
+	m_anim_flag = false;
 }
 
 
@@ -23,12 +24,14 @@ void BossHead::Update()
 {
 	m_img.ChangeAnimation(eBossFireAttackMotion, false);
 	m_img.UpdateAnimation();
-	m_img.CheckAnimationEnd();
-	if (m_img.CheckAnimationEnd()) {
-		//	TaskManager::GetInstance()->AddTask(new BossFireEffect(m_pos));
+	//m_img.CheckAnimationEnd();
+	if (m_anim_flag==false&&m_img.CheckAnimationEnd()) {
+		TaskManager::GetInstance()->AddTask(new BossFireEffect(m_pos));
+		m_anim_flag = true;
 	}
 	m_rot += 0.05;
 	if (m_rot >= PIE * 2)m_rot = 0;
+	if(m_anim_flag==false)
 	m_pos = m_center + CVector2D(sin(m_rot), cos(m_rot))*m_r;
 }
 
