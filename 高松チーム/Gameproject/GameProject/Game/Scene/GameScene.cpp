@@ -10,12 +10,8 @@
 GameScene::GameScene() : Task(eGameScene)
 {
 	new Resource();
-	TaskManager::GetInstance()->AddTask(new Bamboo());
-	TaskManager::GetInstance()->AddTask(new Ground());
+	TaskManager::GetInstance()->AddTask(new Stage01());
 	TaskManager::GetInstance()->AddTask(new EnemyManager());
-	//TaskManager::GetInstance()->AddTask(new BossHead());
-	//TaskManager::GetInstance()->AddTask(new BossHand());
-	//TaskManager::GetInstance()->AddTask(new BossTail());
 	TaskManager::GetInstance()->AddTask(new BossManager());
 	TaskManager::GetInstance()->AddTask(new Item(ItemList::eHyoutan,CVector2D(256,360)));
 	TaskManager::GetInstance()->AddTask(new Item(ItemList::eInari, CVector2D(512, 360)));
