@@ -142,7 +142,9 @@
     <ClInclude Include="Game\Character\Effect\BossEffect.h" />
     <ClInclude Include="Game\Character\Effect\EnemyEffect.h" />
     <ClInclude Include="Game\Character\Effect\PlayerEffect.h" />
+    <ClInclude Include="Game\Character\EnemyBase\Boss\BossManager.h" />
     <ClInclude Include="Game\Character\EnemyBase\EnemyBase.h" />
+    <ClInclude Include="Game\Character\EnemyBase\EnemyManager.h" />
     <ClInclude Include="Game\Character\EnemyBase\Enemy\Enemy01.h" />
     <ClInclude Include="Game\Character\EnemyBase\Enemy\Enemy02.h" />
     <ClInclude Include="Game\Character\EnemyBase\Enemy\Enemy05.h" />
@@ -165,7 +167,9 @@
     <ClCompile Include="Game\Character\Effect\BossEffect.cpp" />
     <ClCompile Include="Game\Character\Effect\EnemyEffect.cpp" />
     <ClCompile Include="Game\Character\Effect\PlayerEffect.cpp" />
+    <ClCompile Include="Game\Character\EnemyBase\Boss\BossManager.cpp" />
     <ClCompile Include="Game\Character\EnemyBase\EnemyBase.cpp" />
+    <ClCompile Include="Game\Character\EnemyBase\EnemyManager.cpp" />
     <ClCompile Include="Game\Character\EnemyBase\Enemy\Enemy01.cpp" />
     <ClCompile Include="Game\Character\EnemyBase\Enemy\Enemy02.cpp" />
     <ClCompile Include="Game\Character\EnemyBase\Enemy\Enemy05.cpp" />

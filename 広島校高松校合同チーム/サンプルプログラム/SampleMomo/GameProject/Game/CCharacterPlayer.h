@@ -3,11 +3,15 @@
 
 
 
+#define PLAYER_ATTACK_FRAME (15)
+
+
 
 enum {
 	ePlayerAnimIdIdle,
 	ePlayerAnimIdMove,
 	ePlayerAnimIdRun,
+	ePlayerAnimIdAttack,
 	ePlayerAnimIdMax,
 };
 
@@ -45,18 +49,24 @@ private:
 	bool m_is_attacking = false;
 	int m_attacking_count = 0;
 	
-	
+	bool m_is_dashing = false;
+
 public:
 	CCharacterPlayer();
 	~CCharacterPlayer();
 	void LoadAnimImage();
+
+	void InputDash();
 	void InputAttack();
 	void InputMove();
 	void InputJump();
+
+	void Attacking();
 	void Jumping();
 	void Move();
 	void Update();
 	void CharacterDraw();
+	void AdjAnim();
 	void CalcScroll();
 };
 

@@ -100,10 +100,13 @@ void CCharacter::DrawShadow()
 
 	CVector2D draw_pos_shadow = CVector2D(m_pos.x, m_pos.z ) - GetScroll();
 
+	CVector2D shadow_pos_adj = m_shadow_pos_adj;
+
+	if (m_is_flip == true) shadow_pos_adj.x *= -1.0f;
 
 	m_shadow_p->SetFlipH(m_is_flip);
 	m_shadow_p->SetSize(m_shadow_size.x, m_shadow_size.y);
-	m_shadow_p->SetPos(draw_pos_shadow);
+	m_shadow_p->SetPos(draw_pos_shadow + shadow_pos_adj);
 	m_shadow_p->SetCenter(m_shadow_size.x / 2.0, m_shadow_size.y / 2.0);
 	m_shadow_p->Draw();
 }
