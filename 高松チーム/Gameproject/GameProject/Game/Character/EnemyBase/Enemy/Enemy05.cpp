@@ -104,3 +104,8 @@ void Enemy05::Draw()
 	m_img.SetPos(m_pos);
 	m_img.Draw();
 }
+
+void Enemy05::HitCheck(Task * _t)
+{
+	
+}
