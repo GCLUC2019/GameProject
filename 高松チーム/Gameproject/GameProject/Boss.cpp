@@ -12,7 +12,7 @@ BossHead::BossHead() :EnemyBase(eBossHead)
 	m_img.SetSize(BOSS_X_SIZE / 3, BOSS_Y_SIZE / 3);
 	//プレイヤー座標取得可能後
 	//m_pos = CVector2D(1280 - BOSS_X_SIZE / 3, Player_pos.y);
-	m_pos = CVector2D(1280 - BOSS_X_SIZE / 3, BOSS_Y_SIZE - BOSS_Y_SIZE / 3);
+	m_pos = CVector2D(1280 - BOSS_X_SIZE / 3, BOSS_Y_SIZE / 3);
 	m_state = eIdle;
 	m_r = 100.0;
 	m_rot = 0;
@@ -47,3 +47,32 @@ void BossHead::Draw()
 	m_img.Draw();
 }
 
+
+//////////////////////////////////////////////////////////////
+///////////////////////ボスの手クラス/////////////////////////
+//////////////////////////////////////////////////////////////
+BossHand::BossHand() :EnemyBase(eBossHead)
+{
+	m_img = COPY_RESOURCE("Boss", CImage*);
+	m_img.SetSize(BOSS_X_SIZE / 3, BOSS_Y_SIZE / 3);
+	m_pos = CVector2D(1280 - BOSS_X_SIZE, BOSS_Y_SIZE / 3);
+}
+
+void BossHand::Update()
+{
+}
+
+void BossHand::Idle()
+{
+}
+
+void BossHand::Attack()
+{
+}
+
+void BossHand::Draw()
+{
+	m_img.SetRect(BOSS_X_SIZE, BOSS_Y_SIZE * 2, BOSS_X_SIZE * 3, BOSS_Y_SIZE * 3);
+	m_img.SetPos(m_pos);
+	m_img.Draw();
+}

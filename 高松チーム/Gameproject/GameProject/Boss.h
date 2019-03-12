@@ -34,3 +34,34 @@ public:
 	void Draw();
 
 };
+
+
+class BossHand :public EnemyBase {
+private:
+	enum {
+		eIdle,
+		eMove,
+		eAttack
+	};
+
+	CVector2D m_center;
+
+	float m_rot;
+	float m_r;
+	int m_state;
+protected:
+
+
+public:
+	BossHand();
+
+	void Update();
+
+	void Idle();
+
+	void Attack();
+
+	void Draw();
+
+};
+
