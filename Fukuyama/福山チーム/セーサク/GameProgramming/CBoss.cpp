@@ -8,16 +8,15 @@
 
 //#define FIREINTERVER_E 60
 
-<<<<<<< HEAD
 extern CPlayerTank*Tank;
- CBoss *Boss = nullptr;
-=======
+// CBoss *Boss = nullptr;
+
 //extern CPlayerTank*Tank;
-//extern CBoss*Boss;
->>>>>>> 9cd562c286176f0ba16c133a8d58ecb4e6ff12e9
+
 
 
 void CBoss::Init() {
+	Boss = this;
 	/*mFireIntervar = FIREINTERVER_E;
 	CTank::Init();
 	SetColor(0.6f, 0.0f, 0.0f, 1.0f);
