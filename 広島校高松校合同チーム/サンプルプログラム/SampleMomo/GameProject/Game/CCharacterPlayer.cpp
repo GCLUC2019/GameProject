@@ -9,10 +9,16 @@ CCharacterPlayer::CCharacterPlayer() :CCharacter(eTaskIdPlayer, 0)
 	SetAnim(ePlayerAnimIdIdle);
 	LoadAnimImage();
 
+	SetSize(400, 400);
 	SetIsShowShadow(true);
 	SetShadowSize(CVector2D(100, 50));
 	SetDrawAdjPos(CVector2D(-15, 20.0f));
 	SetRads(75,200,10);
+
+
+	//体力の設定
+	m_hit_point = 10.0f;
+	m_hit_point_max = 10.0f;
 }
 
 CCharacterPlayer::~CCharacterPlayer()
@@ -47,7 +53,7 @@ void CCharacterPlayer::LoadAnimImage()
 	//アニメーションデータの設定
 	m_anim_info[ePlayerAnimIdIdle].image_num = 3;
 	m_anim_info[ePlayerAnimIdIdle].image_id = ePlayerAnimIdle0;
-	m_anim_info[ePlayerAnimIdIdle].delay = DEFAULT_ANIM_DELAY;
+	m_anim_info[ePlayerAnimIdIdle].delay = PLAYER_ANIM_IDLE;
 
 	m_anim_info[ePlayerAnimIdMove].image_num = 8;
 	m_anim_info[ePlayerAnimIdMove].image_id = ePlayerAnimMove0;
@@ -113,27 +119,28 @@ void CCharacterPlayer::Update()
 
 void CCharacterPlayer::InputMove()
 {
-	m_vec = CVector3D(0, 0, 0);
+	m_vec.x = 0.0f;
+	m_vec.z = 0.0f;
 	
 	bool is_move = false;
 	if (CInput::GetState(0,CInput::eHold, CInput::eRight)) {
 		m_is_flip = false;
 		is_move = true;
-		m_vec.x = 1;
+		m_vec.x = 1 * m_speed;
 	}
 	if (CInput::GetState(0, CInput::eHold, CInput::eLeft)) {
 		m_is_flip = true;
 		is_move = true;
-		m_vec.x = -1;
+		m_vec.x = -1 * m_speed;
 	}
 
 	if (CInput::GetState(0, CInput::eHold, CInput::eUp)) {
 		is_move = true;
-		m_vec.z = -1;
+		m_vec.z = -1 * m_speed;
 	}
 	if (CInput::GetState(0, CInput::eHold, CInput::eDown)) {
 		is_move = true;
-		m_vec.z = 1;
+		m_vec.z = 1 * m_speed;
 	}
 
 	if (is_move == true) {
@@ -145,11 +152,12 @@ void CCharacterPlayer::InputMove()
 
 void CCharacterPlayer::InputJump()
 {
-	if (CInput::GetState(0, CInput::ePush, CInput::eButton1) && m_is_jumping == false && m_is_landing == true) {
+	if (CInput::GetState(0, CInput::eHold, CInput::eButton1) && m_is_jumping == false && m_is_landing == true) {
 		//SetIsDelete();
 		m_will_play_anim_id = ePlayerAnimIdMove;
 		m_is_jumping = true;
 		m_jumping_count = 30;
+		m_vec.y = -25.0f;
 	}
 }
 
@@ -158,6 +166,64 @@ void CCharacterPlayer::Attacking()
 	if (m_is_attacking == false) return;
 	if (m_attacking_count-- <= 0) {
 		m_is_attacking = false;
+
+		//攻撃判定を発生させる。
+
+		//生成されている全てのエネミーのポインタを取得
+		Task** enemy_array = TaskManager::GetInstance()->FindTaskArray(eTaskIdEnemy);
+
+		int i = 0;
+		while (true) {
+			if (enemy_array[i] == nullptr) break;
+			CCharacter* enemy_p = dynamic_cast<CCharacter*>(enemy_array[i]);
+			if (enemy_p == nullptr) {
+				i++;
+				continue;
+			}
+			//printf("エネミーいたよね\n");
+
+			//位置関係を取得
+			CVector3D enemy_pos = enemy_p->GetPos();
+			CVector3D player_pos = GetPos();
+
+
+			//軸ごとの絶対距離を取る
+			CVector3D length = enemy_pos - player_pos;
+			length.x = abs(length.x);
+			length.y = abs(length.y);
+			length.z = abs(length.z);
+
+			//攻撃範囲
+			CVector3D attack_length = PLAYER_ATTACK_LENGTH;
+
+
+			//敵が左側にいて自分が左向き
+			//もしくは敵が右側にいて、自分が右向きなら
+			if (length.x <= 0.0f && m_is_flip == true
+				|| length.x >= 0.0f && m_is_flip == false) {
+
+				printf("length.x %lf length.y %lf length.z %lf \n", length.x, length.y, length.z);
+
+
+				//攻撃範囲内に敵がいるなら
+				if (length.x <= attack_length.x&& length.y <= attack_length.y&&length.z <= attack_length.z) {
+					//当たっているので
+					enemy_p->ReceiveAttack();
+					*enemy_p->GetHitPointPointer() -= PLAYER_ATTACK_POWER;
+				}
+
+			}
+			
+
+
+
+
+
+			i++;
+		}
+
+
+		free(enemy_array);
 	}
 	SetWillPlayAnim(ePlayerAnimIdAttack);
 
@@ -172,15 +238,19 @@ void CCharacterPlayer::Jumping()
 		}
 
 
+
+
+		/*
 		m_vec.y -= 0.1 + GRAVITY;
 		if (m_vec.y <= -3.0) m_vec.y = -3.0;
+		*/
 	}
 }
 
 void CCharacterPlayer::Move()
 {
 	m_pos_old = m_pos;
-	m_pos += m_vec * m_speed;
+	m_pos += m_vec;
 }
 
 void CCharacterPlayer::CharacterDraw()
@@ -211,4 +281,9 @@ void CCharacterPlayer::AdjAnim()
 void CCharacterPlayer::CalcScroll()
 {
 	SetScroll(CVector2D(m_pos.x - 100,0));
+}
+
+void CCharacterPlayer::ReceiveAttack()
+{
+
 }

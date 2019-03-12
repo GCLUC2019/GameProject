@@ -2,19 +2,6 @@
 #include "../GameProject/Base/Task.h"
 #include "../GameProject/stdafx.h"
 
-/*
-Ç±Ç±Ç≈CharacterTypeê›íËÇ∑ÇÈ
-*/
-enum {
-	eEnemy01 = 1,
-	eEnemy02,
-	eEnemy03,
-	eEnemy04,
-	eEnemy05,
-	eBossHead,
-	eBossHund
-};
-
 class EnemyBase : public Task {
 private:
 protected:

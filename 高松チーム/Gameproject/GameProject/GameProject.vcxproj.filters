@@ -127,6 +127,9 @@
     <ClInclude Include="Game\Character\EnemyBase\Boss\BossManager.h">
       <Filter>Game\Character\EnemyBase\Boss</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Character\enum.h">
+      <Filter>Game\Character</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game">

@@ -148,6 +148,7 @@
     <ClInclude Include="Game\Character\EnemyBase\Enemy\Enemy01.h" />
     <ClInclude Include="Game\Character\EnemyBase\Enemy\Enemy02.h" />
     <ClInclude Include="Game\Character\EnemyBase\Enemy\Enemy05.h" />
+    <ClInclude Include="Game\Character\enum.h" />
     <ClInclude Include="Game\Character\Player.h" />
     <ClInclude Include="Game\Resource\Resource.h" />
     <ClInclude Include="Game\Scene\GameScene.h" />
