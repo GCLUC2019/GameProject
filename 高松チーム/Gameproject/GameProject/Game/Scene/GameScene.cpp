@@ -14,6 +14,9 @@ GameScene::GameScene()
     TaskManager::GetInstance()->AddTask(new Enemy02());
 	TaskManager::GetInstance()->AddTask(new Enemy05());
 	TaskManager::GetInstance()->AddTask(new BossHead());
+	TaskManager::GetInstance()->AddTask(new BossHand());
+	//TaskManager::GetInstance()->AddTask(new BossTail());
+	//TaskManager::GetInstance()->AddTask(new BossManager());
 }
 
 GameScene::~GameScene()
