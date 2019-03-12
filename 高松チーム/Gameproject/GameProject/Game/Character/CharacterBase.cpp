@@ -12,3 +12,7 @@ void CharacterBase::Update()
 void CharacterBase::Draw()
 {
 }
+
+void CharacterBase::Damage(int _damage)
+{
+}
