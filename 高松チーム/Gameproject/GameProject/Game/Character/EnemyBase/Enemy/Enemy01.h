@@ -23,6 +23,7 @@ private:
 
 public:
 	Enemy01();
+    Enemy01(CVector2D &_pos);
 	void Update();
 	void Draw();
     void Move();//ƒvƒŒƒCƒ„[”­Œ©‚Ì“®‚«

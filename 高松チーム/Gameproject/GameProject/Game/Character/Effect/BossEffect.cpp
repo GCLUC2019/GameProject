@@ -3,8 +3,13 @@
 
 #define BOSS_X_SIZE 768
 #define BOSS_Y_SIZE 768
+
 #define FIRE_X_SIZE 1280
 #define FIRE_Y_SIZE 960
+
+#define LAZER_X_SIZE 640
+#define LAZER_Y_SIZE 480
+
 
 BossFireEffect::BossFireEffect(const CVector2D& pos)
 {
@@ -34,26 +39,26 @@ void BossFireEffect::Draw()
 ///////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////ボスのレーザー攻撃////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
-//BossLazerEffect::BossLazerEffect(const CVector2D& pos)
-//{
-//	m_img = COPY_RESOURCE("BossLazer", CAnimImage*);
-//	m_pos.x = 0;
-//	//512
-//	m_pos.y = pos.y;
-//}
-//
-//
-//void BossLazerEffect::Update()
-//{
-//	/*m_img.ChangeAnimation(eBossFireEffect, false);
-//	m_img.UpdateAnimation();
-//	m_img.CheckAnimationEnd();*/
-//}
-//
-//void BossLazerEffect::Draw()
-//{
-//	m_img.SetSize(FIRE_X_SIZE - BOSS_X_SIZE / 3, FIRE_Y_SIZE / 4);
-//	m_img.SetRect(FIRE_X_SIZE, 0, FIRE_X_SIZE * 2, FIRE_Y_SIZE);
-//	m_img.SetPos(m_pos);
-//	m_img.Draw();
-//}
+BossLazerEffect::BossLazerEffect(const CVector2D& pos)
+{
+	m_img = COPY_RESOURCE("BossLazer", CAnimImage*);
+	m_pos.x = 0;
+	//512
+	m_pos.y = pos.y;
+}
+
+
+void BossLazerEffect::Update()
+{
+	m_img.ChangeAnimation(eBossFireEffect, false);
+	m_img.UpdateAnimation();
+	m_img.CheckAnimationEnd();
+}
+
+void BossLazerEffect::Draw()
+{
+	m_img.SetSize(LAZER_X_SIZE - BOSS_X_SIZE / 3, LAZER_Y_SIZE / 4);
+	m_img.SetRect(0, 0, LAZER_X_SIZE * 2, LAZER_Y_SIZE);
+	m_img.SetPos(m_pos);
+	m_img.Draw();
+}
