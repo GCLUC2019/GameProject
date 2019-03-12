@@ -9,7 +9,7 @@
 #define FIREINTERVER_E 60
 
 extern CPlayerTank*Tank;
-extern CBoss*Boss;
+ CBoss *Boss = nullptr;
 
 
 void CBoss::Init() {
