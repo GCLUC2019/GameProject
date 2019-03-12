@@ -23,6 +23,7 @@ private:
 
 public:
 	Enemy01();
+    Enemy01(CVector2D &_pos);
 	void Update();
 	void Draw();
     void Move();//プレイヤー発見時の動き
@@ -30,5 +31,6 @@ public:
     void Attack();//攻撃
     void Damage();//ダメージ
     void MoveControl();
+    void HitCheck(Task*_t);
     bool PlayerCheck(Player*p, Task*e,float _l);//プレイヤーを検知する
 };

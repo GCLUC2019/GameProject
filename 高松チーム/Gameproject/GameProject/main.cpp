@@ -24,7 +24,9 @@ void MainLoop(void) {
 	//ƒQ[ƒ€’†‚Ì“®‚«‚Í‚±‚±‚É‘‚­
 	//ƒQ[ƒ€’†‚Í‚±‚ÌŠÖ”_‚ð1•bŠÔ‚É60‰ñŒÄ‚Ño‚µ‚Ä‚¢‚é
 	//--------------------------------------------------------------
-	
+
+	TaskManager::GetInstance()->HitCheckAll();
+
 	TaskManager::GetInstance()->UpdateAll();
 
 	TaskManager::GetInstance()->DrawAll();

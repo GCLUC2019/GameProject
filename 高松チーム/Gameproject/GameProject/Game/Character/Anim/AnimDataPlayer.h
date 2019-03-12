@@ -25,5 +25,5 @@ enum {
 };
 
 extern TexAnimData PlayerAnimData[];
-extern TexAnimData PlayerEfectAnimData[];
+extern TexAnimData PlayerEffectAnimData[];
 
