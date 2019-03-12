@@ -25,6 +25,153 @@
     <ClCompile Include="CArrow.cpp" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
+    <ClCompile Include="main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CMain.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CMatrix33.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CRectangle.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CTank.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CVector2.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CBullet.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemyTank.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CCollider.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerTank.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CTask.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CTexture.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CExplosion.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CHpBar.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneGame.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+<<<<<<< HEAD
+<<<<<<< HEAD
+    <ClCompile Include="CEnemy1.cpp">
+=======
+    <ClCompile Include="CBoss.cpp">
+>>>>>>> 8641c28c65bbd2d5c4b4a2a734b86ab170e58322
+      <Filter>ソース ファイル</Filter>
+=======
+    <ClCompile Include="Task.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="TaskLinker.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="TaskManager.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="CFPS.cpp">
+      <Filter>System</Filter>
+<<<<<<< HEAD
+>>>>>>> 2de4d0cee4f21d4a4249fab9ba8f41e6e5b575fc
+=======
+>>>>>>> c184a9e8346865b82791bbcf73ce4a05725f1917
+>>>>>>> 8641c28c65bbd2d5c4b4a2a734b86ab170e58322
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CMain.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CVector2.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CMatrix33.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CRectangle.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CTank.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CBullet.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemyTank.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CCollider.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerTank.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CTask.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CTexture.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CExplosion.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CHpBar.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CSceneGame.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+<<<<<<< HEAD
+<<<<<<< HEAD
+    <ClInclude Include="CEnemy1.h">
+=======
+    <ClInclude Include="CBoss.h">
+>>>>>>> 8641c28c65bbd2d5c4b4a2a734b86ab170e58322
+      <Filter>ソース ファイル</Filter>
+=======
+    <ClInclude Include="Task.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskLinker.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskManager.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="CFPS.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="GID.h">
+      <Filter>System</Filter>
+<<<<<<< HEAD
+>>>>>>> 2de4d0cee4f21d4a4249fab9ba8f41e6e5b575fc
+=======
+>>>>>>> c184a9e8346865b82791bbcf73ce4a05725f1917
+>>>>>>> 8641c28c65bbd2d5c4b4a2a734b86ab170e58322
+    </ClInclude>
+=======
     <ClInclude Include="CBoss.h" />
     <ClInclude Include="CBullet.h" />
     <ClInclude Include="CCollider.h" />
@@ -48,5 +195,6 @@
     <ClInclude Include="TaskManager.h" />
     <ClInclude Include="CItem.h" />
     <ClInclude Include="CArrow.h" />
+>>>>>>> cf1891f1af59c8b9959ebf32c356aaf9ee2cb5f9
   </ItemGroup>
 </Project>
