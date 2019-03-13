@@ -100,7 +100,8 @@ void PlayerEffectShortAttack03::Draw()
 }
 
 
-PlayerEffectSpecialAttack::PlayerEffectSpecialAttack(const CVector2D& pos) : Task(ePEffectSpecialAttack)
+PlayerEffectSpecialAttack::PlayerEffectSpecialAttack(const CVector2D& pos) : Task(ePEffectSpecialAttack),
+m_scale(CVector2D(1.0f,1.0f))
 {
 	m_img = COPY_RESOURCE("PESpecialAttack", CAnimImage*);
 	m_img2 = COPY_RESOURCE("MagicCircle", CImage*);
@@ -108,8 +109,20 @@ PlayerEffectSpecialAttack::PlayerEffectSpecialAttack(const CVector2D& pos) : Tas
 
 void PlayerEffectSpecialAttack::Update()
 {
+
 }
 
 void PlayerEffectSpecialAttack::Draw()
 {
+	//サイズ指定と描画
+	m_img.SetSize(120 * m_scale.x, 120 * m_scale.y);
+	m_img.SetCenter((120 * m_scale.x) / 2, (120*m_scale.y) / 2);
+	m_img.SetPos(m_pos);
+
+	m_img2.SetSize(120*m_scale.x, 120*m_scale.y);
+	m_img2.SetCenter((120 * m_scale.x) / 2, (120 * m_scale.y) / 2);
+	m_img2.SetPos(m_pos);
+
+	m_img2.Draw();
+	m_img.Draw();
 }
