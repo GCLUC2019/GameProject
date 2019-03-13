@@ -41,7 +41,7 @@ m_special(0)
 	m_shadow= COPY_RESOURCE("Shadow", CImage*);
 	m_depth = (m_pos.y - DEP_N)/3.5;
 	SetAnim();
-
+	m_shadow.SetColor(0.3f, 0.3f, 0.3f, 0.4f);
 }
 
 void Player::Move()
@@ -312,7 +312,7 @@ void Player::Update()
 		Attack();
 	if (m_pos.x < 0 || m_pos.x > 1280)
 		m_pos.x = m_pos_old.x;
-	if (m_pos.y < 720 / 2 || m_pos.y > 720)
+	if (m_pos.y < 480 || m_pos.y > 720)
 		m_pos.y = m_pos_old.y;
 	
 	if (m_state != m_state_old)
@@ -346,7 +346,7 @@ void Player::Draw()
 
 	
 #define SAIZE 150
-#define SAIZE_SD 110
+#define SAIZE_SD 100
 	
 	m_img.UpdateAnimation();
 

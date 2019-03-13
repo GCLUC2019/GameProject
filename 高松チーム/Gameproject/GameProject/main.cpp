@@ -27,7 +27,8 @@ enum PadButton {
 	e7,
 	e8,
 	e9,
-	e10
+	e10,
+	e11,
 };
 void MainLoop(void) {
 
@@ -76,21 +77,20 @@ void Init(void)
 	CInput::SetButton(0, CInput::eDown, 'S');
 	CInput::SetButton(0, CInput::eRight, 'D');*/
 	//‚µ‚á‚ª‚İ
-	CInput::SetButton(0, CInput::eButton1, 'Z');
+	CInput::SetButton(0, CInput::eButton1, VK_SHIFT);
 	CInput::SetPadButton(0, CInput::eButton1, PadButton::e3);
 	//‹ßÚUŒ‚
 	CInput::SetPadButton(0, CInput::eButton2, PadButton::e4);
-	CInput::SetButton(0, CInput::eButton2, 'X');
+	CInput::SetButton(0, CInput::eButton2, 'Z');
 	//ƒWƒƒƒ“ƒv
-
-	CInput::SetButton(0, CInput::eButton3, 'C');
+	CInput::SetButton(0, CInput::eButton3,VK_SPACE);
 	CInput::SetPadButton(0, CInput::eButton3, PadButton::e1);
 	//‰“‹——£UŒ‚
 	CInput::SetPadButton(0, CInput::eButton4, PadButton::e2);
-	CInput::SetButton(0, CInput::eButton4, 'V');
+	CInput::SetButton(0, CInput::eButton4, 'X');
 	//•KEUŒ‚
 	CInput::SetPadButton(0, CInput::eButton5, PadButton::e8);
-	CInput::SetButton(0, CInput::eButton5, 'B');
+	CInput::SetButton(0, CInput::eButton5, 'W');
 
 	CInput::SetButton(0, CInput::eButton10, VK_RETURN);
 	CInput::SetButton(0, CInput::eUp, VK_UP);
