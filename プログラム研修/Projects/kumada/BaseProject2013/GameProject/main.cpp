@@ -36,7 +36,7 @@ void MainLoop(void) {
 	
 
 	//速すぎ防止
-	Sleep(1);
+	Sleep(rand()%20);
 
 }
 void Init(void)
@@ -53,7 +53,7 @@ void Init(void)
 	glEnable(GL_ALPHA_TEST);
 
 	//フレームレート設定
-	CFPS::SetFPS(60);
+	CFPS::SetFPS(30);
 	//フレーム制御初期化
 	CFPS::Init();
 	//ボタンの設定
