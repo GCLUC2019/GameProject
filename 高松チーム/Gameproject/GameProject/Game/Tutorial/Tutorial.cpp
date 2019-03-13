@@ -4,8 +4,8 @@
 
 Tutorial::Tutorial() : Task(eGameTutorial)
 {
-	TaskManager::AddTask(new Player());
-	TaskManager::AddTask(new Enemy02(CVector2D(700,500)));
+	TaskManager::GetInstance()->AddTask(new Player());
+	TaskManager::GetInstance()->AddTask(new Enemy02(CVector2D(700,500)));
 }
 
 void Tutorial::Update()

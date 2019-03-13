@@ -68,6 +68,9 @@
     <ClCompile Include="Game\Tutorial\Tutorial.cpp">
       <Filter>Game\Tutorial</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Stage\ground.cpp">
+      <Filter>Game\Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GID.h" />
@@ -142,6 +145,9 @@
     <ClInclude Include="Game\Tutorial\Tutorial.h">
       <Filter>Game\Tutorial</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Stage\ground.h">
+      <Filter>Game\Stage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game">
@@ -185,6 +191,9 @@
     </Filter>
     <Filter Include="Game\Tutorial">
       <UniqueIdentifier>{9b1e7435-fdd8-4dba-9a07-65124f8b49f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Stage">
+      <UniqueIdentifier>{01a95af4-faab-40cc-b719-0e2bd5fa1fe6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

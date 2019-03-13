@@ -1,4 +1,6 @@
 #include "Item.h"
+#include "../Character/CharacterBase.h"
+#include "../Character/Player.h"
 
 Item::Item(int _m_item_type, CVector2D _m_pos) : Task(eItem),
 m_item_type(_m_item_type),
@@ -44,6 +46,11 @@ m_pos(_m_pos)
 
 void Item::Update()
 {
+	Task* p = TaskManager::GetInstance()->FindObject(ePlayer);
+	if (p == nullptr) 
+		return;
+
+	return;
 }
 
 void Item::Draw()

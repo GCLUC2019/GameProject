@@ -4,7 +4,7 @@
 
 #define BOSS_X_SIZE 768
 #define BOSS_Y_SIZE 768
-#define PIE 3.14
+
 
 BossHead::BossHead() :EnemyBase(eBossHead)
 {
@@ -12,13 +12,11 @@ BossHead::BossHead() :EnemyBase(eBossHead)
 	m_img.SetSize(BOSS_X_SIZE / 3, BOSS_Y_SIZE / 3);
 
 	m_pos = CVector2D(1280 - BOSS_X_SIZE / 3, 0);
-	m_center = CVector2D(m_pos.x + m_r, m_pos.y);
 
 	m_anim_flag = true;
 	m_move_flag = false;
 
-	m_r = 100.0;
-	m_rot = 0;
+	
 }
 
 
@@ -39,10 +37,7 @@ void BossHead::Update()
 	}
 
 	if (m_move_flag == true)m_pos.y -= 3;
-	m_rot += 0.05;
-	if (m_rot >= PIE * 2)m_rot = 0;
-	/*if(m_anim_flag==false)
-	m_pos = m_center + CVector2D(sin(m_rot), cos(m_rot))*m_r;*/
+	
 }
 
 void BossHead::Draw()
