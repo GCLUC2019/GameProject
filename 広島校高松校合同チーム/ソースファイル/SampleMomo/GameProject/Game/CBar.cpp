@@ -36,6 +36,7 @@ void CBar::Draw()
 {
 	m_HPbar_img->Draw();
 	m_HPbar_img->SetSize(now_bar_size, 50);
+	m_HPbar_img->SetRect(0, now_bar_size, now_bar_size, now_bar_size);
 }
 //更新履歴2019/03/13
 //HPバーの減少処理を追加
