@@ -7,11 +7,11 @@
 #include<stdio.h>
 #include "CHpBar.h"
 
-
+//extern CBoss*Boss;
 
 class CBoss :public CTank {
 public:
-	extern CBoss*Boss;
+
 	int mFireIntervar;
 	void Init();
 	void Update();
@@ -21,6 +21,10 @@ public:
 	void OnCollision(CCollider*p);
 	void OnCollision(CBoxCollider*p);
 	CHpBar mHpBar;
-};
+
+	
+	};
+
+
 
 #endif

@@ -6,19 +6,17 @@
 #include "CSceneGame.h"
 #include "CMain.h"
 
-//#define FIREINTERVER_E 60
+#define FIREINTERVER_E 60
 
-<<<<<<< HEAD
 extern CPlayerTank*Tank;
- CBoss *Boss = nullptr;
-=======
-//extern CPlayerTank*Tank;
-//extern CBoss*Boss;
->>>>>>> 9cd562c286176f0ba16c133a8d58ecb4e6ff12e9
+// CBoss *Boss = nullptr;
+
+
+
 
 
 void CBoss::Init() {
-	/*mFireIntervar = FIREINTERVER_E;
+	mFireIntervar = FIREINTERVER_E;
 	CTank::Init();
 	SetColor(0.6f, 0.0f, 0.0f, 1.0f);
 	mHead.SetColor(1.0f, 0.0f, 0.0f, 1.0f);
@@ -29,13 +27,12 @@ void CBoss::Init() {
 	mpTarget = Tank;
 	CCollisionManager::Get()->Add(mCollider);
 	mTaskTag = EENEMYTANK;
-	mHpBar.SetHpBar(this, CVector2(0.0f, -35.0f), CVector2(50.0f, 8.0f), mColor, 100, 100);*/
+	mHpBar.SetHpBar(this, CVector2(0.0f, -35.0f), CVector2(50.0f, 8.0f), mColor, 100, 100);
 }
 
 void CBoss::Update() {
-
-	/*Forward();
-	CBoss::Update();
+	Forward();
+	CTank::Update();
 	mHpBar.Update();
 
 	CVector2 rightSide = mHead.mMatrix*CVector2(1.0f, 0.0f) - mHead.mMatrix*CVector2(0.0f, 0.0f);
@@ -43,20 +40,20 @@ void CBoss::Update() {
 	CVector2 dirPlayer = mpTarget->mPosition - mHead.mMatrix*CVector2(0.0f, 0.0f);
 
 	float dot = rightSide.dot(dirPlayer);
-	if (dot > 0.0f) {
+	if (dot > 0.0f){
 		HeadRightTurn();
 	}
-	else if (dot < 0.0f) {
+	else if (dot < 0.0f){
 		HeadLeftTurn();
 	}
 	CCollisionManager::Get()->Collision(mCollider);
 
-	if (mFireIntervar > 0) {
+	if (mFireIntervar>0){
 		mFireIntervar--;
 	}
 
-	if (-0.1 < dot&&dot < 0.1) {
-		if (mFireIntervar <= 0) {
+	if (-0.1 < dot&&dot < 0.1){
+		if (mFireIntervar <= 0){
 			mFireIntervar = FIREINTERVER_E;
 			CBullet*bullet = new CBullet();
 			bullet->mTaskTag = EENEMYBULLET;
@@ -67,38 +64,39 @@ void CBoss::Update() {
 			CTaskManager::Get()->Add(bullet);
 		}
 	}
-	if (EnemyTank->mPosition.x >= 425.0f) {
+	if (EnemyTank->mPosition.x >= 425.0f){
 		EnemyTank->mPosition.y = 150.0f;
 		EnemyTank->mRotation = 90.0f;
 	}
 
-	if (EnemyTank->mPosition.x <= -425.0f) {
+	if (EnemyTank->mPosition.x <= -425.0f){
 		EnemyTank->mPosition.y = 250.0f;
 		EnemyTank->mRotation = 270.0f;
-	}*/
+	}
+	
 }
 
 void CBoss::OnCollision(CCollider*p) {
-	/*if (p->mpTask->mTaskTag == EPLAYERBULLET) {
+	if (p->mpTask->mTaskTag == EPLAYERBULLET){
 		CExplosion*p = new CExplosion();
 		p->SetTexture(&Texture, 0, 64, 64, 0);
 		p->mPosition = mPosition;
 		CTaskManager::Get()->Add(p);
-		mHpBar.mHp -= 10.0f;
+		mHpBar.mHp -= 40.0f;
 		if (mHpBar.mHp <= 0.0f){
 			mEnabled = false;
 			CMain::mSceneTag = CScene::EWIN;
 		}
 	}
-	printf("‚Ú‚·");
-	mPosition = mPosition + mCollider->mAdjust;*/
+	printf("CEnemyTank::OnCollision\n");
+	mPosition = mPosition + mCollider->mAdjust;
 }
 
 void CBoss::OnCollision(CBoxCollider*p) {
-	/*mPosition = mPosition + mCollider->mAdjust;*/
+	mPosition = mPosition + mCollider->mAdjust;
 }
 
 void CBoss::Render() {
-	/*CTank::Render();
-	mHpBar.Render();*/
+	CTank::Render();
+	mHpBar.Render();
 }
