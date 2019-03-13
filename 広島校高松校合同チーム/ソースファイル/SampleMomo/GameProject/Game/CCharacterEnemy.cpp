@@ -32,6 +32,7 @@ CCharacterEnemy::CCharacterEnemy() :CCharacter(eTaskIdEnemy, 0)
 	m_is_damage = true;
 	m_damage_chance = 0;
 	m_attack_chance = false;
+	m_attack_pos = CVector2D(300, 100);
 	m_AI_cnt = 0;
 	m_player_pos = CVector3D(0, 0, 0);
 	m_player_vec = CVector2D(0, 0);
@@ -156,6 +157,7 @@ void CCharacterEnemy::Move()
 	else m_vec = CVector3D(m_player_vec.x, m_vec.y, m_player_vec.y);
 	if (m_vec.x > 0) m_is_flip = true;
 	else m_is_flip = false;
+	if (m_attack_chance) m_AI_cnt += 200;
 	AiChange(200);
 }
 
@@ -169,9 +171,10 @@ void CCharacterEnemy::Attack()
 
 	CCharacterPlayer* p = dynamic_cast<CCharacterPlayer*>(TaskManager::GetInstance()->FindTask(eTaskIdPlayer));
 	CVector3D player_pos = p->GetPos();
-	if (player_pos.x - m_pos.x > -100 || player_pos.x - m_pos.x < 100) {
+	if (abs(m_pos.z - player_pos.z) < 60 && abs(player_pos.x - m_pos.x) <200) {
 		printf("Hit!!");
 		p->ReceiveAttack();
+		p->HitPointGainValue(-3.0);
 	}
 
 	AiChange(140);
@@ -184,7 +187,7 @@ void CCharacterEnemy::Damage()
 	if (m_is_damage) {
 		m_damage_chance++;
 		m_is_damage = false;
-		m_hit_point -= 19.0f;
+		m_hit_point -= 0.0f;
 	}
 	if (m_hit_point < 0)SetIsDelete();
 	AiChange(30);
@@ -196,8 +199,8 @@ void CCharacterEnemy::MovePos()
 	
 	m_pos += m_vec;
 	//とりあえずテスト用なので
-	/*if (m_pos.z <= 280.0f) m_pos.z = 280.0f;
-	if (m_pos.z >= 580.0f) m_pos.z = 580.0f;*/
+	if (m_pos.z <= 430.0f) m_pos.z = 430.0f;
+	if (m_pos.z >= 720.0f) m_pos.z = 720.0f;
 }
 
 void CCharacterEnemy::AiChange(int ai_cnt)
@@ -238,8 +241,15 @@ void CCharacterEnemy::CharacterBeforeCollisionCheck()
 	CCharacterPlayer* p = dynamic_cast<CCharacterPlayer*>(TaskManager::GetInstance()->FindTask(eTaskIdPlayer));
 	m_player_pos = p->GetPos();
 	CVector2D l_vec = CVector2D(m_player_pos.x - m_pos.x, m_player_pos.z - m_pos.z);
-	if (l_vec.Length() < 200) {
+	/*l_vec.Length() < 200*/
+	if (abs(l_vec.x) < m_attack_pos.x && abs(l_vec.y) < m_attack_pos.y) {
 		m_attack_chance = true;
 	}
 	else m_attack_chance = false;
+
+	/*float* h = p->GetHitPointPointer();
+	float hp = *h;
+	printf("%f\n", hp);*/
+	printf("エネミーのZ%f", m_pos.z);
+	printf("プレイヤーのZ%f\n", m_player_pos.z);
 }

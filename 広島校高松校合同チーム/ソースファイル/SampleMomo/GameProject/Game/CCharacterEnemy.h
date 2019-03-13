@@ -47,6 +47,7 @@ private:
 	bool m_is_damage;          //ダメージを受けていいかどうかのフラグ
 	int m_damage_chance;    //攻撃を当てられた状態
 	bool m_attack_chance;    //攻撃が当たる距離かのフラグ
+	CVector2D m_attack_pos;         //プレイヤー方向へのベクトル
 	CVector3D m_player_pos;		 //プレイヤーの座標を記憶
 	CVector2D m_player_vec;         //プレイヤー方向へのベクトル
 public:
