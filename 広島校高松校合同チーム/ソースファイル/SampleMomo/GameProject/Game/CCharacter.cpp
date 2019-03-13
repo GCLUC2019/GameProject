@@ -17,6 +17,8 @@ void CCharacter::Update()
 {
 	CheckHitPoint();
 	CharacterUpdate();
+
+	//printf("player pos x %lf y %lf z %lf\n",m_pos.x,m_pos.y,m_pos.z);
 }
 
 void CCharacter::CharacterUpdate()

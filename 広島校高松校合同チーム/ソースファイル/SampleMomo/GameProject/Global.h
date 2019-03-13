@@ -29,4 +29,5 @@ enum {
 	eTaskIdPlayer,
 	eTaskIdEnemy,
 	eTaskIdCommonObject,
+	eTaskIdDropItem,
 };

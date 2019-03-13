@@ -6,6 +6,7 @@
 #include "CStoryScene.h"
 #include "CTitle.h"
 #include "CBar.h"
+#include "CDropItem.h"
 static CGameScene* s_instance_p = nullptr;
 
 CGameScene::CGameScene() : CObject(0, 0)
@@ -47,8 +48,14 @@ void CGameScene::Setup()
 	CCharacterEnemy* enemy_p = new CCharacterEnemy();
 	AddGameSceneObject(enemy_p);
 
-	CBar*Bar_p = new CBar();
-	TaskManager::GetInstance()->AddTask(Bar_p);
+	CDropItem* drop_item_p;
+	AddGameSceneObject(drop_item_p = new CDropItem(eItemIdSpear, GET_RESOURCE("IconSpear", CImage*)));
+	drop_item_p->SetPos(CVector3D(200,200,200));
+	drop_item_p->SetSize(CVector2D(200, 200));
+
+
+	//CBar*Bar_p = new CBar();
+	//TaskManager::GetInstance()->AddTask(Bar_p);
 }
 
 
