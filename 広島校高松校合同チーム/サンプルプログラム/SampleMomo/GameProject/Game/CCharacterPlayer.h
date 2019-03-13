@@ -5,7 +5,9 @@
 
 #define PLAYER_ATTACK_FRAME (15)
 
+#define PLAYER_ATTACK_LENGTH CVector3D(300,300,50)
 
+#define PLAYER_ATTACK_POWER (1.0f)
 
 enum {
 	ePlayerAnimIdIdle,
@@ -51,6 +53,8 @@ private:
 	
 	bool m_is_dashing = false;
 
+
+
 public:
 	CCharacterPlayer();
 	~CCharacterPlayer();
@@ -68,6 +72,8 @@ public:
 	void CharacterDraw();
 	void AdjAnim();
 	void CalcScroll();
+
+	void ReceiveAttack();
 };
 
 /*

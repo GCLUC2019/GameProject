@@ -1,6 +1,6 @@
 #include "CharacterBase.h"
 
-CharacterBase::CharacterBase(int _type) : Task()
+CharacterBase::CharacterBase(int _type) : Task(eCharacterBase)
 {
 	m_type = _type;
 }

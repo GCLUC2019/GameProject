@@ -33,7 +33,11 @@ public:
 		ADD_RESOURCE("BossFire", CAnimImage::LoadImage("../data/Image/pipo-btleffect162.png",BossFireEffectAnimData,1280,960));
 		ADD_RESOURCE("Shadow", CImage::LoadImage("../data/Image/shadow.png"));
 		ADD_RESOURCE("Ground", CImage::LoadImage("../data/Image/bg_ground.png"));
-		//ADD_RESOURCE("BossLazer", CAnimImage::LoadImage("../data/Image/pipo-btleffect162.png", BossLazerEffectAnimData, 640,480));
+		ADD_RESOURCE("Bamboo", CImage::LoadImage("../data/Image/bg_bamboo.png"));
+		ADD_RESOURCE("SkyBlue", CImage::LoadImage("../data/Image/bg_sky_01.png"));
+		ADD_RESOURCE("SkyRed", CImage::LoadImage("../data/Image/bg_sky_02.png"));
+		ADD_RESOURCE("Kakera", CImage::LoadImage("../data/Image/item_kakera.png"));
+		ADD_RESOURCE("BossLazer", CAnimImage::LoadImage("../data/Image/pipo-btleffect141.png", BossLazerEffectAnimData, 640,480));
 		ADD_RESOURCE("Title", CImage::LoadImage("../data/Image/title.png"));
 
 	}

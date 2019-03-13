@@ -1,6 +1,7 @@
 //è¨êÏ
 
 #include "CItem.h"
+#include <stdio.h>
 
 int type;
 
@@ -32,15 +33,26 @@ void CItem::Render(){
 }
 
 void CItem::OnCollision(CCircleCollider*p){
-	if (type == 1){  //âÒïú
+	if (mTaskTag == EPLAYERBULLET&&p->mpTask->mTaskTag == EENEMYTANK){
+		if (type == 1){  //âÒïú
 
-	}
-	if (type == 2){  //ã≠âª
+			mEnabled = false;
+		}
+		if (type == 2){  //ã≠âª
 
-	}
-	if (type == 3){  //ñ≥ìG
+			mEnabled = false;
 
+		}
+		if (type == 3){  //ñ≥ìG
+
+			mEnabled = false;
+
+		}
 	}
+}
+
+void CItem::OnCollision(CCollider*p){
+	printf("CItem::OnCollision\n");
 }
 
 

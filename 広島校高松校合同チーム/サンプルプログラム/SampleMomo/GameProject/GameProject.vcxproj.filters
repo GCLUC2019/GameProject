@@ -44,6 +44,15 @@
     <ClCompile Include="Game\CBar.cpp">
       <Filter>Game\Object\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Game\CGameSceneWave.cpp">
+      <Filter>Game\Object\GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CCharacterBoss.cpp">
+      <Filter>Game\Object\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CSubWeapon.cpp">
+      <Filter>Game\Object\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Global.h" />
@@ -91,6 +100,12 @@
       <Filter>Game\Object\Character</Filter>
     </ClInclude>
     <ClInclude Include="Game\CBar.h">
+      <Filter>Game\Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CGameSceneWave.h">
+      <Filter>Game\Object\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CSubWeapon.h">
       <Filter>Game\Object\UI</Filter>
     </ClInclude>
   </ItemGroup>

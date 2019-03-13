@@ -108,8 +108,11 @@ void Enemy01::Search()
 void Enemy01::Attack()
 {
     m_img.ChangeAnimation(eEAttack01, false);
-    if (m_img.CheckAnimationEnd())
+    if (m_img.CheckAnimationEnd()) {
         m_state = eSearch;
+        SetKill();
+    }
+       
 }
 void Enemy01::Damage()
 {
@@ -119,6 +122,13 @@ void Enemy01::Damage()
 }
 void Enemy01::MoveControl()
 {
+}
+void Enemy01::HitCheck(Task * _t)
+{
+    Task*t = TaskManager::FindObject(ePlayer);
+    if (t) {
+        printf("Player発見\n");
+    }
 }
 //2019/3/11タスクの探索処理ができ次第実装可能　田中
 bool Enemy01::PlayerCheck(Player*p, Task*e, float _l)
