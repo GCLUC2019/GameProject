@@ -7,7 +7,6 @@
 #define JUMP_SPD -20.0f
 #define GRAVITY 10.0f
 Enemy02::Enemy02() : EnemyBase(eEnemy02),
-m_state(eSearch),
 m_hight(0.0f),
 m_search_flg(false),
 m_move_dir_flg(true),
@@ -21,13 +20,13 @@ m_jump_flg(false)
     m_pos = CVector2D(200, 200);
     m_vec = CVector2D(0, 0);
     m_dir = CVector2D(0, 0);
+    m_state = eSearch;
     m_depth = m_pos.y / DEP_N;
 
     cnt = 0;
 }
 
 Enemy02::Enemy02(CVector2D _pos) : EnemyBase(eEnemy02),
-m_state(eAttack),
 m_hight(0.0f),
 m_search_flg(false),
 m_move_dir_flg(true),
@@ -41,6 +40,7 @@ m_jump_flg(false)
     m_pos = _pos;
     m_vec = CVector2D(0, 0);
     m_dir = CVector2D(0, 0);
+    m_state = eSearch;
     m_depth = m_pos.y / DEP_N;
 
     cnt = 0;
@@ -121,8 +121,8 @@ void Enemy02::Search()
 
 void Enemy02::Attack()
 {
-    m_img.ChangeAnimation(eEAttack02,false);
-    float bound = false;   
+    m_img.ChangeAnimation(eEAttack02, false);
+    float bound = false;
     if (m_jump_flg) {
         cnt++;
         m_hight = 0 + JUMP_SPD * cnt + GRAVITY / 10 * (cnt*cnt) / 2;
@@ -130,7 +130,7 @@ void Enemy02::Attack()
             m_hight = 0;
             cnt = 1;
             m_jump_flg = false;
-        }       
+        }
     }
     if (m_img.CheckAnimationEnd()) {
         m_state = eSearch;
