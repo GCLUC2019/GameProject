@@ -4,6 +4,7 @@ const enum {
 	eGameScene,
 	eGameClear,
 	eGameTutorial,
+    eGameTitle,
 
 	eStage01,
 	eGround,

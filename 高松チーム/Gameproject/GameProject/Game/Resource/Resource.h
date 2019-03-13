@@ -42,6 +42,10 @@ public:
 		ADD_RESOURCE("MagicCircle", CImage::LoadImage("../data/Image/mahoujin_image.png"));
 		ADD_RESOURCE("BossLazer", CAnimImage::LoadImage("../data/Image/pipo-btleffect141.png", BossLazerEffectAnimData, 640,480));
 		ADD_RESOURCE("Title", CImage::LoadImage("../data/Image/title.png"));
+        ADD_RESOURCE("PushStart", CImage::LoadImage("../data/Image/push start.png"));
+        ADD_RESOURCE("RogoBase", CImage::LoadImage("../data/Image/rogo_base.png"));
+        ADD_RESOURCE("RogoClear", CImage::LoadImage("../data/Image/rogo_cl.png"));
+        ADD_RESOURCE("RogoHuda", CImage::LoadImage("../data/Image/rogo_huda.png"));
 
 	}
 };
