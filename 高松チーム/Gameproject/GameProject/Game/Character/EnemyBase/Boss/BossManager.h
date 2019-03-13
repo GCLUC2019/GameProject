@@ -1,11 +1,16 @@
 #pragma once
 #include "../GameProject/Base/Task.h"
 
+
+/*
+   作成者　番條
+   マネージャーで待機状態を管理する
+*/
 class BossManager : public Task {
 private:
 	enum {
-		eNothing,
 		eIdle,
+		eNothing,
 		eAttack,
 		eDeath,
 	};
@@ -21,12 +26,15 @@ private:
 	CVector2D m_pos2;//右手の座標
 	CVector2D m_pos3;//左手の座標
 	CVector2D m_pos4;//尻尾の座標
-	CVector2D m_pos5;//尻尾の座標
+	CVector2D m_pos5;//
 	CVector2D m_center;
 	CVector2D m_center2;
+	CVector2D m_player_pos;
 
 	int m_state;//ボスの状態
+	int m_boss_attack_type;//ボスの攻撃する種類を番号で振り分ける
 	int m_boss_hp;//ボスの体力
+	int m_idle_cnt;//待機状態でいる時間
 
 	float m_rot;//円周率
 	float m_rot2;//円周率
