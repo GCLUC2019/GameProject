@@ -40,6 +40,7 @@ private:
 		eEnemyStateAttack,
 		eEnemyStateDamage
 	};
+	int t;   //仮のタイプ
 	int m_enemy_state;
 	int m_old_enemy_state;   //ダメージを受けた時に記憶する直前の状態
 	int m_AI_cnt;            //状態が変化するまでのカウント

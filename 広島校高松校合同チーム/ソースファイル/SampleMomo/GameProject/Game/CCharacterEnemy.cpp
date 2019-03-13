@@ -3,9 +3,14 @@
 
 CCharacterEnemy::CCharacterEnemy() :CCharacter(eTaskIdEnemy, 0)
 {
-	ADD_RESOURCE("Enemy_Idle_2", CImage::LoadImage("Enemy_idle2.png"));
-	ADD_RESOURCE("Enemy_Idle_3", CImage::LoadImage("Enemy_idle3.png"));
-	ADD_RESOURCE("Enemy_Idle_4", CImage::LoadImage("Enemy_idle4.png"));
+	ADD_RESOURCE("SpearEnemy_Idle_1", CImage::LoadImage("Enemy_Spear_idle1.png"));
+	ADD_RESOURCE("SpearEnemy_Idle_2", CImage::LoadImage("Enemy_Spear_idle2.png"));
+	ADD_RESOURCE("SpearEnemy_Idle_3", CImage::LoadImage("Enemy_Spear_idle3.png"));
+	ADD_RESOURCE("SpearEnemy_Idle_4", CImage::LoadImage("Enemy_Spear_idle4.png"));
+	ADD_RESOURCE("AxeEnemy_Idle_1", CImage::LoadImage("Enemy_Axe_idle1.png"));
+	ADD_RESOURCE("AxeEnemy_Idle_2", CImage::LoadImage("Enemy_Axe_idle2.png"));
+	ADD_RESOURCE("AxeEnemy_Idle_3", CImage::LoadImage("Enemy_Axe_idle3.png"));
+	ADD_RESOURCE("AxeEnemy_Idle_4", CImage::LoadImage("Enemy_Axe_idle4.png"));
 	ADD_RESOURCE("Enemy_Move_2", CImage::LoadImage("Enemy_move2.png"));
 	ADD_RESOURCE("Enemy_Move_3", CImage::LoadImage("Enemy_move3.png"));
 	ADD_RESOURCE("Enemy_Move_4", CImage::LoadImage("Enemy_move4.png"));
@@ -15,7 +20,7 @@ CCharacterEnemy::CCharacterEnemy() :CCharacter(eTaskIdEnemy, 0)
 	ADD_RESOURCE("Enemy_Move_8", CImage::LoadImage("Enemy_move8.png"));
 	ADD_RESOURCE("Enemy_Attack_2", CImage::LoadImage("Enemy_attack2.png"));
 
-
+	t = 1;
 	m_enemy_state = eEnemyStateIdle;
 
 	m_vec = CVector3D(0, 0, 0);
@@ -31,6 +36,7 @@ CCharacterEnemy::CCharacterEnemy() :CCharacter(eTaskIdEnemy, 0)
 	m_player_pos = CVector3D(0, 0, 0);
 	m_player_vec = CVector2D(0, 0);
 	LoadAnimImage();
+
 
 	SetAnim(eEnemyAnimIdIdle);
 	SetIsShowShadow(true);
@@ -88,10 +94,18 @@ void CCharacterEnemy::ReceiveAttack()
 
 void CCharacterEnemy::LoadAnimImage()
 {
-	m_anim_image_p[eEnemyAnimIdle1] = GET_RESOURCE("Enemy_Idle_0", CImage*);
-	m_anim_image_p[eEnemyAnimIdle2] = GET_RESOURCE("Enemy_Idle_2", CImage*);
-	m_anim_image_p[eEnemyAnimIdle3] = GET_RESOURCE("Enemy_Idle_3", CImage*);
-	m_anim_image_p[eEnemyAnimIdle4] = GET_RESOURCE("Enemy_Idle_4", CImage*);
+	if (t == 1) {
+		m_anim_image_p[eEnemyAnimIdle1] = GET_RESOURCE("SpearEnemy_Idle_1", CImage*);
+		m_anim_image_p[eEnemyAnimIdle2] = GET_RESOURCE("SpearEnemy_Idle_2", CImage*);
+		m_anim_image_p[eEnemyAnimIdle3] = GET_RESOURCE("SpearEnemy_Idle_3", CImage*);
+		m_anim_image_p[eEnemyAnimIdle4] = GET_RESOURCE("SpearEnemy_Idle_4", CImage*);
+	}
+	else {
+		m_anim_image_p[eEnemyAnimIdle1] = GET_RESOURCE("AxeEnemy_Idle_1", CImage*);
+		m_anim_image_p[eEnemyAnimIdle2] = GET_RESOURCE("AxeEnemy_Idle_2", CImage*);
+		m_anim_image_p[eEnemyAnimIdle3] = GET_RESOURCE("AxeEnemy_Idle_3", CImage*);
+		m_anim_image_p[eEnemyAnimIdle4] = GET_RESOURCE("AxeEnemy_Idle_4", CImage*);
+	}
 	m_anim_image_p[eEnemyAnimMove1] = GET_RESOURCE("Enemy_Move_0", CImage*);
 	m_anim_image_p[eEnemyAnimMove2] = GET_RESOURCE("Enemy_Move_2", CImage*);
 	m_anim_image_p[eEnemyAnimMove3] = GET_RESOURCE("Enemy_Move_3", CImage*);
@@ -170,6 +184,7 @@ void CCharacterEnemy::Damage()
 	if (m_is_damage) {
 		m_damage_chance++;
 		m_is_damage = false;
+		m_hit_point -= 19.0f;
 	}
 	if (m_hit_point < 0)SetIsDelete();
 	AiChange(30);
