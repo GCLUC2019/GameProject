@@ -4,7 +4,7 @@
 
 
 
-enum {
+enum {	//アニメーションの種類の番号
 	eEnemyAnimIdIdle,
 	eEnemyAnimIdMove,
 	eEnemyAnimIdAttack,
@@ -12,7 +12,7 @@ enum {
 	eEnemyAnimIdMax,
 };
 
-enum {
+enum {	//アニメーションの画像を入れる番号
 	eEnemyAnimIdle1,
 	eEnemyAnimIdle2,
 	eEnemyAnimIdle3,
@@ -35,20 +35,24 @@ enum {
 class CCharacterEnemy : public CCharacter {
 private:
 	enum {
-		eEnemyStateIdle,
-		eEnemyStateMove,
-		eEnemyStateAttack,
-		eEnemyStateDamage
+		eEnemyStateIdle,	//待機状態
+		eEnemyStateMove,	//移動状態
+		eEnemyStateAttack,	//攻撃状態
+		eEnemyStateDamage	//ダメージ状態
 	};
-	int t;   //仮のタイプ
-	int m_enemy_state;
-	int m_old_enemy_state;   //ダメージを受けた時に記憶する直前の状態
+	int t;   //仮のタイプで画像を切り替えています：後日修正
+	int m_enemy_state;       //エネミーの状態
+	int m_old_enemy_state;   //エネミーがダメージを受けた時に記憶する直前の状態
 	int m_AI_cnt;            //状態が変化するまでのカウント
-	bool m_is_damage;          //ダメージを受けていいかどうかのフラグ
-	int m_damage_chance;    //攻撃を当てられた状態
-	bool m_attack_chance;    //攻撃が当たる距離かのフラグ
+	bool m_is_damage;        //エネミーがダメージを受けていいかどうかのフラグ
+	int m_damage_chance;     //プレイヤーの攻撃を当てられた回数
+	bool m_attack_chance;    //エネミーの攻撃が当たる距離かのフラグ
+	CVector2D m_attack_pos;      //適正射程距離
 	CVector3D m_player_pos;		 //プレイヤーの座標を記憶
-	CVector2D m_player_vec;         //プレイヤー方向へのベクトル
+	CVector2D m_player_vec;      //プレイヤー方向へのベクトル
+
+	bool is_attack;          //エネミーの攻撃を当てたかどうかのフラグ
+
 public:
 	CCharacterEnemy();
 	~CCharacterEnemy();
@@ -57,16 +61,15 @@ public:
 	void ReceiveAttack();
 
 	void LoadAnimImage();
-	void Idle();
-	void Move();
-	void Attack();
-	void Damage();
-	void MovePos();
+	void Idle();         //待機状態の関数
+	void Move();		 //移動状態の関数
+	void Attack();		 //攻撃状態の関数
+	void Damage();		 //ダメージ状態の関数
+	void MovePos();		 //移動処理
 
-	void AiChange(int ai_cnt);
-	void CharacterBeforeCollisionCheck();
+	void AiChange(int ai_cnt);				//状態を変更する時の関数
+	void CharacterBeforeCollisionCheck();	//プレイヤーとの位置関係を調べる関数
 };
 /*
-2019/03/06 クラス定義。 by shingai
 2019/03/11 クラス定義。 by 堀川
 */
