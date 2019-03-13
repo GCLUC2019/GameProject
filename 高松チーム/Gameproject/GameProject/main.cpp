@@ -8,7 +8,7 @@
 
 #include "stdafx.h"
 #include "Global.h"
-#include "GID.h"
+#include "../GLLibrary/CFPS.h"
 #include "Base\Task.h"
 #include "Base\TaskManager.h"
 #include "Game\Scene\GameScene.h"
