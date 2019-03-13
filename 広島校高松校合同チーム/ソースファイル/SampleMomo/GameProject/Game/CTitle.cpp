@@ -1,6 +1,7 @@
 #include "CTitle.h"
 #include "CObjectImage.h"
 #include "CStoryScene.h"
+#include "CBar.h"
 CTitle::CTitle() : CObject(0, 0)
 {
 	ADD_RESOURCE("Back", CImage::LoadImage("Back.png"));
@@ -59,6 +60,7 @@ void CTitle::NextScene()
 {
 	CStoryScene*StoryScene_p = new CStoryScene();
 	TaskManager::GetInstance()->AddTask(StoryScene_p);
+	
 }
 
 
