@@ -49,3 +49,15 @@ public:
 	void Update();
 	void Draw();
 };
+
+class PlayerEffectSpecialAttack : public Task {
+private:
+	CAnimImage m_img;
+	CImage m_img2;
+	CVector2D m_pos;
+	CVector2D m_vec;
+public:
+	PlayerEffectSpecialAttack(const CVector2D& pos);
+	void Update();
+	void Draw();
+};

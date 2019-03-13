@@ -98,3 +98,18 @@ void PlayerEffectShortAttack03::Draw()
 	m_img.SetPos(m_pos);
 	m_img.Draw();
 }
+
+
+PlayerEffectSpecialAttack::PlayerEffectSpecialAttack(const CVector2D& pos) : Task(ePEffectSpecialAttack)
+{
+	m_img = COPY_RESOURCE("PESpecialAttack", CAnimImage*);
+	m_img2 = COPY_RESOURCE("MagicCircle", CImage*);
+}
+
+void PlayerEffectSpecialAttack::Update()
+{
+}
+
+void PlayerEffectSpecialAttack::Draw()
+{
+}

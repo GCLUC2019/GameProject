@@ -21,7 +21,7 @@ enum {
 	ePEShortAttack01,
 	ePEShortAttack02,
 	ePEShortAttack03,
-
+	ePESpecialAttack,
 };
 
 extern TexAnimData PlayerAnimData[];
