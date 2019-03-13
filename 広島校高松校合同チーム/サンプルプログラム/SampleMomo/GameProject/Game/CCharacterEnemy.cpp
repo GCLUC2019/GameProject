@@ -17,24 +17,28 @@ CCharacterEnemy::CCharacterEnemy() :CCharacter(eTaskIdEnemy, 0)
 
 
 	m_enemy_state = eEnemyStateIdle;
-	m_enemy_hp = 100;
 
 	m_vec = CVector3D(0, 0, 0);
-	m_pos = CVector3D(1000, -50, 500);  //初期値のy軸は地面に埋まらないように少し浮かせる
+	m_pos = CVector3D(1000, -160, 500);  //初期値のy軸は地面に埋まらないように少し浮かせる
 	m_rads = CVector3D(75,150,10);
 	SetSize(300, 300);
+	m_is_flip = false;
 
-	is_damage = true;
+	m_is_damage = true;
+	m_damage_chance = 0;
 	m_attack_chance = false;
 	m_AI_cnt = 0;
-	p_pos = CVector3D(0, 0, 0);
-	p_vec = CVector2D(0, 0);
+	m_player_pos = CVector3D(0, 0, 0);
+	m_player_vec = CVector2D(0, 0);
 	LoadAnimImage();
 
 	SetAnim(eEnemyAnimIdIdle);
 	SetIsShowShadow(true);
 	SetShadowSize(CVector2D(100, 50));
-	SetDrawAdjPos(CVector2D(5.0, -50.0));
+	SetDrawAdjPos(CVector2D(5.0, 50.0));
+
+	m_hit_point = 100.0f;
+	m_hit_point_max = 100.0f;
 }
 
 CCharacterEnemy::~CCharacterEnemy()
@@ -64,7 +68,7 @@ void CCharacterEnemy::CharacterUpdate()
 	}
 	Gravity();
 #ifdef _DEBUG
-
+	//printf("%f", m_pos.x);
 #endif // _DEBUG
 	MovePos();
 	
@@ -73,6 +77,13 @@ void CCharacterEnemy::CharacterUpdate()
 void CCharacterEnemy::CharacterDraw()
 {	
 
+}
+
+void CCharacterEnemy::ReceiveAttack()
+{
+	if (m_is_damage) m_enemy_state = eEnemyStateDamage;
+	m_AI_cnt = 0;
+	printf("エネミー 攻撃があたった!\n");
 }
 
 void CCharacterEnemy::LoadAnimImage()
@@ -104,19 +115,19 @@ void CCharacterEnemy::LoadAnimImage()
 
 	m_anim_info[eEnemyAnimIdAttack].image_num = 2;
 	m_anim_info[eEnemyAnimIdAttack].image_id = eEnemyAnimAttack1;
-	m_anim_info[eEnemyAnimIdAttack].delay = DEFAULT_ANIM_DELAY;
+	m_anim_info[eEnemyAnimIdAttack].delay = 50;
 
 	m_anim_info[eEnemyAnimIdDamage].image_num = 1;
 	m_anim_info[eEnemyAnimIdDamage].image_id = eEnemyAnimDamage1;
-	m_anim_info[eEnemyAnimIdDamage].delay = 100;
+	m_anim_info[eEnemyAnimIdDamage].delay = 30;
 }
 
 void CCharacterEnemy::Idle()
 {
 	SetWillPlayAnim(eEnemyAnimIdIdle);
-	is_damage = true;
-	p_vec = CVector2D(p_pos.x - m_pos.x, p_pos.z - m_pos.z);
-	p_vec = p_vec/p_vec.Length();
+	m_is_damage = true;
+	m_player_vec = CVector2D(m_player_pos.x - m_pos.x, m_player_pos.z - m_pos.z);
+	m_player_vec = m_player_vec/ m_player_vec.Length();
 	m_vec = CVector3D(0, m_vec.y, 0);
 	AiChange(200);
 }
@@ -124,33 +135,50 @@ void CCharacterEnemy::Idle()
 void CCharacterEnemy::Move()
 {
 	SetWillPlayAnim(eEnemyAnimIdMove);
-	is_damage = true;
-	m_vec = CVector3D(p_vec.x, m_vec.y, p_vec.y);
+	m_is_damage = true;
+	if (m_damage_chance > 3) {
+		m_vec = CVector3D(-m_player_vec.x * 2, m_vec.y, -m_player_vec.y * 2);
+	}
+	else m_vec = CVector3D(m_player_vec.x, m_vec.y, m_player_vec.y);
+	if (m_vec.x > 0) m_is_flip = true;
+	else m_is_flip = false;
 	AiChange(200);
 }
 
 void CCharacterEnemy::Attack()
 {
 	SetWillPlayAnim(eEnemyAnimIdAttack);
-	is_damage = true;
+	m_is_damage = true;
 	m_vec = CVector3D(0, m_vec.y, 0);
-	AiChange(0);
+	if (m_player_vec.x > 0) m_is_flip = true;
+	else m_is_flip = false;
+
+	CCharacterPlayer* p = dynamic_cast<CCharacterPlayer*>(TaskManager::GetInstance()->FindTask(eTaskIdPlayer));
+	CVector3D player_pos = p->GetPos();
+	if (player_pos.x - m_pos.x > -100 || player_pos.x - m_pos.x < 100) {
+		printf("Hit!!");
+		p->ReceiveAttack();
+	}
+
+	AiChange(140);
 }
 
 void CCharacterEnemy::Damage()
 {
 	SetWillPlayAnim(eEnemyAnimIdDamage);
 	m_vec = CVector3D(0, m_vec.y, 0);
-	if (is_damage) {
-		m_enemy_hp -= 30;
-		is_damage = false;
+	if (m_is_damage) {
+		m_damage_chance++;
+		m_is_damage = false;
 	}
-	if (m_enemy_hp < 0)SetIsDelete();
+	if (m_hit_point < 0)SetIsDelete();
+	AiChange(30);
 }
 
 void CCharacterEnemy::MovePos()
 {
 	m_pos_old = m_pos;
+	
 	m_pos += m_vec;
 	//とりあえずテスト用なので
 	/*if (m_pos.z <= 280.0f) m_pos.z = 280.0f;
@@ -168,14 +196,20 @@ void CCharacterEnemy::AiChange(int ai_cnt)
 			else m_enemy_state = eEnemyStateMove;
 			break;
 		case eEnemyStateMove:
+			m_damage_chance = 0;
 			m_AI_cnt = rand() % 50;
 			if (m_attack_chance)m_enemy_state = eEnemyStateAttack;
 			else m_enemy_state = eEnemyStateIdle;
 			break;
 		case eEnemyStateAttack:
-			m_AI_cnt = rand() % 50;
+			m_AI_cnt = 0;
 			if (m_attack_chance)m_enemy_state = eEnemyStateIdle;
 			else m_enemy_state = eEnemyStateMove;
+			break;
+		case eEnemyStateDamage:
+			m_AI_cnt = rand() % 50;
+			if (m_damage_chance > 3)m_enemy_state = eEnemyStateMove;
+			else m_enemy_state = eEnemyStateIdle;
 			break;
 		default:
 			break;
@@ -187,9 +221,9 @@ void CCharacterEnemy::AiChange(int ai_cnt)
 void CCharacterEnemy::CharacterBeforeCollisionCheck()
 {
 	CCharacterPlayer* p = dynamic_cast<CCharacterPlayer*>(TaskManager::GetInstance()->FindTask(eTaskIdPlayer));
-	p_pos = p->GetPos();
-	CVector2D l_vec = CVector2D(p_pos.x - m_pos.x, p_pos.z - m_pos.z);
-	if (l_vec.Length() < 150) {
+	m_player_pos = p->GetPos();
+	CVector2D l_vec = CVector2D(m_player_pos.x - m_pos.x, m_player_pos.z - m_pos.z);
+	if (l_vec.Length() < 200) {
 		m_attack_chance = true;
 	}
 	else m_attack_chance = false;

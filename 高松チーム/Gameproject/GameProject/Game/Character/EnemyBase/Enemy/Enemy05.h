@@ -4,6 +4,7 @@
 */
 #include "../EnemyBase.h"
 
+
 class Enemy05 : public EnemyBase {
 private:
 	enum {
@@ -16,7 +17,7 @@ private:
 	int m_move_cnt;	//仮攻撃カウント変数
 	int mp_hp;
 public:
-	Enemy05(CVector2D& pos);
+	Enemy05(CVector2D& _pos);
 	void Move();
 	/*
 	@brief　移動管理
@@ -28,5 +29,5 @@ public:
 	void Update();
 	void Draw();
 	void HitCheck(Task* _t);
-	
+	virtual int GetType() { return m_type; }
 };

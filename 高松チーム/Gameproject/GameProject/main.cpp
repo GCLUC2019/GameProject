@@ -17,13 +17,27 @@
 //--------------------------------------------
 //グローバル変数領域
 //--------------------------------------------
-
+enum PadButton {
+	e1,
+	e2,
+	e3,
+	e4,
+	e5,
+	e6,
+	e7,
+	e8,
+	e9,
+	e10,
+	e11,
+};
 void MainLoop(void) {
 
 	//--------------------------------------------------------------
 	//ゲーム中の動きはここに書く
 	//ゲーム中はこの関数_を1秒間に60回呼び出している
 	//--------------------------------------------------------------
+
+    TaskManager::GetInstance()->CheckKillAll();
 
 	TaskManager::GetInstance()->HitCheckAll();
 
@@ -57,11 +71,27 @@ void Init(void)
 	//ボタンの設定
 	CInput::Init();
 	CInput::Init();
-	CInput::SetButton(0, CInput::eButton1, 'Z');
-	CInput::SetButton(0, CInput::eButton2, 'X');
-	CInput::SetButton(0, CInput::eButton3, 'C');
-	CInput::SetButton(0, CInput::eButton4, 'V');
-	CInput::SetButton(0, CInput::eButton5, 'B');
+
+	/*CInput::SetButton(0, CInput::eUp, 'W');
+	CInput::SetButton(0, CInput::eLeft, 'A');
+	CInput::SetButton(0, CInput::eDown, 'S');
+	CInput::SetButton(0, CInput::eRight, 'D');*/
+	//しゃがみ
+	CInput::SetButton(0, CInput::eButton1, VK_SHIFT);
+	CInput::SetPadButton(0, CInput::eButton1, PadButton::e3);
+	//近接攻撃
+	CInput::SetPadButton(0, CInput::eButton2, PadButton::e4);
+	CInput::SetButton(0, CInput::eButton2, 'Z');
+	//ジャンプ
+	CInput::SetButton(0, CInput::eButton3,VK_SPACE);
+	CInput::SetPadButton(0, CInput::eButton3, PadButton::e1);
+	//遠距離攻撃
+	CInput::SetPadButton(0, CInput::eButton4, PadButton::e2);
+	CInput::SetButton(0, CInput::eButton4, 'X');
+	//必殺攻撃
+	CInput::SetPadButton(0, CInput::eButton5, PadButton::e8);
+	CInput::SetButton(0, CInput::eButton5, 'W');
+
 	CInput::SetButton(0, CInput::eButton10, VK_RETURN);
 	CInput::SetButton(0, CInput::eUp, VK_UP);
 	CInput::SetButton(0, CInput::eDown, VK_DOWN);
