@@ -68,6 +68,7 @@ void TaskManager::HitCheckAll()
 
 	while (d) {
 		d->HitCheck(d2);
+		//d2->HitCheck(d);
 		d = d->GetNext();
 	}
 }

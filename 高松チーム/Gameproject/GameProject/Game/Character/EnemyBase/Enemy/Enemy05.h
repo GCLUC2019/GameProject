@@ -4,6 +4,7 @@
 */
 #include "../EnemyBase.h"
 
+
 class Enemy05 : public EnemyBase {
 private:
 	enum {
@@ -28,5 +29,5 @@ public:
 	void Update();
 	void Draw();
 	void HitCheck(Task* _t);
-	
+	virtual int GetType() { return m_type; }
 };
