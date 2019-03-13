@@ -3,9 +3,11 @@
 #include "CGameScene.h"
 #include "CGameSceneWave.h"
 
-CCharacter::CCharacter(int _task_id, int _draw_priority) : CObject(_task_id, _draw_priority)
+CCharacter::CCharacter(int _task_id, int _draw_priority) : CGameSceneObject(_task_id, _draw_priority)
 {
+	/*
 	m_shadow_p = GET_RESOURCE("Shadow", CImage*);
+	*/
 }
 
 CCharacter::~CCharacter()
@@ -13,12 +15,10 @@ CCharacter::~CCharacter()
 
 }
 
-void CCharacter::Update()
+void CCharacter::GameSceneObjectUpdate()
 {
 	CheckHitPoint();
 	CharacterUpdate();
-
-	//printf("player pos x %lf y %lf z %lf\n",m_pos.x,m_pos.y,m_pos.z);
 }
 
 void CCharacter::CharacterUpdate()
@@ -26,10 +26,11 @@ void CCharacter::CharacterUpdate()
 	
 }
 
-void CCharacter::AfterUpdate()
+void CCharacter::GameSceneObjectAfterUpdate()
 {
 	CharacterAfterUpdate();
 
+	/*
 	//アニメーション制御用なのでここにあると都合が良い
 	SetAnim(m_will_play_anim_id);
 	PlayAnim();
@@ -37,12 +38,16 @@ void CCharacter::AfterUpdate()
 	//描画順番の設定
 	SetDrawPriority(m_pos.z);
 	//SetDrawPriority(GetShadowPos().z);
+	*/
+
+	
 }
 
 void CCharacter::CharacterAfterUpdate()
 {
 }
 
+/*
 void CCharacter::SetAnim(int _anim_id)
 {
 	if (m_play_anim_id == _anim_id) return;
@@ -62,7 +67,9 @@ void CCharacter::PlayAnim()
 		m_play_anim_count = m_anim_info[m_play_anim_id].delay;
 	}
 }
+*/
 
+/*
 void CCharacter::Gravity()
 {
 	//接地しているなら重力を加算しない
@@ -78,18 +85,22 @@ void CCharacter::Gravity()
 
 	//if (m_vec.y >= 3.0) m_vec.y = 3.0;
 }
+*/
 
-void CCharacter::BeforeCollisionCheck()
+void CCharacter::GameSceneObjectBeforeCollisionCheck()
 {
+	/*
 	m_is_landing_old = m_is_landing;
 	m_is_landing = false;
+	*/
+	CharacterBeforeCollisionCheck();
 }
 
 void CCharacter::CharacterBeforeCollisionCheck()
 {
 }
 
-void CCharacter::BeforeUpdate()
+void CCharacter::GameSceneObjectBeforeUpdate()
 {
 	CharacterBeforeUpdate();
 }
@@ -116,19 +127,22 @@ void CCharacter::SendDeadMeForFromWave()
 
 void CCharacter::CheckHitPoint()
 {
-	if (m_hit_point < 0.0f) {
+	if (m_hit_point <= 0.0f) {
 		SetIsDelete();
 		SendDeadMeForFromWave();//ウェーブシステムに自分が倒されたことを伝える
 	}
 }
 
-void CCharacter::Draw()
+void CCharacter::GameSceneObjectDraw()
 {
+	/*
 	DrawShadow();
 	DrawAnimImage();
+	*/
 	CharacterDraw();
 }
 
+/*
 void CCharacter::DrawShadow()
 {
 	if (m_shadow_p == nullptr) return;
@@ -149,7 +163,10 @@ void CCharacter::DrawShadow()
 	m_shadow_p->SetCenter(m_shadow_size.x / 2.0, m_shadow_size.y / 2.0);
 	m_shadow_p->Draw();
 }
+*/
 
+
+/*
 void CCharacter::DrawAnimImage()
 {
 	if (m_anim_image_p[m_play_anim_image] == nullptr) return;
@@ -165,55 +182,62 @@ void CCharacter::DrawAnimImage()
 	m_anim_image_p[m_play_anim_image]->SetCenter(m_size.x / 2.0, m_size.y / 2.0);
 	m_anim_image_p[m_play_anim_image]->Draw();
 }
+*/
 
 void CCharacter::CharacterDraw()
 {
 }
 
-void CCharacter::CollisionCheck(Task * _collision_task)
+//
+//void CCharacter::CollisionCheck(Task * _collision_task)
+//{
+//	CObject* ob = dynamic_cast<CObject*>(_collision_task);
+//	CVector3D ob_pos = ob->GetPos();
+//	CVector3D ob_pos_old = ob->GetPosOld();
+//	CVector3D ob_rads = ob->GetRads();
+//
+//
+//	//相手も動く場合は、処理が複雑かも
+//
+//	if (CollisionCheck3D(CVector3D(m_pos.x,m_pos_old.y,m_pos_old.z),m_rads,ob_pos,ob_rads)) {
+//		m_pos.x = m_pos_old.x;
+//	};
+//
+//	if (CollisionCheck3D(CVector3D(m_pos_old.x, m_pos.y, m_pos_old.z), m_rads, ob_pos, ob_rads)) {
+//		m_pos.y = m_pos_old.y;
+//		
+//		
+//		//もし戻した座標が自分の頭上より上なら自分の頭上ぴったりに合わせる
+//
+//		//計算式 敵の頭上ぴったりとなる位置 = 敵のY位置 - 敵のY半径 - 自分のY半径 - 若干浮かせるための補正値
+//
+//
+//		double ob_head_pos = ob_pos.y - ob_rads.y - m_rads.y - 0.1f;
+//		if(m_pos.y <= ob_head_pos) m_pos.y = ob_head_pos;
+//
+//
+//		m_is_landing = true;
+//	};
+//
+//	if (CollisionCheck3D(CVector3D(m_pos_old.x, m_pos_old.y, m_pos.z), m_rads, ob_pos, ob_rads)) {
+//		m_pos.z = m_pos_old.z;
+//	};
+//
+//	/*
+//	if (CollisionCheck3D(m_pos, m_rads, ob_pos, ob_rads)) {
+//		//printf("ぶつかった ob_pos.y %lf ob_rads.y %lf\n",ob_pos.y,ob_rads.y);
+//		//m_pos = m_pos_old;
+//	};
+//	*/
+//
+//	
+//
+//
+//	CollisionCheckCharacter(_collision_task);
+//}
+
+void CCharacter::GameSceneObjectCollisionCheck(Task * _collision_task)
 {
-	CObject* ob = dynamic_cast<CObject*>(_collision_task);
-	CVector3D ob_pos = ob->GetPos();
-	CVector3D ob_pos_old = ob->GetPosOld();
-	CVector3D ob_rads = ob->GetRads();
-
-
-	//相手も動く場合は、処理が複雑かも
-
-	if (CollisionCheck3D(CVector3D(m_pos.x,m_pos_old.y,m_pos_old.z),m_rads,ob_pos,ob_rads)) {
-		m_pos.x = m_pos_old.x;
-	};
-
-	if (CollisionCheck3D(CVector3D(m_pos_old.x, m_pos.y, m_pos_old.z), m_rads, ob_pos, ob_rads)) {
-		m_pos.y = m_pos_old.y;
-		
-		
-		//もし戻した座標が自分の頭上より上なら自分の頭上ぴったりに合わせる
-
-		//計算式 敵の頭上ぴったりとなる位置 = 敵のY位置 - 敵のY半径 - 自分のY半径 - 若干浮かせるための補正値
-
-
-		double ob_head_pos = ob_pos.y - ob_rads.y - m_rads.y - 0.1f;
-		if(m_pos.y <= ob_head_pos) m_pos.y = ob_head_pos;
-
-
-		m_is_landing = true;
-	};
-
-	if (CollisionCheck3D(CVector3D(m_pos_old.x, m_pos_old.y, m_pos.z), m_rads, ob_pos, ob_rads)) {
-		m_pos.z = m_pos_old.z;
-	};
-
-	/*
-	if (CollisionCheck3D(m_pos, m_rads, ob_pos, ob_rads)) {
-		//printf("ぶつかった ob_pos.y %lf ob_rads.y %lf\n",ob_pos.y,ob_rads.y);
-		//m_pos = m_pos_old;
-	};
-	*/
-
-	
-
-
 	CollisionCheckCharacter(_collision_task);
 }
 
@@ -221,6 +245,7 @@ void CCharacter::CollisionCheckCharacter(Task * _collision_task)
 {
 }
 
+/*
 void CCharacter::MoveLimit()
 {
 	CVector3D limit_pos_max = CGameScene::GetInstance()->GetGameSceneLimitPosMax();
@@ -232,3 +257,4 @@ void CCharacter::MoveLimit()
 	if (m_pos.z < limit_pos_min.z + m_rads.y / 2.0) m_pos.z = limit_pos_min.z + m_rads.y / 2.0;
 	if (m_pos.z > limit_pos_max.z) m_pos.z = limit_pos_max.z;
 }
+*/

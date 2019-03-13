@@ -42,16 +42,18 @@ void CGameScene::Setup()
 
 	CCharacterPlayer* player_p = new CCharacterPlayer();
 	AddGameSceneObject(player_p);
-	player_p->SetPos(300, -300, 500);
+	player_p->SetPos(300, -500, 500);
 
 
 	CCharacterEnemy* enemy_p = new CCharacterEnemy();
 	AddGameSceneObject(enemy_p);
 
+	/*
 	CDropItem* drop_item_p;
 	AddGameSceneObject(drop_item_p = new CDropItem(eItemIdSpear, GET_RESOURCE("IconSpear", CImage*)));
 	drop_item_p->SetPos(CVector3D(200,200,200));
 	drop_item_p->SetSize(CVector2D(200, 200));
+	*/
 
 
 	//CBar*Bar_p = new CBar();

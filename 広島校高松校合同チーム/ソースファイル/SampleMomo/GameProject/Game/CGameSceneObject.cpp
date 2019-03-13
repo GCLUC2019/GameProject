@@ -24,6 +24,13 @@ void CGameSceneObject::GameSceneObjectUpdate()
 void CGameSceneObject::AfterUpdate()
 {
 	GameSceneObjectAfterUpdate();
+
+	//アニメーション制御用なのでここにあると都合が良い
+	SetAnim(m_will_play_anim_id);
+	PlayAnim();
+
+	//描画順番の設定
+	SetDrawPriority(m_pos.z);
 }
 
 void CGameSceneObject::GameSceneObjectAfterUpdate()
@@ -44,11 +51,14 @@ void CGameSceneObject::Gravity()
 
 void CGameSceneObject::BeforeCollisionCheck()
 {
+	m_is_landing_old = m_is_landing;
+	m_is_landing = false;
 	GameSceneObjectBeforeCollisionCheck();
 }
 
 void CGameSceneObject::GameSceneObjectBeforeCollisionCheck()
 {
+	
 }
 
 void CGameSceneObject::BeforeUpdate()
@@ -63,19 +73,82 @@ void CGameSceneObject::GameSceneObjectBeforeUpdate()
 void CGameSceneObject::Draw()
 {
 	DrawShadow();
+	DrawAnimImage();
 	GameSceneObjectDraw();
 }
 
 void CGameSceneObject::DrawShadow()
 {
+	if (m_shadow_p == nullptr) return;
+
+	CVector2D draw_pos_shadow = CVector2D(m_pos.x, m_pos.z) - GetScroll();
+
+	CVector2D shadow_pos_adj = m_shadow_pos_adj;
+
+	if (m_is_flip == true) shadow_pos_adj.x *= -1.0f;
+
+	m_shadow_p->SetFlipH(m_is_flip);
+	m_shadow_p->SetSize(m_shadow_size.x, m_shadow_size.y);
+	m_shadow_p->SetPos(draw_pos_shadow + shadow_pos_adj);
+	m_shadow_p->SetCenter(m_shadow_size.x / 2.0, m_shadow_size.y / 2.0);
+	m_shadow_p->Draw();
+}
+
+void CGameSceneObject::DrawAnimImage()
+{
+	if (m_anim_image_p[m_play_anim_image] == nullptr) return;
+	m_anim_image_p[m_play_anim_image]->SetFlipH(m_is_flip);
+	m_anim_image_p[m_play_anim_image]->SetSize(m_size.x, m_size.y);
+	CVector2D draw_pos = CVector2D(m_pos.x, m_pos.y + m_pos.z) - GetScroll();
+
+
+	CVector2D draw_adj = m_draw_adj;
+	if (m_is_flip == true) draw_adj.x *= -1.0f;
+
+	m_anim_image_p[m_play_anim_image]->SetPos(draw_pos + draw_adj);
+	m_anim_image_p[m_play_anim_image]->SetCenter(m_size.x / 2.0, m_size.y / 2.0);
+	m_anim_image_p[m_play_anim_image]->Draw();
 }
 
 void CGameSceneObject::GameSceneObjectDraw()
 {
+
 }
 
 void CGameSceneObject::CollisionCheck(Task * _collision_task)
 {
+	CObject* ob = dynamic_cast<CObject*>(_collision_task);
+	CVector3D ob_pos = ob->GetPos();
+	CVector3D ob_pos_old = ob->GetPosOld();
+	CVector3D ob_rads = ob->GetRads();
+
+
+	//相手も動く場合は、処理が複雑かも
+
+	if (CollisionCheck3D(CVector3D(m_pos.x, m_pos_old.y, m_pos_old.z), m_rads, ob_pos, ob_rads)) {
+		m_pos.x = m_pos_old.x;
+	};
+
+	if (CollisionCheck3D(CVector3D(m_pos_old.x, m_pos.y, m_pos_old.z), m_rads, ob_pos, ob_rads)) {
+		m_pos.y = m_pos_old.y;
+
+
+		//もし戻した座標が自分の頭上より上なら自分の頭上ぴったりに合わせる
+
+		//計算式 敵の頭上ぴったりとなる位置 = 敵のY位置 - 敵のY半径 - 自分のY半径 - 若干浮かせるための補正値
+
+
+		double ob_head_pos = ob_pos.y - ob_rads.y - m_rads.y - 0.1f;
+		if (m_pos.y <= ob_head_pos) m_pos.y = ob_head_pos;
+
+
+		m_is_landing = true;
+	};
+
+	if (CollisionCheck3D(CVector3D(m_pos_old.x, m_pos_old.y, m_pos.z), m_rads, ob_pos, ob_rads)) {
+		m_pos.z = m_pos_old.z;
+	};
+
 	GameSceneObjectCollisionCheck(_collision_task);
 }
 

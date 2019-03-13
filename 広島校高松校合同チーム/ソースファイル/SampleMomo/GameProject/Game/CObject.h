@@ -7,7 +7,7 @@
 class CObject : public Task {
 private:
 protected:
-	CVector3D m_pos;
+	CVector3D m_pos = CVector3D(0,0,0);
 	CVector3D m_pos_old;
 	CVector3D m_vec;
 	float m_speed;
@@ -42,7 +42,7 @@ public:
 	bool GetIsFlip() { return m_is_flip; };
 
 	float GetSpeed() {return m_speed; };
-	CVector3D GetPos() { return m_pos; };
+	const CVector3D& GetPos() { return m_pos; };
 	CVector3D GetPosOld() { return m_pos_old; };
 
 	CVector3D GetVec() { return m_vec; };
