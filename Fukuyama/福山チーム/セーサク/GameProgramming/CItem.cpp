@@ -1,7 +1,6 @@
 //¬ì
 
 #include "CItem.h"
-#include <stdio.h>
 
 int type;
 

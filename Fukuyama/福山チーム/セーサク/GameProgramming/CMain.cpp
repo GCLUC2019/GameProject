@@ -10,6 +10,7 @@
 #include "CEnemyTank.h"
 #include "CTexture.h"
 #include "CSceneGame.h"
+#include "CBoss.h"
 
 CTexture Texture;
 CRectangle*Explosion;
@@ -19,6 +20,9 @@ CScene*mpScene;
 CPlayerTank *Tank;
 
 CEnemyTank*EnemyTank;
+
+CBoss *Boss = NULL;
+
 
 CScene::ESceneTag CMain::mSceneTag = CScene::EROOT;
 

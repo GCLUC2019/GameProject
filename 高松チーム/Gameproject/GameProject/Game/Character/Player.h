@@ -8,7 +8,7 @@
  Zキー		:近距離攻撃　　	
  SPACEキー	:ジャンプ
  Xキー		:遠距離攻撃
- Wキー		:必殺攻撃
+ Qキー		:必殺攻撃
 */
 class Player : public CharacterBase {
 private:

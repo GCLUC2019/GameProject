@@ -2,6 +2,8 @@
 #include "../Anim/AnimDataPlayer.h"
 #include "../GameProject/Game/Resource/Resource.h"
 
+#define IMAGE_SIZE 200
+
 PlayerEffectLongAttack::PlayerEffectLongAttack(const CVector2D& pos) : Task(ePEffectLongAttack)
 {
 	m_pos = pos;
@@ -103,25 +105,30 @@ void PlayerEffectShortAttack03::Draw()
 PlayerEffectSpecialAttack::PlayerEffectSpecialAttack(const CVector2D& pos) : Task(ePEffectSpecialAttack),
 m_scale(CVector2D(1.0f,1.0f))
 {
+	m_pos = pos;
 	m_img = COPY_RESOURCE("PESpecialAttack", CAnimImage*);
 	m_img2 = COPY_RESOURCE("MagicCircle", CImage*);
 }
 
 void PlayerEffectSpecialAttack::Update()
 {
+	++m_cnt;
+	if (m_cnt >= 60 && m_cnt <= 180) {
+		m_scale += CVector2D(0.03f, 0.03f);
+	}
 
 }
 
 void PlayerEffectSpecialAttack::Draw()
 {
 	//サイズ指定と描画
-	m_img.SetSize(120 * m_scale.x, 120 * m_scale.y);
-	m_img.SetCenter((120 * m_scale.x) / 2, (120*m_scale.y) / 2);
-	m_img.SetPos(m_pos);
+	m_img.SetSize(IMAGE_SIZE * m_scale.x, 250);
+	m_img.SetCenter((IMAGE_SIZE * m_scale.x) / 2, 250/ 2);
+	m_img.SetPos(m_pos-CVector2D(0,50));
 
-	m_img2.SetSize(120*m_scale.x, 120*m_scale.y);
-	m_img2.SetCenter((120 * m_scale.x) / 2, (120 * m_scale.y) / 2);
-	m_img2.SetPos(m_pos);
+	m_img2.SetSize((IMAGE_SIZE/2.7f)*m_scale.x, 70);
+	m_img2.SetCenter(((IMAGE_SIZE/ 2.7f) * m_scale.x) / 2, 50/ 2);
+	m_img2.SetPos(m_pos-CVector2D(0,20));
 
 	m_img2.Draw();
 	m_img.Draw();

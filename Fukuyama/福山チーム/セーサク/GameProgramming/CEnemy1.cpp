@@ -12,15 +12,15 @@ extern CPlayerTank*Tank;
 void CEnemy1::Init(){
 	mFireIntervar = FIREINTERVER_E;
 	CTank::Init();
-	SetColor(0.6f, 0.0f, 0.0f, 1.0f);
-	mHead.SetColor(1.0f, 0.0f, 0.0f, 1.0f);
-	mCanon.SetColor(0.8f, 0.0f, 0.0f, 1.0f);
+	SetColor(0.6f, 1.0f, 1.0f, 1.0f);
+	mHead.SetColor(0.6f, 1.0f, 1.0f, 1.0f);
+	mCanon.SetColor(0.6f, 1.0f, 1.0f, 1.0f);
 	mCollider = new CCircleCollider();
 	mCollider->mRadius = 20.0f;
 	mCollider->mpTask = this;
 	mpTarget = Tank;
 	CCollisionManager::Get()->Add(mCollider);
-	mTaskTag = EENEMYTANK;
+	mTaskTag = EENEMY1;
 	mHpBar.SetHpBar(this, CVector2(0.0f, -35.0f), CVector2(50.0f, 8.0f), mColor, 100, 100);
 }
 
@@ -36,10 +36,10 @@ void CEnemy1::Update(){
 
 	float dot = rightSide.dot(dirPlayer);
 	if (dot > 0.0f){
-		HeadRightTurn();
+		RightTurn();
 	}
 	else if (dot < 0.0f){
-		HeadLeftTurn();
+		LeftTurn();
 	}
 	CCollisionManager::Get()->Collision(mCollider);
 

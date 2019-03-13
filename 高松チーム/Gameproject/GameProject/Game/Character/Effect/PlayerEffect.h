@@ -57,6 +57,7 @@ private:
 	CVector2D m_pos;
 	CVector2D m_vec;
 	CVector2D m_scale;
+	int m_cnt;
 
 public:
 	PlayerEffectSpecialAttack(const CVector2D& pos);
