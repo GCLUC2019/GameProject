@@ -7,6 +7,10 @@
 */
 class BossHead :public EnemyBase {
 private:
+	CVector2D m_center;
+
+	float m_rot;//円周率
+	float m_r;  //半径
 
 	bool m_anim_flag;//アニメーションフラグ
 	bool m_move_flag;//移動フラグ
@@ -33,6 +37,8 @@ private:
 	bool m_anim_flag;//アニメーションフラグ
 	bool m_move_flag;//移動フラグ
 
+	float m_rot;
+	float m_r;
 protected:
 
 

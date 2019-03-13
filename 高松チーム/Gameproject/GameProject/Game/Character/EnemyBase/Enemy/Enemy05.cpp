@@ -7,7 +7,7 @@
 
 #define MOVE_ 360
 
-Enemy05::Enemy05(CVector2D& _pos) : EnemyBase(eEnemy05),
+Enemy05::Enemy05(CVector2D& pos) : EnemyBase(eEnemy05),
 m_move_cnt(0)
 {
 	//‰Šú‰»
@@ -15,8 +15,7 @@ m_move_cnt(0)
 	m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
 	m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
 
-	//m_rect = 
-	m_pos = _pos;
+	m_pos = CVector2D(600, 100);
 	m_vec = CVector2D(0, 0);
 	m_hp = 100;
 	m_img.SetFlipH(m_flip);
@@ -116,6 +115,7 @@ void Enemy05::HitCheck(Task * _t)
 {
 	switch (_t->GetType()) {
 	case ePlayer:
+		
 		printf("player‚ğæ“¾");
 		break;
 	default:

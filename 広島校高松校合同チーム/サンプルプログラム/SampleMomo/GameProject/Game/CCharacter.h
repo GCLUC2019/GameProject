@@ -5,16 +5,9 @@
 #define ANIMATION_IMAGE_MAX (500)
 
 
+#define DEFAULT_ANIM_DELAY (10)
+#define PLAYER_ANIM_RUN_DELAY (5)
 
-//#define DEFAULT_ANIM_DELAY (10)
-#define PLAYER_ANIM_IDLE (8)
-#define DEFAULT_ANIM_DELAY (5)
-#define PLAYER_ANIM_RUN_DELAY (3)
-//#define PLAYER_ANIM_RUN_DELAY (5)
-
-class CGameSceneWave;
-
-#define DEFAULT_HIT_POINT (10.0f)
 struct AnimInfo {
 	int image_id;
 	int image_num = 0;
@@ -24,9 +17,6 @@ struct AnimInfo {
 class CCharacter : public CObject {
 private:
 protected:
-
-	float m_hit_point = DEFAULT_HIT_POINT;
-	float m_hit_point_max = DEFAULT_HIT_POINT;
 
 	//影表示関連
 	CVector2D m_shadow_size;
@@ -50,9 +40,6 @@ protected:
 	bool m_is_landing = false;
 
 
-	CGameSceneWave* m_from_wave_p = nullptr;
-	int m_wave_character_id = 0;
-
 	//近くに存在するエネミーオブジェクト
 	//CCharacterEnemy* m_near_enemy_p;
 	
@@ -75,21 +62,6 @@ public:
 
 	void BeforeUpdate();
 	virtual void CharacterBeforeUpdate();
-
-	float* GetHitPointPointer() { return &m_hit_point; };
-	float GetHitPointMax() { return m_hit_point_max; };
-
-
-	virtual void ReceiveAttack();
-
-
-	void SetFromWave(CGameSceneWave* _wave) { m_from_wave_p = _wave; };
-	void SetCharacterWaveId(int _id) { m_wave_character_id = _id; };
-	int GetCharacterWaveId() { return m_wave_character_id; };
-
-	void SendDeadMeForFromWave();
-
-	void CheckHitPoint();
 
 	void Draw();
 	void DrawShadow();

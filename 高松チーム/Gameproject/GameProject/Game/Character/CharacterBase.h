@@ -2,6 +2,13 @@
 #include "../GameProject/Base/Task.h"
 #include "../GameProject/stdafx.h"
 
+/*
+Ç±Ç±Ç≈CharacterTypeê›íËÇ∑ÇÈ
+*/
+enum {
+	ePlayer,
+};
+
 class CharacterBase : public Task {
 private:
 protected:

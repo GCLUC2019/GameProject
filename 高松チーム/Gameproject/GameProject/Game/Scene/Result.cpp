@@ -1,6 +1,6 @@
 #include "Result.h"
 
-GameClear::GameClear() : Task(eGameClear)
+GameClear::GameClear()
 {
 	m_gameclear_pos = CVector2D(1280 / 2, 720 / 2);
 	m_gameclear_img = COPY_RESOURCE("GameClear", CImage*);

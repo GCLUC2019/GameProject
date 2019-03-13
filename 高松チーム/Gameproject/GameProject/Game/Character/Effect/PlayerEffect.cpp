@@ -2,7 +2,7 @@
 #include "../Anim/AnimDataPlayer.h"
 #include "../GameProject/Game/Resource/Resource.h"
 
-PlayerEffectLongAttack::PlayerEffectLongAttack(const CVector2D& pos) : Task(ePEffectLongAttack)
+PlayerEffectLongAttack::PlayerEffectLongAttack(const CVector2D& pos)
 {
 	m_pos = pos;
 	m_vec = CVector2D(ZERO,ZERO);
@@ -31,7 +31,7 @@ void PlayerEffectLongAttack::Draw()
 
 
 
-PlayerEffectShortAttack01::PlayerEffectShortAttack01(const CVector2D & pos) : Task(ePEffectShortAttack01)
+PlayerEffectShortAttack01::PlayerEffectShortAttack01(const CVector2D & pos)
 {
 	m_pos = pos;
 	m_vec = CVector2D(ZERO, ZERO);
@@ -55,7 +55,7 @@ void PlayerEffectShortAttack01::Draw()
 }
 
 
-PlayerEffectShortAttack02::PlayerEffectShortAttack02(const CVector2D & pos) : Task(ePEffectShortAttack02)
+PlayerEffectShortAttack02::PlayerEffectShortAttack02(const CVector2D & pos)
 {
 	m_pos = pos;
 	m_vec = CVector2D(ZERO, ZERO);
@@ -77,7 +77,7 @@ void PlayerEffectShortAttack02::Draw()
 	m_img.Draw();
 }
 
-PlayerEffectShortAttack03::PlayerEffectShortAttack03(const CVector2D & pos) : Task(ePEffectShortAttack03)
+PlayerEffectShortAttack03::PlayerEffectShortAttack03(const CVector2D & pos)
 {
 	m_pos = pos;
 	m_vec = CVector2D(ZERO, ZERO);

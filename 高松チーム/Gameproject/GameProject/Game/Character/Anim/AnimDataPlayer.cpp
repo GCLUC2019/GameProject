@@ -16,24 +16,24 @@ static TexAnim PlayerIdle[] = {
 };
 
 static TexAnim PlayerLongAttack[] = {
-	{10,5},
-{11,5},
+	{10,30},
+{11,30},
 };
 
 static TexAnim PlayerShortAttack01[] = {
-	{20,5},
-{21,5},
-{22,5},
+	{20,15},
+{21,15},
+{22,15},
 };
 
 static TexAnim PlayerShortAttack02[] = {
-	{30,5},
-{31,5},
+	{30,15},
+{31,15},
 };
 
 static TexAnim PlayerShortAttack03[] = {
-	{40,5},
-{41,5},
+	{40,15},
+{41,15},
 };
 
 static TexAnim PlayerDamage[] = {

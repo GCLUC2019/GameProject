@@ -12,8 +12,8 @@ protected:
 public:
 	Task * GetHead() { return mp_head; }
 	Task* GetLast() { return mp_last; }
-	static void SetHead(Task *t) { mp_head = t; }
-	static void SetLast(Task *t) { mp_last = t; }
+	static void SetHead(Task *t) { t = mp_head; }
+	static void SetLast(Task *t) { t = mp_last; }
 	
 	TaskManager();
 	static void AddTask(Task *_t);
@@ -22,7 +22,6 @@ public:
 	static void HitCheckAll();
 	static void Kill(Task* _t);
 	static void KillAll();
-    static void CheckKillAll();
 	static void Search();
 	static void Swap(Task* t1, Task* t2);
 	static void TaskSort(float _comp);
@@ -33,7 +32,6 @@ public:
 	static void Insert(Task*_t);
 	static void ReLink(bool _fb, Task* t1, Task* t2);
 
-    static Task*FindObject(int _type);
 	static TaskManager* GetInstance();
 	static void ClearInstance();
 	

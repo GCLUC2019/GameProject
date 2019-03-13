@@ -25,8 +25,6 @@ void MainLoop(void) {
 	//ƒQ[ƒ€’†‚Í‚±‚ÌŠÖ”_‚ð1•bŠÔ‚É60‰ñŒÄ‚Ño‚µ‚Ä‚¢‚é
 	//--------------------------------------------------------------
 
-    TaskManager::GetInstance()->CheckKillAll();
-
 	TaskManager::GetInstance()->HitCheckAll();
 
 	TaskManager::GetInstance()->UpdateAll();

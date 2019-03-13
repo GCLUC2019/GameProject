@@ -1,10 +1,63 @@
 #include "CStoryScene.h"
 #include "string.h"
 
+#define STORY_SIZE  CVector2D(1000,600)
+#define STORY_POSISHON  CVector2D(140,20)
+#define BOX_SIZE CVector2D(1100,70)
+#define BOX_POSISHON CVector2D(100, 630)
+#define TEXT_SIZE CVector2D(1100,70)
+#define TEXT_POSISHON CVector2D(130, 635)
+#define TEXT_DEF_SIZE CVector2D(30,50)
+#define RECTSIZE_X 30
+#define RECTSIZE_Y 40
+#define ICON_POSISHON CVector2D(1100,660)
+#define ICON_SIZE CVector2D(30,30)
+#define MAX_STRINGS 1024
 
 CStoryScene::CStoryScene() : CObject(0, 0)
 {
-	
+	ADD_RESOURCE("Story", CImage::LoadImage("story1.png"));
+	ADD_RESOURCE("Story2", CImage::LoadImage("story2.png"));
+	ADD_RESOURCE("Textbox", CImage::LoadImage("TextBox.png"));
+	ADD_RESOURCE("Text1-1", CImage::LoadImage("Text1-1.png"));
+	ADD_RESOURCE("Text1-2", CImage::LoadImage("Text1-3.png"));
+	ADD_RESOURCE("Text1-3", CImage::LoadImage("Text1-2.png"));
+	ADD_RESOURCE("Text1-4", CImage::LoadImage("Text1-4.png"));
+	ADD_RESOURCE("Text1-5", CImage::LoadImage("Text1-5.png"));
+	ADD_RESOURCE("Text1-6", CImage::LoadImage("Text1-6.png"));
+	ADD_RESOURCE("Send", CImage::LoadImage("SendIcon.png"));
+	strcpy_s(name[0], "Story");
+	strcpy_s(name[1], "Story2");
+    strcpy_s(t_name[0],"Text1-1");
+	strcpy_s(t_name[1], "Text1-2");
+	strcpy_s(t_name[2], "Text1-3");
+	strcpy_s(t_name[3], "Text1-4");
+	strcpy_s(t_name[4], "Text1-5");
+	strcpy_s(t_name[5], "Text1-6");
+	pos_array[0].top_x= 2500; pos_array[0].top_y = 0;
+	pos_array[0].bottom_x = 4093; pos_array[0].bottom_y = 2894;
+	pos_array[0].size = CVector2D(400, 600);
+	pos_array[0].pos = CVector2D(750, 20);
+	pos_array[1].top_x = 1650; pos_array[1].top_y = 0;
+	pos_array[1].bottom_x = 2600; pos_array[1].bottom_y = 1550;
+	pos_array[1].size = CVector2D(300, 350);
+	pos_array[1].pos = CVector2D(450, 20);
+	pos_array[2].top_x = 550; pos_array[2].top_y = 1500;
+	pos_array[2].bottom_x = 2800; pos_array[2].bottom_y = 2894;
+	pos_array[2].size = CVector2D(500, 300);
+	pos_array[2].pos = CVector2D(250, 300);
+	pos_array[3].top_x = 0; pos_array[3].top_y = 0;
+	pos_array[3].bottom_x = 1650; pos_array[3].bottom_y = 2894;
+	pos_array[3].size = CVector2D(400, 600);
+	pos_array[3].pos = CVector2D(130, 20);
+	pos_array[4].top_x = 0; pos_array[4].top_y = 0;
+	pos_array[4].bottom_x = 4093; pos_array[4].bottom_y = 2894;
+	pos_array[4].size = CVector2D(1020, 600);
+	pos_array[4].pos = CVector2D(130, 20);
+
+	SetAll();
+	subscript = 0;//ìYÇ¶éö
+	sentence_num = 6;//ï∂èÕêî
 }
 
 CStoryScene::~CStoryScene()
@@ -13,12 +66,20 @@ CStoryScene::~CStoryScene()
 
 void CStoryScene::Update()
 {
-	
+	UpdateText(30, sentence_num);
+	if (subscript == 1)UpdateStory(pos_array[subscript-1],pos_array[subscript]);
+	if (subscript == 2)UpdateStory(pos_array[subscript - 1], pos_array[subscript]);
+	if (subscript == 3)UpdateStory(pos_array[subscript - 1], pos_array[subscript]);
+	if (subscript == 4)UpdateStory(pos_array[subscript - 1], pos_array[subscript]);
+	if (subscript == 5)NextStory(name,1,pos_array[0]);
 }
 
 void CStoryScene::Draw()
 {
-	
+	m_s_img.Draw();
+	m_text_box.Draw();
+	m_text.Draw();
+	IconDraw();
 }
 
 void CStoryScene::SetParam()
@@ -28,13 +89,6 @@ void CStoryScene::SetParam()
 	draw_cnt = 0;
 	lim = RECTSIZE_X;
 	complete_flg = false;
-}
-
-void CStoryScene::SetSubSentense(int sent)
-{
-	num_decison = 1;//îªíËópêîéö
-	subscript = 0;//ìYÇ¶éö
-	sentence_num = sent;//ï∂èÕêî
 }
 
 void CStoryScene::SetTextBox()
@@ -76,23 +130,6 @@ void CStoryScene::SetText(char text_name[])
 	m_text.SetSize(TEXT_DEF_SIZE);
 }
 
-void CStoryScene::SetArrayValue(int num_array[])
-{
-	pos_array[num_array[0]].top_x = num_array[1];
-	pos_array[num_array[0]].top_y = num_array[2];
-	pos_array[num_array[0]].bottom_x = num_array[3];
-	pos_array[num_array[0]].bottom_y = num_array[4];
-	pos_array[num_array[0]].size = CVector2D(num_array[5], num_array[6]);
-	pos_array[num_array[0]].pos = CVector2D(num_array[7], num_array[8]);
-}
-
-void CStoryScene::SetSentense(int repite, char name_a[][80], char name_b[][80])
-{
-	for (int i = 0; i < repite; i++) {
-		strcpy_s(name_a[i], name_b[i]);
-	}
-}
-
 void CStoryScene::SetAll()
 {
 	SetStory(name[0], pos_array[0]);
@@ -102,12 +139,12 @@ void CStoryScene::SetAll()
 	SetParam();
 }
 
-void CStoryScene::NextStory(char story_name[][80],int sub, rect_pos_size values)
+void CStoryScene::NextStory(char story_name[][1024],int sub, rect_pos_size values)
 {
 	SetStory(story_name[sub],values);
 }
 
-void CStoryScene::NextText(char text_name[][80])
+void CStoryScene::NextText(char text_name[][1024])
 {
 	//ïœêîÇÃèâä˙âª
 	SetParam();
@@ -192,14 +229,6 @@ void CStoryScene::IconDraw()
 	draw_cnt++;
 	if (draw_cnt <= 30) m_icon.Draw();
 	else if (draw_cnt > 60) draw_cnt = 0;
-}
-
-void CStoryScene::AllDraw()
-{
-	m_s_img.Draw();
-	m_text_box.Draw();
-	m_text.Draw();
-	IconDraw();
 }
 
 void CStoryScene::RectUp()
