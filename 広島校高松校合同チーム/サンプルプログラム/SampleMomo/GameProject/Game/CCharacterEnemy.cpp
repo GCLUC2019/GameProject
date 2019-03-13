@@ -68,7 +68,7 @@ void CCharacterEnemy::CharacterUpdate()
 	}
 	Gravity();
 #ifdef _DEBUG
-	printf("%f", m_pos.x);
+	//printf("%f", m_pos.x);
 #endif // _DEBUG
 	MovePos();
 	
@@ -152,6 +152,14 @@ void CCharacterEnemy::Attack()
 	m_vec = CVector3D(0, m_vec.y, 0);
 	if (m_player_vec.x > 0) m_is_flip = true;
 	else m_is_flip = false;
+
+	CCharacterPlayer* p = dynamic_cast<CCharacterPlayer*>(TaskManager::GetInstance()->FindTask(eTaskIdPlayer));
+	CVector3D player_pos = p->GetPos();
+	if (player_pos.x - m_pos.x > -100 || player_pos.x - m_pos.x < 100) {
+		printf("Hit!!");
+		p->ReceiveAttack();
+	}
+
 	AiChange(140);
 }
 

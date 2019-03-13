@@ -108,8 +108,11 @@ void Enemy01::Search()
 void Enemy01::Attack()
 {
     m_img.ChangeAnimation(eEAttack01, false);
-    if (m_img.CheckAnimationEnd())
+    if (m_img.CheckAnimationEnd()) {
         m_state = eSearch;
+        //SetKill();
+    }
+       
 }
 void Enemy01::Damage()
 {

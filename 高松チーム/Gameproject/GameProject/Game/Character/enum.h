@@ -5,6 +5,12 @@ const enum {
 	eGameClear,
 	eGameTutorial,
 
+	eStage01,
+	eGround,
+	eBamboo,
+	eSkyBlue,
+	eSkyRed,
+
 	eCharacterBase,
 	eEnemyBase,
 	eEnemyBaseManager,
