@@ -5,7 +5,7 @@
 #include "CCommonObject.h"
 #include "CStoryScene.h"
 #include "CTitle.h"
-
+#include "CBar.h"
 static CGameScene* s_instance_p = nullptr;
 
 CGameScene::CGameScene() : CObject(0, 0)
@@ -46,6 +46,9 @@ void CGameScene::Setup()
 
 	CCharacterEnemy* enemy_p = new CCharacterEnemy();
 	AddGameSceneObject(enemy_p);
+
+	CBar*Bar_p = new CBar();
+	TaskManager::GetInstance()->AddTask(Bar_p);
 }
 
 
