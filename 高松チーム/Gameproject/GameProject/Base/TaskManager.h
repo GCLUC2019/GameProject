@@ -12,8 +12,8 @@ protected:
 public:
 	Task * GetHead() { return mp_head; }
 	Task* GetLast() { return mp_last; }
-	static void SetHead(Task *t) { t = mp_head; }
-	static void SetLast(Task *t) { t = mp_last; }
+	static void SetHead(Task *t) { mp_head = t; }
+	static void SetLast(Task *t) { mp_last = t; }
 	
 	TaskManager();
 	static void AddTask(Task *_t);

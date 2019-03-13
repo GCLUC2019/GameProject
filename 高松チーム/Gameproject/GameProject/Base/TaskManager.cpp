@@ -24,7 +24,7 @@ void TaskManager::AddTask(Task * _t)
 		}
 
 		t->SetNext(_t);
-		_t->SetPrev(_t);
+		_t->SetPrev(t);
 		SetLast(_t);
 	}
 
@@ -118,6 +118,14 @@ void TaskManager::CheckKillAll()
             //ŽŸ‚Ìƒ^ƒXƒN
             k = k->GetNext();
     } while (k);
+
+	//k = mp_head;
+	//while (k->GetPrev() != nullptr)
+	//	k = k->GetPrev();
+	//mp_head = k;
+	//while (k->GetNext() != nullptr)
+	//	k = k->GetNext();
+	//mp_last = k;
 }
 
 void TaskManager::Search()
