@@ -50,6 +50,28 @@ void TaskManager::DrawAll()
 	}
 }
 
+void TaskManager::HitCheckAll()
+{
+	//Task* d = mp_head;
+	//Task* d2 = d->GetNext();
+	////総当たりならこれでいける？
+	//while (d) {
+	//	while (d2) {
+	//		d->HitCheck(d2);
+	//		d2->GetNext();
+	//	}		
+	//	d = d->GetNext();
+	//}
+
+	Task* d = mp_head;
+	Task* d2 = d->GetNext();
+
+	while (d) {
+		d->HitCheck(d2);
+		d = d->GetNext();
+	}
+}
+
 void TaskManager::Kill(Task * _t)
 {
 	Task* k = mp_head;
@@ -60,6 +82,31 @@ void TaskManager::KillAll()
 {
 	Task* k = mp_head;
 	
+}
+/*
+作成　田中
+*/
+void TaskManager::CheckKillAll()
+{
+    Task* k = mp_head;
+    do {
+        //キルフラグがtrueなら
+        if (k->m_kill_flg) {
+            //前後を繋ぎなおす
+            Task*prev = k->GetPrev();
+            Task*next = k->GetNext();
+            prev->SetNext(next);
+            next->SetPrev(prev);
+            //削除
+            delete k;
+            //次のタスク
+            k = next;
+        }
+        else
+            //次のタスク
+            k = k->GetNext();
+    } 
+    while (k);
 }
 
 void TaskManager::Search()
@@ -169,6 +216,20 @@ void TaskManager::ReLink(bool _fb, Task*_t1, Task * _t2)
 
 		t2->SetNext(t1);
 	}
+}
+/*担当
+田中*/
+Task * TaskManager::FindObject(int _type)
+{
+    Task*t = mp_head;
+    while (t->GetType() != _type) {
+
+        if (t->GetNext())
+            t = t->GetNext();
+        else
+            return nullptr;
+    }
+    return t;
 }
 
 TaskManager * TaskManager::GetInstance()

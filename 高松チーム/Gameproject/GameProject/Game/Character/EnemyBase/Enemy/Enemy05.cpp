@@ -1,34 +1,72 @@
 #include "Enemy05.h"
 #include "../../Anim/AnimData.h"
 #include "../GameProject/Game/Resource/Resource.h"
+#include "../../CharacterBase.h"
+#include "../../Player.h"
+#define MOVE_ 360
 
-Enemy05::Enemy05() : EnemyBase(eEnemy05)
+#define MOVE_ 360
+
+Enemy05::Enemy05(CVector2D& _pos) : EnemyBase(eEnemy05),
+m_move_cnt(0)
 {
 	//‰Šú‰»
 	m_img = COPY_RESOURCE("Enemy05", CAnimImage*);
 	m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
 	m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
 
-	m_pos = CVector2D(100, 100);
+	//m_rect = 
+	m_pos = _pos;
 	m_vec = CVector2D(0, 0);
 	m_hp = 100;
-	m_cnt = 0;
+	m_img.SetFlipH(m_flip);
+	m_move_cnt = 0;
 	m_state = eMove;
 }
 
 void Enemy05::Move()
 {
+	MoveManagement(0);
 	m_img.ChangeAnimation(eEMove05);
-	if(m_img.CheckAnimationEnd())
-	m_state = eMove;
+}
+
+void Enemy05::MoveManagement(int _type)
+{
+	switch (_type) {
+	case 0:
+		//‰¼ˆÚ“®
+		++m_move_cnt;
+		if (m_move_cnt <= MOVE_ / 2) {
+			m_vec.x = 2.0f;
+			m_flip = true;
+		}
+		else if (m_move_cnt >= MOVE_/2) {
+			m_vec.x = -2.0f;
+			m_flip = false;
+		}
+		if (m_move_cnt >= MOVE_) {
+			m_vec.x = 0;
+			m_move_cnt = 0;
+			m_state = eAttack;
+			
+		}
+		break;
+
+	case 1:
+		break;
+	case 2:
+		break;
+	default:
+		break;
+	}
 }
 
 void Enemy05::Attack()
 {
-	m_cnt = 0;
 	m_img.ChangeAnimation(eEAttack05,false);
 	if (m_img.CheckAnimationEnd())
-	m_state = eMove;
+		m_state = eMove;
+	
 }
 
 void Enemy05::Damage()
@@ -58,11 +96,6 @@ void Enemy05::Update()
 		break;
 	}
 
-	//‰¼UŒ‚
-	++m_cnt;
-	if (m_cnt >= 300) {
-		m_state = eAttack;
-	}
 
 	m_pos += m_vec;
 	MoveControl();
@@ -75,5 +108,17 @@ void Enemy05::Draw()
 	m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
 	m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
 	m_img.SetPos(m_pos);
+	m_img.SetFlipH(m_flip);
 	m_img.Draw();
+}
+
+void Enemy05::HitCheck(Task * _t)
+{
+	switch (_t->GetType()) {
+	case ePlayer:
+		printf("player‚ğæ“¾");
+		break;
+	default:
+		break;
+	}
 }

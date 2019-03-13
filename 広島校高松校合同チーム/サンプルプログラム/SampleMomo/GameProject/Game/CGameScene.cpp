@@ -28,18 +28,20 @@ void CGameScene::Setup()
 {
 
 	for (int i = 0; i < 6; i++) {
-		AddGameSceneObject(new CCommonObject(nullptr, CVector3D(1280 * i, 0, 0), CVector2D(0, 0), CVector3D(1280, 1, 720)));
+		//重力ベクトルが大きくなってもすり抜けないように厚めに床に判定を張っておく
+		AddGameSceneObject(new CCommonObject(nullptr, CVector3D(1280 * i,10000, 0), CVector2D(0, 0), CVector3D(1280, 1 + 10000, 720)));
 		AddGameSceneObject(new CObjectImage(GET_RESOURCE("Stage_Background_0", CImage*), CVector3D(1280 * i, 0, 0), CVector2D(1280, 720), -1));
 	}
 
-	SetGameSceneLimitPos(CVector3D(1280*6,720.0f,720.0f));
+	//AddGameSceneObject(new CCommonObject(nullptr, CVector3D(600, 0, 600), CVector2D(0, 0), CVector3D(50, 50, 50)));
+
+	SetGameSceneLimitPosMin(CVector3D(100.0f, 0.0f, 340.0f));
+
+	SetGameSceneLimitPosMax(CVector3D(1280.0f*6,720.0f,720.0f));
 
 	CCharacterPlayer* player_p = new CCharacterPlayer();
 	AddGameSceneObject(player_p);
-
-	player_p->SetSize(400, 400);
-	player_p->SetPos(300, -300, 300);
-	player_p->SetRads(10, 10, 10);
+	player_p->SetPos(300, -300, 500);
 
 
 	CCharacterEnemy* enemy_p = new CCharacterEnemy();
@@ -60,6 +62,10 @@ void CGameScene::ClearGameSceneObject()
 		m_game_scene_object_p[i] = nullptr;
 	}
 	m_game_scene_object_num = 0;
+}
+
+void CGameScene::WaveDone()
+{
 }
 
 CGameScene * CGameScene::GetInstance()

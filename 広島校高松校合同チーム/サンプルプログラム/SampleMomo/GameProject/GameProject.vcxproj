@@ -132,33 +132,41 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Game\CBar.h" />
     <ClInclude Include="Game\CCharacter.h" />
+    <ClInclude Include="Game\CCharacterBoss.h" />
     <ClInclude Include="Game\CCharacterEnemy.h" />
     <ClInclude Include="Game\CCharacterPlayer.h" />
     <ClInclude Include="Game\CCommonObject.h" />
     <ClInclude Include="Game\CGameScene.h" />
     <ClInclude Include="Game\CLoadResorce.h" />
     <ClInclude Include="Game\CStoryScene.h" />
+    <ClInclude Include="Game\CSubWeapon.h" />
     <ClInclude Include="Game\CTitle.h" />
     <ClInclude Include="Game\CObject.h" />
     <ClInclude Include="Game\CObjectImage.h" />
     <ClInclude Include="Game\CSetupGame.h" />
+    <ClInclude Include="Game\CGameSceneWave.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Task\Task.h" />
     <ClInclude Include="Task\TaskManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Game\CBar.cpp" />
     <ClCompile Include="Game\CCharacter.cpp" />
+    <ClCompile Include="Game\CCharacterBoss.cpp" />
     <ClCompile Include="Game\CCharacterEnemy.cpp" />
     <ClCompile Include="Game\CCharacterPlayer.cpp" />
     <ClCompile Include="Game\CCommonObject.cpp" />
     <ClCompile Include="Game\CGameScene.cpp" />
+    <ClCompile Include="Game\CGameSceneWave.cpp" />
     <ClCompile Include="Game\CLoadResorce.cpp" />
     <ClCompile Include="Game\CObject.cpp" />
     <ClCompile Include="Game\CObjectImage.cpp" />
     <ClCompile Include="Game\CSetupGame.cpp" />
     <ClCompile Include="Game\CStoryScene.cpp" />
+    <ClCompile Include="Game\CSubWeapon.cpp" />
     <ClCompile Include="Game\CTitle.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Task\Task.cpp" />
