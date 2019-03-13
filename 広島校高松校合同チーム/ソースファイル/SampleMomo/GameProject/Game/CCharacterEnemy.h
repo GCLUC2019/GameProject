@@ -34,13 +34,18 @@ enum {	//アニメーションの画像を入れる番号
 
 class CCharacterEnemy : public CCharacter {
 private:
-	enum {
+	enum {	//エネミーの状態
 		eEnemyStateIdle,	//待機状態
 		eEnemyStateMove,	//移動状態
 		eEnemyStateAttack,	//攻撃状態
 		eEnemyStateDamage	//ダメージ状態
 	};
-	int t;   //仮のタイプで画像を切り替えています：後日修正
+	enum {  //エネミーのタイプ
+		eEnemyTypeSpear,	//槍
+		eEnemyTypeAxe,		//斧
+		eEnemyTypeGun		//銃
+	};
+	int m_enemy_type;        //エネミーのタイプです
 	int m_enemy_state;       //エネミーの状態
 	int m_old_enemy_state;   //エネミーがダメージを受けた時に記憶する直前の状態
 	int m_AI_cnt;            //状態が変化するまでのカウント
