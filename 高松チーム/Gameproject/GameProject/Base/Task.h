@@ -8,12 +8,12 @@ class Task {
 private:
 	int m_updateprio;
 	int m_drawprio;
-	int m_type;
     bool m_kill_flg=false;
 	Task *mp_next = nullptr;
 	Task *mp_prev = nullptr;
 
-
+protected:
+	int m_type;
 public:
 	Task(int _type);
 	virtual void Update();
@@ -27,7 +27,7 @@ public:
     void SetKill() {
         m_kill_flg = true;
     }
-	int GetType() { return m_type; }
+	virtual int GetType() { return m_type; }
 	friend class TaskManager;
 
 };
