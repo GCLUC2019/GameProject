@@ -1,5 +1,6 @@
 #include "CCharacterPlayer.h"
 #include "../Global.h"
+#include "CGameScene.h"
 
 #define PLAYER_SPEED (3.0f)
 
@@ -117,6 +118,13 @@ void CCharacterPlayer::InputAttack()
 		printf("攻撃\n");
 		m_is_attacking = true;
 		m_attacking_count = PLAYER_ATTACK_FRAME;
+
+
+		for (int i = 0; i < MEMORY_HIT_ATTACKED_ENEMY_MAX; i++) {
+			m_memory_hit_attacked_enemy_p[i] = nullptr;
+			
+		}
+		m_memory_hit_attacked_enemy_num = 0;
 	}
 }
 
@@ -129,7 +137,12 @@ void CCharacterPlayer::Update()
 	
 	//もし着地モーション等を再生してないなら
 	if (m_will_play_anim_id == ePlayerAnimIdLand) SetWillPlayAnim(ePlayerAnimIdLand);
+	if (m_will_play_anim_id == ePlayerAnimIdDamage && m_damage_anim_count-- > 0) {
+		SetWillPlayAnim(ePlayerAnimIdDamage);
+		printf("ダメージモーション中 %d\n", m_damage_anim_count);
+	}
 	else m_will_play_anim_id = ePlayerAnimIdIdle;
+
 	
 	m_is_dashing = false;
 	m_speed = PLAYER_SPEED;
@@ -210,9 +223,15 @@ void CCharacterPlayer::Landing()
 void CCharacterPlayer::Attacking()
 {
 	if (m_is_attacking == false) return;
-	if (m_attacking_count-- <= 0) {
-		m_is_attacking = false;
+	m_attacking_count--;
 
+
+	if (m_attacking_count <= 0) {
+		m_is_attacking = false;
+	}
+
+
+	else if (m_attacking_count <= PLAYER_ATTACK_HIT_FRAME_START && m_attacking_count > PLAYER_ATTACK_HIT_FRAME_END) {
 		//攻撃判定を発生させる。
 
 		//生成されている全てのエネミーのポインタを取得
@@ -220,12 +239,18 @@ void CCharacterPlayer::Attacking()
 
 		int i = 0;
 		while (true) {
-			if (enemy_array[i] == nullptr) break;
+			if (enemy_array[i] == nullptr) {
+				break;
+			}
+
 			CCharacter* enemy_p = dynamic_cast<CCharacter*>(enemy_array[i]);
 			if (enemy_p == nullptr) {
 				i++;
 				continue;
 			}
+
+
+
 			//printf("エネミーいたよね\n");
 
 			//位置関係を取得
@@ -245,6 +270,8 @@ void CCharacterPlayer::Attacking()
 			//攻撃範囲
 			CVector3D attack_length = PLAYER_ATTACK_LENGTH;
 
+
+			//printf("攻撃!!!!\n");
 			//敵が左側にいて自分が左向き
 			//もしくは敵が右側にいて、自分が右向きなら
 			if (length.x <= 0.0f && m_is_flip == true
@@ -253,10 +280,26 @@ void CCharacterPlayer::Attacking()
 
 				//攻撃範囲内に敵がいるなら
 				if (length_abs.x <= attack_length.x&& length_abs.y <= attack_length.y&&length_abs.z <= attack_length.z) {
-					//当たっているので
-					enemy_p->ReceiveAttack();
-					*enemy_p->GetHitPointPointer() -= PLAYER_ATTACK_POWER;
-					printf("enemy hp %lf\n", *enemy_p->GetHitPointPointer());
+					
+					
+					bool is_aready_hit = false;
+					//当たっているので攻撃判定が既にされているオブジェクトかどうかチェック
+					for (int i = 0; i < m_memory_hit_attacked_enemy_num; i++) {
+						if (m_memory_hit_attacked_enemy_p[i] == enemy_p) {
+							is_aready_hit = true;
+							printf("もう攻撃していたのでなにもしない\n");
+							break;
+						}
+					}
+					
+					
+					//まだ攻撃を当たった扱いになってないなら攻撃判定を行う
+					if (is_aready_hit == false) {
+						enemy_p->ReceiveAttack();
+						*enemy_p->GetHitPointPointer() -= PLAYER_ATTACK_POWER;
+						printf("enemy hp %lf\n", *enemy_p->GetHitPointPointer());
+						m_memory_hit_attacked_enemy_p[m_memory_hit_attacked_enemy_num++] = enemy_p;
+					}
 				}
 
 			}
@@ -334,31 +377,56 @@ void CCharacterPlayer::AdjAnim()
 void CCharacterPlayer::CalcScroll()
 {
 	//画面上の座標
-	//CVector2D screen_pos = CVector2D(m_pos.x,m_pos.z + m_pos.y);
-	//sscreen_pos -= GetScroll();
 
 	CVector2D scroll_pos = GetScroll();
-
-
-	//スクロールの中に居る場合なにもしない
-
-
-	if (m_pos.x >= scroll_pos.x + 1280.0f) {
-		SetScroll(CVector2D(m_pos.x - 1280.0f, 0));
-	}
-	else if (m_pos.x <= scroll_pos.x) {
-		SetScroll(CVector2D(m_pos.x,0));
-	}
-
-
 	
-	//if (scroll_pos.x > 0.0f) SetScroll(CVector2D(m_pos.x - 1280, 0));
+	//	float offset_x = -100.0f;
+	float offset_x = - 120.0f;
 
-	//もし画面端にプレイヤーがいるならスクロールする
-	//SetScroll(CVector2D(m_pos.x - 100,0));
+	CVector2D calc_scroll_pos = GetScroll();
+
+	if (m_pos.x >= scroll_pos.x + 1280.0f + offset_x) {
+		calc_scroll_pos.x = m_pos.x - 1280.0f - offset_x;
+	}
+	else if (m_pos.x <= scroll_pos.x - offset_x) {
+		calc_scroll_pos.x = m_pos.x + offset_x;
+	}
+	
+	
+	if (calc_scroll_pos.x >= CGameScene::GetInstance()->GetGameSceneLimitPosMax().x  + offset_x) {
+		calc_scroll_pos.x = CGameScene::GetInstance()->GetGameSceneLimitPosMax().x - offset_x;
+	}
+
+	//スクロール限界値を設定
+	double max_x = CGameScene::GetInstance()->GetGameSceneLimitPosMax().x - 1280.0f;
+	if (calc_scroll_pos.x > max_x) calc_scroll_pos.x = max_x;
+	//printf("max_x %lf calc_scroll_pos.x %lf\n", max_x,calc_scroll_pos.x);
+
+	//Y軸スクロール
+	float offset_y = -200.0f;
+
+	double draw_pos_y = m_pos.y + m_pos.z;
+
+	if (draw_pos_y <= scroll_pos.y - offset_y) {
+		calc_scroll_pos.y = draw_pos_y + offset_y;
+	}
+	else if (scroll_pos.y < 0) {
+		calc_scroll_pos.y = draw_pos_y + offset_y;
+	}
+
+	if (calc_scroll_pos.y > 0.0f) calc_scroll_pos.y = 0.0f;
+
+	//printf("calc_scroll_pos.y %lf\n", calc_scroll_pos.y);
+
+
+
+
+	SetScroll(calc_scroll_pos);
+
 }
 
 void CCharacterPlayer::ReceiveAttack()
 {
 	SetWillPlayAnim(ePlayerAnimIdDamage);
+	m_damage_anim_count = PLAYER_DAMAGE_ANIM_FRAME;
 }
