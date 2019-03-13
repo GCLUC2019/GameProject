@@ -16,7 +16,7 @@ static TexAnim PlayerIdle[] = {
 };
 
 static TexAnim PlayerLongAttack[] = {
-	{10,5},
+	{10,30},
 {11,5},
 };
 

@@ -2,6 +2,7 @@
 #include "../GameProject/Game/Resource/Resource.h"
 #include "../Character/Anim/AnimDataPlayer.h"
 #include <stdio.h>
+#include"Effect/PlayerEffect.h"
 #define GRAVITY -4//èdóÕ
 #define DEP_N 540//âúçsèdêŒ
 #define JUMP_SPD 50
@@ -128,13 +129,13 @@ void Player::Attack()
 	switch (m_state)
 	{
 	case eAttack01:
-		if (k <= 10) {
+		if (k == 10) {
 			if (m_flip)
-				Utility::DrawQuad(m_pos + CVector2D(25, 0), CVector2D(50, 50), CVector4D(1.0f, 0, 0, 1));
+				TaskManager::GetInstance()->AddTask(new PlayerEffectShortAttack01(m_pos + CVector2D(25, -20)));
 			else
-				Utility::DrawQuad(m_pos - CVector2D(25, 0), CVector2D(50, 50), CVector4D(1.0f, 0, 0, 1));
+				TaskManager::GetInstance()->AddTask(new PlayerEffectShortAttack01(m_pos - CVector2D(25, -20)));
 		}
-		if (CInput::GetState(0, CInput::ePush, CInput::eButton2)&&k>10) {
+		if (CInput::GetState(0, CInput::ePush, CInput::eButton2) && k > 11) {
 			m_state = eAttack02;
 			k = 0;
 		}
@@ -150,13 +151,13 @@ void Player::Attack()
 		}
 		break;
 	case eAttack02:
-		if (k <= 30) {
+		if (k == 10) {
 			if (m_flip)
-				Utility::DrawQuad(m_pos + CVector2D(25, 0), CVector2D(50, 50), CVector4D(1.0f, 0, 1, 1));
+				TaskManager::GetInstance()->AddTask(new PlayerEffectShortAttack02(m_pos + CVector2D(25, -20)));
 			else
-				Utility::DrawQuad(m_pos - CVector2D(25, 0), CVector2D(50, 50), CVector4D(1.0f, 0, 1, 1));
+				TaskManager::GetInstance()->AddTask(new PlayerEffectShortAttack02(m_pos - CVector2D(25, -20)));
 		}
-		if (CInput::GetState(0, CInput::ePush, CInput::eButton2) && k>10) {
+		if (CInput::GetState(0, CInput::ePush, CInput::eButton2) && k > 11) {
 			m_state = eAttack03;
 			k = 0;
 		}
@@ -172,11 +173,11 @@ void Player::Attack()
 		}
 		break;
 	case eAttack03:
-		if (k <= 30) {
+		if (k == 10) {
 			if (m_flip)
-				Utility::DrawQuad(m_pos + CVector2D(25, 0), CVector2D(50, 50), CVector4D(1.0f, 1, 0, 1));
+				TaskManager::GetInstance()->AddTask(new PlayerEffectShortAttack03(m_pos + CVector2D(25, -20)));
 			else
-				Utility::DrawQuad(m_pos - CVector2D(25, 0), CVector2D(50, 50), CVector4D(1.0f, 1, 0, 1));
+				TaskManager::GetInstance()->AddTask(new PlayerEffectShortAttack03(m_pos - CVector2D(25, -20)));
 		}
 		if (CInput::GetState(0, CInput::eHold, CInput::eButton1)) {
 			k = 0;
@@ -184,17 +185,17 @@ void Player::Attack()
 			m_squat_flg = true;
 			m_state = eSquat;
 		}
-		if (k >= 60 || m_squat_flg) {
+		if (k >= 30 || m_squat_flg) {
 			k = 0;
 			m_attack_flg = false;
 		}
 		break;
 	case eAttack04:
-		if (k <= 3) {
+		if (k == 30) {
 			if (m_flip)
-				Utility::DrawQuad(m_pos + CVector2D(25, 0), CVector2D(100, 100), CVector4D(1.0f, 1, 1, 1));
+				TaskManager::GetInstance()->AddTask(new PlayerEffectLongAttack(m_pos));
 			else
-				Utility::DrawQuad(m_pos - CVector2D(25, 0), CVector2D(100, 100), CVector4D(1.0f, 1, 1, 1));
+				TaskManager::GetInstance()->AddTask(new PlayerEffectLongAttack(m_pos));
 		}
 		if (CInput::GetState(0, CInput::eHold, CInput::eButton1)) {
 			k = 0;
@@ -222,7 +223,7 @@ void Player::Attack()
 
 void Player::Damage(int _damage)
 {
-	if(m_damage_flg)
+	if(m_damage_flg||m_special_flg)
 		return;
 	if (m_HP <= 0) {
 		m_state = eDeath;
@@ -234,6 +235,23 @@ void Player::Damage(int _damage)
 
 void Player::Special()
 {
+	static int time = 300;
+	if (time == 300) {
+		TaskManager::GetInstance()->AddTask(new PlayerEffectSpecialAttack(m_pos));
+		m_state = eSpecial;
+		SetAnim();
+	}
+
+
+
+	time--;
+	if (time <= 0) {
+		time = 300;
+		m_special_flg = false;
+
+	}
+
+
 }
 
 void Player::SetAnim()
@@ -300,10 +318,15 @@ void Player::Update()
 	if (m_HP < 0)
 		return;
 	m_img.SetColor(1, 1, 1, 1);
-	if (m_special_flg)
-		Special();
+	if (CInput::GetState(0, CInput::eHold, CInput::eButton5) && m_attack_flg == false)
+		m_special_flg = true;
 	m_state_old = m_state;
 	m_pos_old = m_pos;
+	if (m_special_flg) {
+		Special();
+		return;
+	}
+		
 	if (m_damage_flg)
 		DamageState();
 	else
