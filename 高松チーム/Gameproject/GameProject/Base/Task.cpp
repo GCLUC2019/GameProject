@@ -17,7 +17,7 @@ void Task::HitCheck(Task * _t)
 
 void Task::Draw()
 {
-	printf("Task Draw\n");
+	//printf("Task Draw\n");
 }
 
 
