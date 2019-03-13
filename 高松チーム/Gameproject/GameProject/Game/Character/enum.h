@@ -17,6 +17,7 @@ const enum {
 	eEnemyBaseManager,
 
 	eItem,
+	eItemBox,
 
 	ePlayer,
 	ePEffectLongAttack,
