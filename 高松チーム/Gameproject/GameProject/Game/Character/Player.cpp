@@ -131,9 +131,9 @@ void Player::Attack()
 	case eAttack01:
 		if (k == 10) {
 			if (m_flip)
-				TaskManager::GetInstance()->AddTask(new PlayerEffectShortAttack01(m_pos + CVector2D(25, -20)));
+				TaskManager::GetInstance()->AddTask(new PlayerEffectShortAttack01(m_pos + CVector2D(25, -20),m_flip));
 			else
-				TaskManager::GetInstance()->AddTask(new PlayerEffectShortAttack01(m_pos - CVector2D(25, -20)));
+				TaskManager::GetInstance()->AddTask(new PlayerEffectShortAttack01(m_pos - CVector2D(25, -20), m_flip));
 		}
 		if (CInput::GetState(0, CInput::ePush, CInput::eButton2) && k > 11) {
 			m_state = eAttack02;
@@ -153,9 +153,9 @@ void Player::Attack()
 	case eAttack02:
 		if (k == 10) {
 			if (m_flip)
-				TaskManager::GetInstance()->AddTask(new PlayerEffectShortAttack02(m_pos + CVector2D(25, -20)));
+				TaskManager::GetInstance()->AddTask(new PlayerEffectShortAttack02(m_pos + CVector2D(25, -20), m_flip));
 			else
-				TaskManager::GetInstance()->AddTask(new PlayerEffectShortAttack02(m_pos - CVector2D(25, -20)));
+				TaskManager::GetInstance()->AddTask(new PlayerEffectShortAttack02(m_pos - CVector2D(25, -20), m_flip));
 		}
 		if (CInput::GetState(0, CInput::ePush, CInput::eButton2) && k > 11) {
 			m_state = eAttack03;
@@ -175,9 +175,9 @@ void Player::Attack()
 	case eAttack03:
 		if (k == 10) {
 			if (m_flip)
-				TaskManager::GetInstance()->AddTask(new PlayerEffectShortAttack03(m_pos + CVector2D(25, -20)));
+				TaskManager::GetInstance()->AddTask(new PlayerEffectShortAttack03(m_pos + CVector2D(25, -20), m_flip));
 			else
-				TaskManager::GetInstance()->AddTask(new PlayerEffectShortAttack03(m_pos - CVector2D(25, -20)));
+				TaskManager::GetInstance()->AddTask(new PlayerEffectShortAttack03(m_pos - CVector2D(25, -20), m_flip));
 		}
 		if (CInput::GetState(0, CInput::eHold, CInput::eButton1)) {
 			k = 0;
@@ -193,9 +193,9 @@ void Player::Attack()
 	case eAttack04:
 		if (k == 30) {
 			if (m_flip)
-				TaskManager::GetInstance()->AddTask(new PlayerEffectLongAttack(m_pos));
+				TaskManager::GetInstance()->AddTask(new PlayerEffectLongAttack((m_pos),m_flip));
 			else
-				TaskManager::GetInstance()->AddTask(new PlayerEffectLongAttack(m_pos));
+				TaskManager::GetInstance()->AddTask(new PlayerEffectLongAttack((m_pos), m_flip));
 		}
 		if (CInput::GetState(0, CInput::eHold, CInput::eButton1)) {
 			k = 0;

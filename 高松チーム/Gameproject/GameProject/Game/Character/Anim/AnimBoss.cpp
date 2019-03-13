@@ -109,6 +109,9 @@ static TexAnim BossLazerEffect[] = {
 { 24,3 },
 { 25,3 },
 { 26,3 },
+{ 27,3 },
+{ 28,3 },
+{ 29,3 },
 };
 
 TexAnimData BossLazerEffectAnimData[] = {

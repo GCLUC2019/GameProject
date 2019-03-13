@@ -15,6 +15,30 @@ CCharacterEnemy::CCharacterEnemy() :CCharacter(eTaskIdEnemy, 0)
 	ADD_RESOURCE("GunEnemy_Idle_2", CImage::LoadImage("Enemy_Gun_idle2.png"));
 	ADD_RESOURCE("GunEnemy_Idle_3", CImage::LoadImage("Enemy_Gun_idle3.png"));
 	ADD_RESOURCE("GunEnemy_Idle_4", CImage::LoadImage("Enemy_Gun_idle4.png"));
+	ADD_RESOURCE("SpearEnemy_Move_1", CImage::LoadImage("Enemy_Spear_move1.png"));
+	ADD_RESOURCE("SpearEnemy_Move_2", CImage::LoadImage("Enemy_Spear_move2.png"));
+	ADD_RESOURCE("SpearEnemy_Move_3", CImage::LoadImage("Enemy_Spear_move3.png"));
+	ADD_RESOURCE("SpearEnemy_Move_4", CImage::LoadImage("Enemy_Spear_move4.png"));
+	ADD_RESOURCE("SpearEnemy_Move_5", CImage::LoadImage("Enemy_Spear_move5.png"));
+	ADD_RESOURCE("SpearEnemy_Move_6", CImage::LoadImage("Enemy_Spear_move6.png"));
+	ADD_RESOURCE("SpearEnemy_Move_7", CImage::LoadImage("Enemy_Spear_move7.png"));
+	ADD_RESOURCE("SpearEnemy_Move_8", CImage::LoadImage("Enemy_Spear_move8.png"));
+	ADD_RESOURCE("AxeEnemy_Move_1", CImage::LoadImage("Enemy_Axe_move1.png"));
+	ADD_RESOURCE("AxeEnemy_Move_2", CImage::LoadImage("Enemy_Axe_move2.png"));
+	ADD_RESOURCE("AxeEnemy_Move_3", CImage::LoadImage("Enemy_Axe_move3.png"));
+	ADD_RESOURCE("AxeEnemy_Move_4", CImage::LoadImage("Enemy_Axe_move4.png"));
+	ADD_RESOURCE("AxeEnemy_Move_5", CImage::LoadImage("Enemy_Axe_move5.png"));
+	ADD_RESOURCE("AxeEnemy_Move_6", CImage::LoadImage("Enemy_Axe_move6.png"));
+	ADD_RESOURCE("AxeEnemy_Move_7", CImage::LoadImage("Enemy_Axe_move7.png"));
+	ADD_RESOURCE("AxeEnemy_Move_8", CImage::LoadImage("Enemy_Axe_move8.png"));
+	ADD_RESOURCE("GunEnemy_Move_1", CImage::LoadImage("Enemy_Gun_move1.png"));
+	ADD_RESOURCE("GunEnemy_Move_2", CImage::LoadImage("Enemy_Gun_move2.png"));
+	ADD_RESOURCE("GunEnemy_Move_3", CImage::LoadImage("Enemy_Gun_move3.png"));
+	ADD_RESOURCE("GunEnemy_Move_4", CImage::LoadImage("Enemy_Gun_move4.png"));
+	ADD_RESOURCE("GunEnemy_Move_5", CImage::LoadImage("Enemy_Gun_move5.png"));
+	ADD_RESOURCE("GunEnemy_Move_6", CImage::LoadImage("Enemy_Gun_move6.png"));
+	ADD_RESOURCE("GunEnemy_Move_7", CImage::LoadImage("Enemy_Gun_move7.png"));
+	ADD_RESOURCE("GunEnemy_Move_8", CImage::LoadImage("Enemy_Gun_move8.png"));
 	ADD_RESOURCE("Enemy_Move_2", CImage::LoadImage("Enemy_move2.png"));
 	ADD_RESOURCE("Enemy_Move_3", CImage::LoadImage("Enemy_move3.png"));
 	ADD_RESOURCE("Enemy_Move_4", CImage::LoadImage("Enemy_move4.png"));
@@ -24,7 +48,7 @@ CCharacterEnemy::CCharacterEnemy() :CCharacter(eTaskIdEnemy, 0)
 	ADD_RESOURCE("Enemy_Move_8", CImage::LoadImage("Enemy_move8.png"));
 	ADD_RESOURCE("Enemy_Attack_2", CImage::LoadImage("Enemy_attack2.png"));
 
-	m_enemy_type = eEnemyTypeSpear;		//このタイプでエネミーの種類が変わります
+	m_enemy_type = eEnemyTypeGun;		//このタイプでエネミーの種類が変わります
 	m_enemy_state = eEnemyStateIdle;
 
 	m_vec = CVector3D(0, 0, 0);
@@ -124,31 +148,51 @@ void CCharacterEnemy::LoadAnimImage()
 			m_anim_image_p[eEnemyAnimIdle2] = GET_RESOURCE("SpearEnemy_Idle_2", CImage*);
 			m_anim_image_p[eEnemyAnimIdle3] = GET_RESOURCE("SpearEnemy_Idle_3", CImage*);
 			m_anim_image_p[eEnemyAnimIdle4] = GET_RESOURCE("SpearEnemy_Idle_4", CImage*);
+
+			m_anim_image_p[eEnemyAnimMove1] = GET_RESOURCE("SpearEnemy_Move_1", CImage*);
+			m_anim_image_p[eEnemyAnimMove2] = GET_RESOURCE("SpearEnemy_Move_2", CImage*);
+			m_anim_image_p[eEnemyAnimMove3] = GET_RESOURCE("SpearEnemy_Move_3", CImage*);
+			m_anim_image_p[eEnemyAnimMove4] = GET_RESOURCE("SpearEnemy_Move_4", CImage*);
+			m_anim_image_p[eEnemyAnimMove5] = GET_RESOURCE("SpearEnemy_Move_5", CImage*);
+			m_anim_image_p[eEnemyAnimMove6] = GET_RESOURCE("SpearEnemy_Move_6", CImage*);
+			m_anim_image_p[eEnemyAnimMove7] = GET_RESOURCE("SpearEnemy_Move_7", CImage*);
+			m_anim_image_p[eEnemyAnimMove8] = GET_RESOURCE("SpearEnemy_Move_8", CImage*);
 			break;
 		case eEnemyTypeAxe:
 			m_anim_image_p[eEnemyAnimIdle1] = GET_RESOURCE("AxeEnemy_Idle_1", CImage*);
 			m_anim_image_p[eEnemyAnimIdle2] = GET_RESOURCE("AxeEnemy_Idle_2", CImage*);
 			m_anim_image_p[eEnemyAnimIdle3] = GET_RESOURCE("AxeEnemy_Idle_3", CImage*);
 			m_anim_image_p[eEnemyAnimIdle4] = GET_RESOURCE("AxeEnemy_Idle_4", CImage*);
+
+			m_anim_image_p[eEnemyAnimMove1] = GET_RESOURCE("AxeEnemy_Move_1", CImage*);
+			m_anim_image_p[eEnemyAnimMove2] = GET_RESOURCE("AxeEnemy_Move_2", CImage*);
+			m_anim_image_p[eEnemyAnimMove3] = GET_RESOURCE("AxeEnemy_Move_3", CImage*);
+			m_anim_image_p[eEnemyAnimMove4] = GET_RESOURCE("AxeEnemy_Move_4", CImage*);
+			m_anim_image_p[eEnemyAnimMove5] = GET_RESOURCE("AxeEnemy_Move_5", CImage*);
+			m_anim_image_p[eEnemyAnimMove6] = GET_RESOURCE("AxeEnemy_Move_6", CImage*);
+			m_anim_image_p[eEnemyAnimMove7] = GET_RESOURCE("AxeEnemy_Move_7", CImage*);
+			m_anim_image_p[eEnemyAnimMove8] = GET_RESOURCE("AxeEnemy_Move_8", CImage*);
 			break;
 		case eEnemyTypeGun:
 			m_anim_image_p[eEnemyAnimIdle1] = GET_RESOURCE("GunEnemy_Idle_1", CImage*);
 			m_anim_image_p[eEnemyAnimIdle2] = GET_RESOURCE("GunEnemy_Idle_2", CImage*);
 			m_anim_image_p[eEnemyAnimIdle3] = GET_RESOURCE("GunEnemy_Idle_3", CImage*);
 			m_anim_image_p[eEnemyAnimIdle4] = GET_RESOURCE("GunEnemy_Idle_4", CImage*);
+
+			m_anim_image_p[eEnemyAnimMove1] = GET_RESOURCE("GunEnemy_Move_1", CImage*);
+			m_anim_image_p[eEnemyAnimMove2] = GET_RESOURCE("GunEnemy_Move_2", CImage*);
+			m_anim_image_p[eEnemyAnimMove3] = GET_RESOURCE("GunEnemy_Move_3", CImage*);
+			m_anim_image_p[eEnemyAnimMove4] = GET_RESOURCE("GunEnemy_Move_4", CImage*);
+			m_anim_image_p[eEnemyAnimMove5] = GET_RESOURCE("GunEnemy_Move_5", CImage*);
+			m_anim_image_p[eEnemyAnimMove6] = GET_RESOURCE("GunEnemy_Move_6", CImage*);
+			m_anim_image_p[eEnemyAnimMove7] = GET_RESOURCE("GunEnemy_Move_7", CImage*);
+			m_anim_image_p[eEnemyAnimMove8] = GET_RESOURCE("GunEnemy_Move_8", CImage*);
 			break;
 		default:
 			break;
 		}
 	
-	m_anim_image_p[eEnemyAnimMove1] = GET_RESOURCE("Enemy_Move_0", CImage*);
-	m_anim_image_p[eEnemyAnimMove2] = GET_RESOURCE("Enemy_Move_2", CImage*);
-	m_anim_image_p[eEnemyAnimMove3] = GET_RESOURCE("Enemy_Move_3", CImage*);
-	m_anim_image_p[eEnemyAnimMove4] = GET_RESOURCE("Enemy_Move_4", CImage*);
-	m_anim_image_p[eEnemyAnimMove5] = GET_RESOURCE("Enemy_Move_5", CImage*);
-	m_anim_image_p[eEnemyAnimMove6] = GET_RESOURCE("Enemy_Move_6", CImage*);
-	m_anim_image_p[eEnemyAnimMove7] = GET_RESOURCE("Enemy_Move_7", CImage*);
-	m_anim_image_p[eEnemyAnimMove8] = GET_RESOURCE("Enemy_Move_8", CImage*);
+	
 	m_anim_image_p[eEnemyAnimAttack1] = GET_RESOURCE("Enemy_Attack_0", CImage*);
 	m_anim_image_p[eEnemyAnimAttack2] = GET_RESOURCE("Enemy_Attack_2", CImage*);
 	m_anim_image_p[eEnemyAnimDamage1] = GET_RESOURCE("Enemy_Damage_0", CImage*);
