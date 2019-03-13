@@ -56,6 +56,12 @@
     <ClCompile Include="Game\CCharacterBoss.cpp">
       <Filter>Game\Object\Character</Filter>
     </ClCompile>
+    <ClCompile Include="Game\CDropItem.cpp">
+      <Filter>Game\Object\DropItem</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CGameSceneObject.cpp">
+      <Filter>Game\Object\GameSceneObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Global.h" />
@@ -117,6 +123,9 @@
     <ClInclude Include="Game\CSubWeapon.h">
       <Filter>Game\Object\Interface</Filter>
     </ClInclude>
+    <ClInclude Include="Game\CDropItem.h">
+      <Filter>Game\Object\DropItem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game">
@@ -154,6 +163,9 @@
     </Filter>
     <Filter Include="Game\Object\StoryScene">
       <UniqueIdentifier>{e98914e3-611f-4932-80db-2e39224d1cad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\DropItem">
+      <UniqueIdentifier>{7892ea5e-1386-45af-bac0-94a703cdc30b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

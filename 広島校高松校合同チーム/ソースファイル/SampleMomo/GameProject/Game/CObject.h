@@ -15,7 +15,7 @@ protected:
 	CVector3D m_rads;
 	bool m_is_flip = false;
 public:
-	CObject(int _task_id, int _draw_priority);
+	CObject(int _task_id = 0, int _draw_priority = 0);
 	virtual ~CObject();
 	virtual void BeforeUpdate();
 	virtual void BeforeCollisionCheck();
