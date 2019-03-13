@@ -35,6 +35,15 @@ void PlayerEffectLongAttack::Draw()
 	m_img.Draw();
 }
 
+void PlayerEffectLongAttack::MoveControl()
+{
+
+	if (m_pos.x < SCREEN_MIN_SIZE_X || m_pos.y > SCREEN_MAX_SIZE_X)
+		SetKill();
+	if (m_pos.y < SCREEN_MIN_SIZE_Y || m_pos.y > SCREEN_MAX_SIZE_Y)
+		SetKill();
+}
+
 
 
 PlayerEffectShortAttack01::PlayerEffectShortAttack01(const CVector2D & pos, bool _flip) : Task(ePEffectShortAttack01)

@@ -6,6 +6,7 @@
 #include "../GameProject/Game/Character/EnemyBase/Boss/BossManager.h"
 #include "../Stage/ground.h"
 #include "../Item/Item.h"
+#include "../Item/ItemBox.h"
 
 GameScene::GameScene() : Task(eGameScene)
 {
@@ -17,6 +18,8 @@ GameScene::GameScene() : Task(eGameScene)
 	TaskManager::GetInstance()->AddTask(new Item(ItemList::eInari, CVector2D(512, 360)));
 	TaskManager::GetInstance()->AddTask(new Item(ItemList::eKakera, CVector2D(768, 360)));
 	TaskManager::GetInstance()->AddTask(new Item(ItemList::eKoban, CVector2D(1024, 360)));
+	TaskManager::GetInstance()->AddTask(new ItemBox(Box_Typ::eTrueBox, CVector2D(512, 560)));
+	TaskManager::GetInstance()->AddTask(new ItemBox(Box_Typ::eDummyBox, CVector2D(768, 560)));
 	TaskManager::GetInstance()->AddTask(new Player());
 }
 

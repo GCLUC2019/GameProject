@@ -6,12 +6,14 @@ private:
 	CAnimImage m_img;
 	CVector2D m_pos;
 	CVector2D m_vec;
+	float m_depth;
 	bool m_flip;
 
 public:
 	PlayerEffectLongAttack(const CVector2D& pos, bool _flip);
 	void Update();
 	void Draw();
+	void MoveControl();
 
 };
 
