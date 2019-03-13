@@ -2,6 +2,15 @@
 #include "CObject.h"
 #include "../Global.h"
 
+//配列の最大数
+#define MAX_TEXT_ARRAY 10
+#define MAX_STORY_ARRAY 2
+#define MAX_SENTENSE_SIZE 20
+#define ARRAY_SIZE 15
+
+//テキストの文字数	
+#define CHAR_NUM 30
+
 //添え字
 #define SUB0 0
 #define SUB1 1
@@ -9,6 +18,11 @@
 #define SUB3 3
 #define SUB4 4
 #define SUB5 5
+#define SUB6 6
+#define SUB7 7
+#define SUB8 8
+#define SUB9 9
+#define SUB10 10
 
 //紙芝居サイズと座標
 #define STORY_SIZE  CVector2D(1000,600)
@@ -36,7 +50,7 @@
 #define DRAW_MAX_Y 600
 //表示位置の最大値と最小値
 #define POS_MAX_X 750
-#define POS_MAX_Y 300
+#define POS_MAX_Y 320
 #define POS_MIN_X 130
 #define POS_MIN_Y 20
 
@@ -63,11 +77,11 @@ protected:
 		CVector2D pos;
 	};
 	
-	rect_pos_size pos_array[5];
+	rect_pos_size pos_array[ARRAY_SIZE];
 
 	bool complete_flg;
-	char name[2][80];
-	char t_name[6][80];
+	char name[MAX_STORY_ARRAY][MAX_SENTENSE_SIZE];
+	char t_name[MAX_TEXT_ARRAY][MAX_SENTENSE_SIZE];
 public:
 	CStoryScene();
 	~CStoryScene();
@@ -81,12 +95,13 @@ public:
 	void SetStory2(rect_pos_size pos_a);
 	void SetText(char text_name[]);
 	void SetArrayValue(int num_array[]);
-	void SetSentense(int repite, char name_a[][80], char name_b[][80]);
-	void SetAll();
+	void SetSentense(int repite, char name_a[][MAX_SENTENSE_SIZE], 
+		                         char name_b[][MAX_SENTENSE_SIZE]);
+	void SetAll(int sent_num);
 	//次の画像を表示する関数
-	void NextStory(char story_name[][80],int sub, rect_pos_size values);
+	void NextStory(char story_name[][MAX_SENTENSE_SIZE],int sub, rect_pos_size values);
 	//次のテキストを表示する関数
-	void NextText(char text_name[][80]);
+	void NextText(char text_name[][MAX_SENTENSE_SIZE]);
 	//表示したい文章の文字数と文章数
 	void UpdateText(int word,int limit);
 	//現在の構造体と次の構造体
@@ -102,6 +117,8 @@ public:
 	//描写関連まとめ関数
 	void AllDraw();
 	void RectUp();
+	//次のシーンに変更関数(引数は表示する文章数）
+	void ChangeScene(int sent_num);
 };
 
 /*
@@ -110,4 +127,6 @@ public:
 テキストボックスの座標・サイズ設定関数
 テキストの座標・サイズ設定関数
 追加
+2019/3/13 ストーリーシーンクラス　完成　作成　松川
+上記の関数を追加
 */

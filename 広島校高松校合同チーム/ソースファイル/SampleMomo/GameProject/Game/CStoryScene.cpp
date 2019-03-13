@@ -86,28 +86,31 @@ void CStoryScene::SetArrayValue(int num_array[])
 	pos_array[num_array[0]].pos = CVector2D(num_array[7], num_array[8]);
 }
 
-void CStoryScene::SetSentense(int repite, char name_a[][80], char name_b[][80])
+void CStoryScene::SetSentense(int repite, char name_a[][MAX_SENTENSE_SIZE], 
+	                                      char name_b[][MAX_SENTENSE_SIZE])
 {
 	for (int i = 0; i < repite; i++) {
 		strcpy_s(name_a[i], name_b[i]);
 	}
 }
 
-void CStoryScene::SetAll()
+void CStoryScene::SetAll(int sent_num)
 {
 	SetStory(name[0], pos_array[0]);
 	SetTextBox();
 	SetText(t_name[0]);
 	SetIcon();
+	SetSubSentense(sent_num);
 	SetParam();
 }
 
-void CStoryScene::NextStory(char story_name[][80],int sub, rect_pos_size values)
+void CStoryScene::NextStory(char story_name[][MAX_SENTENSE_SIZE],
+	                        int sub, rect_pos_size values)
 {
 	SetStory(story_name[sub],values);
 }
 
-void CStoryScene::NextText(char text_name[][80])
+void CStoryScene::NextText(char text_name[][MAX_SENTENSE_SIZE])
 {
 	//•Ï”‚Ì‰Šú‰»
 	SetParam();
@@ -204,6 +207,22 @@ void CStoryScene::AllDraw()
 
 void CStoryScene::RectUp()
 {
-	m_text.SetRect(0, 0, RECTSIZE_X + rect_cnt, RECTSIZE_Y);
-	m_text.SetSize(RECTSIZE_X + rect_cnt, 50);
+	m_text.SetRect(MIN, MIN, RECTSIZE_X + rect_cnt, RECTSIZE_Y);
+	m_text.SetSize(RECTSIZE_X + rect_cnt, RECTSIZE_Y+10);
+}
+
+void CStoryScene::ChangeScene(int sent_num)
+{
+	if (subscript == sent_num) {
+		if (CInput::GetState(0, CInput::ePush, CInput::eButton1)) {
+			SetIsDelete();
+		}
+	}
+	if (subscript == sent_num - 1) {
+		if (CInput::GetState(0, CInput::ePush, CInput::eButton1)) {
+			subscript++;
+			printf("%d\n", subscript);
+		}
+	}
+	
 }
