@@ -38,6 +38,7 @@ CCharacterEnemy::CCharacterEnemy() :CCharacter(eTaskIdEnemy, 0)
 	m_player_vec = CVector2D(0, 0);
 	LoadAnimImage();
 
+	is_attack = true;
 
 	SetAnim(eEnemyAnimIdIdle);
 	SetIsShowShadow(true);
@@ -88,7 +89,7 @@ void CCharacterEnemy::CharacterDraw()
 
 void CCharacterEnemy::ReceiveAttack()
 {
-	if (m_is_damage) m_enemy_state = eEnemyStateDamage;
+	/*if (m_is_damage)*/ m_enemy_state = eEnemyStateDamage;
 	m_AI_cnt = 0;
 	printf("エネミー 攻撃があたった!\n");
 }
@@ -140,6 +141,7 @@ void CCharacterEnemy::LoadAnimImage()
 void CCharacterEnemy::Idle()
 {
 	SetWillPlayAnim(eEnemyAnimIdIdle);
+	is_attack = true;
 	m_is_damage = true;
 	m_player_vec = CVector2D(m_player_pos.x - m_pos.x, m_player_pos.z - m_pos.z);
 	m_player_vec = m_player_vec/ m_player_vec.Length();
@@ -171,8 +173,10 @@ void CCharacterEnemy::Attack()
 
 	CCharacterPlayer* p = dynamic_cast<CCharacterPlayer*>(TaskManager::GetInstance()->FindTask(eTaskIdPlayer));
 	CVector3D player_pos = p->GetPos();
-	if (abs(m_pos.z - player_pos.z) < 60 && abs(player_pos.x - m_pos.x) <200) {
-		printf("Hit!!");
+	if (abs(m_pos.z - player_pos.z) < 500 && abs(player_pos.x - m_pos.x) <200 && is_attack) {
+		is_attack = false;
+		if(p == NULL) printf("プレイヤーがいません\n");
+		printf("Hit!!\n");
 		p->ReceiveAttack();
 		p->HitPointGainValue(-3.0);
 	}
@@ -184,11 +188,11 @@ void CCharacterEnemy::Damage()
 {
 	SetWillPlayAnim(eEnemyAnimIdDamage);
 	m_vec = CVector3D(0, m_vec.y, 0);
-	if (m_is_damage) {
+	//if (m_is_damage) {
 		m_damage_chance++;
 		m_is_damage = false;
-		m_hit_point -= 0.0f;
-	}
+		m_hit_point -= 10.0f;
+	//}
 	if (m_hit_point < 0)SetIsDelete();
 	AiChange(30);
 }
@@ -250,6 +254,6 @@ void CCharacterEnemy::CharacterBeforeCollisionCheck()
 	/*float* h = p->GetHitPointPointer();
 	float hp = *h;
 	printf("%f\n", hp);*/
-	printf("エネミーのZ%f", m_pos.z);
-	printf("プレイヤーのZ%f\n", m_player_pos.z);
+	/*printf("エネミーのZ%f", m_pos.z);
+	printf("プレイヤーのZ%f\n", m_player_pos.z);*/
 }

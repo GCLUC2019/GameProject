@@ -50,6 +50,9 @@ private:
 	CVector2D m_attack_pos;         //プレイヤー方向へのベクトル
 	CVector3D m_player_pos;		 //プレイヤーの座標を記憶
 	CVector2D m_player_vec;         //プレイヤー方向へのベクトル
+
+	bool is_attack;
+
 public:
 	CCharacterEnemy();
 	~CCharacterEnemy();
