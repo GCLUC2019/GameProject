@@ -1,7 +1,6 @@
 #include "CCharacter.h"
 #include "../Global.h"
 #include "CGameScene.h"
-#include "CGameSceneWave.h"
 
 CCharacter::CCharacter(int _task_id, int _draw_priority) : CObject(_task_id, _draw_priority)
 {
@@ -15,7 +14,6 @@ CCharacter::~CCharacter()
 
 void CCharacter::Update()
 {
-	CheckHitPoint();
 	CharacterUpdate();
 }
 
@@ -63,18 +61,8 @@ void CCharacter::PlayAnim()
 
 void CCharacter::Gravity()
 {
-	//接地しているなら重力を加算しない
-	if (m_is_landing == true) {
-		printf("m_vec.y %lf\n", m_vec.y);
-		return;
-	}
-
-	//ベクトルが大きい際に敵にうまっちゃう場合あり
-
-	m_vec.y += GRAVITY * CFPS::GetDeltaTime();
-	if (m_vec.y >= GRAVITY_LIMIT) m_vec.y = GRAVITY_LIMIT;
-
-	//if (m_vec.y >= 3.0) m_vec.y = 3.0;
+	m_vec.y += GRAVITY;
+	if (m_vec.y >= 3.0) m_vec.y = 3.0;
 }
 
 void CCharacter::BeforeCollisionCheck()
@@ -93,24 +81,6 @@ void CCharacter::BeforeUpdate()
 
 void CCharacter::CharacterBeforeUpdate()
 {
-}
-
-void CCharacter::ReceiveAttack()
-{
-}
-
-void CCharacter::SendDeadMeForFromWave()
-{
-	if (m_from_wave_p == nullptr) return;
-	m_from_wave_p->DeadEnemy(m_wave_character_id);
-}
-
-void CCharacter::CheckHitPoint()
-{
-	if (m_hit_point < 0.0f) {
-		SetIsDelete();
-		SendDeadMeForFromWave();//ウェーブシステムに自分が倒されたことを伝える
-	}
 }
 
 void CCharacter::Draw()
@@ -165,11 +135,8 @@ void CCharacter::CollisionCheck(Task * _collision_task)
 {
 	CObject* ob = dynamic_cast<CObject*>(_collision_task);
 	CVector3D ob_pos = ob->GetPos();
-	CVector3D ob_pos_old = ob->GetPosOld();
 	CVector3D ob_rads = ob->GetRads();
-
-
-	//相手も動く場合は、処理が複雑かも
+	
 
 	if (CollisionCheck3D(CVector3D(m_pos.x,m_pos_old.y,m_pos_old.z),m_rads,ob_pos,ob_rads)) {
 		m_pos.x = m_pos_old.x;
@@ -183,12 +150,6 @@ void CCharacter::CollisionCheck(Task * _collision_task)
 	if (CollisionCheck3D(CVector3D(m_pos_old.x, m_pos_old.y, m_pos.z), m_rads, ob_pos, ob_rads)) {
 		m_pos.z = m_pos_old.z;
 	};
-
-	if (CollisionCheck3D(m_pos, m_rads, ob_pos, ob_rads)) {
-		m_pos = m_pos_old;
-	};
-
-	
 
 
 	CollisionCheckCharacter(_collision_task);

@@ -4,16 +4,7 @@
 *
 **/
 #pragma once
-
-//ヘッダーファイルのインクルード
-#define DIRECTINPUT_VERSION 0x0800
-
-#include <dinput.h>
-//必要なライブラリファイルのロード
-#pragma comment(lib,"winmm.lib")
-#pragma comment(lib,"dxguid.lib")
-#pragma comment(lib,"dinput8.lib")
-
+#include "GL.h"
 
 #include "windows.h"
 #include "CVector.h"
@@ -32,8 +23,9 @@ public:
 		eFree,		//離している
 		eStateMax,
 	};
-	enum E_BUTTON{
-		eButton1=0,
+
+	enum E_BUTTON {
+		eButton1 = 0,
 		eButton2,
 		eButton3,
 		eButton4,
@@ -53,32 +45,19 @@ public:
 		eDown,
 		eLeft,
 		eRight,
-		eNum0,
-		eNum1,
-		eNum2,
-		eNum3,
-		eNum4,
-		eMax = 31
+		eKeyMax = 31
 	};
-	static char	m_key_code[PAD_MAX][eMax];
+	static char	m_key_code[PAD_MAX][eKeyMax];
 	static char	m_pad_code[PAD_MAX][16];
 	static unsigned long m_key_old[PAD_MAX];
 	static unsigned long m_key_state[PAD_MAX][eStateMax];
 	static CVector2D m_mouse_vec;
+	static CVector2D m_mouse_pos;
+	static CVector2D m_mouse_pos_old;
 	static int		m_mouse_wheel;
 	static int		m_mouse_wheelOld;
 	static bool		m_mouse_inside;
 
-	static LPDIRECTINPUT8 m_pDinput;
-	static LPDIRECTINPUTDEVICE8 m_pMouse;
-	struct SPadDevice{
-		LPDIRECTINPUTDEVICE8 m_pPadDevice;
-		DIJOYSTATE2 js;
-		int no;
-	};
-
-	static SPadDevice m_device[PAD_MAX];
-	static bool CALLBACK _padCallback(const LPDIDEVICEINSTANCE lpddi, LPVOID pvRef);
 public:
 	static bool Init();
 
@@ -130,12 +109,9 @@ public:
 		@retval	マウスカーソルの座標
 	**/
 	static CVector2D GetMousePoint() {
-		POINT pt;
-		//マウスの現在の座標を取得する
-		GetCursorPos(&pt);
-		ScreenToClient(GL::hWnd,&pt);
+		
 
-		return CVector2D((float)pt.x, (float)pt.y);
+		return m_mouse_pos;
 	}
 	
 	/*!
@@ -179,9 +155,7 @@ public:
 	static void AddMouseWheel(int a) {
 		m_mouse_wheel+=a;
 	}
-	static DIJOYSTATE2* GetPadData(int no) {
-		return (m_device[no].m_pPadDevice) ? &m_device[no].js : NULL;
-	}
+
 	/*!
 		@brief	キーの状態を更新する
 		@retval	無し
@@ -193,3 +167,8 @@ public:
 	};
 	static void UpdateClipCursor(int f);
 };
+
+#define PUSH(key) CInput::GetState(0,CInput::ePush,key)
+#define HOLD(key) CInput::GetState(0,CInput::eHold,key)
+#define PULL(key) CInput::GetState(0,CInput::ePull,key)
+#define FREE(key) CInput::GetState(0,CInput::eFree,key)

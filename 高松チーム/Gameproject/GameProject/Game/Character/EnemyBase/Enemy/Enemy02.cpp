@@ -4,13 +4,14 @@
 #include "../GameProject/Global.h"
 #define MOVE_SPEED 2.5f
 #define DEP_N 1200
-#define JUMP_SPD -20.0f
-#define GRAVITY 10.0f
+#define JUMP_SPD -30
+#define GRAVITY 20
 Enemy02::Enemy02() : EnemyBase(eEnemy02),
-m_hight(0.0f),
+m_state(eAttack),
+m_jump_vec(0.0f),
 m_search_flg(false),
 m_move_dir_flg(true),
-m_jump_flg(false)
+m_jump_flg(true)
 {
     m_img = COPY_RESOURCE("Enemy02", CAnimImage*);
     m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
@@ -20,17 +21,17 @@ m_jump_flg(false)
     m_pos = CVector2D(200, 200);
     m_vec = CVector2D(0, 0);
     m_dir = CVector2D(0, 0);
-    m_state = eSearch;
     m_depth = m_pos.y / DEP_N;
 
     cnt = 0;
 }
 
 Enemy02::Enemy02(CVector2D _pos) : EnemyBase(eEnemy02),
-m_hight(0.0f),
+m_state(eAttack),
+m_jump_vec(0.0f),
 m_search_flg(false),
 m_move_dir_flg(true),
-m_jump_flg(false)
+m_jump_flg(true)
 {
     m_img = COPY_RESOURCE("Enemy02", CAnimImage*);
     m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
@@ -40,7 +41,6 @@ m_jump_flg(false)
     m_pos = _pos;
     m_vec = CVector2D(0, 0);
     m_dir = CVector2D(0, 0);
-    m_state = eSearch;
     m_depth = m_pos.y / DEP_N;
 
     cnt = 0;
@@ -83,7 +83,7 @@ void Enemy02::Draw()
 {
     m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
     m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
-    m_img.SetPos(CVector2D(m_pos.x, m_pos.y + m_hight));
+    m_img.SetPos(CVector2D(m_pos.x, m_pos.y + m_jump_vec));
     m_img.SetFlipH(m_move_dir_flg);
     m_img.Draw();
 }
@@ -121,20 +121,22 @@ void Enemy02::Search()
 
 void Enemy02::Attack()
 {
-    m_img.ChangeAnimation(eEAttack02, false);
+    m_img.ChangeAnimation(eEAttack02,false);
     float bound = false;
     if (m_jump_flg) {
-        cnt++;
-        m_hight = 0 + JUMP_SPD * cnt + GRAVITY / 10 * (cnt*cnt) / 2;
-        if (m_hight > 0) {
-            m_hight = 0;
-            cnt = 1;
+        static float time = 1;
+        m_jump_vec = 0 + JUMP_SPD * time + GRAVITY / 10 * (time*time) / 2;
+        time += 0.5f;
+        if (m_jump_vec > 0) {
+            time = 0;
+            m_jump_vec = 0;
             m_jump_flg = false;
         }
+        
     }
-    if (m_img.CheckAnimationEnd()) {
+    
+    if (m_img.CheckAnimationEnd())
         m_state = eSearch;
-    }
 }
 
 void Enemy02::Damage()

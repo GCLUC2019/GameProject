@@ -24,7 +24,7 @@ void TaskManager::AddTask(Task * _t)
 		}
 
 		t->SetNext(_t);
-		_t->SetPrev(t);
+		_t->SetPrev(_t);
 		SetLast(_t);
 	}
 
@@ -52,27 +52,24 @@ void TaskManager::DrawAll()
 
 void TaskManager::HitCheckAll()
 {
-    //Task* d = mp_head;
-    //Task* d2 = d->GetNext();
-    ////総当たりならこれでいける？
-    //while (d) {
-    //	while (d2) {
-    //		d->HitCheck(d2);
-    //		d2->GetNext();
-    //	}		
-    //	d = d->GetNext();
-    //}
+	//Task* d = mp_head;
+	//Task* d2 = d->GetNext();
+	////総当たりならこれでいける？
+	//while (d) {
+	//	while (d2) {
+	//		d->HitCheck(d2);
+	//		d2->GetNext();
+	//	}		
+	//	d = d->GetNext();
+	//}
 
-    Task* d = mp_head;
-    while (d) {
-        Task* d2 = d->GetNext();
-        while (d2) {
-            d->HitCheck(d2);
-            d2->HitCheck(d);
-            d2 = d2->GetNext();
-        }
-        d = d->GetNext();
-    }
+	Task* d = mp_head;
+	Task* d2 = d->GetNext();
+
+	while (d) {
+		d->HitCheck(d2);
+		d = d->GetNext();
+	}
 }
 
 void TaskManager::Kill(Task * _t)
@@ -85,50 +82,6 @@ void TaskManager::KillAll()
 {
 	Task* k = mp_head;
 	
-}
-/*
-作成　田中
-*/
-void TaskManager::CheckKillAll()
-{
-    Task*next = nullptr;
-    Task* k = mp_head;
-    do {
-        //キルフラグがtrueなら
-        if (k->m_kill_flg) {
-            //前後を繋ぎなおす
-            if (k== mp_head) {
-                mp_head = k->mp_next;
-                k->mp_next->SetPrev(nullptr);
-                next = k->mp_next;
-            }
-            else if (k == mp_last) {
-                mp_last = k->mp_prev;
-                k->mp_prev->SetNext(nullptr);
-                next = nullptr;
-            }
-            else {
-                k->mp_prev->SetNext(k->mp_next);
-                k->mp_next->SetPrev(k->mp_prev);
-                next = k->mp_next;
-            }
-            //削除
-            delete k;
-            //次のタスク
-            k = next;
-        }
-        else
-            //次のタスク
-            k = k->GetNext();
-    } while (k);
-
-	//k = mp_head;
-	//while (k->GetPrev() != nullptr)
-	//	k = k->GetPrev();
-	//mp_head = k;
-	//while (k->GetNext() != nullptr)
-	//	k = k->GetNext();
-	//mp_last = k;
 }
 
 void TaskManager::Search()
@@ -238,20 +191,6 @@ void TaskManager::ReLink(bool _fb, Task*_t1, Task * _t2)
 
 		t2->SetNext(t1);
 	}
-}
-/*担当
-田中*/
-Task * TaskManager::FindObject(int _type)
-{
-    Task*t = mp_head;
-    while (t->GetType() != _type) {
-
-        if (t->GetNext())
-            t = t->GetNext();
-        else
-            return nullptr;
-    }
-    return t;
 }
 
 TaskManager * TaskManager::GetInstance()

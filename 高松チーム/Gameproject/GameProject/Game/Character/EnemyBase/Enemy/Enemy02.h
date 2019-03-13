@@ -16,11 +16,12 @@ private:
         eDamage,
     };
     CVector2D m_dir;
-    float m_hight;//高さ
+    int m_state;//状態
+    float m_jump_vec;
     float m_hover;//浮遊を表現するための変数
     bool m_search_flg;//プレイヤーを見つけたかどうかのフラグ
     bool m_move_dir_flg;//方向：false右、true左
-    bool m_jump_flg;//ジャンプフラグ
+    bool m_jump_flg;
 
     int cnt;
 public:

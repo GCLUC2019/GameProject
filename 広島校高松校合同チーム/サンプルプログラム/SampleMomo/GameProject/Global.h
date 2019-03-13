@@ -9,10 +9,7 @@
 #define SCREEN_HEIGHT 720
 
 
-#define GRAVITY (9.8f*7)
-
-#define GRAVITY_LIMIT (40.0f)
-
+#define GRAVITY (9.8f*10)
 // 1/60•b
 #define SPF		(1.0f/60.0f)
 

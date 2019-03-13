@@ -3,12 +3,11 @@
 /*
 作成　中尾	
 　操作　暫定
- 十字　		:移動
- SHIFTキー	:しゃがみ	
- Zキー		:近距離攻撃　　	
- SPACEキー	:ジャンプ
- Xキー		:遠距離攻撃
- Wキー		:必殺攻撃
+ 十字　	:移動
+ zキー	:しゃがみ	
+ xキー	:近距離攻撃　　	
+ cキー	:ジャンプ
+ vキー	:遠距離攻撃
 */
 class Player : public CharacterBase {
 private:
@@ -67,6 +66,7 @@ public:
 	Player();
 	void Update();
 	void Draw();
+
 	int GetHP() {
 		return m_HP;
 	}
