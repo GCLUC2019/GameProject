@@ -20,7 +20,7 @@ CCharacterEnemy::CCharacterEnemy() :CCharacter(eTaskIdEnemy, 0)
 	ADD_RESOURCE("Enemy_Move_8", CImage::LoadImage("Enemy_move8.png"));
 	ADD_RESOURCE("Enemy_Attack_2", CImage::LoadImage("Enemy_attack2.png"));
 
-	t = 1;
+	t = 1;		//この数字でエネミーの種類が変わります：後日enumを用意
 	m_enemy_state = eEnemyStateIdle;
 
 	m_vec = CVector3D(0, 0, 0);
