@@ -24,7 +24,7 @@ CCharacterEnemy::CCharacterEnemy() :CCharacter(eTaskIdEnemy, 0)
 	ADD_RESOURCE("Enemy_Move_8", CImage::LoadImage("Enemy_move8.png"));
 	ADD_RESOURCE("Enemy_Attack_2", CImage::LoadImage("Enemy_attack2.png"));
 
-	m_enemy_type = eEnemyTypeGun;		//このタイプでエネミーの種類が変わります
+	m_enemy_type = eEnemyTypeSpear;		//このタイプでエネミーの種類が変わります
 	m_enemy_state = eEnemyStateIdle;
 
 	m_vec = CVector3D(0, 0, 0);
@@ -49,8 +49,23 @@ CCharacterEnemy::CCharacterEnemy() :CCharacter(eTaskIdEnemy, 0)
 	SetShadowSize(CVector2D(100, 50));
 	SetDrawAdjPos(CVector2D(5.0, 50.0));
 
-	m_hit_point = 100.0f;
-	m_hit_point_max = 100.0f;
+	m_hit_point = 10.0f;
+	m_hit_point_max = 10.0f;
+
+	switch (m_enemy_type)
+	{
+	case eEnemyTypeSpear:
+		m_attack_pos = CVector2D(300, 100);
+		break;
+	case eEnemyTypeAxe:
+		m_attack_pos = CVector2D(300, 100);
+		break;
+	case eEnemyTypeGun:
+		m_attack_pos = CVector2D(800, 50);
+		break;
+	default:
+		break;
+	}
 }
 
 CCharacterEnemy::~CCharacterEnemy()
@@ -94,8 +109,9 @@ void CCharacterEnemy::CharacterDraw()
 void CCharacterEnemy::ReceiveAttack()
 {
 	/*if (m_is_damage)*/ m_enemy_state = eEnemyStateDamage;
+	m_damage_chance++;
 	m_AI_cnt = 0;
-	printf("エネミー 攻撃があたった!\n");
+	printf("エネミー 攻撃があたった!%d\n", m_damage_chance);
 }
 
 void CCharacterEnemy::LoadAnimImage()
@@ -161,6 +177,8 @@ void CCharacterEnemy::Idle()
 	is_attack = true;
 	m_is_damage = true;
 	m_player_vec = CVector2D(m_player_pos.x - m_pos.x, m_player_pos.z - m_pos.z);
+	float x = m_player_vec.x;
+	if (m_attack_pos.x > abs(x)) m_player_vec.x = 0;
 	m_player_vec = m_player_vec/ m_player_vec.Length();
 	m_vec = CVector3D(0, m_vec.y, 0);
 	AiChange(200);
@@ -176,7 +194,7 @@ void CCharacterEnemy::Move()
 	else m_vec = CVector3D(m_player_vec.x, m_vec.y, m_player_vec.y);
 	if (m_vec.x > 0) m_is_flip = true;
 	else m_is_flip = false;
-	if (m_attack_chance) m_AI_cnt += 200;
+	if (m_attack_chance && m_damage_chance < 3) m_AI_cnt += 100;
 	AiChange(200);
 }
 
@@ -185,7 +203,7 @@ void CCharacterEnemy::Attack()
 	SetWillPlayAnim(eEnemyAnimIdAttack);
 	m_is_damage = true;
 	m_vec = CVector3D(0, m_vec.y, 0);
-	if (m_player_vec.x > 0) m_is_flip = true;
+	if (m_player_vec.x > 0) m_is_flip = true;   //LRの追加か、マイナス値を付与する
 	else m_is_flip = false;
 
 	CCharacterPlayer* p = dynamic_cast<CCharacterPlayer*>(TaskManager::GetInstance()->FindTask(eTaskIdPlayer));
@@ -205,11 +223,7 @@ void CCharacterEnemy::Damage()
 {
 	SetWillPlayAnim(eEnemyAnimIdDamage);
 	m_vec = CVector3D(0, m_vec.y, 0);
-	//if (m_is_damage) {
-		m_damage_chance++;
-		m_is_damage = false;
-		m_hit_point -= 10.0f;
-	//}
+	
 	if (m_hit_point < 0)SetIsDelete();
 	AiChange(30);
 }
