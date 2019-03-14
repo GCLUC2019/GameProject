@@ -23,6 +23,8 @@ CEnemyTank*EnemyTank;
 
 CBoss *Boss = NULL;
 
+CEnemy1*Enemy1;           //’Ç‰Á@Š˜“c
+CEnemy2*Enemy2;
 
 CScene::ESceneTag CMain::mSceneTag = CScene::EROOT;
 

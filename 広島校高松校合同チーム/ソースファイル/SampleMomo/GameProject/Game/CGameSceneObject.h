@@ -19,6 +19,9 @@ struct AnimInfo {
 	int delay;
 };
 
+
+
+
 class CGameSceneObject : public CObject {
 private:
 protected:
