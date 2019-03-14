@@ -1,7 +1,7 @@
 //è¨êÏ
 
-#ifndef CArrow_H
-#define CArrow_H
+#ifndef CARROW_H
+#define CARROW_H
 
 #include "CRectangle.h"
 #include "CCollider.h"

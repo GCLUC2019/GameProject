@@ -50,7 +50,7 @@ void CGameScene::Setup()
 
 	/*
 	CDropItem* drop_item_p;
-	AddGameSceneObject(drop_item_p = new CDropItem(eItemIdSpear, GET_RESOURCE("IconSpear", CImage*)));
+	AddGameSceneObject(drop_item_p = new CDropItem(eItemIdSpear));
 	drop_item_p->SetPos(CVector3D(200,200,200));
 	drop_item_p->SetSize(CVector2D(200, 200));
 	*/

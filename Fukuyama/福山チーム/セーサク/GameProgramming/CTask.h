@@ -12,6 +12,12 @@ public:
 		EENEMYTANK,
 		EPLAYERBULLET,
 		EENEMYBULLET,
+		EARROW,
+		EENEMY1,      //í«â¡Å@äòìc
+		EENEMY2,
+		EITEM,
+
+
 	};
 	ETaskTag mTaskTag;
 	CTask*mpNext;

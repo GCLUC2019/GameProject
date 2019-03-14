@@ -105,6 +105,34 @@ void CGameSceneObject::DrawAnimImage()
 	CVector2D draw_adj = m_draw_adj;
 	if (m_is_flip == true) draw_adj.x *= -1.0f;
 
+
+	//“_–Å•`‰æ
+	if (m_is_blind_draw == true) {
+
+		if (m_blind_delay_count-- <= 0) {
+			if (m_is_blind_now == false) {
+				m_is_blind_now = true;
+				m_blind_delay_count = m_blind_delay;
+			}
+			else {
+				m_is_blind_now = false;
+				m_blind_delay_count = m_blind_delay;
+			}
+		}
+
+		if (m_is_blind_now == false) {
+			m_anim_image_p[m_play_anim_image]->SetColor(2.55f, 2.55f, 2.55f, m_blind_alpha);
+		}
+		else {
+			m_anim_image_p[m_play_anim_image]->SetColor(2.55f, 2.55f, 2.55f, 2.55f);
+		}
+	}
+	if (m_is_blind_draw == false) {
+		m_is_blind_now = false;
+		m_anim_image_p[m_play_anim_image]->SetColor(2.55f, 2.55f, 2.55f, 2.55f);
+	}
+	
+	
 	m_anim_image_p[m_play_anim_image]->SetPos(draw_pos + draw_adj);
 	m_anim_image_p[m_play_anim_image]->SetCenter(m_size.x / 2.0, m_size.y / 2.0);
 	m_anim_image_p[m_play_anim_image]->Draw();

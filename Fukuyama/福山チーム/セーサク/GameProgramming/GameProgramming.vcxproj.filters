@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="CBoss.cpp" />
+    <ClCompile Include="CBullet.cpp" />
+    <ClCompile Include="CCollider.cpp" />
+    <ClCompile Include="CEnemyTank.cpp" />
+    <ClCompile Include="CExplosion.cpp" />
+    <ClCompile Include="CFPS.cpp" />
+    <ClCompile Include="CHpBar.cpp" />
+    <ClCompile Include="CMain.cpp" />
+    <ClCompile Include="CMatrix33.cpp" />
+    <ClCompile Include="CPlayerTank.cpp" />
+    <ClCompile Include="CRectangle.cpp" />
+    <ClCompile Include="CSceneGame.cpp" />
+    <ClCompile Include="CTank.cpp" />
+    <ClCompile Include="CTask.cpp" />
+    <ClCompile Include="CTexture.cpp" />
+    <ClCompile Include="CVector2.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Task.cpp" />
+    <ClCompile Include="TaskLinker.cpp" />
+    <ClCompile Include="TaskManager.cpp" />
+    <ClCompile Include="CAppear.cpp" />
+    <ClCompile Include="CArrow.cpp" />
+    <ClCompile Include="CItem.cpp" />
+    <ClCompile Include="CEnemy1.cpp" />
+    <ClCompile Include="CEnemy2.cpp" />
+    <ClCompile Include="CPlayer.cpp" />
+    <ClCompile Include="CKey.cpp" />
+    <ClCompile Include="CCharacter.cpp" />
+    <ClCompile Include="GL.cpp" />
+    <ClCompile Include="CMatrix.cpp" />
+    <ClCompile Include="Utility.cpp" />
+    <ClCompile Include="CVector.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CBoss.h" />
+    <ClInclude Include="CBullet.h" />
+    <ClInclude Include="CCollider.h" />
+    <ClInclude Include="CEnemyTank.h" />
+    <ClInclude Include="CExplosion.h" />
+    <ClInclude Include="CFPS.h" />
+    <ClInclude Include="CHpBar.h" />
+    <ClInclude Include="CPlayerTank.h" />
+    <ClInclude Include="CScene.h" />
+    <ClInclude Include="CSceneGame.h" />
+    <ClInclude Include="CTank.h" />
+    <ClInclude Include="CMain.h" />
+    <ClInclude Include="CMatrix33.h" />
+    <ClInclude Include="CTask.h" />
+    <ClInclude Include="CTexture.h" />
+    <ClInclude Include="CVector2.h" />
+    <ClInclude Include="CRectangle.h" />
+    <ClInclude Include="GID.h" />
+    <ClInclude Include="Task.h" />
+    <ClInclude Include="TaskLinker.h" />
+    <ClInclude Include="TaskManager.h" />
+    <ClInclude Include="CAppear.h" />
+    <ClInclude Include="CArrow.h" />
+    <ClInclude Include="CItem.h" />
+    <ClInclude Include="CEnemy1.h" />
+    <ClInclude Include="CEnemy2.h" />
+    <ClInclude Include="CPlayer.h" />
+    <ClInclude Include="CKey.h" />
+    <ClInclude Include="CSound.h" />
+    <ClInclude Include="CCharacter.h" />
+    <ClInclude Include="GL.h" />
+    <ClInclude Include="CMatrix.h" />
+    <ClInclude Include="Utility.h" />
+    <ClInclude Include="CVector.h" />
+  </ItemGroup>
+</Project>

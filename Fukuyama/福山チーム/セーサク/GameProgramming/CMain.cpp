@@ -1,6 +1,6 @@
 //ヘッダファイルのインクルード
 #include "CMain.h"
-#include "glut.h"
+//#include "glut.h"
 #include "CVector2.h"
 #include "CMatrix33.h"
 #include "CRectangle.h"
@@ -8,9 +8,9 @@
 #include "CPlayerTank.h"
 #include "CBullet.h"
 #include "CEnemyTank.h"
-#include "CTexture.h"
 #include "CSceneGame.h"
 #include "CBoss.h"
+#include "CTexture.h"
 
 CTexture Texture;
 CRectangle*Explosion;
@@ -23,6 +23,8 @@ CEnemyTank*EnemyTank;
 
 CBoss *Boss = NULL;
 
+CEnemy1*Enemy1;           //追加　釜田
+CEnemy2*Enemy2;
 
 CScene::ESceneTag CMain::mSceneTag = CScene::EROOT;
 

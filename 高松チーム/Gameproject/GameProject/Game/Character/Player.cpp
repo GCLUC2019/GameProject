@@ -3,6 +3,7 @@
 #include "../Character/Anim/AnimDataPlayer.h"
 #include <stdio.h>
 #include"Effect/PlayerEffect.h"
+#include"../GameData/GameData.h"
 #define GRAVITY -4//èdóÕ
 #define DEP_N 540//âúçsèdêŒ
 #define JUMP_SPD 50
@@ -43,6 +44,11 @@ m_special(0)
 	m_depth = (m_pos.y - DEP_N)/3.5;
 	SetAnim();
 	m_shadow.SetColor(0.3f, 0.3f, 0.3f, 0.4f);
+	m_rect = CRect(-50, -50, 50, 50);
+}
+
+void Player::HitCheck()
+{
 }
 
 void Player::Move()
@@ -120,7 +126,8 @@ void Player::Jump()
 		time = 0;
 		m_jump_vec = 0;
 		m_jump_flg = false;
-	}
+    }
+	g_game_data.m_scroll.y =  m_jump_vec;
 }
 
 void Player::Attack()
@@ -312,7 +319,7 @@ void Player::Update()
 	if (CInput::GetState(0, CInput::eHold, CInput::eMouseL))
 		Damage(10);
 	if (CInput::GetState(0, CInput::eHold, CInput::eMouseR))
-		SetKill();
+		//SetKill();
 #endif // _DEBUG
 
 	if (m_HP < 0)
@@ -356,8 +363,7 @@ void Player::DamageState()
 		Move();
 	if (time < 0) {
 		time = 60;
-		m_damage_flg = false;
-		
+		m_damage_flg = false;	
 	}
 }
 void Player::Draw()
@@ -372,6 +378,8 @@ void Player::Draw()
 #define SAIZE_SD 100
 	
 	m_img.UpdateAnimation();
+	g_game_data.m_scroll.x = m_pos.x -320;
+    if(g_game_data.m_scroll.x<0)g_game_data.m_scroll.x = 0;
 
 	m_img.SetSize(SAIZE + m_depth, SAIZE + m_depth);
 	m_img.SetCenter((SAIZE + m_depth) / 2, (SAIZE + m_depth));
@@ -379,7 +387,7 @@ void Player::Draw()
 	m_img.SetFlipH(m_flip);
 	m_shadow.SetSize(SAIZE_SD + m_depth+m_jump_vec/5, SAIZE_SD + m_depth + m_jump_vec / 5);
 	m_shadow.SetCenter((SAIZE_SD + m_depth + m_jump_vec / 5) / 2, (SAIZE_SD + m_depth + m_jump_vec / 5) / 2);
-	m_shadow.SetPos(m_pos);
+    m_shadow.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y);
 	m_shadow.Draw();
 	m_img.Draw();
 		

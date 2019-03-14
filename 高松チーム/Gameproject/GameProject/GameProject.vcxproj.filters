@@ -80,6 +80,12 @@
     <ClCompile Include="Game\Scene\Title.cpp">
       <Filter>Game\Resource\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Game\CollitionBase.cpp">
+      <Filter>Game\Collition</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameData\GameData.cpp">
+      <Filter>Game\GameData</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GID.h" />
@@ -166,6 +172,12 @@
     <ClInclude Include="Game\Scene\Title.h">
       <Filter>Game\Resource\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Game\CollitionBase.h">
+      <Filter>Game\Collition</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameData\GameData.h">
+      <Filter>Game\GameData</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game">
@@ -212,6 +224,12 @@
     </Filter>
     <Filter Include="Game\Resource\Scene">
       <UniqueIdentifier>{3f4fbc74-5a7d-4a17-bff3-a0f66a4a7a17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Collition">
+      <UniqueIdentifier>{36793308-d191-4520-b4a2-b5db8b69490a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\GameData">
+      <UniqueIdentifier>{89c6430f-7610-4f90-a8ad-4195856f61cc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -22,7 +22,6 @@ void TaskManager::AddTask(Task * _t)
 		while (t->GetNext() != nullptr) {
 			t = t->GetNext();
 		}
-
 		t->SetNext(_t);
 		_t->SetPrev(t);
 		SetLast(_t);
@@ -46,8 +45,16 @@ void TaskManager::DrawAll()
 
 	while (d) {
 		d->Draw();
+		
+		printf("%d  ", d->GetType());
+		/*d->GetPos();
+		if (d->GetPos().x != -1 || d->GetPos().y != -1)
+			printf("%f,%f  ", d->GetPos().x, d->GetPos().y);*/
 		d = d->GetNext();
 	}
+
+
+	printf("\n ");
 }
 
 void TaskManager::HitCheckAll()
@@ -65,12 +72,7 @@ void TaskManager::HitCheckAll()
 
     Task* d = mp_head;
     while (d) {
-        Task* d2 = d->GetNext();
-        while (d2) {
-            d->HitCheck(d2);
-            d2->HitCheck(d);
-            d2 = d2->GetNext();
-        }
+            d->HitCheck();
         d = d->GetNext();
     }
 }
@@ -94,6 +96,7 @@ void TaskManager::CheckKillAll()
     Task*next = nullptr;
     Task* k = mp_head;
     do {
+        if (!k)return;
         //キルフラグがtrueなら
         if (k->m_kill_flg) {
             //前後を繋ぎなおす

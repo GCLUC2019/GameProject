@@ -5,6 +5,7 @@ const enum {
 	eGameClear,
 	eGameTutorial,
     eGameTitle,
+	eCollition,
 
 	eStage01,
 	eGround,
@@ -25,6 +26,7 @@ const enum {
 	ePEffectShortAttack02,
 	ePEffectShortAttack03,
 	ePEffectSpecialAttack,
+	ePEffectGetDamage,
 
 	eEnemy01,
 	eEnemy02,

@@ -142,6 +142,7 @@
     <ClInclude Include="Game\CGameScene.h" />
     <ClInclude Include="Game\CGameSceneObject.h" />
     <ClInclude Include="Game\CLoadResorce.h" />
+    <ClInclude Include="Game\CStageCrear.h" />
     <ClInclude Include="Game\CStoryScene.h" />
     <ClInclude Include="Game\CStorySceneCrear1.h" />
     <ClInclude Include="Game\CStorySceneOpening.h" />
@@ -171,6 +172,7 @@
     <ClCompile Include="Game\CObject.cpp" />
     <ClCompile Include="Game\CObjectImage.cpp" />
     <ClCompile Include="Game\CSetupGame.cpp" />
+    <ClCompile Include="Game\CStageCrear.cpp" />
     <ClCompile Include="Game\CStoryScene.cpp" />
     <ClCompile Include="Game\CStorySceneCrear1.cpp" />
     <ClCompile Include="Game\CStorySceneOpening.cpp" />

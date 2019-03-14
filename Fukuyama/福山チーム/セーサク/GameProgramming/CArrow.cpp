@@ -4,16 +4,16 @@
 #include <stdio.h>
 
 void CArrow::Init(){
-	SetVertex(-3.0f, 3.0f, -3.0f, 3.0f);
+	SetVertex(-10.0f, 50.0f, -5.0f, 5.0f);
 	mCollider = new CCircleCollider();
-	mCollider->mRadius = 3.0f;
+	mCollider->mRadius = 10.0f;
 	mCollider->mpTask = this;
 	CCollisionManager::Get()->Add(mCollider);
 }
 
 void CArrow::Update(){
 	if (mLife > 0){
-		mPosition = mPosition + mForward*mVelocity;
+		mPosition = mPosition + mForward*mVelocity * 2;
 		mLife--;
 		CRectangle::Update();
 	}
@@ -37,11 +37,9 @@ void CArrow::OnCollision(CCircleCollider*p){
 	printf("CArrow::OnCollision\n");
 }
 
-/*
 void CArrow::OnCollision(CCollider*p){
-if (mTaskTag == EPLAYERARROW&&p->mpTask->mTaskTag == EENEMYTANK){
-mEnabled = false;
+	if (mTaskTag == EARROW&&p->mpTask->mTaskTag == EENEMYTANK){
+		mEnabled = false;
+	}
 }
-}
-*/
 

@@ -34,5 +34,11 @@ public:
 	*/
 	virtual void MoveControl();
 	virtual int GetType() { return m_type; }
-
+	virtual CVector2D GetPos() {
+		return  m_pos;
+	}
+	CRect GetRect() {
+		return m_rect;
+	}
+		
 };

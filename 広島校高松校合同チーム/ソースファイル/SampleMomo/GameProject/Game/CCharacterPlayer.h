@@ -21,6 +21,8 @@
 
 #define MEMORY_HIT_ATTACKED_ENEMY_MAX (1000)
 
+#define PLAYER_AFTER_DAMAGE_INVINCIBLE (60)
+
 
 enum {
 	ePlayerAnimIdIdle,
@@ -31,6 +33,7 @@ enum {
 	ePlayerAnimIdLand,
 	ePlayerAnimIdFall,
 	ePlayerAnimIdDamage,
+	ePlayerAnimIdEvasion,
 	ePlayerAnimIdMax,
 };
 
@@ -63,6 +66,7 @@ enum {
 	ePlayerAnimFall1,
 	ePlayerAnimFall2,
 	ePlayerAnimDamage0,
+	ePlayerAnimEvasion0,
 	ePlayerAnimMax,
 };
 
@@ -90,6 +94,16 @@ private:
 	Task* m_memory_hit_attacked_enemy_p[MEMORY_HIT_ATTACKED_ENEMY_MAX];
 
 
+	bool m_is_evasion = false;
+	int m_evasion_count = 0;
+
+
+	int m_receive_input_evasion_time_count_l = 0;
+	int m_receive_input_evasion_time_count_r = 0;
+
+	int m_after_damage_invincible_count = 0;
+
+
 public:
 	CCharacterPlayer();
 	~CCharacterPlayer();
@@ -99,7 +113,12 @@ public:
 	void InputAttack();
 	void InputMove();
 	void InputJump();
+	void InputEvasion();
+	void BeginEvasion();
 
+	void DoingEvasion();
+
+	void AfterDamageInvincible();
 	void Landing();
 	void Attacking();
 	void Jumping();

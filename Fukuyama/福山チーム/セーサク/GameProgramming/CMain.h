@@ -1,6 +1,6 @@
 #pragma once
 
-#include "glut.h"
+//#include "glut.h"
 #include "CCollider.h"
 #include "CScene.h"
 

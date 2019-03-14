@@ -24,6 +24,7 @@ public:
 		ADD_RESOURCE("PEffectShortAttack", CAnimImage::LoadImage("../data/Image/motion_effect.png", PlayerEffectAnimData, 512, 512));
 		ADD_RESOURCE("PEffectLongAttack", CAnimImage::LoadImage("../data/Image/item_matome_1.png", PlayerEffectAnimData, 128, 128));
 		ADD_RESOURCE("PESpecialAttack", CAnimImage::LoadImage("../data/Image/pipo-mapeffect013a-1.png", PlayerEffectAnimData, 400, 400));
+		ADD_RESOURCE("PEGetDamage", CAnimImage::LoadImage("../data/Image/Effect_p020.png", PlayerEffectAnimData, 200, 200));
 
 		ADD_RESOURCE("Boss", CAnimImage::LoadImage("../data/Image/moton_jaryu.png", BossAnimData, 768, 768));
 		ADD_RESOURCE("GameClear", CImage::LoadImage("../data/Image/push start.png"));
