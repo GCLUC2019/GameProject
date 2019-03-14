@@ -16,12 +16,13 @@ enum {
 	ePCrouch,
 };
 
-enum {
+enum PlayerEffect {
 	ePELongAttack,
 	ePEShortAttack01,
 	ePEShortAttack02,
 	ePEShortAttack03,
 	ePESpecialAttack,
+	ePEGetDamage,
 };
 
 extern TexAnimData PlayerAnimData[];
