@@ -1,5 +1,6 @@
 #include "CollitionBase.h"
 #include"../Game/Character/EnemyBase/EnemyBase.h"
+#include "../GameProject/Game/GameData/GameData.h"
 
 CollitionBase::CollitionBase()
 {
@@ -24,12 +25,22 @@ bool CollitionBase::CollisionCheckRect(Task * b1, int _type)
 				b1->GetPos().x + b1->GetRect().m_right,
 				b1->GetPos().y + b1->GetRect().m_bottom);
 
+			/*CRect((b1->GetPos().x + b1->GetRect().m_left) - g_game_data.m_scroll.x,
+				(b1->GetPos().y + b1->GetRect().m_top) - g_game_data.m_scroll.y,
+				(b1->GetPos().x + b1->GetRect().m_right) - g_game_data.m_scroll.x,
+				(b1->GetPos().y + b1->GetRect().m_bottom) - g_game_data.m_scroll.y);*/
+
 			
 			CRect r2 = CRect(
 				b2->GetPos().x + b2->GetRect().m_left,
 				b2->GetPos().y + b2->GetRect().m_top,
 				b2->GetPos().x + b2->GetRect().m_right,
 				b2->GetPos().y + b2->GetRect().m_bottom);
+
+				/*CRect((b2->GetPos().x + b2->GetRect().m_left) - g_game_data.m_scroll.x,
+				(b2->GetPos().y + b2->GetRect().m_top) - g_game_data.m_scroll.y,
+					(b2->GetPos().x + b2->GetRect().m_right) - g_game_data.m_scroll.x,
+					(b2->GetPos().y + b2->GetRect().m_bottom) - g_game_data.m_scroll.y);*/
 		
 #ifdef _DEBUG//デバッグ表示　見れない場合は背景をなくしてください
 			Utility::DrawQuad(CVector2D(r1.m_left, r1.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
