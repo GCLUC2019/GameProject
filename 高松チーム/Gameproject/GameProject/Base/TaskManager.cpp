@@ -80,13 +80,17 @@ void TaskManager::HitCheckAll()
 void TaskManager::Kill(Task * _t)
 {
 	Task* k = mp_head;
-
+	
 }
 
 void TaskManager::KillAll()
 {
 	Task* k = mp_head;
-	
+	while (k) {
+		if (k->m_kill_flg == false)
+			k->SetKill();
+		k = k->GetNext();
+	}
 }
 /*
 ì¬@“c’†
