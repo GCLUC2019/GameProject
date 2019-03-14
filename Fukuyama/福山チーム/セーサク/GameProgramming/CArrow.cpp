@@ -13,7 +13,7 @@ void CArrow::Init(){
 
 void CArrow::Update(){
 	if (mLife > 0){
-		mPosition = mPosition + mForward*mVelocity*2;
+		mPosition = mPosition + mForward*mVelocity * 2;
 		mLife--;
 		CRectangle::Update();
 	}
