@@ -81,7 +81,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CAppear.cpp" />
-    <ClCompile Include="CAppearManager.cpp" />
     <ClCompile Include="CArrow.cpp" />
     <ClCompile Include="CBoss.cpp" />
     <ClCompile Include="CBullet.cpp" />
@@ -116,7 +115,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CAppear.h" />
-    <ClInclude Include="CAppearManager.h" />
     <ClInclude Include="CArrow.h" />
     <ClInclude Include="CBoss.h" />
     <ClInclude Include="CBullet.h" />
