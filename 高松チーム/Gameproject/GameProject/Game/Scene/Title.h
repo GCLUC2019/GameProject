@@ -17,8 +17,8 @@ private:
     CVector2D m_ohuda_pos;
     CVector2D m_start_pos;
     int m_cnt;//カウント
-    float m_size;
-    float m_time;
+    float m_size;//rogoclearのサイズ変量
+    float m_time;//お札の回転値
 public:
     Title();
     ~Title();

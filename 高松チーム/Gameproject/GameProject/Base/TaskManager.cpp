@@ -94,6 +94,7 @@ void TaskManager::CheckKillAll()
     Task*next = nullptr;
     Task* k = mp_head;
     do {
+        if (!k)return;
         //キルフラグがtrueなら
         if (k->m_kill_flg) {
             //前後を繋ぎなおす
