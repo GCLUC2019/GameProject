@@ -27,12 +27,13 @@ void BossFireEffect::Update()
 	m_img.ChangeAnimation(eBossFireEffect, false);
 	m_img.UpdateAnimation();
 	m_img.CheckAnimationEnd();
+	if (m_img.CheckAnimationEnd())SetKill();
 }
 
 void BossFireEffect::Draw()
 {
 	m_img.SetSize(FIRE_X_SIZE - BOSS_X_SIZE / 3, FIRE_Y_SIZE / 4);
-	m_img.SetPos(m_pos);
+	m_img.SetPos(m_pos - m_scroll);
 	m_img.Draw();
 }
 
@@ -59,11 +60,12 @@ void BossLazerEffect::Update()
 	m_img.ChangeAnimation(eBossLazerEffect, false);
 	m_img.UpdateAnimation();
 	m_img.CheckAnimationEnd();
+	if (m_img.CheckAnimationEnd())SetKill();
 }
 
 void BossLazerEffect::Draw()
 {
 	m_img.SetSize(LAZER_X_SIZE + 640, LAZER_Y_SIZE + 528);
-	m_img.SetPos(m_pos);
+	m_img.SetPos(m_pos - m_scroll);
 	m_img.Draw();
 }

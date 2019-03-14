@@ -8,13 +8,14 @@
 */
 class BossManager : public Task {
 private:
-	enum {
+	enum B{
 		eIdle,
 		eUp,
 		eAttackDown,
 		eAttackDown2,
 		eDeath,
 		eNothing,
+		ePriparation,
 	};
 
 	CAnimImage m_img; //“ª
@@ -33,7 +34,11 @@ public:
 
 	BossManager();
 
+	~BossManager();
+
 	void Nothing();
+
+	void Priparation();
 
 	void Idle();
 
