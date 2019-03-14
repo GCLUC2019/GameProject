@@ -25,6 +25,7 @@ const enum {
 	ePEffectShortAttack02,
 	ePEffectShortAttack03,
 	ePEffectSpecialAttack,
+	ePEffectGetDamage,
 
 	eEnemy01,
 	eEnemy02,
