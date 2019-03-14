@@ -173,3 +173,27 @@ void PlayerEffectSpecialAttack::Draw()
 	m_img2.Draw();
 	m_img.Draw();
 }
+
+
+PlayerEffectGetDamage::PlayerEffectGetDamage(const CVector2D & pos) : Task(ePEffectGetDamage)
+{
+	m_pos = pos;
+	m_img = COPY_RESOURCE("PEGetDamage", CAnimImage*);
+}
+
+void PlayerEffectGetDamage::Update()
+{
+	m_img.ChangeAnimation(PlayerEffect::ePEGetDamage,false);
+
+	if (m_img.CheckAnimationEnd())
+		SetKill();
+	m_img.UpdateAnimation();
+}
+
+void PlayerEffectGetDamage::Draw()
+{
+	m_img.SetSize(150, 150);
+	m_img.SetCenter(150 / 2, 150 / 2);
+	m_img.SetPos(m_pos - CVector2D(0,80));
+	m_img.Draw();
+}
