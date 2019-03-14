@@ -24,9 +24,8 @@ void CTank::Update(){
 	mBackward = rot.MultiVector2(CVector2(0.0f, 1.0f));
 	mHead.mMatrix = mMatrix*mHead.mMatrix;
 	mCanon.mMatrix = mHead.mMatrix*mCanon.mMatrix;
-
-
-
+	mPForward = rot.MultiVector2(CVector2(0.0f, 2.3f));   //’Ç‰Á Š˜“c
+	mEForward = rot.MultiVector2(CVector2(0.0f, 0.6f));
 
 }
 void CTank::LeftTurn(){
@@ -49,6 +48,22 @@ void CTank::HeadRightTurn(){
 	mHead.mRotation -= 20.0f;
 }
 
+//’Ç‰Á Š˜“c
+void CTank::EnemyUp(){
+	mPosition.y += 1;
+}
+void CTank::EnemyDown(){
+	mPosition.y -= 1;
+}
+void CTank::PForward(){
+	mPosition = mPosition + mPForward;
+}
+
+void CTank::EForward(){
+	mPosition = mPosition + mEForward;
+}
+
+
 void CTank::Render(){
 	CRectangle::Render();
 	mHead.Render();
@@ -58,3 +73,4 @@ void CTank::Render(){
 void CTank::OnCollision(CCollider*p){
 	printf("CTank::OnCollision\n");
 }
+

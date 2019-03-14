@@ -14,7 +14,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////
 class BossHead :public EnemyBase {
 private:
-	enum {
+	enum Head{
 		eIdle,
 		eUp,
 		eFireAttackDown,
@@ -44,6 +44,8 @@ protected:
 public:
 	BossHead(const CVector2D &player_pos,const int state);
 
+	~BossHead();
+
 	void Idle();
 
 	void FireAttack();
@@ -69,7 +71,7 @@ public:
 ///////////////////////////////////////////////////////////////////////////////////////////////
 class BossHand :public EnemyBase {
 private:
-	enum {
+	enum Hand{
 		eIdle,
 		eUp,
 		eDownAttack,
@@ -104,7 +106,10 @@ protected:
 
 
 public:
+
 	BossHand(const int state);
+
+	~BossHand();
 
 	void Idle();
 
@@ -128,7 +133,7 @@ public:
 ///////////////////////////////////////////////////////////////////////////////////////////////
 class BossTail :public EnemyBase{
 private:
-	enum {
+	enum  Tail{
 		eIdle,
 		eUp,
 		eDown,
@@ -136,19 +141,25 @@ private:
 	};
 
 	CAnimImage m_img2;//ボスの攻撃するときの画像
+	CImage m_img3;//ボスの攻撃するまでの画像
 
-	CVector2D m_pos2;
-	CVector2D m_player_pos; //プレイヤーの座標を格納する
+	CVector2D m_pos2;//攻撃するときのざひょう
+
+	CVector2D m_player_pos; //攻撃するときに使うプレイヤーの座標を格納する
 
 	int m_state;
 	int m_idle_cnt;//待機状態でいる時間
+	int m_anim_cnt;
 
 	bool m_draw_flag;
 	bool m_idle_flag;
+	bool m_anim_flag;
 
 public:
 
 	BossTail(const CVector2D &player_pos, const int state);
+
+	~BossTail();
 
 	void Update();
 

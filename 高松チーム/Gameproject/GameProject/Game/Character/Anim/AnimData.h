@@ -1,7 +1,7 @@
 #pragma once
 #include "../../Gameproject/GameProject/stdafx.h"
 
-enum {
+enum Enemy01Anim{
 	//Enemy01
 	eEIdile01,
 	eEMove01,
@@ -10,7 +10,7 @@ enum {
 	eEDeath01,
 };
 
-enum {
+enum Enemy02Anim {
 	//Enemy02
 	eEIdile02,
 	eEMove02,
@@ -19,7 +19,7 @@ enum {
 	eEDeath02,
 };
 
-enum {
+enum Enemy03Anim {
 	//Enemy03
 	eEIdile03,
 	eEMove03,
@@ -28,7 +28,7 @@ enum {
 	eEDeath03,
 };
 
-enum {
+enum Enemy04Anim {
 	//Enemy04
 	eEIdile04,
 	eEMove04,
@@ -37,7 +37,7 @@ enum {
 	eEDeath04,
 };
 
-enum {
+enum Enemy05Anim {
 	//Enemy05
 	eEIdile05,
 	eEMove05,

@@ -1,7 +1,7 @@
 #pragma once
 #include "../../Gameproject/GameProject/stdafx.h"
 
-enum {
+enum PlayerStateAnim{
 	ePIdle,
 	ePLongAttack,
 	ePShortAttack01,
@@ -16,7 +16,7 @@ enum {
 	ePCrouch,
 };
 
-enum PlayerEffect {
+enum PlayerEffectAnim {
 	ePELongAttack,
 	ePEShortAttack01,
 	ePEShortAttack02,

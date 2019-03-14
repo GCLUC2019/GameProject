@@ -1,7 +1,7 @@
 /*
 　　　　　　　　　　　　製作者　釜田正輝
-			　近距離　敵
-*/
+			近距離　敵
+			*/
 
 #ifndef CENEMY1_H
 #define CENEMY1_H
@@ -21,6 +21,7 @@ public:
 	void OnCollision(CCollider*p);
 	void OnCollision(CBoxCollider*p);
 	CHpBar mHpBar;
+
 };
 
 #endif

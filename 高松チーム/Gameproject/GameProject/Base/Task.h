@@ -16,6 +16,7 @@ private:
 protected:
     int m_type;
     float m_depth;
+   
 public:
     Task(int _type);
     virtual void Update();

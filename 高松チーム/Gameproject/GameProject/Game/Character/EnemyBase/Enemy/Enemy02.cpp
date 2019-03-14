@@ -2,11 +2,12 @@
 #include "../GameProject/Game/Character/Player.h"
 #include "../../Anim/AnimData.h"
 #include "../GameProject/Global.h"
+#include "../GameProject/Game/GameData/GameData.h"
 #define MOVE_SPEED 2.5f
 #define DEP_N 1200
 #define JUMP_SPD -20.0f
 #define GRAVITY 10.0f
-Enemy02::Enemy02() : EnemyBase(eEnemy02),
+Enemy02::Enemy02() : EnemyBase(CharacterData::eEnemy02),
 m_hight(0.0f),
 m_search_flg(false),
 m_move_dir_flg(true),
@@ -26,7 +27,7 @@ m_jump_flg(false)
     cnt = 0;
 }
 
-Enemy02::Enemy02(CVector2D _pos) : EnemyBase(eEnemy02),
+Enemy02::Enemy02(CVector2D _pos) : EnemyBase(CharacterData::eEnemy02),
 m_hight(0.0f),
 m_search_flg(false),
 m_move_dir_flg(true),
@@ -83,7 +84,7 @@ void Enemy02::Draw()
 {
     m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
     m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
-    m_img.SetPos(CVector2D(m_pos.x, m_pos.y + m_hight));
+    m_img.SetPos(CVector2D(m_pos.x - g_game_data.m_scroll.x, m_pos.y + m_hight - g_game_data.m_scroll.y));
     m_img.SetFlipH(m_move_dir_flg);
     m_img.Draw();
 }
