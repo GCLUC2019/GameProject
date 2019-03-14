@@ -54,10 +54,25 @@ void CLoadResorce::LoadResorce()
 
 	ADD_RESOURCE("Player_Damage_Anim_0", CImage::LoadImage("momotaro_damage_anim_0.png"));
 
+	ADD_RESOURCE("Player_Evasion_Anim_0", CImage::LoadImage("momotaro_evasion_anim_0.png"));
+	ADD_RESOURCE("Player_Evasion_Anim_1", CImage::LoadImage("momotaro_evasion_anim_1.png"));
+	ADD_RESOURCE("Player_Evasion_Anim_2", CImage::LoadImage("momotaro_evasion_anim_2.png"));
+	ADD_RESOURCE("Player_Evasion_Anim_3", CImage::LoadImage("momotaro_evasion_anim_3.png"));
+	ADD_RESOURCE("Player_Evasion_Anim_4", CImage::LoadImage("momotaro_evasion_anim_4.png"));
+	ADD_RESOURCE("Player_Evasion_Anim_5", CImage::LoadImage("momotaro_evasion_anim_5.png"));
+
+
+	ADD_RESOURCE("Player_Attack_Anim_0", CImage::LoadImage("momotaro_attack_anim_0.png"));
+	ADD_RESOURCE("Player_Attack_Anim_1", CImage::LoadImage("momotaro_attack_anim_1.png"));
+	ADD_RESOURCE("Player_Attack_Anim_2", CImage::LoadImage("momotaro_attack_anim_2.png"));
+
 	ADD_RESOURCE("Enemy_Idle_0", CImage::LoadImage("Enemy_idle1.png"));
 	ADD_RESOURCE("Enemy_Move_0", CImage::LoadImage("Enemy_move1.png"));
 	ADD_RESOURCE("Enemy_Attack_0", CImage::LoadImage("Enemy_attack1.png"));
 	ADD_RESOURCE("Enemy_Damage_0", CImage::LoadImage("Enemy_damage1.png"));
+
+	ADD_RESOURCE("Player_Down_Anim_0", CImage::LoadImage("momotaro_down_anim_0.png"));
+	ADD_RESOURCE("Player_Down_Anim_1", CImage::LoadImage("momotaro_down_anim_1.png"));
 
 	ADD_RESOURCE("IconSpear", CImage::LoadImage("IconSpear.png"));
 }
