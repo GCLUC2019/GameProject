@@ -1,3 +1,8 @@
+/*
+　　　　　　　　　　　　製作者　釜田正輝
+			　近距離　敵
+*/
+
 #ifndef CENEMY1_H
 #define CENEMY1_H
 #include "CTank.h"

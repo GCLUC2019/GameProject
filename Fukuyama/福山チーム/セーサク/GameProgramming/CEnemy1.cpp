@@ -1,3 +1,8 @@
+/*
+　　　　　　　　　　　　製作者　釜田正輝
+			　近距離　敵
+*/
+
 #include "CEnemy1.h"
 #include "CPlayerTank.h"
 #include "CBullet.h"
@@ -11,7 +16,12 @@ extern CPlayerTank*Tank;
 
 void CEnemy1::Init(){
 	mFireIntervar = FIREINTERVER_E;
-	CTank::Init();
+	//CTank::Init();
+	SetVertex(-50.0f, 50.0f, -54.0f, 54.0f);
+	mBoxCollider.mSize.x = 20.0f;
+	mBoxCollider.mSize.y = 24.0f;
+	mBoxCollider.mpTask = this;
+
 	SetColor(0.6f, 1.0f, 1.0f, 1.0f);
 	mHead.SetColor(0.6f, 1.0f, 1.0f, 1.0f);
 	mCanon.SetColor(0.6f, 1.0f, 1.0f, 1.0f);
@@ -47,18 +57,18 @@ void CEnemy1::Update(){
 		mFireIntervar--;
 	}
 
-	if (-0.1 < dot&&dot < 0.1){
-		if (mFireIntervar <= 0){
-			mFireIntervar = FIREINTERVER_E;
-			CBullet*bullet = new CBullet();
-			bullet->mTaskTag = EENEMYBULLET;
-			bullet->mLife = CBULLET_LIFE;
-			bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, 25.0f);
-			bullet->mForward = bullet->mPosition - mCanon.mMatrix*CVector2(0.0f, 24.0f);
-			bullet->SetColor(mColor[0], mColor[1], mColor[2], mColor[3]);
-			CTaskManager::Get()->Add(bullet);
-		}
-	}
+	//if (-0.1 < dot&&dot < 0.1){
+	//	if (mFireIntervar <= 0){
+	//		mFireIntervar = FIREINTERVER_E;
+	//		CBullet*bullet = new CBullet();
+	//		bullet->mTaskTag = EENEMYBULLET;
+	//		bullet->mLife = CBULLET_LIFE;
+	//		bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, 25.0f);
+	//		bullet->mForward = bullet->mPosition - mCanon.mMatrix*CVector2(0.0f, 24.0f);
+	//		bullet->SetColor(mColor[0], mColor[1], mColor[2], mColor[3]);
+	//		CTaskManager::Get()->Add(bullet);
+	//	}
+	//}
 	if (EnemyTank->mPosition.x >= 425.0f){
 		EnemyTank->mPosition.y = 150.0f;
 		EnemyTank->mRotation = 90.0f;
@@ -88,6 +98,7 @@ void CEnemy1::OnCollision(CCollider*p){
 
 void CEnemy1::OnCollision(CBoxCollider*p){
 	mPosition = mPosition + mCollider->mAdjust;
+
 }
 
 void CEnemy1::Render(){
