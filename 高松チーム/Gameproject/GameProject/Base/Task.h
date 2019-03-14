@@ -30,4 +30,8 @@ public:
     virtual float GetDepth(){ return m_depth; }
     friend class TaskManager;
 
+	virtual CVector2D GetPos() {
+		return  CVector2D(-1,-1);
+	}
+
 };

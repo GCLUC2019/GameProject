@@ -1,4 +1,5 @@
 #include "CStorySceneOpening.h"
+#include "CGameScene.h"
 
 //オープニングのテキスト数
 #define OPENING_SENTENSE_NUM 10
@@ -58,6 +59,7 @@ CStorySceneOpening::CStorySceneOpening()
 
 CStorySceneOpening::~CStorySceneOpening()
 {
+	CGameScene::GetInstance()->Setup();
 }
 
 void CStorySceneOpening::Update()

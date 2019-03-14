@@ -62,6 +62,9 @@
     <ClCompile Include="Game\CCharacterBoss.cpp">
       <Filter>Game\Object\GameSceneObject\Character\Boss</Filter>
     </ClCompile>
+    <ClCompile Include="Game\CStorySceneCrear1.cpp">
+      <Filter>Game\Object\StoryScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Global.h" />
@@ -125,6 +128,9 @@
     </ClInclude>
     <ClInclude Include="Game\CCharacterBoss.h">
       <Filter>Game\Object\GameSceneObject\Character\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CStorySceneCrear1.h">
+      <Filter>Game\Object\StoryScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -10,9 +10,9 @@
 #define NEXT_ARRAY_NUM 12
 
 //画像切り取りサイズの初期値と変動値
-#define DEF_RECT_TOP_X 550
+#define DEF_RECT_TOP_X 550  
 #define DEF_RECT_TOP_Y 500
-#define DEF_RECT_BOT_X 1550
+#define DEF_RECT_BOT_X 1550 
 #define DEF_RECT_BOT_Y 1600
 #define RECT_TOP_X 1650
 #define RECT_BOT_X 2600
@@ -27,16 +27,17 @@
 #define RECT_TOP_Y4 1150
 #define RECT_BOT_X4 2100
 #define RECT_BOT_Y4 2000
-
 #define RECT_BOT_X5 550
 #define RECT_BOT_Y5 1450
-#define RECT_TOP_X6 550
-#define RECT_TOP_Y6 250
-#define RECT_BOT_X6 1200
+#define RECT_TOP_Y6 1000
+#define RECT_BOT_X6 1050
 #define RECT_BOT_Y6 1700
-#define RECT_TOP_X7 2800
-#define RECT_TOP_X8 1200
-
+#define RECT_TOP_X7 1050
+#define RECT_TOP_Y7 200
+#define RECT_BOT_X7 1550
+#define RECT_BOT_Y7 700
+#define RECT_TOP_X9 1200
+#define RECT_BOT_X9 3600
 //画像サイズの初期値と変動値
 #define DEF_SIZE_X 300
 #define DEF_SIZE_Y 300
@@ -48,8 +49,14 @@
 #define SIZE_Y3 300
 #define SIZE_X4 300
 #define SIZE_Y4 300
+#define SIZE_X6 300
+#define SIZE_Y6 400
+#define SIZE_X7 200
+#define SIZE_Y7 200
 #define SIZE_X8 600
 #define SIZE_Y8 600
+#define SIZE_X9 600
+#define SIZE_Y9 600
 //表示位置の変動値
 #define DEF_POS_X 200
 #define DEF_POS_Y 100
@@ -59,8 +66,11 @@
 #define POS_X4 350
 #define POS_Y4 150
 #define POS_X6 300
-#define POS_Y6 50
+#define POS_Y6 220
+#define POS_X7 180
+#define POS_Y7 70
 #define POS_X8 200
+#define POS_X9 550
 
 CStorySceneCrear1::CStorySceneCrear1()
 {
@@ -141,27 +151,23 @@ void CStorySceneCrear1::SetValue()
 	size_poses = CVector4D(DEF_SIZE_X, DEF_SIZE_Y, DEF_POS_X, DEF_POS_Y);
 	DelValue(SUB5, rects, size_poses);
 
-	rects = CVector4D(RECT_TOP_X6, RECT_TOP_Y6, RECT_BOT_X6, RECT_BOT_Y6);
-	size_poses = CVector4D(DEF_SIZE_X, DEF_SIZE_Y, DEF_POS_X, DEF_POS_Y);
+	rects = CVector4D(MIN, RECT_TOP_Y6, RECT_BOT_X6, MAX_Y);
+	size_poses = CVector4D(SIZE_X6, SIZE_Y6, POS_MIN_X, POS_Y6);
 	DelValue(SUB6, rects, size_poses);
 
-	rects = CVector4D(RECT_TOP_X7, MIN, MAX_X, MAX_Y);
-	size_poses = CVector4D(DEF_SIZE_X, DEF_SIZE_Y, POS_MAX_X, POS_MIN_Y);
+	rects = CVector4D(RECT_TOP_X7, RECT_TOP_Y7, RECT_BOT_X7, RECT_BOT_Y7);
+	size_poses = CVector4D(SIZE_X7, SIZE_Y7, POS_X7, POS_Y7);
 	DelValue(SUB7, rects, size_poses);
 
-	rects = CVector4D(RECT_TOP_X8, MIN, MAX_X, MAX_Y);
-	size_poses = CVector4D(SIZE_X8, SIZE_Y8, POS_X8, POS_MIN_Y);
+	rects = CVector4D(MIN, MIN, DEF_RECT_BOT_X, MAX_Y);
+	size_poses = CVector4D(SIZE_X, SIZE_Y, POS_MIN_X, POS_MIN_Y);
 	DelValue(SUB8, rects, size_poses);
 
-	rects = CVector4D(MIN, MIN, MAX_X, MAX_Y);
-	size_poses = CVector4D(DRAW_MAX_X, DRAW_MAX_Y, POS_MIN_X, POS_MIN_Y);
+	rects = CVector4D(RECT_TOP_X9, MIN, RECT_BOT_X9, MAX_Y);
+	size_poses = CVector4D(SIZE_X9, SIZE_Y9, POS_X9, POS_MIN_Y);
 	DelValue(SUB9, rects, size_poses);
 
 	rects = CVector4D(MIN, MIN, MAX_X, MAX_Y);
 	size_poses = CVector4D(DRAW_MAX_X, DRAW_MAX_Y, POS_MIN_X, POS_MIN_Y);
 	DelValue(SUB10, rects, size_poses);
-
-	rects = CVector4D(MIN, MIN, MAX_X, MAX_Y);
-	size_poses = CVector4D(DRAW_MAX_X, DRAW_MAX_Y, POS_MIN_X, POS_MIN_Y);
-	DelValue(SUB11, rects, size_poses);
 }

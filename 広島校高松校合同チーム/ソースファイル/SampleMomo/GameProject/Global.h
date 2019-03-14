@@ -31,3 +31,4 @@ enum {
 	eTaskIdCommonObject,
 	eTaskIdDropItem,
 };
+

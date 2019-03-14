@@ -47,10 +47,6 @@ void MainLoop(void) {
 
 	//ï`âÊ
 	TaskManager::GetInstance()->DrawAll();
-
-	//ë¨Ç∑Ç¨ñhé~
-	Sleep(1);
-
 }
 void Init(void)
 {
