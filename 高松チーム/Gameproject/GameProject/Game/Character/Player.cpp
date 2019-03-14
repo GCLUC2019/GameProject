@@ -125,7 +125,8 @@ void Player::Jump()
 		time = 0;
 		m_jump_vec = 0;
 		m_jump_flg = false;
-	}
+    }
+        m_scroll.y =  m_jump_vec;
 }
 
 void Player::Attack()
@@ -361,8 +362,7 @@ void Player::DamageState()
 		Move();
 	if (time < 0) {
 		time = 60;
-		m_damage_flg = false;
-		
+		m_damage_flg = false;	
 	}
 }
 void Player::Draw()
@@ -377,14 +377,16 @@ void Player::Draw()
 #define SAIZE_SD 100
 	
 	m_img.UpdateAnimation();
-
+    m_scroll.x = m_pos.x -320;
+    if(m_scroll.x<0)m_scroll.x = 0;
+    //if (m_scroll.y<0)m_scroll.y = 0;
 	m_img.SetSize(SAIZE + m_depth, SAIZE + m_depth);
 	m_img.SetCenter((SAIZE + m_depth) / 2, (SAIZE + m_depth));
 	m_img.SetPos(m_pos+CVector2D(0, m_jump_vec));
 	m_img.SetFlipH(m_flip);
 	m_shadow.SetSize(SAIZE_SD + m_depth+m_jump_vec/5, SAIZE_SD + m_depth + m_jump_vec / 5);
 	m_shadow.SetCenter((SAIZE_SD + m_depth + m_jump_vec / 5) / 2, (SAIZE_SD + m_depth + m_jump_vec / 5) / 2);
-	m_shadow.SetPos(m_pos);
+    m_shadow.SetPos(m_pos.x, m_pos.y - m_scroll.y);
 	m_shadow.Draw();
 	m_img.Draw();
 		
