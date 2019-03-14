@@ -27,12 +27,26 @@ bool CollitionBase::CollisionCheckRect(Task * b1, int _type)
 				b1->GetPos().y + b1->GetRect().m_top,
 				b1->GetPos().x + b1->GetRect().m_right,
 				b1->GetPos().y + b1->GetRect().m_bottom);
-		
+
+			
 			CRect r2 = CRect(
 				b2->GetPos().x + b2->GetRect().m_left,
 				b2->GetPos().y + b2->GetRect().m_top,
 				b2->GetPos().x + b2->GetRect().m_right,
 				b2->GetPos().y + b2->GetRect().m_bottom);
+		
+#ifdef _DEBUG//デバッグ表示　見れない場合は背景をなくしてください
+			Utility::DrawQuad(CVector2D(r1.m_left, r1.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+			Utility::DrawQuad(CVector2D(r1.m_left, r1.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+			Utility::DrawQuad(CVector2D(r1.m_right, r1.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+			Utility::DrawQuad(CVector2D(r1.m_right, r1.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+			
+			Utility::DrawQuad(CVector2D(r2.m_left, r2.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+			Utility::DrawQuad(CVector2D(r2.m_left, r2.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+			Utility::DrawQuad(CVector2D(r2.m_right, r2.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+			Utility::DrawQuad(CVector2D(r2.m_right, r2.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+#endif // _DEBUG
+
 			if (CCollision::CollisionRect(r1, r2))
 				return true;
 			else b2 = b2->GetNext();
