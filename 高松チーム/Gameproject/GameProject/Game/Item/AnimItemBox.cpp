@@ -14,16 +14,22 @@ static TexAnim DummyBoxClose[] = {
 { 6,30 },
 };
 
-static TexAnim DummyBoxOpen[] = {
+static TexAnim DummyBoxOpen01[] = {
 	{ 7,20 },
-{ 8,20 },
-{ 9,20 },
 };
+
+
+static TexAnim DummyBoxOpen02[] = {
+{ 8,30 },
+{ 9,30 },
+};
+
 
 TexAnimData ItemBoxAnimData[] = {
 	ANIMDATA(TrueBoxClose),
 	ANIMDATA(TrueBoxOpen),
 	ANIMDATA(DummyBoxClose),
-	ANIMDATA(DummyBoxOpen),
+	ANIMDATA(DummyBoxOpen01),
+	ANIMDATA(DummyBoxOpen02),
 };
 
