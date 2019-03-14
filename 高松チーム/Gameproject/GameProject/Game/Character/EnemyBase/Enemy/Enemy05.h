@@ -7,7 +7,7 @@
 
 class Enemy05 : public EnemyBase {
 private:
-	enum {
+	enum Enemy05State{
 		eMove,
 		eSearch,
 		eAttack,
@@ -28,6 +28,6 @@ public:
 	void Damage();
 	void Update();
 	void Draw();
-	void HitCheck(/*Task* _t*/);
+	void HitCheck();
 	virtual int GetType() { return m_type; }
 };

@@ -21,6 +21,7 @@ public:
 	ItemBox(int _m_box_typ, CVector2D _m_pos);
 	void Open();
 	void Update();
+	void HitCheck(/*Task* _t*/);
 	void Draw();
 	~ItemBox();
 	CVector2D GetPos() {

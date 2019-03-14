@@ -83,6 +83,9 @@
     <ClCompile Include="Game\CollitionBase.cpp">
       <Filter>Game\Collition</Filter>
     </ClCompile>
+    <ClCompile Include="Game\GameData\GameData.cpp">
+      <Filter>Game\GameData</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GID.h" />
@@ -172,6 +175,9 @@
     <ClInclude Include="Game\CollitionBase.h">
       <Filter>Game\Collition</Filter>
     </ClInclude>
+    <ClInclude Include="Game\GameData\GameData.h">
+      <Filter>Game\GameData</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game">
@@ -221,6 +227,9 @@
     </Filter>
     <Filter Include="Game\Collition">
       <UniqueIdentifier>{36793308-d191-4520-b4a2-b5db8b69490a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\GameData">
+      <UniqueIdentifier>{89c6430f-7610-4f90-a8ad-4195856f61cc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
