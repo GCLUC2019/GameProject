@@ -181,6 +181,7 @@ void CCharacterPlayer::CharacterUpdate()
 	MoveLimit();
 	
 	
+	AfterDamageInvincible();
 	Attacking();
 
 	CalcScroll();
@@ -234,6 +235,25 @@ void CCharacterPlayer::InputJump()
 		m_jumping_count = 30;
 		m_vec.y = -30.0f;
 		m_is_landing = false;
+	}
+}
+
+void CCharacterPlayer::AfterDamageInvincible()
+{
+	if (m_after_damage_invincible_count > 0) {
+
+
+		m_after_damage_invincible_count--;
+		if (m_after_damage_invincible_count <= 0) {
+			SetInvincible(false);
+			SetIsBlindDraw(false);
+
+		}
+		else {
+			SetInvincible(true);
+		}
+		
+		
 	}
 }
 
@@ -300,11 +320,12 @@ void CCharacterPlayer::DoingEvasion()
 {
 	if (m_is_evasion == false) return;
 
-	if (m_evasion_count-- < 0) {
+	if (--m_evasion_count <= 0) {
 		m_is_evasion = false;
 		SetInvincible(false);
 	}
 	else {
+		//
 		printf("‰ñ”ð %d\n", m_evasion_count);
 		SetInvincible(true);
 
@@ -317,7 +338,6 @@ void CCharacterPlayer::DoingEvasion()
 			m_vec.x = -moving_vec * CFPS::GetDeltaTime();
 		}
 		SetWillPlayAnim(ePlayerAnimIdEvasion);
-
 	}
 
 	
@@ -542,4 +562,9 @@ void CCharacterPlayer::ReceiveAttack()
 
 	SetWillPlayAnim(ePlayerAnimIdDamage);
 	m_damage_anim_count = PLAYER_DAMAGE_ANIM_FRAME;
+	
+
+	//–³“GŽžŠÔ“_“”
+	SetIsBlindDraw(true);
+	m_after_damage_invincible_count = PLAYER_AFTER_DAMAGE_INVINCIBLE;
 }

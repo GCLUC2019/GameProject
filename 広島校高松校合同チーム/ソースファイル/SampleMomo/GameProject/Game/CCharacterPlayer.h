@@ -21,6 +21,8 @@
 
 #define MEMORY_HIT_ATTACKED_ENEMY_MAX (1000)
 
+#define PLAYER_AFTER_DAMAGE_INVINCIBLE (60)
+
 
 enum {
 	ePlayerAnimIdIdle,
@@ -99,6 +101,8 @@ private:
 	int m_receive_input_evasion_time_count_l = 0;
 	int m_receive_input_evasion_time_count_r = 0;
 
+	int m_after_damage_invincible_count = 0;
+
 
 public:
 	CCharacterPlayer();
@@ -114,6 +118,7 @@ public:
 
 	void DoingEvasion();
 
+	void AfterDamageInvincible();
 	void Landing();
 	void Attacking();
 	void Jumping();
