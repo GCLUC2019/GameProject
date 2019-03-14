@@ -2,78 +2,11 @@
 #include <iostream>
 //#include <string>
 #include <list>
-
-class Task{
-public:
-	Task *mp_next;
-public:
-    Task();
-    void Draw();
-};
-
-Task::Task() : mp_next(nullptr){
-}
-void Task::Draw(){
-    printf("TaskDraw\n");
-}
-class TaskManager {
-private:
-	Task* head;
-	static TaskManager* instance;
-public:
-	TaskManager();
-	//static TaskManager* GetInstance();
-	//static void ClearInstance();
-	void DrawAll();
-	//void UpdateAll();
-	void Add(Task *t);
-	void Delete(Task *t);
-
-};
-TaskManager* TaskManager::instance=nullptr;
-
-TaskManager::TaskManager() :head(nullptr){
+#include "Task.h"
+#include "TaskManager.h"
 
 
-}
-
-//TaskManager* TaskManager::GetInstance(){
-//
-//
-//}
-
-//TaskManager::ClearInstance(){
-//
-//
-//}
-
-void TaskManager::DrawAll(){
-	//headから最後のタスクのDraw関数を呼び出す
-	Task*t = head;
-	while (t)
-}
-void TaskManager::Add(Task *t){
-	Task*n = head;
-	//末尾のタスクまで進める
-	while (n->mp_next){
-		n = n->mp_next;
-	}
-	//タスクをつなげる
-
-
-}
-void TaskManager::Delete(Task *t){
-
-}
-class A : public Task{
-public:
-	void Draw();
-};
-void A::Draw(){
-	printf("ADraw\n");
-}
-
-Task* head;
+//Task* head;
 
 using namespace std;
 

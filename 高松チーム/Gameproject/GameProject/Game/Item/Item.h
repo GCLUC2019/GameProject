@@ -22,4 +22,7 @@ public:
 	Item(int _m_item_type,CVector2D _m_pos);
 	void Update();
 	void Draw();
+	 CVector2D GetPos() {
+		 return m_pos;
+	}
 };

@@ -53,8 +53,8 @@ static TexAnim EnemyMove02[] = {
 };
 
 static TexAnim EnemyAttack02[] = {
-	{ 4,50 },
-{ 5,30 },
+	{ 4,40 },
+{ 5,10 },
 };
 
 static TexAnim EnemyDamage02[] = {

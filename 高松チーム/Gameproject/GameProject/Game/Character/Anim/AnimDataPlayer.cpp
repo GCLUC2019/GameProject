@@ -16,7 +16,7 @@ static TexAnim PlayerIdle[] = {
 };
 
 static TexAnim PlayerLongAttack[] = {
-	{10,5},
+	{10,30},
 {11,5},
 };
 
@@ -99,18 +99,42 @@ static TexAnim PlayerEffectLongAttack[] = {
 };
 
 static TexAnim PLayerEffectShortAttack01[] = {
-	{ 0,30 },
-{ 1,30 },
+	{ 0,10 },
+{ 1,10 },
 };
 
 static TexAnim PLayerEffectShortAttack02[] = {
-	{ 2,30 },
-{ 3,30 },
+	{ 3,10 },
+{ 4,10 },
 };
 
 static TexAnim PLayerEffectShortAttack03[] = {
-	{ 4,30 },
-{ 5,30 },
+	{ 6,10 },
+{ 7,10 },
+};
+
+static TexAnim PlayerEffectSpecialAttack[] = {
+	{0,10},
+{1,10},
+{2,10},
+{3,10},
+{4,10},
+{5,10},
+{6,10},
+{7,10},
+{8,10},
+{9,10},
+};
+
+static TexAnim PlayerEffectGetDamage[] = {
+	{0,2},
+{1,2},
+{2,2},
+{3,2},
+{4,2},
+{5,2},
+{6,2},
+{7,2},
 };
 
 TexAnimData PlayerEffectAnimData[] = {
@@ -118,4 +142,6 @@ TexAnimData PlayerEffectAnimData[] = {
 	ANIMDATA(PLayerEffectShortAttack01),
 	ANIMDATA(PLayerEffectShortAttack02),
 	ANIMDATA(PLayerEffectShortAttack03),
+	ANIMDATA(PlayerEffectSpecialAttack),
+	ANIMDATA(PlayerEffectGetDamage),
 };

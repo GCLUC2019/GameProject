@@ -6,16 +6,18 @@ class EnemyBase : public Task {
 private:
 protected:
 
-	CRect m_rect;		//“G‹éŒ`
-	CVector2D m_pos;	//“GˆÊ’u
-	CVector2D m_vec;	//“GƒxƒNƒgƒ‹
-	CAnimImage m_img;	//“G‰æ‘œ
-	CVector2D m_pos_old;//“G‘OˆÊ’u
-	int m_hp;			//“G‘Ì—Í
-	int m_state;		//“Gó‘Ô
-	float m_ang;		//“G•ûŒü
-	float m_depth;		//‰œs‚«
-	bool m_flip;		//”½“]ƒtƒ‰ƒO
+	CRect m_rect;			//“G‹éŒ`
+	CVector2D m_pos;		//“GˆÊ’u
+	CVector2D m_shadow_pos;	//‰eˆÊ’u
+	CVector2D m_vec;		//“GƒxƒNƒgƒ‹
+	CAnimImage m_img;		//“G‰æ‘œ
+	CImage m_shadow;		//‰e
+	CVector2D m_pos_old;	//“G‘OˆÊ’u
+	int m_hp;				//“G‘Ì—Í
+	int m_state;			//“Gó‘Ô
+	float m_ang;			//“G•ûŒü
+	float m_depth;			//‰œs‚«
+	bool m_flip;			//”½“]ƒtƒ‰ƒO
 	
 public:
 	EnemyBase(int _type);
@@ -31,6 +33,8 @@ public:
 	@drief ƒIƒuƒWƒFƒNƒg‚Ì‰æ–ÊˆÚ“®‚ğ§ŒÀ‚·‚é
 	*/
 	virtual void MoveControl();
-
-
+	virtual int GetType() { return m_type; }
+	virtual CVector2D GetPos() {
+		return  m_pos;
+	}
 };

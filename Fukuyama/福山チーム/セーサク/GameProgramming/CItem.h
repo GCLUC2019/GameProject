@@ -6,7 +6,7 @@
 #include "CRectangle.h"
 #include "Task.h"
 #include "CCollider.h"
-#include <stdlib.h>
+#include "CStdafx.h"
 
 class CItem :public CRectangle, Task{
 public:

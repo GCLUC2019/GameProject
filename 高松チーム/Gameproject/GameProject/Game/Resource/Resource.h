@@ -3,7 +3,7 @@
 #include "../Character/Anim/AnimData.h"
 #include "../Character/Anim/AnimDataPlayer.h"
 #include "../Character/Anim/AnimBoss.h"
-
+#include"../Item/AnimItemBox.h"
 
 class Resource {
 public:
@@ -23,6 +23,9 @@ public:
 		ADD_RESOURCE("Player", CAnimImage::LoadImage("../data/Image/motion_player.png", PlayerAnimData, 512,512));
 		ADD_RESOURCE("PEffectShortAttack", CAnimImage::LoadImage("../data/Image/motion_effect.png", PlayerEffectAnimData, 512, 512));
 		ADD_RESOURCE("PEffectLongAttack", CAnimImage::LoadImage("../data/Image/item_matome_1.png", PlayerEffectAnimData, 128, 128));
+		ADD_RESOURCE("PESpecialAttack", CAnimImage::LoadImage("../data/Image/pipo-mapeffect013a-1.png", PlayerEffectAnimData, 400, 400));
+		ADD_RESOURCE("PEGetDamage", CAnimImage::LoadImage("../data/Image/Effect_p020.png", PlayerEffectAnimData, 200, 200));
+
 		ADD_RESOURCE("Boss", CAnimImage::LoadImage("../data/Image/moton_jaryu.png", BossAnimData, 768, 768));
 		ADD_RESOURCE("GameClear", CImage::LoadImage("../data/Image/push start.png"));
 		ADD_RESOURCE("Enemy01", CAnimImage::LoadImage("../data/Image/zako_chochin_motion.png", Enemy01AnimData,512,512));
@@ -37,9 +40,14 @@ public:
 		ADD_RESOURCE("SkyBlue", CImage::LoadImage("../data/Image/bg_sky_01.png"));
 		ADD_RESOURCE("SkyRed", CImage::LoadImage("../data/Image/bg_sky_02.png"));
 		ADD_RESOURCE("Kakera", CImage::LoadImage("../data/Image/item_kakera.png"));
+		ADD_RESOURCE("MagicCircle", CImage::LoadImage("../data/Image/mahoujin_image.png"));
 		ADD_RESOURCE("BossLazer", CAnimImage::LoadImage("../data/Image/pipo-btleffect141.png", BossLazerEffectAnimData, 640,480));
 		ADD_RESOURCE("Title", CImage::LoadImage("../data/Image/title.png"));
-
+        ADD_RESOURCE("PushStart", CImage::LoadImage("../data/Image/push start.png"));
+        ADD_RESOURCE("RogoBase", CImage::LoadImage("../data/Image/rogo_base.png"));
+        ADD_RESOURCE("RogoClear", CImage::LoadImage("../data/Image/rogo_cl.png"));
+        ADD_RESOURCE("RogoHuda", CImage::LoadImage("../data/Image/rogo_huda.png"));
+		ADD_RESOURCE("ItemBox", CAnimImage::LoadImage("../data/Image/itembox_motion_object.png", ItemBoxAnimData, 512, 512));
 	}
 };
 

@@ -4,6 +4,7 @@ const enum {
 	eGameScene,
 	eGameClear,
 	eGameTutorial,
+    eGameTitle,
 
 	eStage01,
 	eGround,
@@ -16,12 +17,15 @@ const enum {
 	eEnemyBaseManager,
 
 	eItem,
+	eItemBox,
 
 	ePlayer,
 	ePEffectLongAttack,
 	ePEffectShortAttack01,
 	ePEffectShortAttack02,
 	ePEffectShortAttack03,
+	ePEffectSpecialAttack,
+	ePEffectGetDamage,
 
 	eEnemy01,
 	eEnemy02,
