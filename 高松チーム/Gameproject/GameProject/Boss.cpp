@@ -2,6 +2,7 @@
 #include "../GameProject/Game/Character/Effect/BossEffect.h"
 #include "../GameProject/Game/Character/Anim/AnimBoss.h"
 #include "../GameProject/Game/Character/EnemyBase/Boss/BossManager.h"
+#include "../GameProject/Game/GameData/GameData.h"
 
 
 #define BOSS_X_SIZE 768
@@ -156,9 +157,9 @@ void BossHead::Draw()
 	m_img2.SetRect(0, BOSS_Y_SIZE * 4, BOSS_X_SIZE, BOSS_Y_SIZE * 5);
 
 	
-	m_img.SetPos(m_pos - m_scroll);
-	m_img2.SetPos(m_pos - m_scroll);
-	m_img3.SetPos(m_pos2 - m_scroll);
+	m_img.SetPos(m_pos - g_game_data.m_scroll);
+	m_img2.SetPos(m_pos - g_game_data.m_scroll);
+	m_img3.SetPos(m_pos2 - g_game_data.m_scroll);
 	
 	if (m_draw_flag == false && m_idle_flag == false)m_img.Draw();
 	if(m_draw_flag == true && m_idle_flag == false)m_img2.Draw();
@@ -284,9 +285,9 @@ void BossHand::Draw()
 	m_img2.SetRect(BOSS_X_SIZE, BOSS_Y_SIZE * 2, BOSS_X_SIZE * 2, BOSS_Y_SIZE * 3);
 	m_img3.SetRect(0, BOSS_Y_SIZE * 2, BOSS_X_SIZE, BOSS_Y_SIZE * 3);
 
-	m_img.SetPos(m_pos - m_scroll);
-	m_img2.SetPos(m_pos2 - m_scroll);
-	m_img3.SetPos(m_pos3 - m_scroll);
+	m_img.SetPos(m_pos - g_game_data.m_scroll);
+	m_img2.SetPos(m_pos2 - g_game_data.m_scroll);
+	m_img3.SetPos(m_pos3 - g_game_data.m_scroll);
 
 	if (m_idle_flag == true) {
 		m_img2.Draw();
@@ -397,9 +398,9 @@ void BossTail::HitCheck(Task * _t)
 
 void BossTail::Draw()
 {
-	m_img.SetPos(m_pos - m_scroll);
-	m_img2.SetPos(m_pos2 - m_scroll);
-	m_img3.SetPos(m_pos2 - m_scroll);
+	m_img.SetPos(m_pos - g_game_data.m_scroll);
+	m_img2.SetPos(m_pos2 - g_game_data.m_scroll);
+	m_img3.SetPos(m_pos2 - g_game_data.m_scroll);
 
 	m_img.SetSize(BOSS_X_SIZE / 2, BOSS_Y_SIZE / 2);
 	m_img2.SetSize(BOSS_X_SIZE / 2, BOSS_Y_SIZE / 2);
