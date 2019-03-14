@@ -1,6 +1,8 @@
 #include "Boss.h"
 #include "../GameProject/Game/Character/Effect/BossEffect.h"
 #include "../GameProject/Game/Character/Anim/AnimBoss.h"
+#include "../GameProject/Game/Character/EnemyBase/Boss/BossManager.h"
+
 
 #define BOSS_X_SIZE 768
 #define BOSS_Y_SIZE 768
@@ -22,8 +24,6 @@ BossHead::BossHead(const CVector2D &player_pos, const int state) :EnemyBase(eBos
 	m_img2 = COPY_RESOURCE("Boss", CImage*);
 	m_img3 = COPY_RESOURCE("Boss", CAnimImage*);
 	
-	
-
 	m_img.SetSize(BOSS_X_SIZE / 3, BOSS_Y_SIZE / 3);
 	m_img2.SetSize(BOSS_X_SIZE / 3, BOSS_Y_SIZE / 3);
 	m_img3.SetSize(BOSS_X_SIZE / 2, BOSS_Y_SIZE / 2);
@@ -49,6 +49,11 @@ BossHead::BossHead(const CVector2D &player_pos, const int state) :EnemyBase(eBos
 
 	m_state = state;
 
+}
+
+BossHead::~BossHead()
+{
+	TaskManager::GetInstance()->AddTask(new BossManager());
 }
 
 void BossHead::Idle()
@@ -89,6 +94,7 @@ void BossHead::UpMove()
 {
 	m_draw_flag = true;
 	m_pos.y -= 5;
+
 }
 
 void BossHead::FireDownMove()
@@ -150,9 +156,9 @@ void BossHead::Draw()
 	m_img2.SetRect(0, BOSS_Y_SIZE * 4, BOSS_X_SIZE, BOSS_Y_SIZE * 5);
 
 	
-	m_img.SetPos(m_pos);
-	m_img2.SetPos(m_pos);
-	m_img3.SetPos(m_pos2);
+	m_img.SetPos(m_pos - m_scroll);
+	m_img2.SetPos(m_pos - m_scroll);
+	m_img3.SetPos(m_pos2 - m_scroll);
 	
 	if (m_draw_flag == false && m_idle_flag == false)m_img.Draw();
 	if(m_draw_flag == true && m_idle_flag == false)m_img2.Draw();
@@ -197,6 +203,11 @@ BossHand::BossHand(const int state) :EnemyBase(eBossHund)
 	m_state = state;
 
 	m_idle_cnt = 0;
+}
+
+BossHand::~BossHand()
+{
+	TaskManager::GetInstance()->AddTask(new BossManager());
 }
 
 void BossHand::Idle()
@@ -273,9 +284,9 @@ void BossHand::Draw()
 	m_img2.SetRect(BOSS_X_SIZE, BOSS_Y_SIZE * 2, BOSS_X_SIZE * 2, BOSS_Y_SIZE * 3);
 	m_img3.SetRect(0, BOSS_Y_SIZE * 2, BOSS_X_SIZE, BOSS_Y_SIZE * 3);
 
-	m_img.SetPos(m_pos);
-	m_img2.SetPos(m_pos2);
-	m_img3.SetPos(m_pos3);
+	m_img.SetPos(m_pos - m_scroll);
+	m_img2.SetPos(m_pos2 - m_scroll);
+	m_img3.SetPos(m_pos3 - m_scroll);
 
 	if (m_idle_flag == true) {
 		m_img2.Draw();
@@ -316,6 +327,11 @@ BossTail::BossTail(const CVector2D & player_pos, const int state):EnemyBase(eBos
 	m_draw_flag = false;
 	m_idle_flag = false;
 	m_anim_flag = false;
+}
+
+BossTail::~BossTail()
+{
+	TaskManager::GetInstance()->AddTask(new BossManager());
 }
 
 void BossTail::Update()
@@ -381,9 +397,9 @@ void BossTail::HitCheck(Task * _t)
 
 void BossTail::Draw()
 {
-	m_img.SetPos(m_pos);
-	m_img2.SetPos(m_pos2);
-	m_img3.SetPos(m_pos2);
+	m_img.SetPos(m_pos - m_scroll);
+	m_img2.SetPos(m_pos2 - m_scroll);
+	m_img3.SetPos(m_pos2 - m_scroll);
 
 	m_img.SetSize(BOSS_X_SIZE / 2, BOSS_Y_SIZE / 2);
 	m_img2.SetSize(BOSS_X_SIZE / 2, BOSS_Y_SIZE / 2);

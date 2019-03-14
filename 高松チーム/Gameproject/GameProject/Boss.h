@@ -42,9 +42,9 @@ protected:
 
 
 public:
-	~BossHead();
-
 	BossHead(const CVector2D &player_pos,const int state);
+
+	~BossHead();
 
 	void Idle();
 
@@ -109,6 +109,8 @@ public:
 
 	BossHand(const int state);
 
+	~BossHand();
+
 	void Idle();
 
 	void Attack();
@@ -156,6 +158,8 @@ private:
 public:
 
 	BossTail(const CVector2D &player_pos, const int state);
+
+	~BossTail();
 
 	void Update();
 
