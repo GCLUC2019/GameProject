@@ -1,39 +1,44 @@
 #include "CDropItem.h"
 #include "../Global.h"
 
-CDropItem::CDropItem(int _item_id,CImage* _image_p):CObject(eTaskIdDropItem)
+CDropItem::CDropItem(int _item_id):CGameSceneObject(eTaskIdDropItem)
 {
 	m_item_id = _item_id;
-	m_item_image_p = _image_p;
-	SetDrawPriority(5000);
+	switch (_item_id) {
+	case eItemIdSpear:
+		m_anim_image_p[eItemAnimStatic0] = GET_RESOURCE("IconSpear", CImage*);
+		m_anim_info[eItemAnimIdStatic].image_num = 1;
+		m_anim_info[eItemAnimIdStatic].image_id = eItemAnimStatic0;
+		m_anim_info[eItemAnimIdStatic].delay = 10;
+		break;
+	}
 }
 
 CDropItem::~CDropItem()
 {
 }
 
-void CDropItem::Update()
+void CDropItem::GameSceneObjectUpdate()
+{
+	SetWillPlayAnim(eItemAnimIdStatic);
+}
+
+void CDropItem::GameSceneObjectAfterUpdate()
 {
 }
 
-void CDropItem::AfterUpdate()
+
+void CDropItem::GameSceneObjectBeforeCollisionCheck()
 {
 }
 
-void CDropItem::Gravity()
+void CDropItem::GameSceneObjectBeforeUpdate()
 {
 }
 
-void CDropItem::BeforeCollisionCheck()
+void CDropItem::GameSceneObjectDraw()
 {
-}
-
-void CDropItem::BeforeUpdate()
-{
-}
-
-void CDropItem::Draw()
-{
+	/*
 	if (m_item_image_p == nullptr) return;
 	m_item_image_p->SetFlipH(m_is_flip);
 	m_item_image_p->SetSize(m_size.x, m_size.y);
@@ -48,8 +53,9 @@ void CDropItem::Draw()
 	//m_anim_image_p[m_play_anim_image]->SetPos(draw_pos + draw_adj);
 	//m_anim_image_p[m_play_anim_image]->SetCenter(m_size.x / 2.0, m_size.y / 2.0);
 	//m_anim_image_p[m_play_anim_image]->Draw();
+	*/
 }
 
-void CDropItem::CollisionCheck(Task * _collision_task)
+void CDropItem::GameSceneObjectCollisionCheck(Task * _collision_task)
 {
 }
