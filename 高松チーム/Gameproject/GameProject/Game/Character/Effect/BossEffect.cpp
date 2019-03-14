@@ -15,7 +15,7 @@ BossFireEffect::BossFireEffect(const CVector2D& pos) : Task(eBossFireEffectc)
 {
 	m_img = COPY_RESOURCE("BossFire", CAnimImage*);
 	m_pos.x = 0;
-	m_pos.y = pos.y;
+	m_pos.y = LAZER_Y_SIZE - 720 / 3;
 }
 
 
@@ -41,21 +41,21 @@ void BossFireEffect::Draw()
 BossLazerEffect::BossLazerEffect(const CVector2D& pos) : Task(eBossLazerEffectc)
 {
 	m_img = COPY_RESOURCE("BossLazer", CAnimImage*);
-	m_pos.x = 0;
+	m_pos.x = 1280 / 2 - LAZER_X_SIZE;
 	m_pos.y = pos.y;
 }
 
 
 void BossLazerEffect::Update()
 {
-	m_img.ChangeAnimation(eBossFireEffect, false);
+	m_img.ChangeAnimation(eBossLazerEffect, false);
 	m_img.UpdateAnimation();
 	m_img.CheckAnimationEnd();
 }
 
 void BossLazerEffect::Draw()
 {
-	m_img.SetSize(LAZER_X_SIZE / 2, LAZER_Y_SIZE / 2);
+	m_img.SetSize(LAZER_X_SIZE + 640, LAZER_Y_SIZE);
 	m_img.SetRect(0, 0, LAZER_X_SIZE, LAZER_Y_SIZE);
 	m_img.SetPos(m_pos);
 	m_img.Draw();

@@ -3,7 +3,7 @@
 #include "../Character/Anim/AnimData.h"
 #include "../Character/Anim/AnimDataPlayer.h"
 #include "../Character/Anim/AnimBoss.h"
-
+#include"../Item/AnimItemBox.h"
 
 class Resource {
 public:
@@ -46,7 +46,7 @@ public:
         ADD_RESOURCE("RogoBase", CImage::LoadImage("../data/Image/rogo_base.png"));
         ADD_RESOURCE("RogoClear", CImage::LoadImage("../data/Image/rogo_cl.png"));
         ADD_RESOURCE("RogoHuda", CImage::LoadImage("../data/Image/rogo_huda.png"));
-
+		ADD_RESOURCE("ItemBox", CAnimImage::LoadImage("../data/Image/itembox_motion_object.png", ItemBoxAnimData, 512, 512));
 	}
 };
 

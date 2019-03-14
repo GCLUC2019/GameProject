@@ -6,6 +6,8 @@
 #define OPENING_STORY_NUM 2
 //表示する絵を変えるための文章数
 #define CHANGE_NUM 6
+//次の紙芝居の配列ナンバー
+#define NEXT_ARRAY_NUM 5
 
 //画像切り取りサイズの初期値と変動値
 #define DEF_RECT_TOP_X 2500
@@ -61,14 +63,8 @@ CStorySceneOpening::~CStorySceneOpening()
 void CStorySceneOpening::Update()
 {
 	UpdateText(CHAR_NUM, sentence_num);
-	if (subscript == num_decison) {
-		UpdateStory(pos_array[subscript - 1], pos_array[subscript]);
-		num_decison++;
-		if(num_decison== CHANGE_NUM)NextStory(name, 1, pos_array[5]);
-	}
-
+	UpdateStory2(CHANGE_NUM, NEXT_ARRAY_NUM);
 	ChangeScene(OPENING_SENTENSE_NUM);
-	
 }
 
 void CStorySceneOpening::Draw()
@@ -106,55 +102,44 @@ void CStorySceneOpening::Setchar()
 }
 
 void CStorySceneOpening::SetValue()
-{                   
-	int nums0[] = { /*添え字*/ SUB0,
-		            //切り取りサイズ
-		            DEF_RECT_TOP_X,MIN,MAX_X,MAX_Y,
-		            //表示サイズ
-		            DEF_SIZE_X,DEF_SIZE_Y,
-		            //表示位置
-		            POS_MAX_X,POS_MIN_Y };
-	int nums1[] = { SUB1, 
-		            RECT_TOP_X,MIN,RECT_BOT_X,RECT_BOT_Y,
-		            SIZE_X,SIZE_Y,POS_X,POS_MIN_Y };
-	int nums2[] = { SUB2, 
-		            RECT_TOP_X2,RECT_TOP_Y2,RECT_BOT_X2,MAX_Y,
-		            SIZE_X2,SIZE_Y2,POS_X2,POS_MAX_Y };
-	int nums3[] = { SUB3,
-		            MIN,MIN,RECT_BOT_X3,MAX_Y,
-		            SIZE_X3,SIZE_Y3,POS_MIN_X,POS_MIN_Y };
-	int nums4[] = { SUB4, 
-		            MIN,MIN,MAX_X,MAX_Y,
-		            DRAW_MAX_X,DRAW_MAX_Y,
-		            POS_MIN_X,POS_MIN_Y };
-	int nums5[] = { SUB5,
-		            MIN,MIN,RECT_BOT_X5,RECT_BOT_Y5,
-		            SIZE_X4,SIZE_Y4,POS_MIN_X,POS_MIN_Y };
-	int nums6[] = { SUB6,
-		            RECT_TOP_X6,RECT_TOP_Y6,RECT_BOT_X6,RECT_BOT_Y6,
-		            SIZE_X4,SIZE_Y4,POS_X6,POS_Y6 };
-	int nums7[] = { SUB7,
-		            RECT_TOP_X7,MIN,MAX_X,MAX_Y,
-		            DEF_SIZE_X,DEF_SIZE_Y,
-		            POS_MAX_X,POS_MIN_Y };
-	int nums8[] = { SUB8,
-		            RECT_TOP_X8,MIN,MAX_X,MAX_Y,
-		            SIZE_X8,SIZE_Y8,
-		            POS_X8,POS_MIN_Y };
-	int nums9[] = { SUB9,
-		            MIN,MIN,MAX_X,MAX_Y,
-		            DRAW_MAX_X,DRAW_MAX_Y,
-		            POS_MIN_X,POS_MIN_Y };
+{  
+	CVector4D rects = CVector4D(DEF_RECT_TOP_X, MIN, MAX_X, MAX_Y);
+	CVector4D size_poses= CVector4D(DEF_SIZE_X, DEF_SIZE_Y, POS_MAX_X, POS_MIN_Y);
+	DelValue(SUB0, rects, size_poses);
 
+    rects = CVector4D(RECT_TOP_X, MIN, RECT_BOT_X, RECT_BOT_Y);
+    size_poses = CVector4D(SIZE_X, SIZE_Y, POS_X, POS_MIN_Y);
+	DelValue(SUB1, rects, size_poses);
 
-	SetArrayValue(nums0);
-	SetArrayValue(nums1);
-	SetArrayValue(nums2);
-	SetArrayValue(nums3);
-	SetArrayValue(nums4);
-	SetArrayValue(nums5);
-	SetArrayValue(nums6);
-	SetArrayValue(nums7);
-	SetArrayValue(nums8);
-	SetArrayValue(nums9);
+	rects = CVector4D(RECT_TOP_X2, RECT_TOP_Y2, RECT_BOT_X2, MAX_Y);
+	size_poses = CVector4D(SIZE_X2, SIZE_Y2, POS_X2, POS_MAX_Y);
+	DelValue(SUB2, rects, size_poses);
+
+	rects = CVector4D(MIN, MIN, RECT_BOT_X3, MAX_Y);
+	size_poses = CVector4D(SIZE_X3, SIZE_Y3, POS_MIN_X, POS_MIN_Y);
+	DelValue(SUB3, rects, size_poses);
+
+	rects = CVector4D(MIN, MIN, MAX_X, MAX_Y);
+	size_poses = CVector4D(DRAW_MAX_X, DRAW_MAX_Y,POS_MIN_X, POS_MIN_Y);
+	DelValue(SUB4, rects, size_poses);
+
+	rects = CVector4D(MIN, MIN, RECT_BOT_X5, RECT_BOT_Y5);
+	size_poses = CVector4D(SIZE_X4, SIZE_Y4, POS_MIN_X, POS_MIN_Y);
+	DelValue(SUB5, rects, size_poses);
+
+	rects = CVector4D(RECT_TOP_X6, RECT_TOP_Y6, RECT_BOT_X6, RECT_BOT_Y6);
+	size_poses = CVector4D(SIZE_X4, SIZE_Y4, POS_X6, POS_Y6);
+	DelValue(SUB6, rects, size_poses);
+
+	rects = CVector4D(RECT_TOP_X7, MIN, MAX_X, MAX_Y);
+	size_poses = CVector4D(DEF_SIZE_X, DEF_SIZE_Y, POS_MAX_X, POS_MIN_Y);
+	DelValue(SUB7, rects, size_poses);
+
+	rects = CVector4D(RECT_TOP_X8, MIN, MAX_X, MAX_Y);
+	size_poses = CVector4D(SIZE_X8, SIZE_Y8, POS_X8, POS_MIN_Y);
+	DelValue(SUB8, rects, size_poses);
+
+	rects = CVector4D(MIN, MIN, MAX_X, MAX_Y);
+	size_poses = CVector4D(DRAW_MAX_X, DRAW_MAX_Y, POS_MIN_X, POS_MIN_Y);
+	DelValue(SUB9, rects, size_poses);
 }

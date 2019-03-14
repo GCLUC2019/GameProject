@@ -5,9 +5,22 @@
 
 #define PLAYER_ATTACK_FRAME (15)
 
+//残り5フレーム以下の時に攻撃判定が発生する
+#define PLAYER_ATTACK_HIT_FRAME_START (5)
+//残り0フレーム以下の時に攻撃判定終了
+#define PLAYER_ATTACK_HIT_FRAME_END (0)
+
 #define PLAYER_ATTACK_LENGTH CVector3D(300,300,50)
 
 #define PLAYER_ATTACK_POWER (1.0f)
+
+#define PLAYER_DAMAGE_ANIM_FRAME (20)
+
+#define PLAYER_LANDING_ANIM_FRAME (20)
+
+
+#define MEMORY_HIT_ATTACKED_ENEMY_MAX (1000)
+
 
 enum {
 	ePlayerAnimIdIdle,
@@ -68,6 +81,14 @@ private:
 	
 	bool m_is_dashing = false;
 
+	int m_damage_anim_count = 0;
+
+	int m_landing_anim_count = 0;
+
+	//攻撃した敵を記憶しておくポインタ配列
+	int m_memory_hit_attacked_enemy_num = 0;
+	Task* m_memory_hit_attacked_enemy_p[MEMORY_HIT_ATTACKED_ENEMY_MAX];
+
 
 public:
 	CCharacterPlayer();
@@ -84,8 +105,16 @@ public:
 	void Jumping();
 	void Falling();
 	void Move();
-	void Update();
+
+	
+	void CharacterBeforeUpdate();
+	void CharacterUpdate();
+	void CharacterBeforeCollisionCheck();
+	void CollisionCheckCharacter(Task* _collision_task);
 	void CharacterDraw();
+	
+
+
 	void AdjAnim();
 	void CalcScroll();
 

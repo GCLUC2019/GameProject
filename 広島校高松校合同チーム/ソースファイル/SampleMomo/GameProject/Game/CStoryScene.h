@@ -3,7 +3,7 @@
 #include "../Global.h"
 
 //配列の最大数
-#define MAX_TEXT_ARRAY 10
+#define MAX_TEXT_ARRAY 15
 #define MAX_STORY_ARRAY 2
 #define MAX_SENTENSE_SIZE 20
 #define ARRAY_SIZE 15
@@ -23,6 +23,7 @@
 #define SUB8 8
 #define SUB9 9
 #define SUB10 10
+#define SUB11 11
 
 //紙芝居サイズと座標
 #define STORY_SIZE  CVector2D(1000,600)
@@ -60,19 +61,20 @@ protected:
 	CImage m_text_box;
 	CImage m_text;
 	CImage m_icon;
-	int rect_cnt;
-	int dis_cnt;
-	int lim;
-	int sentence_num;
-	int draw_cnt;
-	int subscript;
-	int num_decison;
+	short int rect_cnt;
+	short int dis_cnt;
+	short int lim;
+	short int sentence_num;
+	short int draw_cnt;
+	short int subscript;
+	short int num_decison;
+	short int scene_change_cnt;
 
 	struct rect_pos_size {
 		int top_x;
 		int top_y;
 		int bottom_x;
-		int bottom_y;
+	    int bottom_y;
 		CVector2D size;
 		CVector2D pos;
 	};
@@ -98,6 +100,8 @@ public:
 	void SetSentense(int repite, char name_a[][MAX_SENTENSE_SIZE], 
 		                         char name_b[][MAX_SENTENSE_SIZE]);
 	void SetAll(int sent_num);
+	//配列数値受け渡し関数
+	void DelValue(int _sub, CVector4D rect, CVector4D size_pos);
 	//次の画像を表示する関数
 	void NextStory(char story_name[][MAX_SENTENSE_SIZE],int sub, rect_pos_size values);
 	//次のテキストを表示する関数
@@ -106,6 +110,8 @@ public:
 	void UpdateText(int word,int limit);
 	//現在の構造体と次の構造体
 	void UpdateStory(rect_pos_size& pos_now,rect_pos_size& pos_next);
+	//引数を次の紙芝居を表示するタイミングと座標等のデータを入れた添え字
+	void UpdateStory2(int change, int next_array);
 	//変更まとめ関数
 	void ChangeAll(rect_pos_size& pos_a, rect_pos_size& pos_b);
 	//切り取り位置変更関数(引数は現在と次の値と変化値）

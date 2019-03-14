@@ -1,9 +1,10 @@
 #pragma once
-#include "CObject.h"
+#include "CGameSceneObject.h"
 
+/*
 #define ANIMATION_INFO_MAX (100)
 #define ANIMATION_IMAGE_MAX (500)
-
+*/
 
 
 //#define DEFAULT_ANIM_DELAY (10)
@@ -17,19 +18,24 @@
 class CGameSceneWave;
 
 #define DEFAULT_HIT_POINT (10.0f)
+
+/*
 struct AnimInfo {
 	int image_id;
 	int image_num = 0;
 	int delay;
 };
+*/
 
-class CCharacter : public CObject {
+class CCharacter : public CGameSceneObject {
 private:
 protected:
 
 	float m_hit_point = DEFAULT_HIT_POINT;
 	float m_hit_point_max = DEFAULT_HIT_POINT;
 
+
+	/*
 	//影表示関連
 	CVector2D m_shadow_size;
 	CImage * m_shadow_p = nullptr;
@@ -51,39 +57,41 @@ protected:
 	//フラグ関連
 	bool m_is_landing = false;
 	bool m_is_landing_old = false;
+	*/
 
 
 	CGameSceneWave* m_from_wave_p = nullptr;
 	int m_wave_character_id = 0;
-
-	//近くに存在するエネミーオブジェクト
-	//CCharacterEnemy* m_near_enemy_p;
 	
 public:
 	CCharacter(int _task_id, int _draw_priority);
+	
 	virtual ~CCharacter();
-	void Update();
+
+	void GameSceneObjectUpdate();
 	virtual void CharacterUpdate();
-	void AfterUpdate();
+	
+	void GameSceneObjectAfterUpdate();
 	virtual void CharacterAfterUpdate();
 
+	/*
 	void SetWillPlayAnim(int _anim_id) { m_will_play_anim_id = _anim_id; };
 	void SetAnim(int _anim_id);
 	void PlayAnim();
 
 	void Gravity();
+	*/
 
-	void BeforeCollisionCheck();
+	void GameSceneObjectBeforeCollisionCheck();
 	virtual void CharacterBeforeCollisionCheck();
 
-	void BeforeUpdate();
+	void GameSceneObjectBeforeUpdate();
 	virtual void CharacterBeforeUpdate();
 
 	float* GetHitPointPointer() { return &m_hit_point; };
 	float GetHitPointMax() { return m_hit_point_max; };
 
 	void HitPointGainValue(double _value);
-
 
 	virtual void ReceiveAttack();
 
@@ -96,16 +104,22 @@ public:
 
 	void CheckHitPoint();
 
-	void Draw();
+	void GameSceneObjectDraw();
+	
+	/*
 	void DrawShadow();
 	void DrawAnimImage();
+	*/
+
 	virtual void CharacterDraw();
-	void CollisionCheck(Task* _collision_task);
+	
+	void GameSceneObjectCollisionCheck(Task* _collision_task);
 	virtual void CollisionCheckCharacter(Task* _collision_task);
 
+	/*
 	void SetIsShowShadow(bool _is) { m_is_show_shadow = _is; };
 	void SetShadowSize(CVector2D _size) { m_shadow_size = _size; };
-
+	
 
 	//影の位置が変わりすぎると当たり判定との差異が起こるので注意すること(X軸にずらすとかその程度にする)
 	void SetShadowPosAdj(CVector2D _pos) { m_shadow_pos_adj = _pos; };
@@ -113,7 +127,9 @@ public:
 	void SetDrawAdjPos(CVector2D _adj_pos) { m_draw_adj = _adj_pos; };
 	CVector2D GetDrawAdjPos() { return m_draw_adj; };
 
+
 	void MoveLimit();
+	*/
 };
 
 
