@@ -1,9 +1,9 @@
 /*
 　　　　　　　　　　　　製作者　釜田正輝
-			　近距離　敵
-*/
+			　遠距離　敵
+			*/
 
-#include "CEnemy1.h"
+#include "CEnemy2.h"
 #include "CPlayerTank.h"
 #include "CBullet.h"
 #include "CExplosion.h"
@@ -14,7 +14,7 @@
 
 extern CPlayerTank*Tank;
 
-void CEnemy1::Init(){
+void CEnemy2::Init(){
 	mFireIntervar = FIREINTERVER_E;
 	//CTank::Init();
 	SetVertex(-50.0f, 50.0f, -54.0f, 54.0f);
@@ -34,7 +34,7 @@ void CEnemy1::Init(){
 	mHpBar.SetHpBar(this, CVector2(0.0f, -35.0f), CVector2(50.0f, 8.0f), mColor, 100, 100);
 }
 
-void CEnemy1::Update(){
+void CEnemy2::Update(){
 
 	Forward();
 	CTank::Update();
@@ -80,7 +80,7 @@ void CEnemy1::Update(){
 	}
 }
 
-void CEnemy1::OnCollision(CCollider*p){
+void CEnemy2::OnCollision(CCollider*p){
 	if (p->mpTask->mTaskTag == EPLAYERBULLET){
 		CExplosion*p = new CExplosion();
 		p->SetTexture(&Texture, 0, 64, 64, 0);
@@ -96,12 +96,12 @@ void CEnemy1::OnCollision(CCollider*p){
 	mPosition = mPosition + mCollider->mAdjust;
 }
 
-void CEnemy1::OnCollision(CBoxCollider*p){
+void CEnemy2::OnCollision(CBoxCollider*p){
 	mPosition = mPosition + mCollider->mAdjust;
 
 }
 
-void CEnemy1::Render(){
+void CEnemy2::Render(){
 	CTank::Render();
 	mHpBar.Render();
 }

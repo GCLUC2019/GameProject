@@ -8,6 +8,7 @@
 #define FIREINTERVAL_E 60
 
 
+//»ìÒ ŒG“c
 extern CPlayerTank *Tank;
 extern CTexture Texture;
 
