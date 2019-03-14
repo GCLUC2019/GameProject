@@ -58,7 +58,7 @@ void Item::Update()
 	CVector2D vec = p->GetPos() - m_pos;
 	vec=vec.GetNormalize();
 	m_pos += vec * 3;
-	m_pos = CVector2D(g_game_data.m_scroll.x, 0);
+	//m_pos = CVector2D(g_game_data.m_scroll.x, 0);
 }
 
 void Item::Draw()
