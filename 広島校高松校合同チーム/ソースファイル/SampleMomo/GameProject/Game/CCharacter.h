@@ -59,9 +59,6 @@ protected:
 	bool m_is_landing_old = false;
 	*/
 
-	//–³“Gó‘Ô‚Ì‰Â”Û
-	bool m_is_invincible = false;
-	
 
 	CGameSceneWave* m_from_wave_p = nullptr;
 	int m_wave_character_id = 0;
@@ -76,11 +73,6 @@ public:
 	
 	void GameSceneObjectAfterUpdate();
 	virtual void CharacterAfterUpdate();
-
-
-	void SetInvincible(bool _is) { m_is_invincible = _is; };
-	bool GetInvincible() { return m_is_invincible; };
-
 
 	/*
 	void SetWillPlayAnim(int _anim_id) { m_will_play_anim_id = _anim_id; };

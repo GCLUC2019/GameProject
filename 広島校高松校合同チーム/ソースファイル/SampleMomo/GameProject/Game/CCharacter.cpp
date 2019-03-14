@@ -111,9 +111,6 @@ void CCharacter::CharacterBeforeUpdate()
 
 void CCharacter::HitPointGainValue(double _value)
 {
-	//–³“G‚È‚ç‰½‚à‚µ‚È‚¢
-	if (GetInvincible() == true) return;
-
 	m_hit_point += _value;
 	if (m_hit_point > m_hit_point_max) m_hit_point = m_hit_point_max;
 }
