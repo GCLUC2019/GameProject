@@ -66,6 +66,8 @@ void CCharacterPlayer::LoadAnimImage()
 
 	m_anim_image_p[ePlayerAnimDamage0] = GET_RESOURCE("Player_Damage_Anim_0", CImage*);
 
+	m_anim_image_p[ePlayerAnimEvasion0] = GET_RESOURCE("Player_Jump_Anim_4", CImage*);
+
 	//アニメーションデータの設定
 	m_anim_info[ePlayerAnimIdIdle].image_num = 4;
 	m_anim_info[ePlayerAnimIdIdle].image_id = ePlayerAnimIdle0;
@@ -99,11 +101,16 @@ void CCharacterPlayer::LoadAnimImage()
 	m_anim_info[ePlayerAnimIdDamage].image_id = ePlayerAnimDamage0;
 	m_anim_info[ePlayerAnimIdDamage].delay = 14;
 
+	m_anim_info[ePlayerAnimIdEvasion].image_num = 1;
+	m_anim_info[ePlayerAnimIdEvasion].image_id = ePlayerAnimEvasion0;
+	m_anim_info[ePlayerAnimIdEvasion].delay = 14;
 
 }
 
 void CCharacterPlayer::InputDash()
 {
+	if (m_is_evasion == true) return;
+
 	if (CInput::GetState(0, CInput::eHold, CInput::eButton3)) {
 		m_is_dashing = true;
 		m_speed = 6.0f;
@@ -113,6 +120,8 @@ void CCharacterPlayer::InputDash()
 
 void CCharacterPlayer::InputAttack()
 {
+	if (m_is_evasion == true) return;
+
 	if (m_is_attacking == true) return;
 	if (CInput::GetState(0, CInput::eHold, CInput::eButton2)) {
 		//printf("攻撃\n");
@@ -151,14 +160,19 @@ void CCharacterPlayer::CharacterUpdate()
 	
 	m_is_dashing = false;
 	m_speed = PLAYER_SPEED;
+	SetInvincible(false);
+	m_vec.x = 0.0f;
+	m_vec.z = 0.0f;
+
 
 	InputAttack();
 	InputDash();
 	InputMove();
 	InputJump();
-
+	InputEvasion();
 
 	//座標移動
+	DoingEvasion();
 	Landing();
 	Gravity();
 	Jumping();
@@ -180,8 +194,7 @@ void CCharacterPlayer::CharacterBeforeCollisionCheck()
 
 void CCharacterPlayer::InputMove()
 {
-	m_vec.x = 0.0f;
-	m_vec.z = 0.0f;
+	if (m_is_evasion == true) return;
 	
 	bool is_move = false;
 	if (CInput::GetState(0,CInput::eHold, CInput::eRight)) {
@@ -213,6 +226,8 @@ void CCharacterPlayer::InputMove()
 
 void CCharacterPlayer::InputJump()
 {
+	if (m_is_evasion == true) return;
+
 	if (CInput::GetState(0, CInput::eHold, CInput::eButton1) && m_is_jumping == false && m_is_landing == true) {
 		SetWillPlayAnim(ePlayerAnimIdJump);
 		m_is_jumping = true;
@@ -230,6 +245,85 @@ void CCharacterPlayer::Landing()
 		m_landing_anim_count = PLAYER_LANDING_ANIM_FRAME;
 	}
 }
+
+
+
+void CCharacterPlayer::InputEvasion()
+{
+	const int receive_input_time = 10;
+
+
+
+	if (m_receive_input_evasion_time_count_r > 0) m_receive_input_evasion_time_count_r--;
+	if (m_receive_input_evasion_time_count_l > 0) m_receive_input_evasion_time_count_l--;
+
+
+
+	if (CInput::GetState(0, CInput::ePush, CInput::eRight) && m_receive_input_evasion_time_count_r <= 0) {
+		m_receive_input_evasion_time_count_l = 0;
+		m_receive_input_evasion_time_count_r = receive_input_time;
+	}
+	else if (CInput::GetState(0, CInput::ePush, CInput::eRight) && m_receive_input_evasion_time_count_r > 0) {
+		BeginEvasion();
+	}
+
+
+
+	if (CInput::GetState(0, CInput::ePush, CInput::eLeft) && m_receive_input_evasion_time_count_l <= 0) {
+		m_receive_input_evasion_time_count_r = 0;
+		m_receive_input_evasion_time_count_l = receive_input_time;
+	}
+	else if (CInput::GetState(0, CInput::ePush, CInput::eLeft) && m_receive_input_evasion_time_count_l > 0) {
+		BeginEvasion();
+	}
+
+
+
+}
+
+void CCharacterPlayer::BeginEvasion()
+{
+	//攻撃・ジャンプをやめる
+	m_is_attacking = false;
+	m_is_jumping = false;
+
+	printf("回避\n");
+	m_receive_input_evasion_time_count_l = 0;
+	m_receive_input_evasion_time_count_r = 0;
+	m_is_evasion = true;
+	m_evasion_count = 30;
+
+
+}
+
+void CCharacterPlayer::DoingEvasion()
+{
+	if (m_is_evasion == false) return;
+
+	if (m_evasion_count-- <= 0) {
+		m_is_evasion = false;
+		SetInvincible(false);
+	}
+	else {
+		printf("回避 %d\n", m_evasion_count);
+		SetInvincible(true);
+
+		double moving_vec = 10 / SPF;
+		//向きに応じて移動
+		if (m_is_flip == false) {
+			m_vec.x = moving_vec * CFPS::GetDeltaTime();
+		}
+		else if (m_is_flip == true) {
+			m_vec.x = -moving_vec * CFPS::GetDeltaTime();
+		}
+		SetWillPlayAnim(ePlayerAnimIdEvasion);
+
+	}
+
+	
+	
+}
+
 
 void CCharacterPlayer::Attacking()
 {
@@ -443,6 +537,9 @@ void CCharacterPlayer::CalcScroll()
 
 void CCharacterPlayer::ReceiveAttack()
 {
+	//無敵ならなにもしない
+	if (GetInvincible() == true) return;
+
 	SetWillPlayAnim(ePlayerAnimIdDamage);
 	m_damage_anim_count = PLAYER_DAMAGE_ANIM_FRAME;
 }
