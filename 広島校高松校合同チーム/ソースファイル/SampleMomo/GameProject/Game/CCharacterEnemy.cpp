@@ -251,13 +251,16 @@ void CCharacterEnemy::Attack()
 	else m_is_flip = false;
 
 	CCharacterPlayer* p = dynamic_cast<CCharacterPlayer*>(TaskManager::GetInstance()->FindTask(eTaskIdPlayer));
-	CVector3D player_pos = p->GetPos();
-	if (abs(m_pos.z - player_pos.z) < 500 && abs(player_pos.x - m_pos.x) <200 && is_attack) {
-		is_attack = false;
-		if(p == NULL) printf("プレイヤーがいません\n");
-		printf("Hit!!\n");
-		p->ReceiveAttack();
-		p->HitPointGainValue(-3.0);
+	
+	if (p != nullptr) {
+		CVector3D player_pos = p->GetPos();
+		if (abs(m_pos.z - player_pos.z) < 500 && abs(player_pos.x - m_pos.x) < 200 && is_attack) {
+			is_attack = false;
+			if (p == NULL) printf("プレイヤーがいません\n");
+			printf("Hit!!\n");
+			p->ReceiveAttack();
+			p->HitPointGainValue(-3.0);
+		}
 	}
 
 	AiChange(140);
@@ -318,6 +321,9 @@ void CCharacterEnemy::AiChange(int ai_cnt)
 void CCharacterEnemy::CharacterBeforeCollisionCheck()
 {
 	CCharacterPlayer* p = dynamic_cast<CCharacterPlayer*>(TaskManager::GetInstance()->FindTask(eTaskIdPlayer));
+	
+	if (p == nullptr) return;
+
 	m_player_pos = p->GetPos();
 	CVector2D l_vec = CVector2D(m_player_pos.x - m_pos.x, m_player_pos.z - m_pos.z);
 	/*l_vec.Length() < 200*/

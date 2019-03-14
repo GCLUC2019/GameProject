@@ -55,9 +55,10 @@ void CGameScene::Setup()
 	drop_item_p->SetSize(CVector2D(200, 200));
 	*/
 
-
-	//CBar*Bar_p = new CBar();
-	//TaskManager::GetInstance()->AddTask(Bar_p);
+	/*
+	CBar*Bar_p = new CBar();
+	TaskManager::GetInstance()->AddTask(Bar_p);
+	*/
 }
 
 
