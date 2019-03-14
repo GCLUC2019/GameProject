@@ -6,7 +6,7 @@
 #pragma once
 #include "CStdafx.h"
 #include "Task.h"
-#include"CRectangle.h"
+#include "CRectangle.h"
 
 class CAppear : public Task {
 private:
@@ -17,11 +17,11 @@ public:
 	@brief	コンストラクタ
 	@param	pos			[in] 出現位置
 	**/
+	CAppear();
 	CAppear(const CVector2& pos);
 	/*!
 	@brief	デストラクタ
 	**/
-	CAppear();
 	~CAppear();
 	/*!
 	@brief	更新処理
@@ -33,9 +33,11 @@ public:
 	**/
 	void Render();
 
-	void SetVecter(const CVector2&vec){
-		m_vec = vec;
-	}
+	/*!
+	@brief ボールの移動量を設定
+	@@param _vector [in] 移動量
+	**/
+	void SetVector(const CVector2& _vector) { m_vec = _vector; };
 };
 
 

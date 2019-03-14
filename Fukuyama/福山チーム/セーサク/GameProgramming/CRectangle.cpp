@@ -73,3 +73,24 @@ void CRectangle::SetTexture(CTexture*t, float left, float right, float bottom, f
 	mUv[3].x = left / t->header.width;
 	mUv[3].y = (t->header.height - top) / t->header.height;
 }
+
+/*
+テクスチャの描画
+*/
+void CRectangle::Draw(const CTexture &t, int left, int right, int bottom, int top) {
+	CVector2 v[4];
+	CMatrix33 rot, tran1, tran2;
+	tran1.SetTranslate(-x, -y);
+	rot.SetRotation(mRotation);
+	tran2.SetTranslate(x, y);
+	rot = tran2 * rot * tran1;
+	v[0].x = x - w; v[0].y = y + h;
+	v[1].x = x - w; v[1].y = y - h;
+	v[2].x = x + w; v[2].y = y - h;
+	v[3].x = x + w; v[3].y = y + h;
+	v[0] = rot * v[0];
+	v[1] = rot * v[1];
+	v[2] = rot * v[2];
+	v[3] = rot * v[3];
+	t.DrawImage(v[0].x, v[0].y, v[1].x, v[1].y, v[2].x, v[2].y, v[3].x, v[3].y, left, right, bottom, top);
+}

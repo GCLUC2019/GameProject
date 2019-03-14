@@ -4,7 +4,7 @@
 #include"CCollider.h"
 #include"CHpBar.h"
 
-
+//»ìÒ ŒG“c
 
 class CBoss :public CTank{
 public:

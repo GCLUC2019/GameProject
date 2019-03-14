@@ -31,27 +31,20 @@ void CItem::Render(){
 	CRectangle::Render();
 }
 
-void CItem::OnCollision(CCircleCollider*p){
-	if (mTaskTag == EPLAYERBULLET&&p->mpTask->mTaskTag == EENEMYTANK){
+void CItem::OnCollision(CCollider*p){
+	if (mTaskTag == EITEM&&p->mpTask->mTaskTag == EPLAYERTANK){
 		if (type == 1){  //‰ñ•œ
 
-			mEnabled = false;
 		}
 		if (type == 2){  //‹­‰»
-
-			mEnabled = false;
 
 		}
 		if (type == 3){  //–³“G
 
-			mEnabled = false;
-
 		}
+		printf("CItem::OnCollision\n");
+		mEnabled = false;
 	}
-}
-
-void CItem::OnCollision(CCollider*p){
-	printf("CItem::OnCollision\n");
 }
 
 
