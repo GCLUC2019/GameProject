@@ -13,7 +13,6 @@
 #include "Base\TaskManager.h"
 #include "Game\Scene\GameScene.h"
 
-
 //--------------------------------------------
 //ƒOƒ[ƒoƒ‹•Ï”—Ìˆæ
 //--------------------------------------------
@@ -44,6 +43,7 @@ void MainLoop(void) {
 	TaskManager::GetInstance()->UpdateAll();
 
 	TaskManager::GetInstance()->DrawAll();
+
 
 	
 
