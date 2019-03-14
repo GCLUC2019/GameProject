@@ -4,7 +4,7 @@
 #include "../CollitionBase.h"
 #include "../GameData/GameData.h"
 
-Item::Item(int _m_item_type, CVector2D _m_pos) : Task(eItem),
+Item::Item(int _m_item_type, CVector2D _m_pos) : Task(CharacterData::eItem),
 m_item_type(_m_item_type),
 m_pos(_m_pos)
 {

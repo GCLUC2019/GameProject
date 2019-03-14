@@ -9,7 +9,7 @@
 #define DEP_N 540//‰œsdÎ
 #define JUMP_SPD 50
 
-Player::Player() : CharacterBase(ePlayer),
+Player::Player() : CharacterBase(CharacterData::ePlayer),
 m_speed(4.0f),
 m_squat_flg(false),
 m_attack_flg(false),

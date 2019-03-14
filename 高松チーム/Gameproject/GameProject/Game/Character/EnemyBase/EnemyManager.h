@@ -6,7 +6,7 @@
 
 class EnemyManager : public Task {
 private:
-	enum {
+	enum EnemyManagerWave{
 		eWave1_1,
 		eWave1_2,
 		eWave2_1,
