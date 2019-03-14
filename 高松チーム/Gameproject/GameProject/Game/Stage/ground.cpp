@@ -24,7 +24,7 @@ void Ground::Update()
 void Ground::Draw()
 {
 	m_img.SetSize(4000, 1400);
-	m_img.SetPos(0,-680);
+    m_img.SetPos(0 - m_scroll.x, -680 - m_scroll.y);
 	m_img.Draw();
 }
 
@@ -42,7 +42,7 @@ void Bamboo::Update()
 void Bamboo::Draw()
 {
 	m_img.SetSize(2000, 700);
-	m_img.SetPos(0, 0);
+	m_img.SetPos(0 - m_scroll.x, 0 - m_scroll.y);
 	m_img.Draw();
 }
 
@@ -59,7 +59,7 @@ void SkyBlue::Update()
 void SkyBlue::Draw()
 {
 	m_img.SetSize(2000, 700);
-	m_img.SetPos(0, -200);
+	m_img.SetPos(0 - m_scroll.x, -200 - m_scroll.y);
 	m_img.Draw();
 }
 
@@ -76,7 +76,7 @@ void SkyRed::Update()
 void SkyRed::Draw()
 {
 	m_img.SetSize(2000, 700);
-	m_img.SetPos(0, 0);
+	m_img.SetPos(0 - m_scroll.x, 0 - m_scroll.y);
 	m_img.Draw();
 }
 

@@ -17,8 +17,7 @@ m_move_cnt(0)
 	//初期化
 	m_img = COPY_RESOURCE("Enemy05", CAnimImage*);
 	m_shadow = COPY_RESOURCE("Shadow", CImage*);
-	m_rect = CRect(-IMAGE_SIZE / 2, -IMAGE_SIZE / 2, IMAGE_SIZE / 2, IMAGE_SIZE / 2);
-	//m_rect = 
+	m_rect = CRect(-IMAGE_SIZE / 2.7f,-IMAGE_SIZE / 4.0f, IMAGE_SIZE / 3.0f, IMAGE_SIZE / 2.3f);
 	m_pos = _pos;
 	m_vec = CVector2D(0, 0);
 	m_hp = 100;
@@ -42,6 +41,8 @@ void Enemy05::MoveManagement(int _type)
 		++m_move_cnt;
 		if (m_move_cnt <= MOVE_ / 2) {
 			m_vec.x = 2.0f;
+			//m_pos.y += 0.2f;
+			//m_depth = (m_pos.y - DEP_N) / 3.5;
 			m_flip = true;
 		}
 		else if (m_move_cnt >= MOVE_/2) {
@@ -75,16 +76,17 @@ void Enemy05::Attack()
 
 void Enemy05::Damage()
 {
-	if (m_hp <= 0)
+	m_vec.x = 0;
+	if (m_hp <= 0){
 		m_img.ChangeAnimation(eEDeath05, false);
-	if (m_img.CheckAnimationEnd())
-		SetKill();
-
-	m_img.ChangeAnimation(eEDamage05,false);
-	if (m_img.CheckAnimationEnd())
-		m_state = eMove;
-	
-	
+		if (m_img.CheckAnimationEnd())
+			SetKill();
+	}
+	else {
+		m_img.ChangeAnimation(eEDamage05, false);
+		if (m_img.CheckAnimationEnd())
+			m_state = eMove;
+	}
 }
 
 void Enemy05::Update()
@@ -100,6 +102,7 @@ void Enemy05::Update()
 		Attack();
 		break;
 	case eDamage:
+		Damage();
 		break;
 	default:
 		break;
@@ -116,31 +119,32 @@ void Enemy05::Draw()
 	//サイズ指定と描画
 	m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
 	m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
-	m_img.SetPos(m_pos);
+	m_img.SetPos(m_pos-m_scroll);
 	m_img.SetFlipH(m_flip);
 
 	m_shadow.SetSize(SAIZE_SD + m_depth / 5, 50);
 	m_shadow.SetCenter((SAIZE_SD + m_depth / 5) / 2, 50 / 2);
-	m_shadow.SetPos(CVector2D(m_pos.x,m_pos.y + 90));
+	m_shadow.SetPos(CVector2D(m_pos.x-m_scroll.x,m_pos.y + 90 - m_scroll.y));
 
 	m_shadow.Draw();
 	m_img.Draw();
 	
 }
 
-void Enemy05::HitCheck(/*Task * _t*/)
-{
-	/*switch (_t->GetType()) {
-	case ePlayer:
-		printf("playerを取得");
-		break;
-	case eEnemy01:
-		printf("enemyを取得\n");
-		break;
-	default:
-		break;
-	}*/
-	
-	if (CollitionBase::CollisionCheckRect(this, eItemBox))
-		printf("\nHIT\n");
+void Enemy05::HitCheck()
+{	
+
+	if (CollitionBase::CollisionCheckRect(this, ePEffectShortAttack01)){
+		printf("HitAttack");
+		m_hp -= 1;
+		m_state = eDamage;
+	}
+	if (CollitionBase::CollisionCheckRect(this, ePEffectShortAttack02)) {
+		m_hp -= 1;
+		m_state = eDamage;
+	}
+	if (CollitionBase::CollisionCheckRect(this, ePEffectShortAttack03)) {
+		m_hp -= 1;
+		m_state = eDamage;
+	}
 }

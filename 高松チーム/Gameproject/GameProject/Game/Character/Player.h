@@ -65,6 +65,7 @@ public:
 	*/
 	void Damage(int _damage);
 	Player();
+	void HitCheck(/*Task* _t*/);
 	void Update();
 	void Draw();
 	int GetHP() {

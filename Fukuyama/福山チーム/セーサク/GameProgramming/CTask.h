@@ -13,8 +13,10 @@ public:
 		EPLAYERBULLET,
 		EENEMYBULLET,
 		EARROW,
-		EENEMY1,
+		EENEMY1,      //í«â¡Å@äòìc
+		EENEMY2,
 		EITEM,
+
 
 	};
 	ETaskTag mTaskTag;

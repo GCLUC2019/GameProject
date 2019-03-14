@@ -83,7 +83,7 @@ void Enemy02::Draw()
 {
     m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
     m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
-    m_img.SetPos(CVector2D(m_pos.x, m_pos.y + m_hight));
+    m_img.SetPos(CVector2D(m_pos.x - m_scroll.x, m_pos.y + m_hight - m_scroll.y));
     m_img.SetFlipH(m_move_dir_flg);
     m_img.Draw();
 }

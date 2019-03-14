@@ -8,6 +8,9 @@ public:
 
 	CVector2 mForward;
 	CVector2 mBackward;
+	CVector2 mPForward;     //追加　釜田　
+	CVector2 mEForward;
+
 	CRectangle mHead;
 	CRectangle mCanon;
 	CRectangle mItem;
@@ -24,6 +27,10 @@ public:
 	void Render();
 	void HeadLeftTurn();
 	void HeadRightTurn();
+	void EnemyUp();         //追加　釜田
+	void EnemyDown();
+	void PForward();
+	void EForward();
 
 };
 #endif
