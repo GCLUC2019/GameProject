@@ -379,7 +379,6 @@ void Player::Draw()
 	m_img.UpdateAnimation();
     m_scroll.x = m_pos.x -320;
     if(m_scroll.x<0)m_scroll.x = 0;
-    //if (m_scroll.y<0)m_scroll.y = 0;
 	m_img.SetSize(SAIZE + m_depth, SAIZE + m_depth);
 	m_img.SetCenter((SAIZE + m_depth) / 2, (SAIZE + m_depth));
 	m_img.SetPos(m_pos+CVector2D(0, m_jump_vec));
