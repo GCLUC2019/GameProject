@@ -12,6 +12,7 @@ class ItemBox :public Task{
 	int m_box_typ;		//箱の種類
 	bool m_open_flg;	//箱の開閉状態
 	int m_time;
+	CRect m_rect;
 public:
 	/*
 	@param _m_box_typ	[in]作るアイテムの種類
@@ -25,5 +26,7 @@ public:
 	CVector2D GetPos() {
 		return m_pos;
 	}
-
+	CRect GetRect() {
+		return m_rect;
+	}
 };

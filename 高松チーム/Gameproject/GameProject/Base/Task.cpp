@@ -11,7 +11,7 @@ void Task::Update()
 {
 }
 
-void Task::HitCheck(Task * _t)
+void Task::HitCheck(/*Task * _t*/)
 {
 }
 

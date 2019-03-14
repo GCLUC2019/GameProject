@@ -28,6 +28,6 @@ public:
 	void Damage();
 	void Update();
 	void Draw();
-	void HitCheck(Task* _t);
+	void HitCheck(/*Task* _t*/);
 	virtual int GetType() { return m_type; }
 };
