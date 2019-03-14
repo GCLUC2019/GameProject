@@ -4,26 +4,11 @@
 #include <stdio.h>
 #include"Effect/PlayerEffect.h"
 #include"../GameData/GameData.h"
+#include"../Scene/Title.h"
 #define GRAVITY -4//重力
 #define DEP_N 540//奥行重石
 #define JUMP_SPD 50
 
-enum PlayerState
-{
-	eIdle,		//待機
-	eMove,		//移動
-	eJumpUp,	//ジャンプ
-	eJumpDown,	//ジャンプ
-	eSquat,		//しゃがみ
-	eAttack01,	//近距離攻撃
-	eAttack02,	//
-	eAttack03,	//
-	eAttack04,	//遠距離攻撃
-	eDamage,	//ダメージ
-	eDeath,		//死亡
-	eUp,		//起き上がり
-	eSpecial,	//必殺
-};
 Player::Player() : CharacterBase(ePlayer),
 m_speed(4.0f),
 m_squat_flg(false),
@@ -31,7 +16,8 @@ m_attack_flg(false),
 m_jump_flg(false),
 m_flip(false),
 m_special_flg(false),
-m_damage_flg(false),
+m_damage_flg(false), 
+m_death_flg(false),
 m_jump_vec(0),
 m_state(eIdle),
 m_state_old(m_state),
@@ -53,6 +39,12 @@ void Player::HitCheck()
 
 void Player::Move()
 {
+	if (m_death_flg) {
+		m_squat_flg = false;
+		return;
+	}
+
+
 	if (m_special_flg)
 		return;
 	if (m_jump_flg != true) {
@@ -114,7 +106,13 @@ void Player::Move()
 
 void Player::Jump()
 {
-	static float time = 1;
+	static float time = 0;
+
+	if (m_death_flg) {
+		m_jump_flg = false;
+		time = 0;
+		return;
+	}
 	static int jump_vec_old = m_jump_vec;
 	jump_vec_old = m_jump_vec;
 	m_jump_vec = 0 + JUMP_SPD * time + GRAVITY * (time*time) / 2;
@@ -133,6 +131,11 @@ void Player::Jump()
 void Player::Attack()
 {
 	static int k = 0;
+	if (m_death_flg) {
+		m_attack_flg = false;
+		k = 0;
+		return;
+	}
 	switch (m_state)
 	{
 	case eAttack01:
@@ -232,11 +235,13 @@ void Player::Damage(int _damage)
 {
 	if(m_damage_flg||m_special_flg)
 		return;
+	m_HP -= _damage;
 	if (m_HP <= 0) {
 		m_state = eDeath;
+		m_death_flg = true;
 		SetAnim();
+		return;
 	}
-	m_HP -= _damage;
 	m_damage_flg = true;
 }
 
@@ -317,13 +322,16 @@ void Player::Update()
 {
 #ifdef _DEBUG
 	if (CInput::GetState(0, CInput::eHold, CInput::eMouseL))
-		Damage(10);
-	if (CInput::GetState(0, CInput::eHold, CInput::eMouseR))
+		Damage(50);
+	//if (CInput::GetState(0, CInput::eHold, CInput::eMouseR))
 		//SetKill();
 #endif // _DEBUG
 
-	if (m_HP < 0)
+	if (m_death_flg) {
+		Death();
 		return;
+	}
+		
 	m_img.SetColor(1, 1, 1, 1);
 	if (CInput::GetState(0, CInput::eHold, CInput::eButton5) && m_attack_flg == false)
 		m_special_flg = true;
@@ -364,6 +372,22 @@ void Player::DamageState()
 	if (time < 0) {
 		time = 60;
 		m_damage_flg = false;	
+	}
+}
+void Player::Death()
+{
+	static int time = 300;
+	if (time == 299) {
+		Attack();
+		Jump();
+		Move();
+	}
+	time--;
+	if (time <= 0)
+	{
+		TaskManager::GetInstance()->KillAll();
+		TaskManager::GetInstance()->AddTask(new Title());
+		time = 300;
 	}
 }
 void Player::Draw()
