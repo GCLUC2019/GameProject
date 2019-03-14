@@ -62,6 +62,9 @@ void ItemBox::Update()
 #endif
 
 }
+void ItemBox::HitCheck()
+{
+}
 void ItemBox::Draw()
 {
 	m_img.UpdateAnimation();

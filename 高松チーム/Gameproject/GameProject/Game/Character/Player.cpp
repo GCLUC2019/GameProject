@@ -43,6 +43,11 @@ m_special(0)
 	m_depth = (m_pos.y - DEP_N)/3.5;
 	SetAnim();
 	m_shadow.SetColor(0.3f, 0.3f, 0.3f, 0.4f);
+	m_rect = CRect(-50, -50, 50, 50);
+}
+
+void Player::HitCheck()
+{
 }
 
 void Player::Move()
