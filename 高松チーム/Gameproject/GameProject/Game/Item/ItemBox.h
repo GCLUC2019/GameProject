@@ -22,6 +22,8 @@ public:
 	void Update();
 	void Draw();
 	~ItemBox();
-
+	CVector2D GetPos() {
+		return m_pos;
+	}
 
 };

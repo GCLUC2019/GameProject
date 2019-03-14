@@ -22,7 +22,6 @@ void TaskManager::AddTask(Task * _t)
 		while (t->GetNext() != nullptr) {
 			t = t->GetNext();
 		}
-
 		t->SetNext(_t);
 		_t->SetPrev(t);
 		SetLast(_t);
@@ -46,6 +45,9 @@ void TaskManager::DrawAll()
 
 	while (d) {
 		d->Draw();
+		/*d->GetPos();
+		if (d->GetPos().x != -1 || d->GetPos().y != -1)
+			printf("%f,%f  ", d->GetPos().x, d->GetPos().y);*/
 		d = d->GetNext();
 	}
 }
