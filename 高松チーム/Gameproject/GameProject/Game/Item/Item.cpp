@@ -1,6 +1,7 @@
 #include "Item.h"
 #include "../Character/CharacterBase.h"
 #include "../Character/Player.h"
+#include "../CollitionBase.h"
 
 Item::Item(int _m_item_type, CVector2D _m_pos) : Task(eItem),
 m_item_type(_m_item_type),
@@ -53,15 +54,24 @@ void Item::Update()
 	Task* p = TaskManager::GetInstance()->FindObject(ePlayer);
 	if (p == nullptr) 
 		return;
-
-	return;
+	CVector2D vec = p->GetPos() - m_pos;
+	vec=vec.GetNormalize();
+	m_pos += vec * 3;
+	
 }
 
 void Item::Draw()
 {
+	m_img.SetPos(m_pos-m_scroll);
 	m_img.Draw();
 }
 
 void Item::HitCheck()
 {
+	
+	/*Task* p =CollitionBase::GetCollisionCheckRect(this, ePlayer);
+	Player* n = dynamic_cast<Player*>(p);
+	if (n != nullptr)
+		n->Damage(5);*/
+	
 }
