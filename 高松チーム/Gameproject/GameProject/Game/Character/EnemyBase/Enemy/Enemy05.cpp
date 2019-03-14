@@ -4,6 +4,7 @@
 #include "../../CharacterBase.h"
 #include "../../Player.h"
 #include "../GameProject/Game/CollitionBase.h"
+#include "../GameProject/Game/GameData/GameData.h"
 #define MOVE_ 360
 
 #define GRAVITY -4//重力
@@ -119,12 +120,12 @@ void Enemy05::Draw()
 	//サイズ指定と描画
 	m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
 	m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
-	m_img.SetPos(m_pos-m_scroll);
+	m_img.SetPos(m_pos- g_game_data.m_scroll);
 	m_img.SetFlipH(m_flip);
 
 	m_shadow.SetSize(SAIZE_SD + m_depth / 5, 50);
 	m_shadow.SetCenter((SAIZE_SD + m_depth / 5) / 2, 50 / 2);
-	m_shadow.SetPos(CVector2D(m_pos.x-m_scroll.x,m_pos.y + 90 - m_scroll.y));
+	m_shadow.SetPos(CVector2D(m_pos.x- g_game_data.m_scroll.x,m_pos.y + 90 - g_game_data.m_scroll.y));
 
 	m_shadow.Draw();
 	m_img.Draw();

@@ -16,7 +16,7 @@ private:
 protected:
     int m_type;
     float m_depth;
-    static CVector2D m_scroll;
+   
 public:
     Task(int _type);
     virtual void Update();
