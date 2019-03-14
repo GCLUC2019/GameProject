@@ -3,6 +3,7 @@
 #include "../GameProject/Game/Resource/Resource.h"
 #include "../../CharacterBase.h"
 #include "../../Player.h"
+#include "../GameProject/Game/CollitionBase.h"
 #define MOVE_ 360
 
 #define GRAVITY -4//d—Í
@@ -16,7 +17,7 @@ m_move_cnt(0)
 	//‰Šú‰»
 	m_img = COPY_RESOURCE("Enemy05", CAnimImage*);
 	m_shadow = COPY_RESOURCE("Shadow", CImage*);
-
+	m_rect = CRect(-IMAGE_SIZE / 2, -IMAGE_SIZE / 2, IMAGE_SIZE / 2, IMAGE_SIZE / 2);
 	//m_rect = 
 	m_pos = _pos;
 	m_vec = CVector2D(0, 0);
@@ -127,9 +128,9 @@ void Enemy05::Draw()
 	
 }
 
-void Enemy05::HitCheck(Task * _t)
+void Enemy05::HitCheck(/*Task * _t*/)
 {
-	switch (_t->GetType()) {
+	/*switch (_t->GetType()) {
 	case ePlayer:
 		printf("player‚ðŽæ“¾");
 		break;
@@ -138,5 +139,8 @@ void Enemy05::HitCheck(Task * _t)
 		break;
 	default:
 		break;
-	}
+	}*/
+	
+	if (CollitionBase::CollisionCheckRect(this, eItemBox))
+		printf("\nHIT\n");
 }

@@ -5,6 +5,7 @@ const enum {
 	eGameClear,
 	eGameTutorial,
     eGameTitle,
+	eCollition,
 
 	eStage01,
 	eGround,

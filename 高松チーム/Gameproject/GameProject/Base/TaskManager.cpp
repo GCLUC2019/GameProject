@@ -72,12 +72,7 @@ void TaskManager::HitCheckAll()
 
     Task* d = mp_head;
     while (d) {
-        Task* d2 = d->GetNext();
-        while (d2) {
-            d->HitCheck(d2);
-            d2->HitCheck(d);
-            d2 = d2->GetNext();
-        }
+            d->HitCheck();
         d = d->GetNext();
     }
 }

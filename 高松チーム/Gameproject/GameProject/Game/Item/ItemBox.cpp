@@ -6,7 +6,9 @@ ItemBox::ItemBox(int _m_box_typ, CVector2D _m_pos) :Task(eItemBox),
 m_pos(_m_pos),
 m_box_typ(_m_box_typ),
 m_time(0)
+
 {
+	m_rect = CRect(-50, -50, 50, 50);
 	m_img = COPY_RESOURCE("ItemBox", CAnimImage*);
 	switch (m_box_typ)
 	{

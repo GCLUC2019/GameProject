@@ -37,4 +37,8 @@ public:
 	virtual CVector2D GetPos() {
 		return  m_pos;
 	}
+	CRect GetRect() {
+		return m_rect;
+	}
+		
 };
