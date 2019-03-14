@@ -1,6 +1,6 @@
 #include "CTitle.h"
 #include "CObjectImage.h"
-#include "CStoryScene.h"
+#include "CStorySceneOpening.h"
 #include "CBar.h"
 CTitle::CTitle() : CObject(0, 0)
 {
@@ -58,9 +58,7 @@ void CTitle::Draw()
 
 void CTitle::NextScene()
 {
-	CStoryScene*StoryScene_p = new CStoryScene();
-	TaskManager::GetInstance()->AddTask(StoryScene_p);
-	
+	TaskManager::GetInstance()->AddTask(new CStorySceneOpening());
 }
 
 

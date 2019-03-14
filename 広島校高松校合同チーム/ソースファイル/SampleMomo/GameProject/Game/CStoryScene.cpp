@@ -23,8 +23,8 @@ void CStoryScene::Draw()
 
 void CStoryScene::SetParam()
 {
-	rect_cnt = 0;
 	dis_cnt = 0;
+	rect_cnt = 0;
 	draw_cnt = 0;
 	lim = RECTSIZE_X;
 	complete_flg = false;
@@ -32,6 +32,7 @@ void CStoryScene::SetParam()
 
 void CStoryScene::SetSubSentense(int sent)
 {
+	scene_change_cnt = 0; //画面遷移カウント
 	num_decison = 1;//判定用数字
 	subscript = 0;//添え字
 	sentence_num = sent;//文章数
@@ -54,7 +55,7 @@ void CStoryScene::SetIcon()
 void CStoryScene::SetStory(char story_name[], rect_pos_size values)
 {
 	m_s_img= COPY_RESOURCE(story_name, CImage*);
-	SetStory2(values);
+ 	SetStory2(values);
 }
 
 void CStoryScene::SetStory2(rect_pos_size value)
@@ -104,6 +105,17 @@ void CStoryScene::SetAll(int sent_num)
 	SetParam();
 }
 
+void CStoryScene::DelValue(int _sub, CVector4D rect, CVector4D size_pos)
+{
+	int nums[9];
+	nums[0] = _sub;
+	nums[1] = rect.x; nums[2] = rect.y;
+	nums[3] = rect.z; nums[4] = rect.w;
+	nums[5] = size_pos.x; nums[6] = size_pos.y;
+	nums[7] = size_pos.z; nums[8] = size_pos.w;
+	SetArrayValue(nums);
+}
+
 void CStoryScene::NextStory(char story_name[][MAX_SENTENSE_SIZE],
 	                        int sub, rect_pos_size values)
 {
@@ -121,7 +133,7 @@ void CStoryScene::UpdateText(int word,int limit)
 {
 	//文字出力完了していないなら、
 	if (complete_flg == false) {
-		if (dis_cnt == 5&& rect_cnt <= lim * word) {
+		if (dis_cnt == 4&& rect_cnt <= lim * word) {
 			RectUp();
 			rect_cnt += RECTSIZE_X;
 			dis_cnt = 0;
@@ -154,6 +166,15 @@ void CStoryScene::UpdateText(int word,int limit)
 void CStoryScene::UpdateStory(rect_pos_size& pos_now, rect_pos_size& pos_next)
 {
 	SetStory2(pos_next);
+}
+
+void CStoryScene::UpdateStory2(int change, int next_array)
+{
+	if (subscript == num_decison) {
+		UpdateStory(pos_array[subscript - 1], pos_array[subscript]);
+		num_decison++;
+		if (num_decison == change)NextStory(name, 1, pos_array[next_array]);
+	}
 }
 
 void CStoryScene::ChangeAll(rect_pos_size & pos_a, rect_pos_size & pos_b)
@@ -213,16 +234,9 @@ void CStoryScene::RectUp()
 
 void CStoryScene::ChangeScene(int sent_num)
 {
-	if (subscript == sent_num) {
-		if (CInput::GetState(0, CInput::ePush, CInput::eButton1)) {
-			SetIsDelete();
-		}
+	if (complete_flg == true && subscript == sent_num - 1) {
+		scene_change_cnt++;
 	}
-	if (subscript == sent_num - 1) {
-		if (CInput::GetState(0, CInput::ePush, CInput::eButton1)) {
-			subscript++;
-			printf("%d\n", subscript);
-		}
-	}
-	
+
+	if (scene_change_cnt == 60)SetIsDelete();
 }

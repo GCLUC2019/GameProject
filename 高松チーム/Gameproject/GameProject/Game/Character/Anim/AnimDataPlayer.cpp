@@ -99,18 +99,18 @@ static TexAnim PlayerEffectLongAttack[] = {
 };
 
 static TexAnim PLayerEffectShortAttack01[] = {
-	{ 0,30 },
-{ 1,30 },
+	{ 0,10 },
+{ 1,10 },
 };
 
 static TexAnim PLayerEffectShortAttack02[] = {
-	{ 2,30 },
-{ 3,30 },
+	{ 3,10 },
+{ 4,10 },
 };
 
 static TexAnim PLayerEffectShortAttack03[] = {
-	{ 4,30 },
-{ 5,30 },
+	{ 6,10 },
+{ 7,10 },
 };
 
 static TexAnim PlayerEffectSpecialAttack[] = {

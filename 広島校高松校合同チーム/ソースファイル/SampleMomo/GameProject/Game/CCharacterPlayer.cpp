@@ -115,7 +115,7 @@ void CCharacterPlayer::InputAttack()
 {
 	if (m_is_attacking == true) return;
 	if (CInput::GetState(0, CInput::eHold, CInput::eButton2)) {
-		printf("攻撃\n");
+		//printf("攻撃\n");
 		m_is_attacking = true;
 		m_attacking_count = PLAYER_ATTACK_FRAME;
 
@@ -131,15 +131,20 @@ void CCharacterPlayer::InputAttack()
 
 
 
-void CCharacterPlayer::Update()
+void CCharacterPlayer::CharacterBeforeUpdate()
+{
+
+}
+
+void CCharacterPlayer::CharacterUpdate()
 {
 	//printf("x %lf y %lf z %lf\n", m_pos.x, m_pos.y, m_pos.z);
 	
 	//もし着地モーション等を再生してないなら
-	if (m_will_play_anim_id == ePlayerAnimIdLand) SetWillPlayAnim(ePlayerAnimIdLand);
-	if (m_will_play_anim_id == ePlayerAnimIdDamage && m_damage_anim_count-- > 0) {
+	if (m_will_play_anim_id == ePlayerAnimIdLand && m_landing_anim_count-- > 0) SetWillPlayAnim(ePlayerAnimIdLand);
+	else if (m_will_play_anim_id == ePlayerAnimIdDamage && m_damage_anim_count-- > 0) {
 		SetWillPlayAnim(ePlayerAnimIdDamage);
-		printf("ダメージモーション中 %d\n", m_damage_anim_count);
+		//printf("ダメージモーション中 %d\n", m_damage_anim_count);
 	}
 	else m_will_play_anim_id = ePlayerAnimIdIdle;
 
@@ -166,6 +171,11 @@ void CCharacterPlayer::Update()
 
 	CalcScroll();
 	AdjAnim();
+}
+
+void CCharacterPlayer::CharacterBeforeCollisionCheck()
+{
+
 }
 
 void CCharacterPlayer::InputMove()
@@ -215,8 +225,9 @@ void CCharacterPlayer::InputJump()
 void CCharacterPlayer::Landing()
 {
 	if (m_is_landing == true & m_is_landing_old == false) {
-		printf("着地したて\n");
+		//printf("着地したて\n");
 		SetWillPlayAnim(ePlayerAnimIdLand);
+		m_landing_anim_count = PLAYER_LANDING_ANIM_FRAME;
 	}
 }
 
@@ -287,7 +298,7 @@ void CCharacterPlayer::Attacking()
 					for (int i = 0; i < m_memory_hit_attacked_enemy_num; i++) {
 						if (m_memory_hit_attacked_enemy_p[i] == enemy_p) {
 							is_aready_hit = true;
-							printf("もう攻撃していたのでなにもしない\n");
+							//printf("もう攻撃していたのでなにもしない\n");
 							break;
 						}
 					}
@@ -297,7 +308,7 @@ void CCharacterPlayer::Attacking()
 					if (is_aready_hit == false) {
 						enemy_p->ReceiveAttack();
 						*enemy_p->GetHitPointPointer() -= PLAYER_ATTACK_POWER;
-						printf("enemy hp %lf\n", *enemy_p->GetHitPointPointer());
+						//printf("enemy hp %lf\n", *enemy_p->GetHitPointPointer());
 						m_memory_hit_attacked_enemy_p[m_memory_hit_attacked_enemy_num++] = enemy_p;
 					}
 				}
@@ -356,6 +367,11 @@ void CCharacterPlayer::CharacterDraw()
 {
 	
 	
+}
+
+void CCharacterPlayer::CollisionCheckCharacter(Task * _collision_task)
+{
+
 }
 
 void CCharacterPlayer::AdjAnim()

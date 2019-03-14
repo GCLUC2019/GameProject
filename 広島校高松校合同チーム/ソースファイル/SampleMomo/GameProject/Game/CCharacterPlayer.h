@@ -16,6 +16,8 @@
 
 #define PLAYER_DAMAGE_ANIM_FRAME (20)
 
+#define PLAYER_LANDING_ANIM_FRAME (20)
+
 
 #define MEMORY_HIT_ATTACKED_ENEMY_MAX (1000)
 
@@ -81,6 +83,8 @@ private:
 
 	int m_damage_anim_count = 0;
 
+	int m_landing_anim_count = 0;
+
 	//攻撃した敵を記憶しておくポインタ配列
 	int m_memory_hit_attacked_enemy_num = 0;
 	Task* m_memory_hit_attacked_enemy_p[MEMORY_HIT_ATTACKED_ENEMY_MAX];
@@ -101,8 +105,16 @@ public:
 	void Jumping();
 	void Falling();
 	void Move();
-	void Update();
+
+	
+	void CharacterBeforeUpdate();
+	void CharacterUpdate();
+	void CharacterBeforeCollisionCheck();
+	void CollisionCheckCharacter(Task* _collision_task);
 	void CharacterDraw();
+	
+
+
 	void AdjAnim();
 	void CalcScroll();
 

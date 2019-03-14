@@ -32,7 +32,7 @@ protected:
 	//フラグ関連
 	bool m_is_landing = false;
 	bool m_is_landing_old = false;
-	CImage * m_static_image_p = nullptr;
+	//CImage * m_static_image_p = nullptr;
 
 	//アニメーション関連(アニメーションクラスに分離したほうがよいかも)
 	AnimInfo m_anim_info[ANIMATION_INFO_MAX];
@@ -63,6 +63,8 @@ public:
 	void Draw();
 	
 	void DrawShadow();
+
+	void DrawAnimImage();
 
 	virtual void GameSceneObjectDraw();
 

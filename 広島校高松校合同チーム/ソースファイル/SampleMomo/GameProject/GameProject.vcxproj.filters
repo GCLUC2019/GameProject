@@ -8,14 +8,8 @@
     <ClCompile Include="Game\CObject.cpp">
       <Filter>Game\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Game\CCharacterPlayer.cpp">
-      <Filter>Game\Object\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\CCharacterEnemy.cpp">
-      <Filter>Game\Object\Character</Filter>
-    </ClCompile>
     <ClCompile Include="Game\CCharacter.cpp">
-      <Filter>Game\Object\Character</Filter>
+      <Filter>Game\Object\GameSceneObject\Character</Filter>
     </ClCompile>
     <ClCompile Include="Task\Task.cpp">
       <Filter>Task</Filter>
@@ -53,14 +47,23 @@
     <ClCompile Include="Game\CSubWeapon.cpp">
       <Filter>Game\Object\Interface</Filter>
     </ClCompile>
-    <ClCompile Include="Game\CCharacterBoss.cpp">
-      <Filter>Game\Object\Character</Filter>
-    </ClCompile>
     <ClCompile Include="Game\CDropItem.cpp">
       <Filter>Game\Object\DropItem</Filter>
     </ClCompile>
     <ClCompile Include="Game\CGameSceneObject.cpp">
       <Filter>Game\Object\GameSceneObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CCharacterPlayer.cpp">
+      <Filter>Game\Object\GameSceneObject\Character\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CCharacterEnemy.cpp">
+      <Filter>Game\Object\GameSceneObject\Character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CCharacterBoss.cpp">
+      <Filter>Game\Object\GameSceneObject\Character\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CStorySceneCrear1.cpp">
+      <Filter>Game\Object\StoryScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -72,11 +75,8 @@
     <ClInclude Include="Game\CObject.h">
       <Filter>Game\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Game\CCharacterEnemy.h">
-      <Filter>Game\Object\Character</Filter>
-    </ClInclude>
     <ClInclude Include="Game\CCharacter.h">
-      <Filter>Game\Object\Character</Filter>
+      <Filter>Game\Object\GameSceneObject\Character</Filter>
     </ClInclude>
     <ClInclude Include="Task\Task.h">
       <Filter>Task</Filter>
@@ -99,12 +99,6 @@
     <ClInclude Include="Game\CObjectImage.h">
       <Filter>Game\Object\CObjectImage</Filter>
     </ClInclude>
-    <ClInclude Include="Game\CCharacterPlayer.h">
-      <Filter>Game\Object\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\CCharacterBoss.h">
-      <Filter>Game\Object\Character</Filter>
-    </ClInclude>
     <ClInclude Include="Game\CBar.h">
       <Filter>Game\Object\UI</Filter>
     </ClInclude>
@@ -126,6 +120,18 @@
     <ClInclude Include="Game\CDropItem.h">
       <Filter>Game\Object\DropItem</Filter>
     </ClInclude>
+    <ClInclude Include="Game\CCharacterPlayer.h">
+      <Filter>Game\Object\GameSceneObject\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CCharacterEnemy.h">
+      <Filter>Game\Object\GameSceneObject\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CCharacterBoss.h">
+      <Filter>Game\Object\GameSceneObject\Character\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CStorySceneCrear1.h">
+      <Filter>Game\Object\StoryScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game">
@@ -133,9 +139,6 @@
     </Filter>
     <Filter Include="Game\Object">
       <UniqueIdentifier>{7bd2e3d3-7b50-41dc-8870-c88c6bd77a91}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Object\Character">
-      <UniqueIdentifier>{f701148d-7e9a-48c4-b872-3355b3f5b99b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Task">
       <UniqueIdentifier>{c4e9abac-4f31-4554-b33d-25c3b7c4a45b}</UniqueIdentifier>
@@ -166,6 +169,18 @@
     </Filter>
     <Filter Include="Game\Object\DropItem">
       <UniqueIdentifier>{7892ea5e-1386-45af-bac0-94a703cdc30b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\GameSceneObject\Character">
+      <UniqueIdentifier>{f701148d-7e9a-48c4-b872-3355b3f5b99b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\GameSceneObject\Character\Player">
+      <UniqueIdentifier>{fe2cd74a-e20b-477a-b99c-2eab4c8ad3c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\GameSceneObject\Character\Enemy">
+      <UniqueIdentifier>{0b3c065a-a0db-46e7-bbef-1aa12ad2b7fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\GameSceneObject\Character\Boss">
+      <UniqueIdentifier>{c2ad330c-4849-404b-a5ea-030defc341fe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
