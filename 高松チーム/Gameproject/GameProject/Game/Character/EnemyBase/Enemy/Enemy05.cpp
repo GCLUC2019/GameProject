@@ -12,7 +12,7 @@
 #define JUMP_SPD 50
 #define SAIZE_SD 110
 
-Enemy05::Enemy05(CVector2D& _pos) : EnemyBase(eEnemy05),
+Enemy05::Enemy05(CVector2D& _pos) : EnemyBase(CharacterData::eEnemy05),
 m_move_cnt(0)
 {
 	//‰Šú‰»
@@ -25,13 +25,13 @@ m_move_cnt(0)
 	m_img.SetFlipH(m_flip);
 	m_move_cnt = 0;
 	m_depth = (m_pos.y - DEP_N) / 3.5;
-	m_state = eMove;
+	m_state = Enemy05State::eMove;
 }
 
 void Enemy05::Move()
 {
 	MoveManagement(0);
-	m_img.ChangeAnimation(eEMove05);
+	m_img.ChangeAnimation(Enemy05Anim ::eEMove05);
 }
 
 void Enemy05::MoveManagement(int _type)
@@ -53,7 +53,7 @@ void Enemy05::MoveManagement(int _type)
 		if (m_move_cnt >= MOVE_) {
 			m_vec.x = 0;
 			m_move_cnt = 0;
-			m_state = eAttack;
+			m_state = Enemy05State::eAttack;
 			
 		}
 		break;
@@ -69,9 +69,9 @@ void Enemy05::MoveManagement(int _type)
 
 void Enemy05::Attack()
 {
-	m_img.ChangeAnimation(eEAttack05,false);
+	m_img.ChangeAnimation(Enemy05Anim ::eEAttack05,false);
 	if (m_img.CheckAnimationEnd())
-		m_state = eMove;
+		m_state = Enemy05State::eMove;
 	
 }
 
@@ -79,30 +79,30 @@ void Enemy05::Damage()
 {
 	m_vec.x = 0;
 	if (m_hp <= 0){
-		m_img.ChangeAnimation(eEDeath05, false);
+		m_img.ChangeAnimation(Enemy05Anim ::eEDeath05, false);
 		if (m_img.CheckAnimationEnd())
 			SetKill();
 	}
 	else {
-		m_img.ChangeAnimation(eEDamage05, false);
+		m_img.ChangeAnimation(Enemy05Anim::eEDamage05, false);
 		if (m_img.CheckAnimationEnd())
-			m_state = eMove;
+			m_state = Enemy05State::eMove;
 	}
 }
 
 void Enemy05::Update()
 {
 	switch (m_state) {
-	case eMove:
+	case Enemy05State::eMove:
 		Move();
 		break;
-	case eSearch:
+	case Enemy05State::eSearch:
 		//Search();
 		break;
-	case eAttack:
+	case Enemy05State::eAttack:
 		Attack();
 		break;
-	case eDamage:
+	case Enemy05State::eDamage:
 		Damage();
 		break;
 	default:
@@ -135,17 +135,17 @@ void Enemy05::Draw()
 void Enemy05::HitCheck()
 {	
 
-	if (CollitionBase::CollisionCheckRect(this, ePEffectShortAttack01)){
+	if (CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack01)){
 		printf("HitAttack");
 		m_hp -= 1;
-		m_state = eDamage;
+		m_state = Enemy05State::eDamage;
 	}
-	if (CollitionBase::CollisionCheckRect(this, ePEffectShortAttack02)) {
+	if (CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack02)) {
 		m_hp -= 1;
-		m_state = eDamage;
+		m_state = Enemy05State::eDamage;
 	}
-	if (CollitionBase::CollisionCheckRect(this, ePEffectShortAttack03)) {
+	if (CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack03)) {
 		m_hp -= 1;
-		m_state = eDamage;
+		m_state = Enemy05State::eDamage;
 	}
 }

@@ -2,7 +2,7 @@
 #include"AnimItemBox.h"
 #include "../Resource/Resource.h"
 
-ItemBox::ItemBox(int _m_box_typ, CVector2D _m_pos) :Task(eItemBox),
+ItemBox::ItemBox(int _m_box_typ, CVector2D _m_pos) :Task(CharacterData::eItemBox),
 m_pos(_m_pos),
 m_box_typ(_m_box_typ),
 m_time(0)

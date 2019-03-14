@@ -6,7 +6,7 @@
 #define MOVE_SPEED 2.0f
 #define DEP_N 1200
 
-Enemy01::Enemy01() : EnemyBase(eEnemy01),
+Enemy01::Enemy01() : EnemyBase(CharacterData::eEnemy01),
 m_state(eSearch),
 m_hover(0.0f),
 m_search_flg (false),

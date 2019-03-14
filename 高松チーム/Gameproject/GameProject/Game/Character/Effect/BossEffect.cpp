@@ -1,5 +1,6 @@
 #include "BossEffect.h"
 #include "../GameProject/Game/Resource/Resource.h"
+#include "../GameProject/Game/GameData/GameData.h"
 
 #define BOSS_X_SIZE 768
 #define BOSS_Y_SIZE 768
@@ -33,7 +34,7 @@ void BossFireEffect::Update()
 void BossFireEffect::Draw()
 {
 	m_img.SetSize(FIRE_X_SIZE - BOSS_X_SIZE / 3, FIRE_Y_SIZE / 4);
-	m_img.SetPos(m_pos - m_scroll);
+	m_img.SetPos(m_pos - g_game_data.m_scroll);
 	m_img.Draw();
 }
 
@@ -66,6 +67,6 @@ void BossLazerEffect::Update()
 void BossLazerEffect::Draw()
 {
 	m_img.SetSize(LAZER_X_SIZE + 640, LAZER_Y_SIZE + 528);
-	m_img.SetPos(m_pos - m_scroll);
+	m_img.SetPos(m_pos - g_game_data.m_scroll);
 	m_img.Draw();
 }

@@ -7,7 +7,7 @@
 #define DEP_N 1200
 #define JUMP_SPD -20.0f
 #define GRAVITY 10.0f
-Enemy02::Enemy02() : EnemyBase(eEnemy02),
+Enemy02::Enemy02() : EnemyBase(CharacterData::eEnemy02),
 m_hight(0.0f),
 m_search_flg(false),
 m_move_dir_flg(true),
@@ -27,7 +27,7 @@ m_jump_flg(false)
     cnt = 0;
 }
 
-Enemy02::Enemy02(CVector2D _pos) : EnemyBase(eEnemy02),
+Enemy02::Enemy02(CVector2D _pos) : EnemyBase(CharacterData::eEnemy02),
 m_hight(0.0f),
 m_search_flg(false),
 m_move_dir_flg(true),
