@@ -77,6 +77,9 @@
     <ClCompile Include="Game\Item\AnimItemBox.cpp">
       <Filter>Game\Character\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Scene\Title.cpp">
+      <Filter>Game\Resource\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GID.h" />
@@ -159,6 +162,9 @@
     </ClInclude>
     <ClInclude Include="Game\Scene\Result.h">
       <Filter>Game\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Scene\Title.h">
+      <Filter>Game\Resource\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

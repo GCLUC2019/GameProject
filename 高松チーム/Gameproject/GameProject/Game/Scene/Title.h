@@ -1,5 +1,6 @@
 #pragma once
 #include "../../Base/Task.h"
+#include "../../Game/Scene/GameScene.h"
 #include "../../Game/Resource/Resource.h"
 
 class Title : public Task {
@@ -17,8 +18,10 @@ private:
     CVector2D m_start_pos;
     int m_cnt;//ƒJƒEƒ“ƒg
     float m_size;
+    float m_time;
 public:
     Title();
+    ~Title();
     void Update();
     void Draw();
 };
