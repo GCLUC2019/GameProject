@@ -22,7 +22,6 @@
     <ClCompile Include="TaskLinker.cpp" />
     <ClCompile Include="TaskManager.cpp" />
     <ClCompile Include="CAppear.cpp" />
-    <ClCompile Include="CAppearManager.cpp" />
     <ClCompile Include="CArrow.cpp" />
     <ClCompile Include="CItem.cpp" />
     <ClCompile Include="CEnemy1.cpp" />
@@ -58,7 +57,6 @@
     <ClInclude Include="TaskLinker.h" />
     <ClInclude Include="TaskManager.h" />
     <ClInclude Include="CAppear.h" />
-    <ClInclude Include="CAppearManager.h" />
     <ClInclude Include="CArrow.h" />
     <ClInclude Include="CItem.h" />
     <ClInclude Include="CEnemy1.h" />
