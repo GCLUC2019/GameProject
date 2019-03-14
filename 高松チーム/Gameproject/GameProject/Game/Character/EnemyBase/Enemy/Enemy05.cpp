@@ -17,8 +17,7 @@ m_move_cnt(0)
 	//èâä˙âª
 	m_img = COPY_RESOURCE("Enemy05", CAnimImage*);
 	m_shadow = COPY_RESOURCE("Shadow", CImage*);
-	m_rect = CRect(-IMAGE_SIZE / 2, -IMAGE_SIZE / 2, IMAGE_SIZE / 2, IMAGE_SIZE / 2);
-	//m_rect = 
+	m_rect = CRect(-IMAGE_SIZE / 2.7f,-IMAGE_SIZE / 4.0f, IMAGE_SIZE / 3.0f, IMAGE_SIZE / 2.3f);
 	m_pos = _pos;
 	m_vec = CVector2D(0, 0);
 	m_hp = 100;
@@ -42,6 +41,8 @@ void Enemy05::MoveManagement(int _type)
 		++m_move_cnt;
 		if (m_move_cnt <= MOVE_ / 2) {
 			m_vec.x = 2.0f;
+			//m_pos.y += 0.2f;
+			//m_depth = (m_pos.y - DEP_N) / 3.5;
 			m_flip = true;
 		}
 		else if (m_move_cnt >= MOVE_/2) {
@@ -128,19 +129,20 @@ void Enemy05::Draw()
 	
 }
 
-void Enemy05::HitCheck(/*Task * _t*/)
-{
-	/*switch (_t->GetType()) {
-	case ePlayer:
-		printf("playerÇéÊìæ");
-		break;
-	case eEnemy01:
-		printf("enemyÇéÊìæ\n");
-		break;
-	default:
-		break;
-	}*/
-	
-	if (CollitionBase::CollisionCheckRect(this, eItemBox))
-		printf("\nHIT\n");
+void Enemy05::HitCheck()
+{	
+
+	if (CollitionBase::CollisionCheckRect(this, ePEffectShortAttack01)){
+		printf("HitAttack");
+		m_hp -= 20;
+		m_state = eDamage;
+	}
+	if (CollitionBase::CollisionCheckRect(this, ePEffectShortAttack02)) {
+		m_hp -= 20;
+		m_state = eDamage;
+	}
+	if (CollitionBase::CollisionCheckRect(this, ePEffectShortAttack03)) {
+		m_hp -= 20;
+		m_state = eDamage;
+	}
 }
