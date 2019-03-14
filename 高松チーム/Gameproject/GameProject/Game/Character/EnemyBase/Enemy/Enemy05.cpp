@@ -76,16 +76,17 @@ void Enemy05::Attack()
 
 void Enemy05::Damage()
 {
-	if (m_hp <= 0)
+	m_vec.x = 0;
+	if (m_hp <= 0){
 		m_img.ChangeAnimation(eEDeath05, false);
-	if (m_img.CheckAnimationEnd())
-		SetKill();
-
-	m_img.ChangeAnimation(eEDamage05,false);
-	if (m_img.CheckAnimationEnd())
-		m_state = eMove;
-	
-	
+		if (m_img.CheckAnimationEnd())
+			SetKill();
+	}
+	else {
+		m_img.ChangeAnimation(eEDamage05, false);
+		if (m_img.CheckAnimationEnd())
+			m_state = eMove;
+	}
 }
 
 void Enemy05::Update()
@@ -101,6 +102,7 @@ void Enemy05::Update()
 		Attack();
 		break;
 	case eDamage:
+		Damage();
 		break;
 	default:
 		break;
@@ -134,15 +136,15 @@ void Enemy05::HitCheck()
 
 	if (CollitionBase::CollisionCheckRect(this, ePEffectShortAttack01)){
 		printf("HitAttack");
-		m_hp -= 20;
+		m_hp -= 1;
 		m_state = eDamage;
 	}
 	if (CollitionBase::CollisionCheckRect(this, ePEffectShortAttack02)) {
-		m_hp -= 20;
+		m_hp -= 1;
 		m_state = eDamage;
 	}
 	if (CollitionBase::CollisionCheckRect(this, ePEffectShortAttack03)) {
-		m_hp -= 20;
+		m_hp -= 1;
 		m_state = eDamage;
 	}
 }

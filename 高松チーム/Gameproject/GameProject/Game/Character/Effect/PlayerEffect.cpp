@@ -50,7 +50,7 @@ PlayerEffectShortAttack01::PlayerEffectShortAttack01(const CVector2D & pos, bool
 {
 	m_flip = _flip;
 	m_pos = pos;
-	m_rect = CRect(-20, -30, 20, 30);
+	m_rect = CRect(-60, -120, -20, -40);
 	m_vec = CVector2D(ZERO, ZERO);
 	m_img = COPY_RESOURCE("PEffectShortAttack", CAnimImage*);
 	m_img.SetFlipH(m_flip);
@@ -59,7 +59,10 @@ PlayerEffectShortAttack01::PlayerEffectShortAttack01(const CVector2D & pos, bool
 void PlayerEffectShortAttack01::Update()
 {
 	if (m_flip == true)
+	{
 		m_vec.x = 0;
+		m_rect = CRect(60, -120, 20, -40);
+	}
 	else m_vec.x = -0.01f;
 
 	m_img.ChangeAnimation(ePEShortAttack01,false);
@@ -83,7 +86,7 @@ PlayerEffectShortAttack02::PlayerEffectShortAttack02(const CVector2D & pos, bool
 {
 	m_flip = _flip;
 	m_pos = pos;
-	m_rect = CRect(-20, -30, 20, 30);
+	m_rect = CRect(-60, -120, -20, -40);
 	m_vec = CVector2D(ZERO, ZERO);
 	m_img = COPY_RESOURCE("PEffectShortAttack", CAnimImage*);
 	m_img.SetFlipH(m_flip);
@@ -91,8 +94,10 @@ PlayerEffectShortAttack02::PlayerEffectShortAttack02(const CVector2D & pos, bool
 
 void PlayerEffectShortAttack02::Update()
 {
-	if (m_flip == true)
+	if (m_flip == true) {
 		m_vec.x = 0;
+		m_rect = CRect(60, -120, 20, -40);
+	}
 	else m_vec.x = -0.01f;
 
 	m_img.ChangeAnimation(ePEShortAttack02,false);
@@ -115,7 +120,7 @@ PlayerEffectShortAttack03::PlayerEffectShortAttack03(const CVector2D & pos, bool
 {
 	m_flip = _flip;
 	m_pos = pos;
-	m_rect = CRect(-20, -30, 20, 30);
+	m_rect = CRect(-60, -120, -20, -40);
 	m_vec = CVector2D(ZERO, ZERO);
 	m_img = COPY_RESOURCE("PEffectShortAttack", CAnimImage*);
 	m_img.SetFlipH(m_flip);
@@ -123,8 +128,10 @@ PlayerEffectShortAttack03::PlayerEffectShortAttack03(const CVector2D & pos, bool
 
 void PlayerEffectShortAttack03::Update()
 {
-	if (m_flip == true)
+	if (m_flip == true) {
 		m_vec.x = 0;
+		m_rect = CRect(60, -120, 20, -40);
+	}
 	else m_vec.x = -0.01f;
 
 	m_img.ChangeAnimation(ePEShortAttack03, false);
