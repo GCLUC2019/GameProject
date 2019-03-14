@@ -10,6 +10,9 @@
 #define ANIMATION_INFO_MAX (100)
 #define ANIMATION_IMAGE_MAX (500)
 
+#define DEFAULT_BLIND_DELAY (5)
+#define DEFAULT_BLIND_ALPHA (0.75f)
+
 struct AnimInfo {
 	int image_id;
 	int image_num = 0;
@@ -41,6 +44,13 @@ protected:
 	int m_will_play_anim_id = 0;
 	int m_play_anim_count = 0;
 	CImage* m_anim_image_p[ANIMATION_IMAGE_MAX];
+
+	bool m_is_blind_draw = false;
+	bool m_is_blind_now = false;
+	int m_blind_delay = DEFAULT_BLIND_DELAY;
+	int m_blind_delay_count = 0;
+	float m_blind_alpha = DEFAULT_BLIND_ALPHA;
+
 
 public:
 	CGameSceneObject(int _task_id = 0, int _draw_priority = 0);
@@ -82,6 +92,12 @@ public:
 
 	void MoveLimit();
 
+	void SetIsBlindDraw(bool _is,int _delay = DEFAULT_BLIND_DELAY,double _blind_alpha = DEFAULT_BLIND_ALPHA) { 
+		m_is_blind_draw = _is;
+		m_blind_delay = _delay;
+		m_blind_delay_count = 0;
+		m_blind_alpha = _blind_alpha;
+	};
 
 	//アニメーション再生関連
 	void SetWillPlayAnim(int _anim_id) { m_will_play_anim_id = _anim_id; };
