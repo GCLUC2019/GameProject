@@ -19,7 +19,6 @@ private:
     int m_state;//状態
     float m_hover;//浮遊を表現するための変数
     bool m_search_flg;//プレイヤーを見つけたかどうかのフラグ
-    bool m_move_dir_flg;//方向：false右、true左
 
 public:
 	Enemy01();
