@@ -9,6 +9,8 @@ TutorialEnemy::TutorialEnemy(CVector2D _pos) : EnemyBase(CharacterData::eTutoria
 	m_img.ChangeAnimation(eEMove02);
 	m_state = eMove;
 
+	m_rect = CRect(-47.0f, -17.0f, 54.0f, 82.0f);
+	m_pos = _pos;
 	m_flip = false;
 	m_hp = 100;
 }
@@ -52,6 +54,7 @@ void TutorialEnemy::Draw()
 {
 	m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
 	m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
+	m_img.SetPos(m_pos);
 	m_img.SetFlipH(m_flip);
 	m_img.Draw();
 }

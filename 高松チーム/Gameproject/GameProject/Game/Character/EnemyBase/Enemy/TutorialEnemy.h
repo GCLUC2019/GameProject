@@ -14,8 +14,6 @@ private:
 		eDamage,
 	};
 
-	float m_hight;	//高さ
-	bool m_flip;	//反転
 	bool m_jump_flg;//ジャンプフラグ
 
 public:
@@ -25,4 +23,5 @@ public:
 	void Update();
 	void Draw();
 	void HitCheck();
+	virtual int GetType() { return m_type; }
 };
