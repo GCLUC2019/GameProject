@@ -55,7 +55,6 @@ BossHead::BossHead(const CVector2D &player_pos, const int state) :EnemyBase(eBos
 
 BossHead::~BossHead()
 {
-	TaskManager::GetInstance()->AddTask(new BossManager());
 }
 
 void BossHead::Idle()
@@ -220,7 +219,6 @@ BossHand::BossHand(const CVector2D &player_pos, const int state) :EnemyBase(eBos
 
 BossHand::~BossHand()
 {
-	//BossManager::m_state = eIdle;
 }
 
 void BossHand::Idle()
@@ -259,7 +257,7 @@ void BossHand::HandAttack()
 {
 	m_cnt++;
 	if (m_cnt <= 120 && m_cnt > 0) {
-		m_ang -= DtoR(1.5);
+		m_ang -= DtoR(2);
 		TaskManager::GetInstance()->AddTask(new BossSlashEffect(m_pos));
 		
 	}
@@ -383,7 +381,6 @@ BossTail::BossTail(const CVector2D & player_pos, const int state):EnemyBase(eBos
 
 BossTail::~BossTail()
 {
-	TaskManager::GetInstance()->AddTask(new BossManager());
 }
 
 void BossTail::Update()
