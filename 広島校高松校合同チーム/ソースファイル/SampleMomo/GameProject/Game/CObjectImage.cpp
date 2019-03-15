@@ -29,6 +29,7 @@ void CObjectImage::Draw()
 	m_image_p->SetFlipH(m_is_flip);
 	m_image_p->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 	CVector2D draw_pos = CVector2D(m_pos.x, m_pos.y + m_pos.z) - GetScroll();
+	//printf("get_scroll.x:%lf get_scroll.y:%lf", GetScroll().x, GetScroll().y);
 	m_image_p->SetPos(draw_pos);
 	m_image_p->Draw();
 }

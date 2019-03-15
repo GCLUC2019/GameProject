@@ -235,6 +235,7 @@ void Player::Attack()
 void Player::Special()
 {
 	static int time = 300;
+	m_special = 0;
 	if (time == 300) {
 		TaskManager::GetInstance()->AddTask(new PlayerEffectSpecialAttack(m_pos));
 		m_state = eSpecial;
@@ -308,10 +309,10 @@ void Player::SetAnim()
 void Player::Update()
 {
 #ifdef _DEBUG
-	if (CInput::GetState(0, CInput::eHold, CInput::eMouseL))
+	if (CInput::GetState(0, CInput::ePush, CInput::eMouseL))
 		Damage(50);
-	if (CInput::GetState(0, CInput::eHold, CInput::eMouseR))
-		ItemGet(ItemList::eKoban);
+	if (CInput::GetState(0, CInput::ePush, CInput::eMouseR))
+		SpecialPuls(10);
 #endif // _DEBUG
 
 	if (m_death_flg) {
@@ -320,7 +321,7 @@ void Player::Update()
 	}
 		
 	m_img.SetColor(1, 1, 1, 1);
-	if (CInput::GetState(0, CInput::eHold, CInput::eButton5) && m_attack_flg == false)
+	if (m_special >= 100 && CInput::GetState(0, CInput::eHold, CInput::eButton5) && m_attack_flg == false)
 		m_special_flg = true;
 	m_state_old = m_state;
 	m_pos_old = m_pos;
@@ -396,9 +397,9 @@ void Player::Draw()
 	m_img.SetCenter((SAIZE + m_depth) / 2, (SAIZE + m_depth));
 	m_img.SetPos(m_pos+CVector2D(0, m_jump_vec));
 	m_img.SetFlipH(m_flip);
-	m_shadow.SetSize(SAIZE_SD + m_depth+m_jump_vec/5, SAIZE_SD + m_depth + m_jump_vec / 5);
-	m_shadow.SetCenter((SAIZE_SD + m_depth + m_jump_vec / 5) / 2, (SAIZE_SD + m_depth + m_jump_vec / 5) / 2);
-    m_shadow.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y);
+	m_shadow.SetSize(SAIZE_SD + m_depth + m_jump_vec / 5, SAIZE_SD - 70 );
+	m_shadow.SetCenter((SAIZE_SD + m_depth + m_jump_vec / 5) / 2, (SAIZE_SD - 70 ) / 2);
+    m_shadow.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
 	m_shadow.Draw();
 	m_img.Draw();
 		
@@ -432,6 +433,15 @@ void Player::ItemGet(int _itemTyp)
 		break;
 	}
 
+}
+
+void Player::SpecialPuls(int _puls)
+{
+	if (m_special_flg)
+		return;
+	m_special += _puls;
+	if (m_special >= 100)
+		m_special = 100;
 }
 
 

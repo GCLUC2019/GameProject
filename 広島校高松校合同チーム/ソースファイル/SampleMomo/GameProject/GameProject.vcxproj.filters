@@ -14,9 +14,6 @@
     <ClCompile Include="Task\Task.cpp">
       <Filter>Task</Filter>
     </ClCompile>
-    <ClCompile Include="Task\TaskManager.cpp">
-      <Filter>Task</Filter>
-    </ClCompile>
     <ClCompile Include="Game\CCommonObject.cpp">
       <Filter>Game\Object\CommonObject</Filter>
     </ClCompile>
@@ -67,6 +64,9 @@
     </ClCompile>
     <ClCompile Include="Game\CStageCrear.cpp">
       <Filter>Game\Object\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Task\TaskManager.cpp">
+      <Filter>Task</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

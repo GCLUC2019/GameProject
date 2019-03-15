@@ -9,10 +9,11 @@
 #include "../Item/ItemBox.h"
 #include "../GameProject/Game/Scene/Title.h"
 #include"../Character/EnemyBase/Enemy/Enemy01.h"
+#include "../../Game/UI/UI.h"
 GameScene::GameScene() : Task(eGameScene)
 {
 	new Resource();
-	//TaskManager::GetInstance()->AddTask(new Stage01());
+	TaskManager::GetInstance()->AddTask(new Stage01());
 	TaskManager::GetInstance()->AddTask(new EnemyManager());
 	TaskManager::GetInstance()->AddTask(new BossManager());
 	TaskManager::GetInstance()->AddTask(new Item(ItemList::eHyoutan,CVector2D(256,360)));
@@ -23,6 +24,7 @@ GameScene::GameScene() : Task(eGameScene)
 	TaskManager::GetInstance()->AddTask(new ItemBox(Box_Typ::eDummyBox, CVector2D(768, 560)));
 	TaskManager::GetInstance()->AddTask(new Player());
 	TaskManager::GetInstance()->AddTask(new Enemy01(CVector2D(100, 100)));
+	TaskManager::GetInstance()->AddTask(new UI());
 
 }
 
