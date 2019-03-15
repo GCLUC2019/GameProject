@@ -6,6 +6,7 @@
 
 class Tutorial : public Task {
 private:
+	bool m_state_flg;
 protected:
 public:
 	Tutorial();

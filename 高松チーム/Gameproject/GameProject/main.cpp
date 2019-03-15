@@ -12,6 +12,7 @@
 #include "Base\Task.h"
 #include "Base\TaskManager.h"
 #include "Game/Scene/Title.h"
+#include "../GameProject/Game/Tutorial/Tutorial.h"
 //--------------------------------------------
 //グローバル変数領域
 //--------------------------------------------
@@ -91,6 +92,7 @@ void Init(void)
 	CInput::SetPadButton(0, CInput::eButton5, PadButton::e8);
 	CInput::SetButton(0, CInput::eButton5, 'Q');
 
+	CInput::SetPadButton(0, CInput::eButton6, PadButton::e7);
 	CInput::SetButton(0, CInput::eButton10, VK_RETURN);
 	CInput::SetButton(0, CInput::eUp, VK_UP);
 	CInput::SetButton(0, CInput::eDown, VK_DOWN);
@@ -117,8 +119,8 @@ void Init(void)
 	//初期化の命令を書く
 	//ゲーム起動時に一度だけ呼ばれる
 	//-----------------------------------------------------
-    TaskManager::GetInstance()->AddTask(new Title());
-
+    //TaskManager::GetInstance()->AddTask(new Title());
+	TaskManager::GetInstance()->AddTask(new Tutorial());
 }
 
 void release()

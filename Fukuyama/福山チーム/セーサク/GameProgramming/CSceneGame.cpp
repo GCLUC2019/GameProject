@@ -2,17 +2,21 @@
 #include "CMain.h"
 #include "Windows.h"
 #include"CBoss.h"
+#include"CSpeedEnemy.h"
 
 
 void CSceneGame::Init(){
 	Tank = new CPlayerTank();
 	EnemyTank = new CEnemyTank();
+	SpeedEnemy = new CSpeedEnemy();
 	Enemy1 = new CEnemy1();               //追加　釜田
 	Enemy2 = new CEnemy2();
+	Boss = new CBoss();
 
 	Tank->Init();
 	EnemyTank->Init();
 	EnemyTank->mPosition = CVector2(-400.0f, 250.0f);
+	EnemyTank->mRotation = 270.0f;
 
 	Enemy1->Init();                       //追加　釜田
 	Enemy1->mPosition = CVector2(-300.0f, 150.0f);
@@ -22,16 +26,21 @@ void CSceneGame::Init(){
 	Enemy2->mPosition = CVector2(-380.0f, 150.0f);
 	Enemy2->mRotation = 270.0f;
 
-	Boss = new CBoss();
+	SpeedEnemy->Init();
+	SpeedEnemy->mPosition = CVector2(90.0f, 0.0f);
+	SpeedEnemy->mRotation = 150.0f;
+
+
 	Boss->Init();
 	Boss->mPosition = CVector2(400.0f, -250.0f);
-	EnemyTank->mRotation = 270.0f;
 	Boss->mRotation = -270.0f;
+
 	CTaskManager::Get()->Add(Tank);
 	CTaskManager::Get()->Add(EnemyTank);
 	CTaskManager::Get()->Add(Boss);
 	CTaskManager::Get()->Add(Enemy1);      //追加　釜田
 	CTaskManager::Get()->Add(Enemy2);
+	CTaskManager::Get()->Add(SpeedEnemy);
 
 	Texture.Load("exp.tga");
 }
