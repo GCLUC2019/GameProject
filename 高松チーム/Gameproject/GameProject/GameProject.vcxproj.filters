@@ -95,6 +95,9 @@
     <ClCompile Include="Game\Character\Anim\AnimUI.cpp">
       <Filter>Game\Character\Anim</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Stage\MapData.cpp">
+      <Filter>Game\Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GID.h" />
@@ -195,6 +198,9 @@
     </ClInclude>
     <ClInclude Include="Game\Character\Anim\AnimUI.h">
       <Filter>Game\Character\Anim</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Stage\MapData.h">
+      <Filter>Game\Stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

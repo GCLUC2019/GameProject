@@ -162,6 +162,7 @@
     <ClInclude Include="Game\Scene\Result.h" />
     <ClInclude Include="Game\Scene\Title.h" />
     <ClInclude Include="Game\Stage\ground.h" />
+    <ClInclude Include="Game\Stage\MapData.h" />
     <ClInclude Include="Game\Tutorial\Tutorial.h" />
     <ClInclude Include="Game\UI\UI.h" />
     <ClInclude Include="GID.h" />
@@ -198,6 +199,7 @@
     <ClCompile Include="Game\Scene\Result.cpp" />
     <ClCompile Include="Game\Scene\Title.cpp" />
     <ClCompile Include="Game\Stage\ground.cpp" />
+    <ClCompile Include="Game\Stage\MapData.cpp" />
     <ClCompile Include="Game\Tutorial\Tutorial.cpp" />
     <ClCompile Include="Game\UI\UI.cpp" />
     <ClCompile Include="main.cpp" />
