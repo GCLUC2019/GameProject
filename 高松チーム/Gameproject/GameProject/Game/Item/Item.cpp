@@ -2,8 +2,9 @@
 #include "../Character/CharacterBase.h"
 #include "../Character/Player.h"
 #include "../CollitionBase.h"
+#include "../GameData/GameData.h"
 
-Item::Item(int _m_item_type, CVector2D _m_pos) : Task(eItem),
+Item::Item(int _m_item_type, CVector2D _m_pos) : Task(CharacterData::eItem),
 m_item_type(_m_item_type),
 m_pos(_m_pos)
 {
@@ -57,21 +58,21 @@ void Item::Update()
 	CVector2D vec = p->GetPos() - m_pos;
 	vec=vec.GetNormalize();
 	m_pos += vec * 3;
-	
+	//m_pos = CVector2D(g_game_data.m_scroll.x, 0);
 }
 
 void Item::Draw()
 {
-	m_img.SetPos(m_pos-m_scroll);
+	m_img.SetPos(m_pos);
 	m_img.Draw();
 }
 
 void Item::HitCheck()
 {
 	
-	/*Task* p =CollitionBase::GetCollisionCheckRect(this, ePlayer);
+	Task* p =CollitionBase::GetCollisionCheckRect(this, ePlayer);
 	Player* n = dynamic_cast<Player*>(p);
-	if (n != nullptr)
+	/*if (n != nullptr)
 		n->Damage(5);*/
 	
 }

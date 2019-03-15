@@ -1,11 +1,12 @@
 #include "Enemy01.h"
 #include "../GameProject/Game/Character/Player.h"
 #include "../../Anim/AnimData.h"
+#include "../GameProject/Game/GameData/GameData.h"
 
 #define MOVE_SPEED 2.0f
 #define DEP_N 1200
 
-Enemy01::Enemy01() : EnemyBase(eEnemy01),
+Enemy01::Enemy01() : EnemyBase(CharacterData::eEnemy01),
 m_state(eSearch),
 m_hover(0.0f),
 m_search_flg (false),
@@ -70,7 +71,7 @@ void Enemy01::Draw()
     m_hover += 0.1f;//リセットしたほうがいい？
 	m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
     m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
-    m_img.SetPos(CVector2D(m_pos.x - m_scroll.x, m_pos.y + sin(m_hover)*10.0f - m_scroll.y));
+    m_img.SetPos(CVector2D(m_pos.x - g_game_data.m_scroll.x, m_pos.y + sin(m_hover)*10.0f - g_game_data.m_scroll.y));
     m_img.SetFlipH(m_move_dir_flg);
 	m_img.Draw();
 }

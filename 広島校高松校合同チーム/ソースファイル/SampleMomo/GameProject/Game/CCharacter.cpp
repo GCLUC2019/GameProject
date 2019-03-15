@@ -47,6 +47,10 @@ void CCharacter::CharacterAfterUpdate()
 {
 }
 
+void CCharacter::CharacterOutHitPoint()
+{
+}
+
 /*
 void CCharacter::SetAnim(int _anim_id)
 {
@@ -112,7 +116,12 @@ void CCharacter::CharacterBeforeUpdate()
 void CCharacter::HitPointGainValue(double _value)
 {
 	//–³“G‚È‚ç‰½‚à‚µ‚È‚¢
-	if (GetInvincible() == true) return;
+	if (GetInvincible() == true) {
+		//printf("–³“G‚Å‚·\n");
+		return;
+	}
+
+
 
 	m_hit_point += _value;
 	if (m_hit_point > m_hit_point_max) m_hit_point = m_hit_point_max;
@@ -131,7 +140,9 @@ void CCharacter::SendDeadMeForFromWave()
 void CCharacter::CheckHitPoint()
 {
 	if (m_hit_point <= 0.0f) {
-		SetIsDelete();
+		//printf("hp 0 \n");
+		//SetIsDelete();
+		CharacterOutHitPoint();
 		SendDeadMeForFromWave();//ƒEƒF[ƒuƒVƒXƒeƒ€‚ÉŽ©•ª‚ª“|‚³‚ê‚½‚±‚Æ‚ð“`‚¦‚é
 	}
 }

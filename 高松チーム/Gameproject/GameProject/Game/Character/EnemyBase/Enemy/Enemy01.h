@@ -9,7 +9,7 @@
 
 class Enemy01: public EnemyBase{
 private:
-    enum {
+    enum Enemy01State{
         eMove,
         eSearch,
         eAttack,
