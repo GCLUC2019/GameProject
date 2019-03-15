@@ -34,6 +34,7 @@ public:
 class SpecialGageUI : public UI {
 private:
 	int m_state;
+	int m_special_gage;
 public:
 	SpecialGageUI();
 	void Update();
@@ -57,5 +58,4 @@ public:
 	PlayerGageUI();
 	void Update();
 	void Draw();
-	void HitCheck();
 };

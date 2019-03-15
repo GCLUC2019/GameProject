@@ -58,7 +58,40 @@ SpecialGageUI::SpecialGageUI() : UI(UIData::eSpecialGageUI)
 
 void SpecialGageUI::Update()
 {
+	Task* p = TaskManager::FindObject(ePlayer);
+	Player* n = dynamic_cast<Player*>(p);
+	m_special_gage = n->GetSpecial();
 
+	switch (m_special_gage)
+	{
+	case 0:
+		m_img.ChangeAnimation(SpecialGage::eGage00);
+		break;
+	case 10:
+		m_img.ChangeAnimation(SpecialGage::eGage01);
+		break;
+	case 20:
+		m_img.ChangeAnimation(SpecialGage::eGage02);
+		break;
+	case 30:
+		break;
+	case 40:
+		break;
+	case 50:
+		break;
+	case 60:
+		break;
+	case 70:
+		break;
+	case 80:
+		break;
+	case 90:
+		break;
+	case 100:
+		break;
+	default:
+		break;
+	}
 	m_img.UpdateAnimation();
 }
 
@@ -112,13 +145,4 @@ void PlayerGageUI::Draw()
 	m_img.SetSize(CVector2D(m_player_hp_now * hp_width , 10));
 	m_img.SetPos(m_pos);
 	m_img.Draw();
-}
-
-void PlayerGageUI::HitCheck()
-{
-	/*Task* p = CollitionBase::GetCollisionCheckRect(this, ePlayer);
-	Player* n = dynamic_cast<Player*>(p);
-	if (n != nullptr) {
-		m_player_hp = n->GetHP();
-	}*/
 }
