@@ -86,7 +86,7 @@ BossSlashEffect::BossSlashEffect(const CVector2D & pos) : Task(eBossLazerEffectc
 
 void BossSlashEffect::Update()
 {
-	m_img.ChangeAnimation(PlayerEffectAnim::ePEGetDamage, false);
+	m_img.ChangeAnimation(eBossSlashEffect, false);
 	m_img.UpdateAnimation();
 	m_img.CheckAnimationEnd();
 	if (m_img.CheckAnimationEnd())SetKill();
