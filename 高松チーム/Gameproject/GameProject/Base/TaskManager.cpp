@@ -46,7 +46,7 @@ void TaskManager::DrawAll()
 	while (d) {
 		d->Draw();
 		
-		printf("%d  ", d->GetType());
+		//printf("%d  ", d->GetType());
 		/*d->GetPos();
 		if (d->GetPos().x != -1 || d->GetPos().y != -1)
 			printf("%f,%f  ", d->GetPos().x, d->GetPos().y);*/
@@ -54,7 +54,7 @@ void TaskManager::DrawAll()
 	}
 
 
-	printf("\n ");
+	//printf("\n ");
 }
 
 void TaskManager::HitCheckAll()

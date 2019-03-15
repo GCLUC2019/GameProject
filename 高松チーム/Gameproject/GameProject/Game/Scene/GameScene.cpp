@@ -10,6 +10,7 @@
 #include "../GameProject/Game/Scene/Title.h"
 #include"../Character/EnemyBase/Enemy/Enemy01.h"
 #include "../../Game/UI/UI.h"
+#include "../GameProject/Game/Stage/MapData.h"
 GameScene::GameScene() : Task(eGameScene)
 {
 	new Resource();
@@ -25,6 +26,7 @@ GameScene::GameScene() : Task(eGameScene)
 	TaskManager::GetInstance()->AddTask(new Player());
 	TaskManager::GetInstance()->AddTask(new Enemy01(CVector2D(100, 100)));
 	TaskManager::GetInstance()->AddTask(new UI());
+    TaskManager::GetInstance()->AddTask(new MapData());
 
 }
 
