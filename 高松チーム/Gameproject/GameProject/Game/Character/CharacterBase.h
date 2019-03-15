@@ -21,4 +21,7 @@ public:
 	CRect GetRect() {
 		return m_rect;
 	}
+    float GetDepth() {
+        return m_depth;
+    }
 };
