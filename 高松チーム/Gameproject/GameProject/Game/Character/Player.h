@@ -90,6 +90,8 @@ public:
 	@param _damage	[in]—^‚¦‚éƒ_ƒ[ƒW
 	*/
 	void ItemGet(int _itemTyp);
+	void SpecialPuls(int _puls);
+
 	Player();
 	void HitCheck(/*Task* _t*/);
 	void Update();
