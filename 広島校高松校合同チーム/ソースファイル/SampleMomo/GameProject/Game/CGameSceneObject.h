@@ -54,6 +54,17 @@ protected:
 	int m_blind_delay_count = 0;
 	float m_blind_alpha = DEFAULT_BLIND_ALPHA;
 
+	//移動できる場所の制限を受けるか
+	bool m_is_limit_move_pos = true;
+
+	//重力を受けるか
+	bool m_is_receive_gravity = true;
+
+	//スクロールの基準のオブジェクトにするか
+	bool m_is_calc_scroll_base_object = false;
+
+	
+
 
 public:
 	CGameSceneObject(int _task_id = 0, int _draw_priority = 0);
@@ -95,12 +106,24 @@ public:
 
 	void MoveLimit();
 
+	void CalcScroll();
+
 	void SetIsBlindDraw(bool _is,int _delay = DEFAULT_BLIND_DELAY,double _blind_alpha = DEFAULT_BLIND_ALPHA) { 
 		m_is_blind_draw = _is;
 		m_blind_delay = _delay;
 		m_blind_delay_count = 0;
 		m_blind_alpha = _blind_alpha;
 	};
+
+	void SetIsLimitMovePos(bool _is) { m_is_limit_move_pos = _is; }
+	bool GetIsLimitMovePos() { return m_is_limit_move_pos;  }
+
+
+	void SetIsReceiveGravity(bool _is) { m_is_receive_gravity = _is; }
+	bool GetIsReceiveGravity() { return  m_is_receive_gravity; }
+
+	void SetIsCalcScrollBaseObject(bool _is) { m_is_calc_scroll_base_object = _is; }
+	bool GetIsCalcScrollBaseObject() { return  m_is_calc_scroll_base_object; }
 
 
 	//アニメーション再生関連

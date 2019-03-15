@@ -7,8 +7,8 @@ CCharacterEnemy::CCharacterEnemy() :CCharacter(eTaskIdEnemy, 0)
 	m_enemy_state = eEnemyStateIdle;
 
 	m_vec = CVector3D(0, 0, 0);
-	m_pos = CVector3D(1000, -160, 500);  //初期値のy軸は地面に埋まらないように少し浮かせる
-	m_rads = CVector3D(75,55,10);
+	m_pos = CVector3D(1000, -200, 500);  //初期値のy軸は地面に埋まらないように少し浮かせる
+	m_rads = CVector3D(75,150,10);
 	SetSize(300, 300);
 	m_is_flip = false;
 
@@ -26,7 +26,7 @@ CCharacterEnemy::CCharacterEnemy() :CCharacter(eTaskIdEnemy, 0)
 	SetAnim(eEnemyAnimIdIdle);
 	SetIsShowShadow(true);
 	SetShadowSize(CVector2D(100, 50));
-	SetDrawAdjPos(CVector2D(5.0, 50.0));
+	SetDrawAdjPos(CVector2D(5.0, 35.0));
 
 	m_hit_point = 10.0f;
 	m_hit_point_max = 10.0f;
@@ -55,7 +55,7 @@ CCharacterEnemy::~CCharacterEnemy()
 void CCharacterEnemy::CharacterUpdate()
 {
 	m_AI_cnt++;
-	CharacterBeforeCollisionCheck();
+	//CharacterBeforeCollisionCheck();
 	switch (m_enemy_state) {
 	case eEnemyStateIdle:
 		Idle();
@@ -72,11 +72,11 @@ void CCharacterEnemy::CharacterUpdate()
 	default:
 		break;
 	}
-	Gravity();
+	//Gravity();
 #ifdef _DEBUG
 	//printf("%f", m_pos.x);
 #endif // _DEBUG
-	MovePos();
+	//MovePos();
 	
 }
 

@@ -216,7 +216,7 @@ public:
 
 
 	void AdjAnim();
-	void CalcScroll();
+	//void CalcScroll();
 
 	void ReceiveAttack();
 };

@@ -20,6 +20,8 @@ CCharacterPlayer::CCharacterPlayer() :CCharacter(eTaskIdPlayer, 0)
 	//体力の設定
 	m_hit_point = 5.0f;
 	m_hit_point_max = 10.0f;
+
+	SetIsCalcScrollBaseObject(true);
 }
 
 CCharacterPlayer::~CCharacterPlayer()
@@ -158,7 +160,6 @@ void CCharacterPlayer::InputDash()
 	if (CInput::GetState(0, CInput::eHold, CInput::eButton3)) {
 		m_is_dashing = true;
 		m_speed = 6.0f;
-		m_size = CVector2D(100, 100);
 	}
 }
 
@@ -228,17 +229,19 @@ void CCharacterPlayer::CharacterUpdate()
 	DoingDown();
 	DoingEvasion();
 	Landing();
-	Gravity();
 	Jumping();
 	Falling();
-	Move();
-	MoveLimit();
+
+	//Gravity();
+	
+	//Move();
+	//MoveLimit();
 	
 	
 	AfterDamageInvincible();
 	Attacking();
 
-	CalcScroll();
+	//CalcScroll();
 	AdjAnim();
 }
 
@@ -518,44 +521,49 @@ void CCharacterPlayer::Attacking()
 	else if (m_attacking_count <= PLAYER_ATTACK_FRAME - PLAYER_ATTACK_HIT_FRAME_START && m_attacking_count >  PLAYER_ATTACK_FRAME - PLAYER_ATTACK_HIT_FRAME_END) {
 		//攻撃判定を発生させる。
 
+
+		//ローカル変数定義
+		register const CVector3D& player_pos = GetPos();//プレイヤーの位置
+		
+		register CVector3D length;//距離ベクトル(位置の差)を計算
+		register CVector3D length_abs;//絶対距離
+		register const CVector3D attack_length = PLAYER_ATTACK_LENGTH; //攻撃範囲
+
 		//生成されている全てのエネミーのポインタを取得
 		Task** enemy_array = TaskManager::GetInstance()->FindTaskArray(eTaskIdEnemy);
 
-		int i = 0;
+		//カウンタ
+		register int i = 0;
+
+		//敵のポインタ取得用
+		register CCharacter* enemy_p;
+
 		while (true) {
 			if (enemy_array[i] == nullptr) {
 				break;
 			}
 
-			CCharacter* enemy_p = dynamic_cast<CCharacter*>(enemy_array[i]);
+			enemy_p = dynamic_cast<CCharacter*>(enemy_array[i]);
 			if (enemy_p == nullptr) {
 				i++;
 				continue;
 			}
 
-
-
-			//DEBUG_PRINT("エネミーいたよね\n");
-
 			//位置関係を取得
-			CVector3D enemy_pos = enemy_p->GetPos();
-			CVector3D player_pos = GetPos();
+
+			//敵のポジションを取得
+			register const CVector3D& enemy_pos = enemy_p->GetPos();//敵の位置
+			
 
 
 			//距離ベクトル(位置の差)を計算
-			CVector3D length = enemy_pos - player_pos;
+			length = enemy_pos - player_pos;
 
 			//絶対距離を計算
-			CVector3D length_abs;
 			length_abs.x = abs(length.x);
 			length_abs.y = abs(length.y);
 			length_abs.z = abs(length.z);
-
-			//攻撃範囲
-			CVector3D attack_length = PLAYER_ATTACK_LENGTH;
-
-
-			//DEBUG_PRINT("攻撃!!!!\n");
+			
 			//敵が左側にいて自分が左向き
 			//もしくは敵が右側にいて、自分が右向きなら
 			if (length.x <= 0.0f && m_is_flip == true
@@ -566,22 +574,19 @@ void CCharacterPlayer::Attacking()
 				if (length_abs.x <= attack_length.x&& length_abs.y <= attack_length.y&&length_abs.z <= attack_length.z) {
 					
 					
-					bool is_aready_hit = false;
+					register bool is_aready_hit = false;
 					//当たっているので攻撃判定が既にされているオブジェクトかどうかチェック
 					for (int i = 0; i < m_memory_hit_attacked_enemy_num; i++) {
 						if (m_memory_hit_attacked_enemy_p[i] == enemy_p) {
 							is_aready_hit = true;
-							//DEBUG_PRINT("もう攻撃していたのでなにもしない\n");
 							break;
 						}
 					}
-					
-					
+
 					//まだ攻撃を当たった扱いになってないなら攻撃判定を行う
 					if (is_aready_hit == false) {
 						enemy_p->ReceiveAttack();
 						*enemy_p->GetHitPointPointer() -= PLAYER_ATTACK_POWER;
-						//DEBUG_PRINT("enemy hp %lf\n", *enemy_p->GetHitPointPointer());
 						m_memory_hit_attacked_enemy_p[m_memory_hit_attacked_enemy_num++] = enemy_p;
 					}
 				}
@@ -590,12 +595,9 @@ void CCharacterPlayer::Attacking()
 
 			i++;
 		}
-
-
 		free(enemy_array);
 		
 	}
-	//DEBUG_PRINT("攻撃 %d\n", m_attacking_count);
 	SetWillPlayAnim(ePlayerAnimIdAttack);
 
 
@@ -611,7 +613,6 @@ void CCharacterPlayer::Jumping()
 		}
 
 		SetWillPlayAnim(ePlayerAnimIdJump);
-		//DEBUG_PRINT("ジャンプ！\n");
 	}
 
 	
@@ -621,20 +622,16 @@ void CCharacterPlayer::Jumping()
 void CCharacterPlayer::Falling()
 {
 	if (m_is_landing == false && m_is_jumping == false) {
-
 		SetWillPlayAnim(ePlayerAnimIdFall);
-		//ある程度の高度なら落ちるモーションをそうでないなら着地モーションを再生
-		//if(m_pos.y <= -330) SetWillPlayAnim(ePlayerAnimIdFall);
-		//else SetWillPlayAnim(ePlayerAnimIdLand);
-		
-		//DEBUG_PRINT("ファール\n");
 	}
 }
 
 void CCharacterPlayer::Move()
 {
-	m_pos_old = m_pos;
-	m_pos += m_vec;
+	//MovePos();
+	//m_pos_old = m_pos; //親クラスで行ってるので必要なくなったはず 動きは変わらないはずだが……
+	//m_pos += m_vec;
+	//移動機能は、親クラスで移動は定義された
 }
 
 void CCharacterPlayer::CharacterOutHitPoint()
@@ -703,20 +700,28 @@ void CCharacterPlayer::AdjAnim()
 	}
 }
 
+/*
 void CCharacterPlayer::CalcScroll()
 {
 	//画面上の座標
 
-	CVector2D scroll_pos = GetScroll();
-	
-	//	float offset_x = -100.0f;
-	float offset_x = - 120.0f;
+	const CVector2D& scroll_pos = GetScroll();
+	CVector2D calc_scroll_pos = scroll_pos;
 
-	CVector2D calc_scroll_pos = GetScroll();
+	register const float offset_x = - 120.0f;
+	register const float offset_y = -200.0f;
+
+	//スクロール限界値を設定
+	register const double max_x = CGameScene::GetInstance()->GetGameSceneLimitPosMax().x - 1280.0f;
+
+	//キャラ描画位置
+	register double draw_pos_y = m_pos.y + m_pos.z;
+
 
 	if (m_pos.x >= scroll_pos.x + 1280.0f + offset_x) {
 		calc_scroll_pos.x = m_pos.x - 1280.0f - offset_x;
 	}
+
 	else if (m_pos.x <= scroll_pos.x - offset_x) {
 		calc_scroll_pos.x = m_pos.x + offset_x;
 	}
@@ -726,15 +731,8 @@ void CCharacterPlayer::CalcScroll()
 		calc_scroll_pos.x = CGameScene::GetInstance()->GetGameSceneLimitPosMax().x - offset_x;
 	}
 
-	//スクロール限界値を設定
-	double max_x = CGameScene::GetInstance()->GetGameSceneLimitPosMax().x - 1280.0f;
+	
 	if (calc_scroll_pos.x > max_x) calc_scroll_pos.x = max_x;
-	//DEBUG_PRINT("max_x %lf calc_scroll_pos.x %lf\n", max_x,calc_scroll_pos.x);
-
-	//Y軸スクロール
-	float offset_y = -200.0f;
-
-	double draw_pos_y = m_pos.y + m_pos.z;
 
 	if (draw_pos_y <= scroll_pos.y - offset_y) {
 		calc_scroll_pos.y = draw_pos_y + offset_y;
@@ -745,14 +743,10 @@ void CCharacterPlayer::CalcScroll()
 
 	if (calc_scroll_pos.y > 0.0f) calc_scroll_pos.y = 0.0f;
 
-	//DEBUG_PRINT("calc_scroll_pos.y %lf\n", calc_scroll_pos.y);
-
-
-
-
 	SetScroll(calc_scroll_pos);
 
 }
+*/
 
 void CCharacterPlayer::ReceiveAttack()
 {
