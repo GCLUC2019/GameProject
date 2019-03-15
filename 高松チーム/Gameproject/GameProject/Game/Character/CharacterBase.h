@@ -9,6 +9,7 @@ protected:
 	CAnimImage m_img;
 	int m_type;
 	CRect m_rect;
+    float m_depth;
 public:
 	CharacterBase(int _type);
 	virtual void Update();
