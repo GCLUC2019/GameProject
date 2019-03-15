@@ -11,7 +11,14 @@
 #include "CSceneGame.h"
 #include "CBoss.h"
 #include "CTexture.h"
+
+
+
 #include"CSceneManager.h"
+
+#include"CSpeedEnemy.h"
+
+>>>>>>> 0d547db42de5c4a5a2e178c92dfdc0ed3961ae4b
 CTexture Texture;
 CRectangle*Explosion;
 
@@ -21,6 +28,8 @@ CMap*mpMap;
 CPlayerTank *Tank;
 
 CEnemyTank*EnemyTank;
+
+CSpeedEnemy*SpeedEnemy = NULL;
 
 CBoss *Boss = NULL;
 

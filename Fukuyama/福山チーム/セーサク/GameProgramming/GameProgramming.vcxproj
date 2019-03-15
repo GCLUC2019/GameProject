@@ -82,6 +82,7 @@
   <ItemGroup>
     <ClCompile Include="CArrow.cpp" />
     <ClCompile Include="CBoss.cpp" />
+    <ClCompile Include="CBossBullet.cpp" />
     <ClCompile Include="CBullet.cpp" />
     <ClCompile Include="CCharacter.cpp" />
     <ClCompile Include="CCollider.cpp" />
@@ -101,6 +102,7 @@
     <ClCompile Include="CRectangle.cpp" />
     <ClCompile Include="CSceneGame.cpp" />
     <ClCompile Include="CSceneManager.cpp" />
+    <ClCompile Include="CSpeedEnemy.cpp" />
     <ClCompile Include="CTank.cpp" />
     <ClCompile Include="CTask.cpp" />
     <ClCompile Include="CTexture.cpp" />
@@ -116,6 +118,7 @@
   <ItemGroup>
     <ClInclude Include="CArrow.h" />
     <ClInclude Include="CBoss.h" />
+    <ClInclude Include="CBossBullet.h" />
     <ClInclude Include="CBullet.h" />
     <ClInclude Include="CCharacter.h" />
     <ClInclude Include="CCollider.h" />
@@ -135,6 +138,7 @@
     <ClInclude Include="CSceneGame.h" />
     <ClInclude Include="CSceneManager.h" />
     <ClInclude Include="CSound.h" />
+    <ClInclude Include="CSpeedEnemy.h" />
     <ClInclude Include="CTank.h" />
     <ClInclude Include="CMain.h" />
     <ClInclude Include="CMatrix33.h" />

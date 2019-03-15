@@ -389,7 +389,7 @@ void Player::Draw()
 #define SAIZE_SD 100
 	
 	m_img.UpdateAnimation();
-	g_game_data.m_scroll.x = m_pos.x -320;
+    g_game_data.m_scroll.x = m_pos.x;
     if(g_game_data.m_scroll.x<0)g_game_data.m_scroll.x = 0;
 
 	m_img.SetSize(SAIZE + m_depth, SAIZE + m_depth);
