@@ -1,35 +1,38 @@
 #ifndef CTANK_H
 #define CTANK_H
-
 #include"CRectangle.h"
-#include"CCollider.h"
-#include<stdio.h>
-
+#include"CCOllider.h"
 
 class CTank :public CRectangle{
 public:
+
+	CVector2 mForward;
+	CVector2 mBackward;
+	CVector2 mPForward;     //追加　釜田　
+	CVector2 mEForward;
+
+	CRectangle mHead;
+	CRectangle mCanon;
+	CRectangle mItem;
+
+	CBoxCollider mBoxCollider;
+	void OnCollision(CCollider*p);
+
 	void Init();
 	void Update();
 	void LeftTurn();
 	void RightTurn();
-	void HeadLeftTurn();
-	void HeadRightTurn();
-
-	CVector2 mForward;
-	CVector2 mBackward;
-
 	void Forward();
 	void Backward();
-
-	CRectangle mHead;
 	void Render();
+	void HeadLeftTurn();
+	void HeadRightTurn();
+	void PHeadLeftTurn();
+	void PHeadRightTurn();
+	void EnemyUp();         //追加　釜田
+	void EnemyDown();
+	void PForward();
+	void EForward();
 
-	CRectangle mCanon;
-	CBoxCollider mBoxCollider;
-
-	CCollider mCollider;
-	void OnCollision(CCollider*p);
-	void OnCollision(CBoxCollider*p);
 };
-
 #endif

@@ -11,7 +11,9 @@
 class CMain {
 	int		mState;
 public:
-	static CScene::ESceneTag mSceneTag;
+	//static CScene::ESceneTag mSceneTag;
+
+	static CMap::EScneMap mSceneMap;
 
 	CMain() : mState(0) {}
 

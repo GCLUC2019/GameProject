@@ -50,15 +50,15 @@ void CGameScene::Setup()
 
 	/*
 	CDropItem* drop_item_p;
-	AddGameSceneObject(drop_item_p = new CDropItem(eItemIdSpear, GET_RESOURCE("IconSpear", CImage*)));
+	AddGameSceneObject(drop_item_p = new CDropItem(eItemIdSpear));
 	drop_item_p->SetPos(CVector3D(200,200,200));
 	drop_item_p->SetSize(CVector2D(200, 200));
 	*/
 
-	/*
-	CBar*Bar_p = new CBar();
+	ADD_RESOURCE("HPbar", CImage::LoadImage("HPbar.png"));
+	CImage*m_img = GET_RESOURCE("HPbar", CImage*);
+	CBar*Bar_p = new CBar(m_img,player_p->GetHitPointPointer(),player_p->GetHitPointMax(),CVector2D(10,25),CVector2D(400,50));
 	TaskManager::GetInstance()->AddTask(Bar_p);
-	*/
 }
 
 

@@ -2,21 +2,21 @@
 #include "../GameProject/Game/Character/Player.h"
 #include "../../Anim/AnimData.h"
 #include "../GameProject/Global.h"
+#include "../GameProject/Game/GameData/GameData.h"
 #define MOVE_SPEED 2.5f
 #define DEP_N 1200
 #define JUMP_SPD -20.0f
 #define GRAVITY 10.0f
-Enemy02::Enemy02() : EnemyBase(eEnemy02),
+Enemy02::Enemy02() : EnemyBase(CharacterData::eEnemy02),
 m_hight(0.0f),
 m_search_flg(false),
-m_move_dir_flg(true),
 m_jump_flg(false)
 {
     m_img = COPY_RESOURCE("Enemy02", CAnimImage*);
     m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
     m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
     m_img.ChangeAnimation(eEMove02);
-    m_img.SetFlipH(m_move_dir_flg);
+    m_img.SetFlipH(m_flip);
     m_pos = CVector2D(200, 200);
     m_vec = CVector2D(0, 0);
     m_dir = CVector2D(0, 0);
@@ -26,17 +26,16 @@ m_jump_flg(false)
     cnt = 0;
 }
 
-Enemy02::Enemy02(CVector2D _pos) : EnemyBase(eEnemy02),
+Enemy02::Enemy02(CVector2D _pos) : EnemyBase(CharacterData::eEnemy02),
 m_hight(0.0f),
 m_search_flg(false),
-m_move_dir_flg(true),
 m_jump_flg(false)
 {
     m_img = COPY_RESOURCE("Enemy02", CAnimImage*);
     m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
     m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
     m_img.ChangeAnimation(eEMove02);
-    m_img.SetFlipH(m_move_dir_flg);
+    m_img.SetFlipH(m_flip);
     m_pos = _pos;
     m_vec = CVector2D(0, 0);
     m_dir = CVector2D(0, 0);
@@ -83,8 +82,8 @@ void Enemy02::Draw()
 {
     m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
     m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
-    m_img.SetPos(CVector2D(m_pos.x, m_pos.y + m_hight));
-    m_img.SetFlipH(m_move_dir_flg);
+    m_img.SetPos(CVector2D(m_pos.x , m_pos.y + m_hight - g_game_data.m_scroll.y/3));
+    m_img.SetFlipH(m_flip);
     m_img.Draw();
 }
 
@@ -101,15 +100,15 @@ void Enemy02::Move()
 void Enemy02::Search()
 {
     m_img.ChangeAnimation(eEMove02);
-    if (m_move_dir_flg == true) {
+    if (m_flip == true) {
         m_vec.x += MOVE_SPEED;
         if (m_pos.x > 1280 - IMAGE_SIZE / 2)
-            m_move_dir_flg = false;
+            m_flip = false;
     }
     else {
         m_vec.x -= MOVE_SPEED;
         if (m_pos.x < IMAGE_SIZE / 2)
-            m_move_dir_flg = true;
+            m_flip = true;
     }
     
     /*Player*p ;

@@ -46,8 +46,21 @@ void TaskManager::DrawAll()
 
 	while (d) {
 		d->Draw();
+<<<<<<< HEAD
 		d = d->GetNext();
 	}
+=======
+		
+		//printf("%d  ", d->GetType());
+		/*d->GetPos();
+		if (d->GetPos().x != -1 || d->GetPos().y != -1)
+			printf("%f,%f  ", d->GetPos().x, d->GetPos().y);*/
+		d = d->GetNext();
+	}
+
+
+	//printf("\n ");
+>>>>>>> 7b7833fccc61631035d5b5e9c0ad3425b18ce63d
 }
 
 void TaskManager::HitCheckAll()
@@ -65,12 +78,7 @@ void TaskManager::HitCheckAll()
 
     Task* d = mp_head;
     while (d) {
-        Task* d2 = d->GetNext();
-        while (d2) {
-            d->HitCheck(d2);
-            d2->HitCheck(d);
-            d2 = d2->GetNext();
-        }
+            d->HitCheck();
         d = d->GetNext();
     }
 }
@@ -78,13 +86,17 @@ void TaskManager::HitCheckAll()
 void TaskManager::Kill(Task * _t)
 {
 	Task* k = mp_head;
-
+	
 }
 
 void TaskManager::KillAll()
 {
 	Task* k = mp_head;
-	
+	while (k) {
+		if (k->m_kill_flg == false)
+			k->SetKill();
+		k = k->GetNext();
+	}
 }
 /*
 ì¬@“c’†

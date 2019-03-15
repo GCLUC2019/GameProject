@@ -1,4 +1,5 @@
 #include "CStorySceneCrear1.h"
+#include "CTitle.h"
 
 //ステージクリア１のテキスト数
 #define CREAR_SENTENSE_NUM 11
@@ -72,6 +73,8 @@ CStorySceneCrear1::CStorySceneCrear1()
 
 CStorySceneCrear1::~CStorySceneCrear1()
 {
+  CTitle* c_title_p = new CTitle();
+  TaskManager::GetInstance()->AddTask(c_title_p);
 }
 
 void CStorySceneCrear1::Update()

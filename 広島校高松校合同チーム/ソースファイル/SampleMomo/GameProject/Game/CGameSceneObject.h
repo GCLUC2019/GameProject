@@ -10,11 +10,17 @@
 #define ANIMATION_INFO_MAX (100)
 #define ANIMATION_IMAGE_MAX (500)
 
+#define DEFAULT_BLIND_DELAY (5)
+#define DEFAULT_BLIND_ALPHA (0.75f)
+
 struct AnimInfo {
 	int image_id;
 	int image_num = 0;
 	int delay;
 };
+
+
+
 
 class CGameSceneObject : public CObject {
 private:
@@ -41,6 +47,24 @@ protected:
 	int m_will_play_anim_id = 0;
 	int m_play_anim_count = 0;
 	CImage* m_anim_image_p[ANIMATION_IMAGE_MAX];
+
+	bool m_is_blind_draw = false;
+	bool m_is_blind_now = false;
+	int m_blind_delay = DEFAULT_BLIND_DELAY;
+	int m_blind_delay_count = 0;
+	float m_blind_alpha = DEFAULT_BLIND_ALPHA;
+
+	//移動できる場所の制限を受けるか
+	bool m_is_limit_move_pos = true;
+
+	//重力を受けるか
+	bool m_is_receive_gravity = true;
+
+	//スクロールの基準のオブジェクトにするか
+	bool m_is_calc_scroll_base_object = false;
+
+	
+
 
 public:
 	CGameSceneObject(int _task_id = 0, int _draw_priority = 0);
@@ -72,15 +96,34 @@ public:
 	virtual void  GameSceneObjectCollisionCheck(Task* _collision_task);
 
 	void SetIsShowShadow(bool _is) { m_is_show_shadow = _is; };
-	void SetShadowSize(CVector2D _size) { m_shadow_size = _size; };
+	void SetShadowSize(CVector2D& _size) { m_shadow_size = _size; };
 
 	//影の位置が変わりすぎると当たり判定との差異が起こるので注意すること(X軸にずらすとかその程度にする)
-	void SetShadowPosAdj(CVector2D _pos) { m_shadow_pos_adj = _pos; };
+	void SetShadowPosAdj(CVector2D& _pos) { m_shadow_pos_adj = _pos; };
 
-	void SetDrawAdjPos(CVector2D _adj_pos) { m_draw_adj = _adj_pos; };
-	CVector2D GetDrawAdjPos() { return m_draw_adj; };
+	void SetDrawAdjPos(const CVector2D& _adj_pos) { m_draw_adj = _adj_pos; };
+	const CVector2D& GetDrawAdjPos() { return m_draw_adj; };
 
 	void MoveLimit();
+
+	void CalcScroll();
+
+	void SetIsBlindDraw(bool _is,int _delay = DEFAULT_BLIND_DELAY,double _blind_alpha = DEFAULT_BLIND_ALPHA) { 
+		m_is_blind_draw = _is;
+		m_blind_delay = _delay;
+		m_blind_delay_count = 0;
+		m_blind_alpha = _blind_alpha;
+	};
+
+	void SetIsLimitMovePos(bool _is) { m_is_limit_move_pos = _is; }
+	bool GetIsLimitMovePos() { return m_is_limit_move_pos;  }
+
+
+	void SetIsReceiveGravity(bool _is) { m_is_receive_gravity = _is; }
+	bool GetIsReceiveGravity() { return  m_is_receive_gravity; }
+
+	void SetIsCalcScrollBaseObject(bool _is) { m_is_calc_scroll_base_object = _is; }
+	bool GetIsCalcScrollBaseObject() { return  m_is_calc_scroll_base_object; }
 
 
 	//アニメーション再生関連

@@ -3,56 +3,11 @@
 
 CCharacterEnemy::CCharacterEnemy() :CCharacter(eTaskIdEnemy, 0)
 {
-	ADD_RESOURCE("SpearEnemy_Idle_1", CImage::LoadImage("Enemy_Spear_idle1.png"));
-	ADD_RESOURCE("SpearEnemy_Idle_2", CImage::LoadImage("Enemy_Spear_idle2.png"));
-	ADD_RESOURCE("SpearEnemy_Idle_3", CImage::LoadImage("Enemy_Spear_idle3.png"));
-	ADD_RESOURCE("SpearEnemy_Idle_4", CImage::LoadImage("Enemy_Spear_idle4.png"));
-	ADD_RESOURCE("AxeEnemy_Idle_1", CImage::LoadImage("Enemy_Axe_idle1.png"));
-	ADD_RESOURCE("AxeEnemy_Idle_2", CImage::LoadImage("Enemy_Axe_idle2.png"));
-	ADD_RESOURCE("AxeEnemy_Idle_3", CImage::LoadImage("Enemy_Axe_idle3.png"));
-	ADD_RESOURCE("AxeEnemy_Idle_4", CImage::LoadImage("Enemy_Axe_idle4.png"));
-	ADD_RESOURCE("GunEnemy_Idle_1", CImage::LoadImage("Enemy_Gun_idle1.png"));
-	ADD_RESOURCE("GunEnemy_Idle_2", CImage::LoadImage("Enemy_Gun_idle2.png"));
-	ADD_RESOURCE("GunEnemy_Idle_3", CImage::LoadImage("Enemy_Gun_idle3.png"));
-	ADD_RESOURCE("GunEnemy_Idle_4", CImage::LoadImage("Enemy_Gun_idle4.png"));
-	ADD_RESOURCE("SpearEnemy_Move_1", CImage::LoadImage("Enemy_Spear_move1.png"));
-	ADD_RESOURCE("SpearEnemy_Move_2", CImage::LoadImage("Enemy_Spear_move2.png"));
-	ADD_RESOURCE("SpearEnemy_Move_3", CImage::LoadImage("Enemy_Spear_move3.png"));
-	ADD_RESOURCE("SpearEnemy_Move_4", CImage::LoadImage("Enemy_Spear_move4.png"));
-	ADD_RESOURCE("SpearEnemy_Move_5", CImage::LoadImage("Enemy_Spear_move5.png"));
-	ADD_RESOURCE("SpearEnemy_Move_6", CImage::LoadImage("Enemy_Spear_move6.png"));
-	ADD_RESOURCE("SpearEnemy_Move_7", CImage::LoadImage("Enemy_Spear_move7.png"));
-	ADD_RESOURCE("SpearEnemy_Move_8", CImage::LoadImage("Enemy_Spear_move8.png"));
-	ADD_RESOURCE("AxeEnemy_Move_1", CImage::LoadImage("Enemy_Axe_move1.png"));
-	ADD_RESOURCE("AxeEnemy_Move_2", CImage::LoadImage("Enemy_Axe_move2.png"));
-	ADD_RESOURCE("AxeEnemy_Move_3", CImage::LoadImage("Enemy_Axe_move3.png"));
-	ADD_RESOURCE("AxeEnemy_Move_4", CImage::LoadImage("Enemy_Axe_move4.png"));
-	ADD_RESOURCE("AxeEnemy_Move_5", CImage::LoadImage("Enemy_Axe_move5.png"));
-	ADD_RESOURCE("AxeEnemy_Move_6", CImage::LoadImage("Enemy_Axe_move6.png"));
-	ADD_RESOURCE("AxeEnemy_Move_7", CImage::LoadImage("Enemy_Axe_move7.png"));
-	ADD_RESOURCE("AxeEnemy_Move_8", CImage::LoadImage("Enemy_Axe_move8.png"));
-	ADD_RESOURCE("GunEnemy_Move_1", CImage::LoadImage("Enemy_Gun_move1.png"));
-	ADD_RESOURCE("GunEnemy_Move_2", CImage::LoadImage("Enemy_Gun_move2.png"));
-	ADD_RESOURCE("GunEnemy_Move_3", CImage::LoadImage("Enemy_Gun_move3.png"));
-	ADD_RESOURCE("GunEnemy_Move_4", CImage::LoadImage("Enemy_Gun_move4.png"));
-	ADD_RESOURCE("GunEnemy_Move_5", CImage::LoadImage("Enemy_Gun_move5.png"));
-	ADD_RESOURCE("GunEnemy_Move_6", CImage::LoadImage("Enemy_Gun_move6.png"));
-	ADD_RESOURCE("GunEnemy_Move_7", CImage::LoadImage("Enemy_Gun_move7.png"));
-	ADD_RESOURCE("GunEnemy_Move_8", CImage::LoadImage("Enemy_Gun_move8.png"));
-	ADD_RESOURCE("Enemy_Move_2", CImage::LoadImage("Enemy_move2.png"));
-	ADD_RESOURCE("Enemy_Move_3", CImage::LoadImage("Enemy_move3.png"));
-	ADD_RESOURCE("Enemy_Move_4", CImage::LoadImage("Enemy_move4.png"));
-	ADD_RESOURCE("Enemy_Move_5", CImage::LoadImage("Enemy_move5.png"));
-	ADD_RESOURCE("Enemy_Move_6", CImage::LoadImage("Enemy_move6.png"));
-	ADD_RESOURCE("Enemy_Move_7", CImage::LoadImage("Enemy_move7.png"));
-	ADD_RESOURCE("Enemy_Move_8", CImage::LoadImage("Enemy_move8.png"));
-	ADD_RESOURCE("Enemy_Attack_2", CImage::LoadImage("Enemy_attack2.png"));
-
 	m_enemy_type = eEnemyTypeGun;		//このタイプでエネミーの種類が変わります
 	m_enemy_state = eEnemyStateIdle;
 
 	m_vec = CVector3D(0, 0, 0);
-	m_pos = CVector3D(1000, -160, 500);  //初期値のy軸は地面に埋まらないように少し浮かせる
+	m_pos = CVector3D(1000, -200, 500);  //初期値のy軸は地面に埋まらないように少し浮かせる
 	m_rads = CVector3D(75,150,10);
 	SetSize(300, 300);
 	m_is_flip = false;
@@ -71,7 +26,7 @@ CCharacterEnemy::CCharacterEnemy() :CCharacter(eTaskIdEnemy, 0)
 	SetAnim(eEnemyAnimIdIdle);
 	SetIsShowShadow(true);
 	SetShadowSize(CVector2D(100, 50));
-	SetDrawAdjPos(CVector2D(5.0, 50.0));
+	SetDrawAdjPos(CVector2D(5.0, 35.0));
 
 	m_hit_point = 10.0f;
 	m_hit_point_max = 10.0f;
@@ -94,13 +49,13 @@ CCharacterEnemy::CCharacterEnemy() :CCharacter(eTaskIdEnemy, 0)
 
 CCharacterEnemy::~CCharacterEnemy()
 {
-	printf("削除されました");
+	//printf("削除されました");
 }
 
 void CCharacterEnemy::CharacterUpdate()
 {
 	m_AI_cnt++;
-	CharacterBeforeCollisionCheck();
+	//CharacterBeforeCollisionCheck();
 	switch (m_enemy_state) {
 	case eEnemyStateIdle:
 		Idle();
@@ -117,11 +72,11 @@ void CCharacterEnemy::CharacterUpdate()
 	default:
 		break;
 	}
-	Gravity();
+	//Gravity();
 #ifdef _DEBUG
 	//printf("%f", m_pos.x);
 #endif // _DEBUG
-	MovePos();
+	//MovePos();
 	
 }
 
@@ -135,7 +90,12 @@ void CCharacterEnemy::ReceiveAttack()
 	/*if (m_is_damage)*/ m_enemy_state = eEnemyStateDamage;
 	m_damage_chance++;
 	m_AI_cnt = 0;
-	printf("エネミー 攻撃があたった!%d\n", m_damage_chance);
+	//printf("エネミー 攻撃があたった!%d\n", m_damage_chance);
+}
+
+void CCharacterEnemy::CharacterOutHitPoint()
+{
+	SetIsDelete();
 }
 
 void CCharacterEnemy::LoadAnimImage()
@@ -256,10 +216,11 @@ void CCharacterEnemy::Attack()
 		CVector3D player_pos = p->GetPos();
 		if (abs(m_pos.z - player_pos.z) < 500 && abs(player_pos.x - m_pos.x) < 200 && is_attack) {
 			is_attack = false;
-			if (p == NULL) printf("プレイヤーがいません\n");
-			printf("Hit!!\n");
-			p->ReceiveAttack();
+			//if (p == NULL) printf("プレイヤーがいません\n");
+			//printf("Hit!!\n");
 			p->HitPointGainValue(-3.0);
+			p->ReceiveAttack();
+			
 		}
 	}
 
@@ -337,4 +298,5 @@ void CCharacterEnemy::CharacterBeforeCollisionCheck()
 	printf("%f\n", hp);*/
 	/*printf("エネミーのZ%f", m_pos.z);
 	printf("プレイヤーのZ%f\n", m_player_pos.z);*/
+
 }

@@ -18,6 +18,8 @@
 //プレイヤー泣き
 #define UVPLAYERCRY 196, 216, 158, 130
 
+int NotAttack = 0;  //追加　釜田　　
+
 //プレイヤーのインスタンス
 CPlayer *CPlayer::spInstance = 0;
 

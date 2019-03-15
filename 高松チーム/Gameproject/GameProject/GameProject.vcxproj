@@ -138,6 +138,7 @@
     <ClInclude Include="Game\Character\Anim\AnimBoss.h" />
     <ClInclude Include="Game\Character\Anim\AnimData.h" />
     <ClInclude Include="Game\Character\Anim\AnimDataPlayer.h" />
+    <ClInclude Include="Game\Character\Anim\AnimUI.h" />
     <ClInclude Include="Game\Character\CharacterBase.h" />
     <ClInclude Include="Game\Character\Effect\BossEffect.h" />
     <ClInclude Include="Game\Character\Effect\EnemyEffect.h" />
@@ -148,8 +149,11 @@
     <ClInclude Include="Game\Character\EnemyBase\Enemy\Enemy01.h" />
     <ClInclude Include="Game\Character\EnemyBase\Enemy\Enemy02.h" />
     <ClInclude Include="Game\Character\EnemyBase\Enemy\Enemy05.h" />
+    <ClInclude Include="Game\Character\EnemyBase\Enemy\TutorialEnemy.h" />
     <ClInclude Include="Game\Character\enum.h" />
     <ClInclude Include="Game\Character\Player.h" />
+    <ClInclude Include="Game\CollitionBase.h" />
+    <ClInclude Include="Game\GameData\GameData.h" />
     <ClInclude Include="Game\Item\AnimItemBox.h" />
     <ClInclude Include="Game\Item\Item.h" />
     <ClInclude Include="Game\Item\ItemBox.h" />
@@ -158,7 +162,9 @@
     <ClInclude Include="Game\Scene\Result.h" />
     <ClInclude Include="Game\Scene\Title.h" />
     <ClInclude Include="Game\Stage\ground.h" />
+    <ClInclude Include="Game\Stage\MapData.h" />
     <ClInclude Include="Game\Tutorial\Tutorial.h" />
+    <ClInclude Include="Game\UI\UI.h" />
     <ClInclude Include="GID.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="stdafx.h" />
@@ -170,6 +176,7 @@
     <ClCompile Include="Game\Character\Anim\AnimBoss.cpp" />
     <ClCompile Include="Game\Character\Anim\AnimData.cpp" />
     <ClCompile Include="Game\Character\Anim\AnimDataPlayer.cpp" />
+    <ClCompile Include="Game\Character\Anim\AnimUI.cpp" />
     <ClCompile Include="Game\Character\CharacterBase.cpp" />
     <ClCompile Include="Game\Character\Effect\BossEffect.cpp" />
     <ClCompile Include="Game\Character\Effect\EnemyEffect.cpp" />
@@ -180,7 +187,10 @@
     <ClCompile Include="Game\Character\EnemyBase\Enemy\Enemy01.cpp" />
     <ClCompile Include="Game\Character\EnemyBase\Enemy\Enemy02.cpp" />
     <ClCompile Include="Game\Character\EnemyBase\Enemy\Enemy05.cpp" />
+    <ClCompile Include="Game\Character\EnemyBase\Enemy\TutorialEnemy.cpp" />
     <ClCompile Include="Game\Character\Player.cpp" />
+    <ClCompile Include="Game\CollitionBase.cpp" />
+    <ClCompile Include="Game\GameData\GameData.cpp" />
     <ClCompile Include="Game\Item\AnimItemBox.cpp" />
     <ClCompile Include="Game\Item\Item.cpp" />
     <ClCompile Include="Game\Item\ItemBox.cpp" />
@@ -189,7 +199,9 @@
     <ClCompile Include="Game\Scene\Result.cpp" />
     <ClCompile Include="Game\Scene\Title.cpp" />
     <ClCompile Include="Game\Stage\ground.cpp" />
+    <ClCompile Include="Game\Stage\MapData.cpp" />
     <ClCompile Include="Game\Tutorial\Tutorial.cpp" />
+    <ClCompile Include="Game\UI\UI.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

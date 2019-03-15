@@ -8,7 +8,8 @@ protected:
 	CVector2D m_pos;
 	CAnimImage m_img;
 	int m_type;
-
+	CRect m_rect;
+    float m_depth;
 public:
 	CharacterBase(int _type);
 	virtual void Update();
@@ -16,5 +17,11 @@ public:
 	virtual void Damage(int _damage);
     CVector2D GetPos(){
         return m_pos;
+    }
+	CRect GetRect() {
+		return m_rect;
+	}
+    float GetDepth() {
+        return m_depth;
     }
 };

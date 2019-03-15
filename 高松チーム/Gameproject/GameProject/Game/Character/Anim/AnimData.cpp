@@ -48,8 +48,8 @@ static TexAnim EnemyIdle02[] = {
 };
 
 static TexAnim EnemyMove02[] = {
-	{ 0,50 },
-{ 1,50 },
+	{ 0,40 },
+{ 1,40 },
 };
 
 static TexAnim EnemyAttack02[] = {
@@ -154,8 +154,8 @@ static TexAnim EnemyIdle05[] = {
 };
 
 static TexAnim EnemyMove05[] = {
-	{ 0,50 },
-	{ 1,50 },
+	{ 0,28 },
+	{ 1,28 },
 };
 
 static TexAnim EnemyAttack05[] = {

@@ -1,20 +1,20 @@
 #include "Enemy01.h"
 #include "../GameProject/Game/Character/Player.h"
 #include "../../Anim/AnimData.h"
+#include "../GameProject/Game/GameData/GameData.h"
 
 #define MOVE_SPEED 2.0f
 #define DEP_N 1200
 
-Enemy01::Enemy01() : EnemyBase(eEnemy01),
+Enemy01::Enemy01() : EnemyBase(CharacterData::eEnemy01),
 m_state(eSearch),
 m_hover(0.0f),
-m_search_flg (false),
-m_move_dir_flg(true)
+m_search_flg (false)
 {
     m_img = COPY_RESOURCE("Enemy01", CAnimImage*);
     m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
     m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
-    m_img.SetFlipH(m_move_dir_flg);
+    m_img.SetFlipH(m_flip);
     m_img.ChangeAnimation(eEMove01);
     m_pos = CVector2D(200, 200);
     m_vec = CVector2D(0, 0);
@@ -25,13 +25,12 @@ m_move_dir_flg(true)
 Enemy01::Enemy01(CVector2D & _pos) : EnemyBase(eEnemy01),
 m_state(eSearch),
 m_hover(0.0f),
-m_search_flg(false),
-m_move_dir_flg(true)
+m_search_flg(false)
 {
     m_img = COPY_RESOURCE("Enemy01", CAnimImage*);
     m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
     m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
-    m_img.SetFlipH(m_move_dir_flg);
+    m_img.SetFlipH(m_flip);
     m_img.ChangeAnimation(eEMove01);
     m_pos = _pos;
     m_vec = CVector2D(0, 0);
@@ -67,11 +66,12 @@ void Enemy01::Update()
 
 void Enemy01::Draw()
 {
+    
     m_hover += 0.1f;//リセットしたほうがいい？
 	m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
     m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
-    m_img.SetPos(CVector2D(m_pos.x, m_pos.y + sin(m_hover)*10.0f));
-    m_img.SetFlipH(m_move_dir_flg);
+    m_img.SetPos(CVector2D(m_pos.x, m_pos.y + sin(m_hover)*10.0f - g_game_data.m_scroll.y / 3));
+    m_img.SetFlipH(m_flip);
 	m_img.Draw();
 }
 
@@ -88,15 +88,15 @@ void Enemy01::Move()
 void Enemy01::Search()
 {
     m_img.ChangeAnimation(eEMove01);
-    if (m_move_dir_flg == true) {
+    if (m_flip == true) {
         m_vec.x = MOVE_SPEED;
         if (m_pos.x > 1280 - IMAGE_SIZE / 2)
-            m_move_dir_flg = false;
+            m_flip = false;
     }
     else {
         m_vec.x = -MOVE_SPEED;
         if (m_pos.x < IMAGE_SIZE / 2)
-            m_move_dir_flg = true;
+            m_flip = true;
     }
     /*Player*p = nullptr;
     if (PlayerCheck(p, this,300.0f)) {

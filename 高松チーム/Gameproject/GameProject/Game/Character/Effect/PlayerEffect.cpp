@@ -4,7 +4,7 @@
 
 #define IMAGE_SIZE 200
 
-PlayerEffectLongAttack::PlayerEffectLongAttack(const CVector2D& pos, bool _flip) : Task(ePEffectLongAttack)
+PlayerEffectLongAttack::PlayerEffectLongAttack(const CVector2D& pos, bool _flip) : Task(CharacterData::ePEffectLongAttack)
 {
 	m_flip = _flip;
 	m_pos = pos;
@@ -21,7 +21,7 @@ void PlayerEffectLongAttack::Update()
 	else m_vec.x = -8.5f;
 
 	m_pos += m_vec;
-	m_img.ChangeAnimation(ePELongAttack);
+	m_img.ChangeAnimation(PlayerEffectAnim::ePELongAttack);
 	m_img.UpdateAnimation();
 }
 
@@ -46,10 +46,11 @@ void PlayerEffectLongAttack::MoveControl()
 
 
 
-PlayerEffectShortAttack01::PlayerEffectShortAttack01(const CVector2D & pos, bool _flip) : Task(ePEffectShortAttack01)
+PlayerEffectShortAttack01::PlayerEffectShortAttack01(const CVector2D & pos, bool _flip) : Task(CharacterData::ePEffectShortAttack01)
 {
 	m_flip = _flip;
 	m_pos = pos;
+	m_rect = CRect(-60, -120, -20, -40);
 	m_vec = CVector2D(ZERO, ZERO);
 	m_img = COPY_RESOURCE("PEffectShortAttack", CAnimImage*);
 	m_img.SetFlipH(m_flip);
@@ -58,10 +59,13 @@ PlayerEffectShortAttack01::PlayerEffectShortAttack01(const CVector2D & pos, bool
 void PlayerEffectShortAttack01::Update()
 {
 	if (m_flip == true)
+	{
 		m_vec.x = 0;
+		m_rect = CRect(60, -120, 20, -40);
+	}
 	else m_vec.x = -0.01f;
 
-	m_img.ChangeAnimation(ePEShortAttack01,false);
+	m_img.ChangeAnimation(PlayerEffectAnim::ePEShortAttack01,false);
 	if (m_img.CheckAnimationEnd())
 		SetKill();
 	m_img.UpdateAnimation();
@@ -78,10 +82,11 @@ void PlayerEffectShortAttack01::Draw()
 }
 
 
-PlayerEffectShortAttack02::PlayerEffectShortAttack02(const CVector2D & pos, bool _flip) : Task(ePEffectShortAttack02)
+PlayerEffectShortAttack02::PlayerEffectShortAttack02(const CVector2D & pos, bool _flip) : Task(CharacterData::ePEffectShortAttack02)
 {
 	m_flip = _flip;
 	m_pos = pos;
+	m_rect = CRect(-60, -120, -20, -40);
 	m_vec = CVector2D(ZERO, ZERO);
 	m_img = COPY_RESOURCE("PEffectShortAttack", CAnimImage*);
 	m_img.SetFlipH(m_flip);
@@ -89,11 +94,13 @@ PlayerEffectShortAttack02::PlayerEffectShortAttack02(const CVector2D & pos, bool
 
 void PlayerEffectShortAttack02::Update()
 {
-	if (m_flip == true)
+	if (m_flip == true) {
 		m_vec.x = 0;
+		m_rect = CRect(60, -120, 20, -40);
+	}
 	else m_vec.x = -0.01f;
 
-	m_img.ChangeAnimation(ePEShortAttack02,false);
+	m_img.ChangeAnimation(PlayerEffectAnim::ePEShortAttack02,false);
 	if (m_img.CheckAnimationEnd())
 		SetKill();
 	m_img.UpdateAnimation();
@@ -109,10 +116,11 @@ void PlayerEffectShortAttack02::Draw()
 	m_img.Draw();
 }
 
-PlayerEffectShortAttack03::PlayerEffectShortAttack03(const CVector2D & pos, bool _flip) : Task(ePEffectShortAttack03)
+PlayerEffectShortAttack03::PlayerEffectShortAttack03(const CVector2D & pos, bool _flip) : Task(CharacterData::ePEffectShortAttack03)
 {
 	m_flip = _flip;
 	m_pos = pos;
+	m_rect = CRect(-60, -120, -20, -40);
 	m_vec = CVector2D(ZERO, ZERO);
 	m_img = COPY_RESOURCE("PEffectShortAttack", CAnimImage*);
 	m_img.SetFlipH(m_flip);
@@ -120,11 +128,13 @@ PlayerEffectShortAttack03::PlayerEffectShortAttack03(const CVector2D & pos, bool
 
 void PlayerEffectShortAttack03::Update()
 {
-	if (m_flip == true)
+	if (m_flip == true) {
 		m_vec.x = 0;
+		m_rect = CRect(60, -120, 20, -40);
+	}
 	else m_vec.x = -0.01f;
 
-	m_img.ChangeAnimation(ePEShortAttack03, false);
+	m_img.ChangeAnimation(PlayerEffectAnim::ePEShortAttack03, false);
 	if (m_img.CheckAnimationEnd())
 		SetKill();
 	m_img.UpdateAnimation();
@@ -141,7 +151,7 @@ void PlayerEffectShortAttack03::Draw()
 }
 
 
-PlayerEffectSpecialAttack::PlayerEffectSpecialAttack(const CVector2D& pos) : Task(ePEffectSpecialAttack),
+PlayerEffectSpecialAttack::PlayerEffectSpecialAttack(const CVector2D& pos) : Task(CharacterData::ePEffectSpecialAttack),
 m_scale(CVector2D(1.0f,1.0f))
 {
 	m_pos = pos;
@@ -173,3 +183,30 @@ void PlayerEffectSpecialAttack::Draw()
 	m_img2.Draw();
 	m_img.Draw();
 }
+<<<<<<< HEAD
+=======
+
+
+PlayerEffectGetDamage::PlayerEffectGetDamage(const CVector2D & pos) : Task(CharacterData::ePEffectGetDamage)
+{
+	m_pos = pos;
+	m_img = COPY_RESOURCE("PEGetDamage", CAnimImage*);
+}
+
+void PlayerEffectGetDamage::Update()
+{
+	m_img.ChangeAnimation(PlayerEffectAnim::ePEGetDamage,false);
+
+	if (m_img.CheckAnimationEnd())
+		SetKill();
+	m_img.UpdateAnimation();
+}
+
+void PlayerEffectGetDamage::Draw()
+{
+	m_img.SetSize(150, 150);
+	m_img.SetCenter(150 / 2, 150 / 2);
+	m_img.SetPos(m_pos - CVector2D(0,80));
+	m_img.Draw();
+}
+>>>>>>> 7b7833fccc61631035d5b5e9c0ad3425b18ce63d

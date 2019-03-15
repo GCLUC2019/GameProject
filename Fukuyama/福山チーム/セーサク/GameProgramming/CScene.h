@@ -4,10 +4,14 @@
 #include "CPlayerTank.h"
 #include "CEnemyTank.h"
 #include "CTexture.h"
+#include"CEnemy1.h"
+#include"CEnemy2.h"
 
 extern CPlayerTank*Tank;
 extern CTexture Texture;
 extern CEnemyTank*EnemyTank;
+extern CEnemy1*Enemy1;        //’Ç‰Á@Š˜“c
+extern CEnemy2*Enemy2;
 
 class CScene{
 public:

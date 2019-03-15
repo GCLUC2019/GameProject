@@ -9,7 +9,7 @@
 
 class Enemy02 : public EnemyBase {
 private:
-    enum {
+    enum Enemy02State{
         eMove,
         eSearch,
         eAttack,
@@ -17,9 +17,7 @@ private:
     };
     CVector2D m_dir;
     float m_hight;//高さ
-    float m_hover;//浮遊を表現するための変数
     bool m_search_flg;//プレイヤーを見つけたかどうかのフラグ
-    bool m_move_dir_flg;//方向：false右、true左
     bool m_jump_flg;//ジャンプフラグ
 
     int cnt;

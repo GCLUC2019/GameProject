@@ -14,9 +14,6 @@
     <ClCompile Include="Task\Task.cpp">
       <Filter>Task</Filter>
     </ClCompile>
-    <ClCompile Include="Task\TaskManager.cpp">
-      <Filter>Task</Filter>
-    </ClCompile>
     <ClCompile Include="Game\CCommonObject.cpp">
       <Filter>Game\Object\CommonObject</Filter>
     </ClCompile>
@@ -64,6 +61,12 @@
     </ClCompile>
     <ClCompile Include="Game\CStorySceneCrear1.cpp">
       <Filter>Game\Object\StoryScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CStageCrear.cpp">
+      <Filter>Game\Object\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Task\TaskManager.cpp">
+      <Filter>Task</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -131,6 +134,9 @@
     </ClInclude>
     <ClInclude Include="Game\CStorySceneCrear1.h">
       <Filter>Game\Object\StoryScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CStageCrear.h">
+      <Filter>Game\Object\Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

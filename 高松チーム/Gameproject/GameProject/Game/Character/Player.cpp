@@ -3,34 +3,23 @@
 #include "../Character/Anim/AnimDataPlayer.h"
 #include <stdio.h>
 #include"Effect/PlayerEffect.h"
+#include"../GameData/GameData.h"
+#include"../Scene/Title.h"
+#include"../Item/Item.h"
 #define GRAVITY -4//重力
 #define DEP_N 540//奥行重石
 #define JUMP_SPD 50
 
-enum PlayerState
-{
-	eIdle,		//待機
-	eMove,		//移動
-	eJumpUp,	//ジャンプ
-	eJumpDown,	//ジャンプ
-	eSquat,		//しゃがみ
-	eAttack01,	//近距離攻撃
-	eAttack02,	//
-	eAttack03,	//
-	eAttack04,	//遠距離攻撃
-	eDamage,	//ダメージ
-	eDeath,		//死亡
-	eUp,		//起き上がり
-	eSpecial,	//必殺
-};
-Player::Player() : CharacterBase(ePlayer),
+
+Player::Player() : CharacterBase(CharacterData::ePlayer),
 m_speed(4.0f),
 m_squat_flg(false),
 m_attack_flg(false),
 m_jump_flg(false),
 m_flip(false),
 m_special_flg(false),
-m_damage_flg(false),
+m_damage_flg(false), 
+m_death_flg(false),
 m_jump_vec(0),
 m_state(eIdle),
 m_state_old(m_state),
@@ -43,10 +32,21 @@ m_special(0)
 	m_depth = (m_pos.y - DEP_N)/3.5;
 	SetAnim();
 	m_shadow.SetColor(0.3f, 0.3f, 0.3f, 0.4f);
+	m_rect = CRect(-50, -50, 50, 50);
+}
+
+void Player::HitCheck()
+{
 }
 
 void Player::Move()
 {
+	if (m_death_flg) {
+		m_squat_flg = false;
+		return;
+	}
+
+
 	if (m_special_flg)
 		return;
 	if (m_jump_flg != true) {
@@ -79,15 +79,19 @@ void Player::Move()
 
 	if (CInput::GetState(0, CInput::eHold, CInput::eUp)) {
 		m_pos.y -= m_speed;
-		m_depth =( m_pos.y - DEP_N)/3.5;
-		if (m_jump_flg == false)
-			m_state = eMove;
+        if (m_jump_flg == false) {
+        
+            m_state = eMove;
+        }
+      
 	}
 	if (CInput::GetState(0, CInput::eHold, CInput::eDown)) {
 		m_pos.y += m_speed;
-		m_depth = (m_pos.y - DEP_N)/3.5;
-		if (m_jump_flg == false)
-			m_state = eMove;
+        if (m_jump_flg == false) {
+         
+            m_state = eMove;
+        }
+      
 	}
 	if (CInput::GetState(0, CInput::eHold, CInput::eRight)) {
 		m_pos.x += m_speed;
@@ -108,7 +112,13 @@ void Player::Move()
 
 void Player::Jump()
 {
-	static float time = 1;
+	static float time = 0;
+
+	if (m_death_flg) {
+		m_jump_flg = false;
+		time = 0;
+		return;
+	}
 	static int jump_vec_old = m_jump_vec;
 	jump_vec_old = m_jump_vec;
 	m_jump_vec = 0 + JUMP_SPD * time + GRAVITY * (time*time) / 2;
@@ -120,18 +130,25 @@ void Player::Jump()
 		time = 0;
 		m_jump_vec = 0;
 		m_jump_flg = false;
-	}
+    }
+    m_pos += CVector2D(0, m_jump_vec);
+	g_game_data.m_scroll.y =  m_jump_vec;
 }
 
 void Player::Attack()
 {
 	static int k = 0;
+	if (m_death_flg) {
+		m_attack_flg = false;
+		k = 0;
+		return;
+	}
 	switch (m_state)
 	{
 	case eAttack01:
 		if (k == 10) {
 			if (m_flip)
-				TaskManager::GetInstance()->AddTask(new PlayerEffectShortAttack01(m_pos + CVector2D(25, -20),m_flip));
+				TaskManager::GetInstance()->AddTask(new PlayerEffectShortAttack01(m_pos + CVector2D(25, -20), m_flip));
 			else
 				TaskManager::GetInstance()->AddTask(new PlayerEffectShortAttack01(m_pos - CVector2D(25, -20), m_flip));
 		}
@@ -145,7 +162,7 @@ void Player::Attack()
 			m_squat_flg = true;
 			m_state = eSquat;
 		}
-		if (k >= 60 || m_squat_flg||m_damage_flg) {
+		if (k >= 60 || m_squat_flg || m_damage_flg) {
 			k = 0;
 			m_attack_flg = false;
 		}
@@ -193,7 +210,7 @@ void Player::Attack()
 	case eAttack04:
 		if (k == 30) {
 			if (m_flip)
-				TaskManager::GetInstance()->AddTask(new PlayerEffectLongAttack((m_pos),m_flip));
+				TaskManager::GetInstance()->AddTask(new PlayerEffectLongAttack((m_pos), m_flip));
 			else
 				TaskManager::GetInstance()->AddTask(new PlayerEffectLongAttack((m_pos), m_flip));
 		}
@@ -217,25 +234,13 @@ void Player::Attack()
 	//	k = 0;
 	//	m_attack_flg = false;
 	//}
-		
+
 	k++;
 }
-
-void Player::Damage(int _damage)
-{
-	if(m_damage_flg||m_special_flg)
-		return;
-	if (m_HP <= 0) {
-		m_state = eDeath;
-		SetAnim();
-	}
-	m_HP -= _damage;
-	m_damage_flg = true;
-}
-
 void Player::Special()
 {
 	static int time = 300;
+	m_special = 0;
 	if (time == 300) {
 		TaskManager::GetInstance()->AddTask(new PlayerEffectSpecialAttack(m_pos));
 		m_state = eSpecial;
@@ -309,16 +314,26 @@ void Player::SetAnim()
 void Player::Update()
 {
 #ifdef _DEBUG
+<<<<<<< HEAD
 	if (CInput::GetState(0, CInput::eHold, CInput::eMouseL))
 		Damage(10);
 	if (CInput::GetState(0, CInput::eHold, CInput::eMouseR))
 		SetKill();
+=======
+	if (CInput::GetState(0, CInput::ePush, CInput::eMouseL))
+		Damage(50);
+	if (CInput::GetState(0, CInput::ePush, CInput::eMouseR))
+		SpecialPuls(10);
+>>>>>>> 7b7833fccc61631035d5b5e9c0ad3425b18ce63d
 #endif // _DEBUG
 
-	if (m_HP < 0)
+	if (m_death_flg) {
+		Death();
 		return;
+	}
+		
 	m_img.SetColor(1, 1, 1, 1);
-	if (CInput::GetState(0, CInput::eHold, CInput::eButton5) && m_attack_flg == false)
+	if (m_special >= 100 && CInput::GetState(0, CInput::eHold, CInput::eButton5) && m_attack_flg == false)
 		m_special_flg = true;
 	m_state_old = m_state;
 	m_pos_old = m_pos;
@@ -356,8 +371,23 @@ void Player::DamageState()
 		Move();
 	if (time < 0) {
 		time = 60;
-		m_damage_flg = false;
-		
+		m_damage_flg = false;	
+	}
+}
+void Player::Death()
+{
+	static int time = 300;
+	if (time == 299) {
+		Attack();
+		Jump();
+		Move();
+	}
+	time--;
+	if (time <= 0)
+	{
+		TaskManager::GetInstance()->KillAll();
+		TaskManager::GetInstance()->AddTask(new Title());
+		time = 300;
 	}
 }
 void Player::Draw()
@@ -372,16 +402,71 @@ void Player::Draw()
 #define SAIZE_SD 100
 	
 	m_img.UpdateAnimation();
-
+    g_game_data.m_scroll.x = m_pos.x;
+    if(g_game_data.m_scroll.x<0)g_game_data.m_scroll.x = 0;
+    m_depth = (m_pos.y - DEP_N) / 3.5;
 	m_img.SetSize(SAIZE + m_depth, SAIZE + m_depth);
 	m_img.SetCenter((SAIZE + m_depth) / 2, (SAIZE + m_depth));
-	m_img.SetPos(m_pos+CVector2D(0, m_jump_vec));
+	m_img.SetPos(m_pos);
 	m_img.SetFlipH(m_flip);
-	m_shadow.SetSize(SAIZE_SD + m_depth+m_jump_vec/5, SAIZE_SD + m_depth + m_jump_vec / 5);
-	m_shadow.SetCenter((SAIZE_SD + m_depth + m_jump_vec / 5) / 2, (SAIZE_SD + m_depth + m_jump_vec / 5) / 2);
-	m_shadow.SetPos(m_pos);
+	m_shadow.SetSize(SAIZE_SD + m_depth + m_jump_vec / 5, SAIZE_SD - 70 );
+	m_shadow.SetCenter((SAIZE_SD + m_depth + m_jump_vec / 5) / 2, (SAIZE_SD - 70 ) / 2);
+    m_shadow.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3- m_jump_vec);
 	m_shadow.Draw();
 	m_img.Draw();
 		
 }
 
+void Player::ItemGet(int _itemTyp)
+{
+	
+	switch (_itemTyp)
+	{
+	case ItemList::eHyoutan:
+		if (m_HP < 100)
+			m_HP += 10;
+		if (m_HP > 100)
+			m_HP = 100;
+		break;
+	case ItemList::eInari:
+		g_game_data.m_score += 10;
+
+		break;
+	case ItemList::eKakera:
+		
+
+		break;
+	case ItemList::eKoban:
+
+		g_game_data.m_score += 1;
+		break;
+
+	default:
+		break;
+	}
+
+}
+
+void Player::SpecialPuls(int _puls)
+{
+	if (m_special_flg)
+		return;
+	m_special += _puls;
+	if (m_special >= 100)
+		m_special = 100;
+}
+
+
+void Player::Damage(int _damage)
+{
+	if (m_damage_flg || m_special_flg)
+		return;
+	m_HP -= _damage;
+	if (m_HP <= 0) {
+		m_state = eDeath;
+		m_death_flg = true;
+		SetAnim();
+		return;
+	}
+	m_damage_flg = true;
+}

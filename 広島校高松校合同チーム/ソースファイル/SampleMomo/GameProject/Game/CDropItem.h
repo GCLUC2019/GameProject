@@ -1,25 +1,34 @@
 #pragma once
-#include "CObject.h"
+#include "CGameSceneObject.h"
 
 enum {
 	eItemIdNone,
 	eItemIdSpear,
 };
-class CDropItem : public CObject {
+
+enum {
+	eItemAnimIdStatic = 0,
+};
+
+enum {
+	eItemAnimStatic0,
+};
+
+
+class CDropItem : public CGameSceneObject {
 private:
 	int m_item_id = eItemIdNone;
 	CImage* m_item_image_p = nullptr;
 protected:
 public:
-	CDropItem(int _item_id,CImage* _image_p);
+	CDropItem(int _item_id);
 	virtual ~CDropItem();
-	void Update();
-	void AfterUpdate();
-	void Gravity();
-	void BeforeCollisionCheck();
-	void BeforeUpdate();
-	void Draw();
-	void CollisionCheck(Task* _collision_task);
+	void GameSceneObjectUpdate();
+	void GameSceneObjectAfterUpdate();
+	void GameSceneObjectBeforeCollisionCheck();
+	void GameSceneObjectBeforeUpdate();
+	void GameSceneObjectDraw();
+	void GameSceneObjectCollisionCheck(Task* _collision_task);
 };
 
 
