@@ -1,4 +1,5 @@
 #include "Title.h"
+#include"../GameData/GameData.h"
 
 #define BACKXSIZE 1280
 #define BACKYSIZE 720
@@ -15,6 +16,7 @@ m_cnt(0),
 m_size(0.0f),
 m_time(0.0f)
 {
+	g_game_data.m_score = 0;
     ADD_RESOURCE("Title", CImage::LoadImage("../data/Image/title.png"));
     ADD_RESOURCE("PushStart", CImage::LoadImage("../data/Image/push start.png"));
     ADD_RESOURCE("RogoBase", CImage::LoadImage("../data/Image/rogo_base.png"));

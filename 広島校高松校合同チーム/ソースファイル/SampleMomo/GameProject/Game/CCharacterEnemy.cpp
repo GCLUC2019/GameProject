@@ -53,7 +53,7 @@ CCharacterEnemy::CCharacterEnemy() :CCharacter(eTaskIdEnemy, 0)
 
 	m_vec = CVector3D(0, 0, 0);
 	m_pos = CVector3D(1000, -160, 500);  //初期値のy軸は地面に埋まらないように少し浮かせる
-	m_rads = CVector3D(75,150,10);
+	m_rads = CVector3D(75,120,10);
 	SetSize(300, 300);
 	m_is_flip = false;
 
@@ -71,7 +71,7 @@ CCharacterEnemy::CCharacterEnemy() :CCharacter(eTaskIdEnemy, 0)
 	SetAnim(eEnemyAnimIdIdle);
 	SetIsShowShadow(true);
 	SetShadowSize(CVector2D(100, 50));
-	SetDrawAdjPos(CVector2D(5.0, 50.0));
+	SetDrawAdjPos(CVector2D(5.0, -15.0));
 
 	m_hit_point = 10.0f;
 	m_hit_point_max = 10.0f;
@@ -136,6 +136,11 @@ void CCharacterEnemy::ReceiveAttack()
 	m_damage_chance++;
 	m_AI_cnt = 0;
 	printf("エネミー 攻撃があたった!%d\n", m_damage_chance);
+}
+
+void CCharacterEnemy::CharacterOutHitPoint()
+{
+	SetIsDelete();
 }
 
 void CCharacterEnemy::LoadAnimImage()
@@ -258,8 +263,9 @@ void CCharacterEnemy::Attack()
 			is_attack = false;
 			if (p == NULL) printf("プレイヤーがいません\n");
 			printf("Hit!!\n");
-			p->ReceiveAttack();
 			p->HitPointGainValue(-3.0);
+			p->ReceiveAttack();
+			
 		}
 	}
 

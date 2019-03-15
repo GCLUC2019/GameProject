@@ -10,42 +10,45 @@ public:
 
 class Ground : public Task {
 private:
-	CImage m_img;
-	CVector2D m_pos;
-
+    CImage m_img;
+    CVector2D m_pos;
+    float m_depth = -98;
 public:
-	Ground();
-	void Update();
-	void Draw();
+    Ground();
+    void Update();
+    void Draw();
 
 };
 
 class Bamboo : public Task {
 private:
-	CImage m_img;
-	CVector2D m_pos;
+    CImage m_img;
+    CVector2D m_pos;
+    float m_depth = -99;
 public:
-	Bamboo();
-	void Update();
-	void Draw();
+    Bamboo();
+    void Update();
+    void Draw();
 };
 
-class SkyBlue: public Task {
+class SkyBlue : public Task {
 private:
-	CImage m_img;
-	CVector2D m_pos;
+    CImage m_img;
+    CVector2D m_pos;
+    float m_depth = -100;
 public:
-	SkyBlue();
-	void Update();
-	void Draw();
+    SkyBlue();
+    void Update();
+    void Draw();
 };
 
 class SkyRed : public Task {
 private:
-	CImage m_img;
-	CVector2D m_pos;
+    CImage m_img;
+    CVector2D m_pos;
+    float m_depth = -100;
 public:
-	SkyRed();
-	void Update();
-	void Draw();
+    SkyRed();
+    void Update();
+    void Draw();
 };

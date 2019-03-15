@@ -125,7 +125,7 @@ void Enemy05::Draw()
 
 	m_shadow.SetSize(SAIZE_SD + m_depth / 5, 50);
 	m_shadow.SetCenter((SAIZE_SD + m_depth / 5) / 2, 50 / 2);
-	m_shadow.SetPos(CVector2D(m_pos.x- g_game_data.m_scroll.x,m_pos.y + 90 - g_game_data.m_scroll.y));
+	m_shadow.SetPos(CVector2D(m_pos.x- g_game_data.m_scroll.x,m_pos.y + 90 - g_game_data.m_scroll.y/3));
 
 	m_shadow.Draw();
 	m_img.Draw();

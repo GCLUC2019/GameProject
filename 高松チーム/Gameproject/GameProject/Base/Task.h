@@ -37,5 +37,5 @@ public:
 	virtual CRect GetRect() {
 		return CRect(0, 0, 0, 0);
 	}
-
+    
 };
