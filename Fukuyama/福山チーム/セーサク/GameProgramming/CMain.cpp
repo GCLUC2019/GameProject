@@ -11,6 +11,7 @@
 #include "CSceneGame.h"
 #include "CBoss.h"
 #include "CTexture.h"
+#include"CSpeedEnemy.h"
 
 CTexture Texture;
 CRectangle*Explosion;
@@ -20,6 +21,8 @@ CScene*mpScene;
 CPlayerTank *Tank;
 
 CEnemyTank*EnemyTank;
+
+CSpeedEnemy*SpeedEnemy = NULL;
 
 CBoss *Boss = NULL;
 

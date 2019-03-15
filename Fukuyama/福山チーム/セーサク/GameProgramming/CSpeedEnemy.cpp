@@ -1,46 +1,49 @@
-#include"CBoss.h"
+#include"CSpeedEnemy.h"
 #include"CPlayerTank.h"
 #include <stdio.h>
 #include"CBullet.h"
 #include"CExplosion.h"
 #include"CMain.h"
 #include"CScene.h"
-#include"CBossBullet.h"
+#include"CHpBar.h"
 #define FIREINTERVAL_E 60
-
+#define SPEED_E 60
 
 extern CPlayerTank *Tank;
 extern CTexture Texture;
 
 
-void CBoss::Init(){
+
+void CSpeedEnemy::Init(){
 	mFireInterval = FIREINTERVAL_E;
-
-
 	CTank::Init();
-	SetVertex(-100.0f, 100.0f, -100.0f, 100.0f);
-	SetColor(1.0f, 1.0f, 0.0f, 1.0f);
-	mHead.SetColor(1.0f, 0.6f, 0.0f, 1.0f);
-	mHead.SetVertex(-50.0f, 50.0f, -50.0f, 50.0f);
-	mCanon.SetColor(1.0f, 0.6f, 0.0f, 1.0f);
-	mCanon.SetVertex(-20.0f, 20.0f, -70.0f, 70.0f);
-	mCanon.mPosition.y = 40.0f;
-
-
-
+	SetColor(0.6f, 0.0f, 0.0f, 1.0f);
+	mHead.SetColor(1.0f, 0.0f, 0.0f, 1.0f);
+	mCanon.SetColor(0.8f, 0.0f, 0.0f, 1.0f);
 	mCollider = new CCircleCollider();
 	mCollider->mRadius = 20.0f;
 	mCollider->mpTask = this;
 	mpTarget = Tank;
 	CCollisionManager::Get()->Add(mCollider);
 	mTaskTag = EENEMYTANK;
-	mHpBar.SetHpBar(this, CVector2(0.0f, -120.0f), CVector2(200.0f, 8.0f), mColor, 200, 200);
+	mHpBar.SetHpBar(this, CVector2(0.0f, -35.0f), CVector2(50.0f, 8.0f), mColor, 500, 500);
 }
 
-void CBoss::Update(){
+void CSpeedEnemy::Update(){
 	if (mFireInterval > 0){
 		mFireInterval--;
 	}
+	Forward();
+	Forward();
+	Forward();
+	Forward();
+	Forward();
+	Forward();
+	Forward();
+	Forward();
+	Forward();
+	Forward();
+	Forward();
 	Forward();
 	CTank::Update();
 
@@ -50,6 +53,10 @@ void CBoss::Update(){
 	}
 	if (mPosition.x <-400){
 		mPosition = CVector2(-400.0f, 250.0f);
+		mRotation = 270.0f;
+	}
+	if (mPosition.y <-300){
+		mPosition = CVector2(400.0f, -400.0f);
 		mRotation = 270.0f;
 	}
 
@@ -69,19 +76,19 @@ void CBoss::Update(){
 	if (-0.1 < dot&&dot < 0.1){
 		if (mFireInterval <= 0){
 			mFireInterval = FIREINTERVAL_E;
-			CBossBullet*cbullet = new CBossBullet();
-			cbullet->mTaskTag = EBOSSBULLET;
-			cbullet->mLife = CBULLET_LIFE;
-			cbullet->mPosition = mCanon.mMatrix*CVector2(0.0f, 30.0f);
-			cbullet->mForward = cbullet->mPosition - mCanon.mMatrix*CVector2(0.0f, 24.0f);
-			cbullet->SetColor(mColor[0], mColor[1], mColor[2], mColor[3]);
-			CTaskManager::Get()->Add(cbullet);
+			CBullet*bullet = new CBullet();
+			bullet->mTaskTag = EENEMYBULLET;
+			bullet->mLife = CBULLET_LIFE;
+			bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, 25.0f);
+			bullet->mForward = bullet->mPosition - mCanon.mMatrix*CVector2(0.0f, 24.0f);
+			bullet->SetColor(mColor[0], mColor[1], mColor[2], mColor[3]);
+			CTaskManager::Get()->Add(bullet);
 		}
 	}
 	mHpBar.Update();
 }
 
-void CBoss::OnCollision(CCollider*p){
+void CSpeedEnemy::OnCollision(CCollider*p){
 	if (p->mpTask->mTaskTag == EPLAYERBULLET){
 		CExplosion*p = new CExplosion();
 		p->SetTexture(&Texture, 0, 64, 64, 0);
@@ -93,14 +100,16 @@ void CBoss::OnCollision(CCollider*p){
 			mEnabled = false;
 			CMain::mSceneTag = CScene::EWIN;
 		}
+
 	}
+
 	mPosition = mPosition + mCollider->mAdjust;
 
 }
-void CBoss::OnCollision(CBoxCollider*p){
+void CSpeedEnemy::OnCollision(CBoxCollider*p){
 	mPosition = mPosition + mCollider->mAdjust;
 }
-void CBoss::Render(){
+void CSpeedEnemy::Render(){
 	CTank::Render();
 	mHpBar.Render();
 }
