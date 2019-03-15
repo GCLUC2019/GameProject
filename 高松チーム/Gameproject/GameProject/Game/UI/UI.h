@@ -35,6 +35,7 @@ class SpecialGageUI : public UI {
 private:
 	int m_state;
 	int m_special_gage;
+	CAnimImage m_special_gage_img;
 public:
 	SpecialGageUI();
 	void Update();

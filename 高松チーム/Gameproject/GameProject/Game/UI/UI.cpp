@@ -3,8 +3,6 @@
 #include "../GameProject/Game/CollitionBase.h"
 #include "../Character/Player.h"
 
-#define HP_WIDTH 190;
-
 UI::UI() : Task(CharacterData::eUI)
 {
 	TaskManager::GetInstance()->AddTask(new PlayerLogoUI());
@@ -53,6 +51,8 @@ SpecialGageUI::SpecialGageUI() : UI(UIData::eSpecialGageUI)
 {
 	m_img = COPY_RESOURCE("SpecialGageUI", CAnimImage*);
 	m_img.ChangeAnimation(SpecialGage::eGage00);
+
+	m_special_gage_img = COPY_RESOURCE("SpecialGageEffect", CAnimImage*);
 	m_pos = CVector2D(10, 20);
 }
 
@@ -100,12 +100,20 @@ void SpecialGageUI::Update()
 	default:
 		break;
 	}
+	if (m_special_gage >= 100)
+		m_special_gage_img.ChangeAnimation(SpecialGageEffect::eGageEffect);
 
 	m_img.UpdateAnimation();
+	m_special_gage_img.UpdateAnimation();
 }
 
 void SpecialGageUI::Draw()
 {
+	m_special_gage_img.SetSize(CVector2D(180, 180));
+	m_special_gage_img.SetPos(CVector2D(-31,-20));
+	if (m_special_gage >= 100)
+	m_special_gage_img.Draw();
+
 	m_img.SetSize(CVector2D(100, 100));
 	m_img.SetPos(m_pos);
 	m_img.Draw();
