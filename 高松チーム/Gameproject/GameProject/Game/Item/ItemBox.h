@@ -40,5 +40,12 @@ public:
 	CRect GetRect() {
 		return m_rect;
 	}
+<<<<<<< HEAD
 >>>>>>> 7b7833fccc61631035d5b5e9c0ad3425b18ce63d
+=======
+
+	int  Random(int _h, int _l) {
+		return Utility::Rand(_l, _h);
+	}
+>>>>>>> 341f6f95b9c8109d44ef84c49b2c44a5d8d53fec
 };

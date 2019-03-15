@@ -76,18 +76,32 @@ void Title::Draw()
         m_size += 4.0f;
         m_img_rogoclear.Draw();
     }
+<<<<<<< HEAD
     m_img_rogobase.SetSize(ROGOXSIZE, ROGOYSIZE);
     m_img_rogobase.SetCenter(ROGOXSIZE / 2, ROGOYSIZE / 2);
     m_img_rogobase.SetPos(m_rogo_pos);
     m_img_rogobase.Draw(); 
 
+=======
+    
+    //‚¨ŽD
+>>>>>>> 341f6f95b9c8109d44ef84c49b2c44a5d8d53fec
     m_img_ohuda.SetSize(OHUDASIZE, OHUDASIZE);
     m_img_ohuda.SetCenter((OHUDASIZE) / 2, OHUDASIZE / 2);
     m_img_ohuda.SetPos(m_ohuda_pos);
     m_time -= 0.01f;
     m_img_ohuda.SetAng(m_time); 
     m_img_ohuda.Draw();
+<<<<<<< HEAD
 
+=======
+	//ƒƒS
+	m_img_rogobase.SetSize(ROGOXSIZE, ROGOYSIZE);
+	m_img_rogobase.SetCenter(ROGOXSIZE / 2, ROGOYSIZE / 2);
+	m_img_rogobase.SetPos(m_rogo_pos);
+	m_img_rogobase.Draw();
+    //pushstart
+>>>>>>> 341f6f95b9c8109d44ef84c49b2c44a5d8d53fec
     m_img_pushstart.SetCenter(350 / 2, 100 / 2);
     m_img_pushstart.SetPos(m_start_pos);
     m_img_pushstart.Draw();

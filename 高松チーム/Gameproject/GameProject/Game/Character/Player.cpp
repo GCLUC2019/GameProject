@@ -78,32 +78,46 @@ void Player::Move()
 		return;
 
 	if (CInput::GetState(0, CInput::eHold, CInput::eUp)) {
-		m_pos.y -= m_speed;
-        if (m_jump_flg == false) {
-        
-            m_state = eMove;
-        }
+		
+        if (m_jump_flg)
+			m_pos_old.y -= m_speed;
+		else
+		{
+			m_pos.y -= m_speed;
+			m_state = eMove;
+		}
       
 	}
 	if (CInput::GetState(0, CInput::eHold, CInput::eDown)) {
-		m_pos.y += m_speed;
-        if (m_jump_flg == false) {
-         
+		
+        if (m_jump_flg )
+			m_pos_old.y += m_speed; 
+		else{
+			m_pos.y += m_speed;
             m_state = eMove;
         }
       
 	}
 	if (CInput::GetState(0, CInput::eHold, CInput::eRight)) {
-		m_pos.x += m_speed;
+	
 		m_flip = true;
-		if (m_jump_flg == false)
+
+		if (m_jump_flg)
+			m_pos_old.x += m_speed;
+		else {
+			m_pos.x += m_speed;
 			m_state = eMove;
+		}
 	}
 	if (CInput::GetState(0, CInput::eHold, CInput::eLeft)) {
-		m_pos.x -= m_speed;
+		
 		m_flip = false;
-		if (m_jump_flg == false)
+		if (m_jump_flg)
+			m_pos_old.x -= m_speed;
+		else {
+			m_pos.x -= m_speed;
 			m_state = eMove;
+		}
 	}
 
 	if (m_squat_flg == false && m_attack_flg == false && m_jump_flg == false && m_pos.x == m_pos_old.x&&m_pos.y == m_pos_old.y)
@@ -113,7 +127,7 @@ void Player::Move()
 void Player::Jump()
 {
 	static float time = 0;
-
+	m_pos = m_pos_old;
 	if (m_death_flg) {
 		m_jump_flg = false;
 		time = 0;
@@ -126,13 +140,15 @@ void Player::Jump()
 	if (jump_vec_old - m_jump_vec < 0)
 		m_state = eJumpDown;
 	time += 0.5f;
+	
+	g_game_data.m_scroll.y = m_jump_vec;
+    m_pos += CVector2D(0, m_jump_vec);
 	if (m_jump_vec > 0) {
 		time = 0;
 		m_jump_vec = 0;
 		m_jump_flg = false;
-    }
-    m_pos += CVector2D(0, m_jump_vec);
-	g_game_data.m_scroll.y =  m_jump_vec;
+		m_pos = m_pos_old;
+	}
 }
 
 void Player::Attack()
@@ -336,7 +352,8 @@ void Player::Update()
 	if (m_special >= 100 && CInput::GetState(0, CInput::eHold, CInput::eButton5) && m_attack_flg == false)
 		m_special_flg = true;
 	m_state_old = m_state;
-	m_pos_old = m_pos;
+	if (m_jump_flg == false)
+		m_pos_old = m_pos;
 	if (m_special_flg) {
 		Special();
 		return;
@@ -348,10 +365,22 @@ void Player::Update()
 		Move();
 	if (m_attack_flg)
 		Attack();
-	if (m_pos.x < 0 || m_pos.x > 1280)
-		m_pos.x = m_pos_old.x;
-	if (m_pos.y < 480 || m_pos.y > 720)
-		m_pos.y = m_pos_old.y;
+	if (m_jump_flg)
+	{
+		if (m_pos_old.y < 480)
+			m_pos_old.y = 480;
+		if (m_pos_old.y > 720)
+			m_pos_old.y = 720;
+		if (m_pos_old.x < 0)
+			m_pos_old.x = 0;
+		if (m_pos_old.x > 1280)
+			m_pos_old.x = 1280;
+	}else {
+		if (m_pos.x < 0 || m_pos.x > 1280)
+			m_pos.x = m_pos_old.x;
+		if (m_pos.y < 480 || m_pos.y > 720)
+			m_pos.y = m_pos_old.y;
+	}
 	
 	if (m_state != m_state_old)
 		SetAnim();
@@ -395,6 +424,11 @@ void Player::Draw()
 #ifdef _DEBUG
 	//Utility::DrawQuad(CVector2D(0, 720 / 2), CVector2D(1280, 720), CVector4D(1.0f, 0, 0, 1));
 	
+	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+
 #endif // _DEBUG
 
 	
@@ -404,14 +438,20 @@ void Player::Draw()
 	m_img.UpdateAnimation();
     g_game_data.m_scroll.x = m_pos.x;
     if(g_game_data.m_scroll.x<0)g_game_data.m_scroll.x = 0;
-    m_depth = (m_pos.y - DEP_N) / 3.5;
+	if (m_jump_flg)
+		m_depth = (m_pos_old.y - DEP_N) / 3.5;
+	else
+		m_depth = (m_pos.y - DEP_N) / 3.5;
 	m_img.SetSize(SAIZE + m_depth, SAIZE + m_depth);
 	m_img.SetCenter((SAIZE + m_depth) / 2, (SAIZE + m_depth));
 	m_img.SetPos(m_pos);
 	m_img.SetFlipH(m_flip);
 	m_shadow.SetSize(SAIZE_SD + m_depth + m_jump_vec / 5, SAIZE_SD - 70 );
 	m_shadow.SetCenter((SAIZE_SD + m_depth + m_jump_vec / 5) / 2, (SAIZE_SD - 70 ) / 2);
-    m_shadow.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3- m_jump_vec);
+	if (m_jump_flg)
+		m_shadow.SetPos(m_pos.x, m_pos_old.y - g_game_data.m_scroll.y / 3);
+	else
+		m_shadow.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3 );
 	m_shadow.Draw();
 	m_img.Draw();
 		
