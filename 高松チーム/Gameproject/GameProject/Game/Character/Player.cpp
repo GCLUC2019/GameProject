@@ -79,15 +79,19 @@ void Player::Move()
 
 	if (CInput::GetState(0, CInput::eHold, CInput::eUp)) {
 		m_pos.y -= m_speed;
-		m_depth =( m_pos.y - DEP_N)/3.5;
-		if (m_jump_flg == false)
-			m_state = eMove;
+        if (m_jump_flg == false) {
+        
+            m_state = eMove;
+        }
+      
 	}
 	if (CInput::GetState(0, CInput::eHold, CInput::eDown)) {
 		m_pos.y += m_speed;
-		m_depth = (m_pos.y - DEP_N)/3.5;
-		if (m_jump_flg == false)
-			m_state = eMove;
+        if (m_jump_flg == false) {
+         
+            m_state = eMove;
+        }
+      
 	}
 	if (CInput::GetState(0, CInput::eHold, CInput::eRight)) {
 		m_pos.x += m_speed;
@@ -127,6 +131,7 @@ void Player::Jump()
 		m_jump_vec = 0;
 		m_jump_flg = false;
     }
+    m_pos += CVector2D(0, m_jump_vec);
 	g_game_data.m_scroll.y =  m_jump_vec;
 }
 
@@ -392,14 +397,14 @@ void Player::Draw()
 	m_img.UpdateAnimation();
     g_game_data.m_scroll.x = m_pos.x;
     if(g_game_data.m_scroll.x<0)g_game_data.m_scroll.x = 0;
-
+    m_depth = (m_pos.y - DEP_N) / 3.5;
 	m_img.SetSize(SAIZE + m_depth, SAIZE + m_depth);
 	m_img.SetCenter((SAIZE + m_depth) / 2, (SAIZE + m_depth));
-	m_img.SetPos(m_pos+CVector2D(0, m_jump_vec));
+	m_img.SetPos(m_pos);
 	m_img.SetFlipH(m_flip);
 	m_shadow.SetSize(SAIZE_SD + m_depth + m_jump_vec / 5, SAIZE_SD - 70 );
 	m_shadow.SetCenter((SAIZE_SD + m_depth + m_jump_vec / 5) / 2, (SAIZE_SD - 70 ) / 2);
-    m_shadow.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
+    m_shadow.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3- m_jump_vec);
 	m_shadow.Draw();
 	m_img.Draw();
 		

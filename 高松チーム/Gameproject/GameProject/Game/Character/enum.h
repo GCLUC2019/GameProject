@@ -12,6 +12,7 @@ const enum CharacterData{
 	eBamboo,
 	eSkyBlue,
 	eSkyRed,
+    eMap,
 
 	eCharacterBase,
 	eEnemyBase,
