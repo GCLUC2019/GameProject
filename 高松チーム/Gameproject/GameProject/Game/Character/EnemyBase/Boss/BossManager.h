@@ -10,17 +10,16 @@ class BossManager : public Task {
 private:
 	enum B{
 		eIdle,
-		eUp,
-		eAttackDown,
+		eAttackDown = 2,
 		eAttackDown2,
 		eDeath,
 		eNothing,
 		ePriparation,
 	};
 
-	CAnimImage m_img; //頭
+	CAnimImage m_img; //やられたときの画像
 
-	CVector2D m_pos; //頭の座標
+	CVector2D m_pos; //やられたときの座標
 	CVector2D m_player_pos;//プレイヤーの座標を取得して格納
 
 	int m_state;//ボスの状態
@@ -29,6 +28,7 @@ private:
 	int m_idle_cnt;//待機状態でいる時間
 
 	bool m_death_flag;
+	bool m_idle_flag;
 
 public:
 
@@ -49,4 +49,6 @@ public:
 	void Update();
 
 	void Draw();
+
+	friend class BossHand;
 };
