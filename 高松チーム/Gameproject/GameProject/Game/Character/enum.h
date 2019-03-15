@@ -17,6 +17,7 @@ const enum CharacterData{
 	eEnemyBase,
 	eEnemyBaseManager,
 
+	eUI,
 	eItem,
 	eItemBox,
 
