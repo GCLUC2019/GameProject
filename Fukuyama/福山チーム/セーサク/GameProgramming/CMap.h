@@ -1,4 +1,4 @@
-
+#pragma once
 //§ì‘O‰ª
 
 #include"Task.h"

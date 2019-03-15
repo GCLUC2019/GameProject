@@ -90,47 +90,47 @@ void CPlayer::Update() {
 bool CPlayer::Collision(CCharacter *m, CCharacter *yo) {
 	int dx, dy;
 	//相手と衝突しているか判定
-	if (CRectangle::Collision(yo, &dx, &dy)) {
-		switch (yo->mTag) {
-		case EENEMY: //相手が敵の時
-			switch (yo->mState) {
-			case ERUN:
-				if (mState == ERUN) {
-					mState = ECRY;
-					SetUv(UVPLAYERCRY);
-				}
-				break;
-			case ECRY:
-				//戻りが小さい方へ戻す
-				if (abs(dx) < abs(dy)) {
-					x += dx;
-				}
-				else {
-					y += dy;
-					//重力初期化
-					mGravityV = 0;
-					//歩く
-					mState = ERUN;
-				}
-				break;
-			}
-			break;
-			//戻りが小さい方へ戻す
-			if (abs(dx) < abs(dy)) {
-				x += dx;
-			}
-			else {
-				y += dy;
-				//重力初期化
-				mGravityV = 0;
-				//歩く
-				mState = ERUN;
-			}
-			break;
-		}
-		//衝突している
-		return true;
-	}
+	//if (CRectangle::Collision(yo, &dx, &dy)) {
+	//	switch (yo->mTag) {
+	//	case EENEMY: //相手が敵の時
+	//		switch (yo->mState) {
+	//		case ERUN:
+	//			if (mState == ERUN) {
+	//				mState = ECRY;
+	//				SetUv(UVPLAYERCRY);
+	//			}
+	//			break;
+	//		case ECRY:
+	//			//戻りが小さい方へ戻す
+	//			if (abs(dx) < abs(dy)) {
+	//				x += dx;
+	//			}
+	//			else {
+	//				y += dy;
+	//				//重力初期化
+	//				mGravityV = 0;
+	//				//歩く
+	//				mState = ERUN;
+	//			}
+	//			break;
+	//		}
+	//		break;
+	//		//戻りが小さい方へ戻す
+	//		if (abs(dx) < abs(dy)) {
+	//			x += dx;
+	//		}
+	//		else {
+	//			y += dy;
+	//			//重力初期化
+	//			mGravityV = 0;
+	//			//歩く
+	//			mState = ERUN;
+	//		}
+	//		break;
+	//	}
+	//	//衝突している
+	//	return true;
+	//}
 	//衝突していない
 	return false;
 }

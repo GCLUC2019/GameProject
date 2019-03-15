@@ -10,6 +10,8 @@ struct STgaheader{
 	unsigned char  dummy2;
 };
 
+#define mHeader header
+
 class CTexture{
 public:
 	GLuint mId;
@@ -24,8 +26,6 @@ public:
 		}
 	}
 	void Load(const char*filename);
-<<<<<<< HEAD
-=======
 	/*
 	DrawImage
 	left:ŽlŠpŒ`¶À•W
@@ -122,7 +122,6 @@ public:
 		glDisable(GL_TEXTURE_2D);
 	}
 
->>>>>>> 7b7833fccc61631035d5b5e9c0ad3425b18ce63d
 };
 
 #endif

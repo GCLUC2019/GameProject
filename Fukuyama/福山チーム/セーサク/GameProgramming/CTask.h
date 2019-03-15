@@ -12,8 +12,6 @@ public:
 		EENEMYTANK,
 		EPLAYERBULLET,
 		EENEMYBULLET,
-<<<<<<< HEAD
-=======
 		ESPEEDENEMY,
 		EBOSSBULLET,
 		EARROW,
@@ -22,7 +20,6 @@ public:
 		EITEM,
 
 
->>>>>>> 7b7833fccc61631035d5b5e9c0ad3425b18ce63d
 	};
 	ETaskTag mTaskTag;
 	CTask*mpNext;
