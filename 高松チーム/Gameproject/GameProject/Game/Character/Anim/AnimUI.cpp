@@ -34,7 +34,7 @@ static TexAnim Gage10[] = {
 	{ 10,5 },
 };
 
-TexAnimData SpecialGageUI[] = {
+TexAnimData SpecialGageUIAnimData[] = {
 	ANIMDATA(Gage00),
 	ANIMDATA(Gage01),
 	ANIMDATA(Gage02),
