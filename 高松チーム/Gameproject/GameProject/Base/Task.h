@@ -19,6 +19,7 @@ protected:
    
 public:
     Task(int _type);
+	virtual ~Task();
     virtual void Update();
     virtual void HitCheck(/*Task* _t*/);
     virtual void Draw();    
