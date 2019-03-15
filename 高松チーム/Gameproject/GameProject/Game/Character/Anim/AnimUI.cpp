@@ -47,3 +47,15 @@ TexAnimData SpecialGageUIAnimData[] = {
 	ANIMDATA(Gage09),
 	ANIMDATA(Gage10),
 };
+
+
+//static TexAnim GageEffect[] = {
+//	{ 0,3 },
+//{1,3},
+//{2,3},
+//{3,3},
+//{4,3},
+//{5,3},
+//{6,3},
+//{7,3},
+//};

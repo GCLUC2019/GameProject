@@ -54,6 +54,8 @@ public:
 		ADD_RESOURCE("GageBaseUI", CImage::LoadImage("../data/Image/chara_gauge_base.png"));
 		ADD_RESOURCE("PlayerGageUI", CImage::LoadImage("../data/Image/chara_gauge.png"));
 		ADD_RESOURCE("SpecialGageUI", CAnimImage::LoadImage("../data/Image/item_matome_1.png", SpecialGageUIAnimData, 128, 128));
+		ADD_RESOURCE("SpecialGageEffect", CAnimImage::LoadImage("../data/Image/pipo-gate01b480.png", SpecialGageUIAnimData, 400, 480));
+		ADD_RESOURCE("SpecialGageEffect", CAnimImage::LoadImage("../data/Image/Effect_p036-gate01b480.png", BossSlashEffectAnimData, 200, 200));
 	}
 };
 

@@ -74,24 +74,33 @@ void SpecialGageUI::Update()
 		m_img.ChangeAnimation(SpecialGage::eGage02);
 		break;
 	case 30:
+		m_img.ChangeAnimation(SpecialGage::eGage03);
 		break;
 	case 40:
+		m_img.ChangeAnimation(SpecialGage::eGage04);
 		break;
 	case 50:
+		m_img.ChangeAnimation(SpecialGage::eGage05);
 		break;
 	case 60:
+		m_img.ChangeAnimation(SpecialGage::eGage06);
 		break;
 	case 70:
+		m_img.ChangeAnimation(SpecialGage::eGage07);
 		break;
 	case 80:
+		m_img.ChangeAnimation(SpecialGage::eGage08);
 		break;
 	case 90:
+		m_img.ChangeAnimation(SpecialGage::eGage09);
 		break;
 	case 100:
+		m_img.ChangeAnimation(SpecialGage::eGage10);
 		break;
 	default:
 		break;
 	}
+
 	m_img.UpdateAnimation();
 }
 
