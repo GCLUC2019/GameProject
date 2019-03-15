@@ -37,5 +37,7 @@ public:
 	virtual CRect GetRect() {
 		return CRect(0, 0, 0, 0);
 	}
-
+    virtual float GetDepth() {
+        return m_depth;
+    }
 };
