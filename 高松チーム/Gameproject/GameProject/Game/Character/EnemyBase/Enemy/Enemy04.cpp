@@ -20,7 +20,7 @@ m_search_flg(false)
 	m_img = COPY_RESOURCE("Enemy04", CAnimImage*);
 	m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
 	m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
-	m_img.ChangeAnimation(Enemy04Anim::eEDeath04);
+	m_img.ChangeAnimation(Enemy04Anim::eEIdile04);
 	m_shadow = COPY_RESOURCE("Shadow", CImage*);
 	m_pos = _pos;
 	m_vec = CVector2D(0, 0);

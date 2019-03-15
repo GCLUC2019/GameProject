@@ -416,15 +416,11 @@ void Player::Draw()
 {
 #ifdef _DEBUG
 	//Utility::DrawQuad(CVector2D(0, 720 / 2), CVector2D(1280, 720), CVector4D(1.0f, 0, 0, 1));
-	CRect r1 = CRect(
-		m_pos.x + m_rect.m_left,
-		m_pos.y + m_rect.m_top,
-		m_pos.x + m_rect.m_right,
-		m_pos.y + m_rect.m_bottom);
-	Utility::DrawQuad(CVector2D(r1.m_left, r1.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
-	Utility::DrawQuad(CVector2D(r1.m_left, r1.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
-	Utility::DrawQuad(CVector2D(r1.m_right, r1.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
-	Utility::DrawQuad(CVector2D(r1.m_right, r1.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	
+	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
 
 #endif // _DEBUG
 
