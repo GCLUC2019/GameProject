@@ -20,12 +20,12 @@ m_search_flg(false)
 	m_img = COPY_RESOURCE("Enemy04", CAnimImage*);
 	m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
 	m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
-	m_img.ChangeAnimation(Enemy04Anim::eEIdile04);
+	m_img.ChangeAnimation(Enemy04Anim::eELAttack04);
 	m_shadow = COPY_RESOURCE("Shadow", CImage*);
 	m_pos = _pos;
 	m_vec = CVector2D(0, 0);
 	m_dir = CVector2D(0, 0);
-	m_state = eSearch;
+	m_state = eIdile;
 	m_depth = m_pos.y / DEP_N;
 
 }
@@ -62,4 +62,28 @@ void Enemy04::Damage()
 
 void Enemy04::MoveControl()
 {
+}
+
+void Enemy04::SetAnim()
+{
+	switch (m_state)
+	{
+	case Enemy04State::eIdile:
+		m_img.ChangeAnimation(Enemy04Anim::eEIdile04);
+		break;
+	case Enemy04State::eMove:
+		m_img.ChangeAnimation(Enemy04Anim::eEMove04);
+		break;
+	
+	case Enemy04State::eAttack:
+		//m_img.ChangeAnimation(Enemy04Anim::eEIdile04);
+		break;
+	case Enemy04State::eDamage:
+		m_img.ChangeAnimation(Enemy04Anim::eEDamage04);
+		break;
+
+
+	default:
+		break;
+	}
 }
