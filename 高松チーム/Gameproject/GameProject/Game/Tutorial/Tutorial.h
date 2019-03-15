@@ -9,6 +9,7 @@ private:
 protected:
 public:
 	Tutorial();
+	~Tutorial();
 	void Draw();
 	void Update();
 	/*

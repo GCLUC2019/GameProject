@@ -33,6 +33,7 @@ const enum CharacterData{
 	eEnemy03,
 	eEnemy04,
 	eEnemy05,
+	eTutorialEnemy,
 
 	eBossManager,
 	eBossHead,

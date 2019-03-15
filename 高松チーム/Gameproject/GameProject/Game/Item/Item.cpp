@@ -57,7 +57,7 @@ void Item::Update()
 		return;
 	CVector2D vec = p->GetPos() - m_pos;
 	vec=vec.GetNormalize();
-	m_pos += vec * 3;
+	m_pos += vec * 2;
 	//m_pos = CVector2D(g_game_data.m_scroll.x, 0);
 }
 
@@ -72,7 +72,9 @@ void Item::HitCheck()
 	
 	Task* p =CollitionBase::GetCollisionCheckRect(this, ePlayer);
 	Player* n = dynamic_cast<Player*>(p);
-	/*if (n != nullptr)
-		n->Damage(5);*/
+	if (n != nullptr) {
+		n->ItemGet(m_item_type);
+		SetKill();
+	}
 	
 }

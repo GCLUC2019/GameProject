@@ -6,6 +6,10 @@ Task::Task(int _type) {
     printf("Task‚ª¶¬‚³‚ê‚Ü‚µ‚½\n");
 }
 
+Task::~Task()
+{
+}
+
 void Task::Update()
 {
 }
