@@ -30,4 +30,8 @@ public:
 	CRect GetRect() {
 		return m_rect;
 	}
+
+	int  Random(int _h, int _l) {
+		return Utility::Rand(_l, _h);
+	}
 };
