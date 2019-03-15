@@ -86,7 +86,7 @@ ItemBox::~ItemBox()
 		for (k ; k > 0; k--) {
 			TaskManager::GetInstance()->AddTask(new Item(ItemList::eKoban, m_pos + CVector2D(Utility::Rand(-50, 50), Utility::Rand(-50, 50))));
 		}
-		TaskManager::GetInstance()->AddTask(new Item(ItemList::eHyoutan, m_pos + CVector2D(Utility::Rand(-50, 50), Utility::Rand(-50, 50))));
+		TaskManager::GetInstance()->AddTask(new Item(Random(ItemList::eInari,ItemList::eHyoutan), m_pos + CVector2D(Utility::Rand(-50, 50), Utility::Rand(-50, 50))));
 		break;
 	default:
 		break;
