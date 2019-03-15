@@ -18,7 +18,6 @@
 
 #include"CSpeedEnemy.h"
 
->>>>>>> 0d547db42de5c4a5a2e178c92dfdc0ed3961ae4b
 CTexture Texture;
 CRectangle*Explosion;
 
@@ -36,7 +35,7 @@ CBoss *Boss = NULL;
 CEnemy1*Enemy1;           //追加　釜田
 CEnemy2*Enemy2;
 
-//CScene::ESceneTag CMain::mSceneTag = CScene::EROOT;
+CScene::ESceneTag CMain::mSceneTag = CScene::EROOT;
 
 CMap::EScneMap CMain::mSceneMap = CMap::EStat; //変更　前岡
 //初めに1回だけ実行する処理の定義

@@ -5,9 +5,13 @@
 
 ItemBox::ItemBox(int _m_box_typ, CVector2D _m_pos) :Task(CharacterData::eItemBox),
 m_pos(_m_pos),
+<<<<<<< HEAD
+m_box_typ(_m_box_typ)
+=======
 m_box_typ(_m_box_typ),
 m_time(0)
 
+>>>>>>> 7b7833fccc61631035d5b5e9c0ad3425b18ce63d
 {
 	m_rect = CRect(-50, -50, 50, 50);
 	m_img = COPY_RESOURCE("ItemBox", CAnimImage*);
@@ -18,39 +22,24 @@ m_time(0)
 		break;
 	case eDummyBox:
 		m_img.ChangeAnimation(AnimItemBox::eDummyBoxClose);
+<<<<<<< HEAD
+		//m_img.ChangeAnimation(AnimItemBox::eDummyBoxOpen);
+=======
+>>>>>>> 7b7833fccc61631035d5b5e9c0ad3425b18ce63d
 		break;
 	default:
 		break;
 	}
 }
 
-void ItemBox::Open()
+void ItemBox::Update()
 {
 	
-	switch (m_box_typ)
-	{
-	case eTrueBox:
-		m_img.ChangeAnimation(AnimItemBox::eTrueBoxOpen);
-		if (m_time >= 120)
-			SetKill();
-		break;
-	case eDummyBox:
-		if (m_time == 0)
-			m_img.ChangeAnimation(AnimItemBox::eDummyBoxOpen01);
-		if (m_time == 20)
-			m_img.ChangeAnimation(AnimItemBox::eDummyBoxOpen02);
-		if (m_time >= 180)
-			SetKill();
-		break;
-	default:
-		break;
-	}
-	
-	
-	m_time++;
-	
+	m_img.UpdateAnimation();
 }
 
+<<<<<<< HEAD
+=======
 void ItemBox::Update()
 {
 	if (m_open_flg)
@@ -64,9 +53,9 @@ void ItemBox::Update()
 void ItemBox::HitCheck()
 {
 }
+>>>>>>> 7b7833fccc61631035d5b5e9c0ad3425b18ce63d
 void ItemBox::Draw()
 {
-	m_img.UpdateAnimation();
 	m_img.SetSize(200, 200);
 	m_img.SetCenter(100, 100);
 	m_img.SetPos(m_pos);
@@ -86,7 +75,7 @@ ItemBox::~ItemBox()
 		for (k ; k > 0; k--) {
 			TaskManager::GetInstance()->AddTask(new Item(ItemList::eKoban, m_pos + CVector2D(Utility::Rand(-50, 50), Utility::Rand(-50, 50))));
 		}
-		TaskManager::GetInstance()->AddTask(new Item(ItemList::eHyoutan, m_pos + CVector2D(Utility::Rand(-50, 50), Utility::Rand(-50, 50))));
+		TaskManager::GetInstance()->AddTask(new Item(Random(ItemList::eInari,ItemList::eHyoutan), m_pos + CVector2D(Utility::Rand(-50, 50), Utility::Rand(-50, 50))));
 		break;
 	default:
 		break;

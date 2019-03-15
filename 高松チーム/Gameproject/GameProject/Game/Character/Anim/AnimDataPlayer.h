@@ -16,13 +16,16 @@ enum PlayerStateAnim{
 	ePCrouch,
 };
 
+<<<<<<< HEAD
+enum {
+=======
 enum PlayerEffectAnim {
+>>>>>>> 7b7833fccc61631035d5b5e9c0ad3425b18ce63d
 	ePELongAttack,
 	ePEShortAttack01,
 	ePEShortAttack02,
 	ePEShortAttack03,
 	ePESpecialAttack,
-	ePEGetDamage,
 };
 
 extern TexAnimData PlayerAnimData[];

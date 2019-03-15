@@ -15,4 +15,9 @@ enum SpecialGage{
 	eGage10,
 };
 
-extern TexAnimData SpecialGageUI[];
+enum SpecialGageEffect {
+	eGageEffect,
+};
+
+extern TexAnimData SpecialGageUIAnimData[];
+extern TexAnimData SpecialGageEffectAnimData[];

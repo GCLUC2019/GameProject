@@ -183,6 +183,8 @@ void PlayerEffectSpecialAttack::Draw()
 	m_img2.Draw();
 	m_img.Draw();
 }
+<<<<<<< HEAD
+=======
 
 
 PlayerEffectGetDamage::PlayerEffectGetDamage(const CVector2D & pos) : Task(CharacterData::ePEffectGetDamage)
@@ -207,3 +209,4 @@ void PlayerEffectGetDamage::Draw()
 	m_img.SetPos(m_pos - CVector2D(0,80));
 	m_img.Draw();
 }
+>>>>>>> 7b7833fccc61631035d5b5e9c0ad3425b18ce63d

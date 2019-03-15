@@ -25,7 +25,6 @@ public:
 		ADD_RESOURCE("PEffectShortAttack", CAnimImage::LoadImage("../data/Image/motion_effect.png", PlayerEffectAnimData, 512, 512));
 		ADD_RESOURCE("PEffectLongAttack", CAnimImage::LoadImage("../data/Image/item_matome_1.png", PlayerEffectAnimData, 128, 128));
 		ADD_RESOURCE("PESpecialAttack", CAnimImage::LoadImage("../data/Image/pipo-mapeffect013a-1.png", PlayerEffectAnimData, 400, 400));
-		ADD_RESOURCE("PEGetDamage", CAnimImage::LoadImage("../data/Image/Effect_p020.png", PlayerEffectAnimData, 200, 200));
 
 		ADD_RESOURCE("Boss", CAnimImage::LoadImage("../data/Image/moton_jaryu.png", BossAnimData, 768, 768));
 		ADD_RESOURCE("GameClear", CImage::LoadImage("../data/Image/push start.png"));
@@ -51,7 +50,11 @@ public:
 		ADD_RESOURCE("ItemBox", CAnimImage::LoadImage("../data/Image/itembox_motion_object.png", ItemBoxAnimData, 512, 512));
 
 		ADD_RESOURCE("RogoUI", CImage::LoadImage("../data/Image/chara_gauge_face.png"));
-		ADD_RESOURCE("SpecialGageUI", CAnimImage::LoadImage("../data/Image/item_matome_1.png", SpecialGageUI, 128, 128));
+		ADD_RESOURCE("GageBaseUI", CImage::LoadImage("../data/Image/chara_gauge_base.png"));
+		ADD_RESOURCE("PlayerGageUI", CImage::LoadImage("../data/Image/chara_gauge.png"));
+		ADD_RESOURCE("SpecialGageUI", CAnimImage::LoadImage("../data/Image/item_matome_1.png", SpecialGageUIAnimData, 128, 128));
+		ADD_RESOURCE("SpecialGageEffect", CAnimImage::LoadImage("../data/Image/pipo-gate01b480.png", SpecialGageEffectAnimData, 480, 480));
+		ADD_RESOURCE("BossSlash", CAnimImage::LoadImage("../data/Image/Effect_p036.png", BossSlashEffectAnimData, 200, 200));
 	}
 };
 

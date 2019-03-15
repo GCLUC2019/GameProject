@@ -6,6 +6,8 @@ public:
 	enum UIData {
 		ePlayerLogoUI,
 		eSpecialGageUI,
+		eGageBaseUI,
+		ePlayerGageUI,
 	};
 private:
 protected:
@@ -17,6 +19,7 @@ public:
 	UI(int _type);
 	void Update();
 	void Draw();
+	virtual void HitCheck();
 
 };
 
@@ -30,8 +33,30 @@ public:
 
 class SpecialGageUI : public UI {
 private:
+	int m_state;
+	int m_special_gage;
+	CAnimImage m_special_gage_img;
 public:
 	SpecialGageUI();
+	void Update();
+	void Draw();
+};
+
+class GageBaseUI : public UI {
+private:
+public:
+	GageBaseUI();
+	void Update();
+	void Draw();
+};
+
+class PlayerGageUI : public UI {
+private:
+	float m_player_hp_now;
+	float m_player_hp_max;
+	float hp_width;
+public:
+	PlayerGageUI();
 	void Update();
 	void Draw();
 };

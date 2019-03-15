@@ -25,3 +25,15 @@ public:
 
 	void Draw();
 };
+
+class BossSlashEffect : public Task {
+private:
+	CAnimImage m_img;
+	CVector2D m_pos;
+public:
+	BossSlashEffect(const CVector2D& pos);
+
+	void Update();
+
+	void Draw();
+};

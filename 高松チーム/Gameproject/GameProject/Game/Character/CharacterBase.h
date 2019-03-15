@@ -15,7 +15,6 @@ public:
 	virtual void Update();
 	virtual void Draw();
 	virtual void Damage(int _damage);
-	int GetType() { return m_type; }
     CVector2D GetPos(){
         return m_pos;
     }
