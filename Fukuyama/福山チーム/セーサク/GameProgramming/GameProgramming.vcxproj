@@ -80,7 +80,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CAppear.cpp" />
     <ClCompile Include="CArrow.cpp" />
     <ClCompile Include="CBoss.cpp" />
     <ClCompile Include="CBullet.cpp" />
@@ -115,7 +114,6 @@
     <ClCompile Include="Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CAppear.h" />
     <ClInclude Include="CArrow.h" />
     <ClInclude Include="CBoss.h" />
     <ClInclude Include="CBullet.h" />
