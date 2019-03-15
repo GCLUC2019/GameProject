@@ -1,6 +1,7 @@
 #include "ItemBox.h"
 #include"AnimItemBox.h"
 #include "../Resource/Resource.h"
+#include "Item.h"
 
 ItemBox::ItemBox(int _m_box_typ, CVector2D _m_pos) :Task(CharacterData::eItemBox),
 m_pos(_m_pos),
@@ -14,11 +15,9 @@ m_time(0)
 	{
 	case eTrueBox:
 		m_img.ChangeAnimation(AnimItemBox::eTrueBoxClose);
-		//m_img.ChangeAnimation(AnimItemBox::eTrueBoxOpen);
 		break;
 	case eDummyBox:
 		m_img.ChangeAnimation(AnimItemBox::eDummyBoxClose);
-		//m_img.ChangeAnimation(AnimItemBox::eDummyBoxOpen01);
 		break;
 	default:
 		break;
@@ -76,4 +75,20 @@ void ItemBox::Draw()
 
 ItemBox::~ItemBox()
 {
+	int k = 0;
+	k = Utility::Rand(20, 30);
+	switch (m_box_typ)
+	{
+	case Box_Typ::eDummyBox:
+		break;
+	case Box_Typ::eTrueBox:
+
+		for (k ; k > 0; k--) {
+			TaskManager::GetInstance()->AddTask(new Item(ItemList::eKoban, m_pos + CVector2D(Utility::Rand(-50, 50), Utility::Rand(-50, 50))));
+		}
+		TaskManager::GetInstance()->AddTask(new Item(ItemList::eHyoutan, m_pos + CVector2D(Utility::Rand(-50, 50), Utility::Rand(-50, 50))));
+		break;
+	default:
+		break;
+	}
 }

@@ -19,6 +19,7 @@ protected:
    
 public:
     Task(int _type);
+	virtual ~Task();
     virtual void Update();
     virtual void HitCheck(/*Task* _t*/);
     virtual void Draw();    
@@ -37,7 +38,5 @@ public:
 	virtual CRect GetRect() {
 		return CRect(0, 0, 0, 0);
 	}
-    virtual float GetDepth() {
-        return m_depth;
-    }
+    
 };

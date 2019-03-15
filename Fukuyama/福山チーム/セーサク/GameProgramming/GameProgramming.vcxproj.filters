@@ -21,7 +21,6 @@
     <ClCompile Include="Task.cpp" />
     <ClCompile Include="TaskLinker.cpp" />
     <ClCompile Include="TaskManager.cpp" />
-    <ClCompile Include="CAppear.cpp" />
     <ClCompile Include="CArrow.cpp" />
     <ClCompile Include="CItem.cpp" />
     <ClCompile Include="CEnemy1.cpp" />
@@ -34,6 +33,8 @@
     <ClCompile Include="Utility.cpp" />
     <ClCompile Include="CVector.cpp" />
     <ClCompile Include="CSceneManager.cpp" />
+    <ClCompile Include="CSpeedEnemy.cpp" />
+    <ClCompile Include="CBossBullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CBoss.h" />
@@ -57,7 +58,6 @@
     <ClInclude Include="Task.h" />
     <ClInclude Include="TaskLinker.h" />
     <ClInclude Include="TaskManager.h" />
-    <ClInclude Include="CAppear.h" />
     <ClInclude Include="CArrow.h" />
     <ClInclude Include="CItem.h" />
     <ClInclude Include="CEnemy1.h" />
@@ -72,5 +72,7 @@
     <ClInclude Include="CVector.h" />
     <ClInclude Include="CMap.h" />
     <ClInclude Include="CSceneManager.h" />
+    <ClInclude Include="CSpeedEnemy.h" />
+    <ClInclude Include="CBossBullet.h" />
   </ItemGroup>
 </Project>

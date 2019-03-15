@@ -86,6 +86,12 @@
     <ClCompile Include="Game\GameData\GameData.cpp">
       <Filter>Game\GameData</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Character\EnemyBase\Enemy\TutorialEnemy.cpp">
+      <Filter>Game\Character\EnemyBase\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\UI\UI.cpp">
+      <Filter>Game\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GID.h" />
@@ -178,6 +184,12 @@
     <ClInclude Include="Game\GameData\GameData.h">
       <Filter>Game\GameData</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Character\EnemyBase\Enemy\TutorialEnemy.h">
+      <Filter>Game\Character\EnemyBase\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\UI\UI.h">
+      <Filter>Game\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game">
@@ -230,6 +242,9 @@
     </Filter>
     <Filter Include="Game\GameData">
       <UniqueIdentifier>{89c6430f-7610-4f90-a8ad-4195856f61cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\UI">
+      <UniqueIdentifier>{3eeda70f-6317-497c-9186-b4fd238d3b42}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -9,10 +9,14 @@ Task::Task(int _task_id, int _draw_priority)
 }
 
 
+
+//ƒCƒ“ƒ‰ƒCƒ““WŠJ
+/*
 void Task::Delete()
 {
 	TaskManager::GetInstance()->DeleteTask(this);
 }
+*/
 
 Task::~Task()
 {

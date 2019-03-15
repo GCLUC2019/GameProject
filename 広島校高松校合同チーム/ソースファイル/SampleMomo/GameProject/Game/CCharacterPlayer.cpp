@@ -170,7 +170,7 @@ void CCharacterPlayer::InputAttack()
 
 	if (m_is_attacking == true) return;
 	if (CInput::GetState(0, CInput::eHold, CInput::eButton2)) {
-		//printf("攻撃\n");
+		//DEBUG_PRINT("攻撃\n");
 		ClearEarlyInput();
 		m_is_attacking = true;
 		m_attacking_count = PLAYER_ATTACK_FRAME;
@@ -194,7 +194,7 @@ void CCharacterPlayer::CharacterBeforeUpdate()
 
 void CCharacterPlayer::CharacterUpdate()
 {
-	//printf("x %lf y %lf z %lf\n", m_pos.x, m_pos.y, m_pos.z);
+	//DEBUG_PRINT("x %lf y %lf z %lf\n", m_pos.x, m_pos.y, m_pos.z);
 	
 	
 	if (m_landing_anim_count > 0) m_landing_anim_count--;
@@ -205,7 +205,7 @@ void CCharacterPlayer::CharacterUpdate()
 	else if (m_will_play_anim_id == ePlayerAnimIdAttackReserve && m_attack_reserve_count-- > 0) SetWillPlayAnim(ePlayerAnimIdAttackReserve);
 	else if (m_will_play_anim_id == ePlayerAnimIdDamage && m_damage_anim_count-- > 0) {
 		SetWillPlayAnim(ePlayerAnimIdDamage);
-		//printf("ダメージモーション中 %d\n", m_damage_anim_count);
+		//DEBUG_PRINT("ダメージモーション中 %d\n", m_damage_anim_count);
 	}
 	else m_will_play_anim_id = ePlayerAnimIdIdle;
 
@@ -333,7 +333,7 @@ void CCharacterPlayer::DoingLandingAction()
 void CCharacterPlayer::Landing()
 {
 	if (m_is_landing == true & m_is_landing_old == false) {
-		//printf("着地\n");
+		//DEBUG_PRINT("着地\n");
 		if(m_will_play_anim_id ==  ePlayerAnimIdIdle) SetWillPlayAnim(ePlayerAnimIdLand);
 		m_landing_action_count = PLAYER_LANDING_ACTION_FRAME;
 		m_landing_anim_count = PLAYER_LANDING_ANIM_FRAME;
@@ -353,7 +353,7 @@ void CCharacterPlayer::InputEvasion()
 	
 	if(m_evasion_reserve_count > 0 || m_is_evasion == true) receive_input_time = PLAYER_RECEIVE_INPUT__EVASION_TIME_AFTER_EVASION;
 
-	printf("receive_input %d\n", receive_input_time);
+	//DEBUG_PRINT("receive_input %d\n", receive_input_time);
 
 	if (m_receive_input_evasion_time_count_r > 0) m_receive_input_evasion_time_count_r--;
 	if (m_receive_input_evasion_time_count_l > 0) m_receive_input_evasion_time_count_l--;
@@ -381,7 +381,7 @@ void CCharacterPlayer::InputEvasion()
 	}
 
 
-	printf("m_is_input_evasion %d\n", m_is_input_evasion);
+	//DEBUG_PRINT("m_is_input_evasion %d\n", m_is_input_evasion);
 	if (m_is_input_evasion == true) {
 		BeginEvasion();
 	}
@@ -409,7 +409,7 @@ void CCharacterPlayer::BeginEvasion()
 	//m_is_jumping = false;
 
 
-	printf("回避開始\n");
+	//DEBUG_PRINT("回避開始\n");
 	m_receive_input_evasion_time_count_l = 0;
 	m_receive_input_evasion_time_count_r = 0;
 	m_is_evasion = true;
@@ -426,7 +426,7 @@ void CCharacterPlayer::BeginEvasion()
 		m_evasion_count = PLAYER_EVASION_FRAME - (PLAYER_EVASION_ANIM_DELAY * 2);
 	}
 
-	//printf("m_is_input_evasion false\n");
+	//DEBUG_PRINT("m_is_input_evasion false\n");
 
 
 }
@@ -461,7 +461,7 @@ void CCharacterPlayer::DoingEvasion()
 		//移動開始フレームになったら移動する
 		//if (m_evasion_count <= PLAYER_EVASION_FRAME - PLAYER_EVASION_MOVE_START_FRAME && m_evasion_count > PLAYER_EVASION_FRAME - PLAYER_EVASION_MOVE_END_FRAME) {
 		if (m_evasion_count <= PLAYER_EVASION_FRAME - PLAYER_EVASION_MOVE_START_FRAME) {
-			double moving_vec = 3.5 / SPF;
+			const double moving_vec = 7.5 / SPF;
 			//向きに応じて移動
 			if (m_is_flip == false) {
 				m_vec.x = moving_vec * CFPS::GetDeltaTime();
@@ -471,7 +471,7 @@ void CCharacterPlayer::DoingEvasion()
 			}
 		}
 
-		printf("回避 %d\n", m_evasion_count);
+		//DEBUG_PRINT("回避 %d\n", m_evasion_count);
 		SetInvincible(true);
 
 		if(m_is_fast_evasion == true) SetWillPlayAnim(ePlayerAnimIdEvasionFast);
@@ -535,7 +535,7 @@ void CCharacterPlayer::Attacking()
 
 
 
-			//printf("エネミーいたよね\n");
+			//DEBUG_PRINT("エネミーいたよね\n");
 
 			//位置関係を取得
 			CVector3D enemy_pos = enemy_p->GetPos();
@@ -555,12 +555,12 @@ void CCharacterPlayer::Attacking()
 			CVector3D attack_length = PLAYER_ATTACK_LENGTH;
 
 
-			//printf("攻撃!!!!\n");
+			//DEBUG_PRINT("攻撃!!!!\n");
 			//敵が左側にいて自分が左向き
 			//もしくは敵が右側にいて、自分が右向きなら
 			if (length.x <= 0.0f && m_is_flip == true
 				|| length.x >= 0.0f && m_is_flip == false) {
-				//printf("length.x %lf length.y %lf length.z %lf \n", length.x, length.y, length.z);
+				//DEBUG_PRINT("length.x %lf length.y %lf length.z %lf \n", length.x, length.y, length.z);
 
 				//攻撃範囲内に敵がいるなら
 				if (length_abs.x <= attack_length.x&& length_abs.y <= attack_length.y&&length_abs.z <= attack_length.z) {
@@ -571,7 +571,7 @@ void CCharacterPlayer::Attacking()
 					for (int i = 0; i < m_memory_hit_attacked_enemy_num; i++) {
 						if (m_memory_hit_attacked_enemy_p[i] == enemy_p) {
 							is_aready_hit = true;
-							//printf("もう攻撃していたのでなにもしない\n");
+							//DEBUG_PRINT("もう攻撃していたのでなにもしない\n");
 							break;
 						}
 					}
@@ -581,7 +581,7 @@ void CCharacterPlayer::Attacking()
 					if (is_aready_hit == false) {
 						enemy_p->ReceiveAttack();
 						*enemy_p->GetHitPointPointer() -= PLAYER_ATTACK_POWER;
-						//printf("enemy hp %lf\n", *enemy_p->GetHitPointPointer());
+						//DEBUG_PRINT("enemy hp %lf\n", *enemy_p->GetHitPointPointer());
 						m_memory_hit_attacked_enemy_p[m_memory_hit_attacked_enemy_num++] = enemy_p;
 					}
 				}
@@ -595,7 +595,7 @@ void CCharacterPlayer::Attacking()
 		free(enemy_array);
 		
 	}
-	printf("攻撃 %d\n", m_attacking_count);
+	//DEBUG_PRINT("攻撃 %d\n", m_attacking_count);
 	SetWillPlayAnim(ePlayerAnimIdAttack);
 
 
@@ -611,7 +611,7 @@ void CCharacterPlayer::Jumping()
 		}
 
 		SetWillPlayAnim(ePlayerAnimIdJump);
-		printf("ジャンプ！\n");
+		//DEBUG_PRINT("ジャンプ！\n");
 	}
 
 	
@@ -627,7 +627,7 @@ void CCharacterPlayer::Falling()
 		//if(m_pos.y <= -330) SetWillPlayAnim(ePlayerAnimIdFall);
 		//else SetWillPlayAnim(ePlayerAnimIdLand);
 		
-		printf("ファール\n");
+		//DEBUG_PRINT("ファール\n");
 	}
 }
 
@@ -729,7 +729,7 @@ void CCharacterPlayer::CalcScroll()
 	//スクロール限界値を設定
 	double max_x = CGameScene::GetInstance()->GetGameSceneLimitPosMax().x - 1280.0f;
 	if (calc_scroll_pos.x > max_x) calc_scroll_pos.x = max_x;
-	//printf("max_x %lf calc_scroll_pos.x %lf\n", max_x,calc_scroll_pos.x);
+	//DEBUG_PRINT("max_x %lf calc_scroll_pos.x %lf\n", max_x,calc_scroll_pos.x);
 
 	//Y軸スクロール
 	float offset_y = -200.0f;
@@ -745,7 +745,7 @@ void CCharacterPlayer::CalcScroll()
 
 	if (calc_scroll_pos.y > 0.0f) calc_scroll_pos.y = 0.0f;
 
-	//printf("calc_scroll_pos.y %lf\n", calc_scroll_pos.y);
+	//DEBUG_PRINT("calc_scroll_pos.y %lf\n", calc_scroll_pos.y);
 
 
 

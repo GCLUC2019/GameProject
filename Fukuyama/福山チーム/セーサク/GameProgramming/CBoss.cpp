@@ -5,39 +5,43 @@
 #include"CExplosion.h"
 #include"CMain.h"
 #include"CScene.h"
+#include"CBossBullet.h"
 #define FIREINTERVAL_E 60
 
 
-//»ìŽÒ ŒG“c
 extern CPlayerTank *Tank;
 extern CTexture Texture;
 
 
 void CBoss::Init(){
 	mFireInterval = FIREINTERVAL_E;
-	
+
 
 	CTank::Init();
 	SetVertex(-100.0f, 100.0f, -100.0f, 100.0f);
-	SetColor(0.6f, 0.0f, 1.0f, 1.0f);
-	mHead.SetColor(0.6f, 1.0f, 1.0f, 1.0f);
+	SetColor(1.0f, 1.0f, 0.0f, 1.0f);
+	mHead.SetColor(1.0f, 0.6f, 0.0f, 1.0f);
 	mHead.SetVertex(-50.0f, 50.0f, -50.0f, 50.0f);
-	mCanon.SetColor(0.0f, 0.0f, 0.0f, 1.0f);
-	
+	mCanon.SetColor(1.0f, 0.6f, 0.0f, 1.0f);
+	mCanon.SetVertex(-20.0f, 20.0f, -70.0f, 70.0f);
+	mCanon.mPosition.y = 40.0f;
+
+
+
 	mCollider = new CCircleCollider();
 	mCollider->mRadius = 20.0f;
 	mCollider->mpTask = this;
 	mpTarget = Tank;
 	CCollisionManager::Get()->Add(mCollider);
 	mTaskTag = EENEMYTANK;
-	mHpBar.SetHpBar(this, CVector2(0.0f, -35.0f), CVector2(50.0f, 8.0f), mColor, 100, 100);
+	mHpBar.SetHpBar(this, CVector2(0.0f, -120.0f), CVector2(200.0f, 8.0f), mColor, 200, 200);
 }
 
 void CBoss::Update(){
 	if (mFireInterval > 0){
 		mFireInterval--;
 	}
-	 Forward();
+	Forward();
 	CTank::Update();
 
 	if (mPosition.x > 400){
@@ -65,13 +69,13 @@ void CBoss::Update(){
 	if (-0.1 < dot&&dot < 0.1){
 		if (mFireInterval <= 0){
 			mFireInterval = FIREINTERVAL_E;
-			CBullet*bullet = new CBullet();
-			bullet->mTaskTag = EENEMYBULLET;
-			bullet->mLife = CBULLET_LIFE;
-			bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, 25.0f);
-			bullet->mForward = bullet->mPosition - mCanon.mMatrix*CVector2(0.0f, 24.0f);
-			bullet->SetColor(mColor[0], mColor[1], mColor[2], mColor[3]);
-			CTaskManager::Get()->Add(bullet);
+			CBossBullet*cbullet = new CBossBullet();
+			cbullet->mTaskTag = EBOSSBULLET;
+			cbullet->mLife = CBULLET_LIFE;
+			cbullet->mPosition = mCanon.mMatrix*CVector2(0.0f, 30.0f);
+			cbullet->mForward = cbullet->mPosition - mCanon.mMatrix*CVector2(0.0f, 24.0f);
+			cbullet->SetColor(mColor[0], mColor[1], mColor[2], mColor[3]);
+			CTaskManager::Get()->Add(cbullet);
 		}
 	}
 	mHpBar.Update();

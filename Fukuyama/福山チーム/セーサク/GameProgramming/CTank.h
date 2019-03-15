@@ -27,6 +27,8 @@ public:
 	void Render();
 	void HeadLeftTurn();
 	void HeadRightTurn();
+	void PHeadLeftTurn();
+	void PHeadRightTurn();
 	void EnemyUp();         //í«â¡Å@äòìc
 	void EnemyDown();
 	void PForward();

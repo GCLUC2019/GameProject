@@ -85,13 +85,13 @@ public:
 	virtual void  GameSceneObjectCollisionCheck(Task* _collision_task);
 
 	void SetIsShowShadow(bool _is) { m_is_show_shadow = _is; };
-	void SetShadowSize(CVector2D _size) { m_shadow_size = _size; };
+	void SetShadowSize(CVector2D& _size) { m_shadow_size = _size; };
 
 	//影の位置が変わりすぎると当たり判定との差異が起こるので注意すること(X軸にずらすとかその程度にする)
-	void SetShadowPosAdj(CVector2D _pos) { m_shadow_pos_adj = _pos; };
+	void SetShadowPosAdj(CVector2D& _pos) { m_shadow_pos_adj = _pos; };
 
-	void SetDrawAdjPos(CVector2D _adj_pos) { m_draw_adj = _adj_pos; };
-	CVector2D GetDrawAdjPos() { return m_draw_adj; };
+	void SetDrawAdjPos(const CVector2D& _adj_pos) { m_draw_adj = _adj_pos; };
+	const CVector2D& GetDrawAdjPos() { return m_draw_adj; };
 
 	void MoveLimit();
 
@@ -101,6 +101,7 @@ public:
 		m_blind_delay_count = 0;
 		m_blind_alpha = _blind_alpha;
 	};
+
 
 	//アニメーション再生関連
 	void SetWillPlayAnim(int _anim_id) { m_will_play_anim_id = _anim_id; };
