@@ -75,7 +75,7 @@ void BossLazerEffect::Draw()
 
 BossSlashEffect::BossSlashEffect(const CVector2D & pos) : Task(eBossLazerEffectc)
 {
-	m_img = COPY_RESOURCE("PEGetDamage", CAnimImage*);
+	m_img = COPY_RESOURCE("BossSlash", CAnimImage*);
 
 	m_img.SetCenter(SLASH_SIZE * 2 / 2, SLASH_SIZE * 2 / 2);
 

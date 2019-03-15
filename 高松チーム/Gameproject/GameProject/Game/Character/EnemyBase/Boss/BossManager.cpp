@@ -15,7 +15,7 @@ BossManager::BossManager() : Task(eBossManager)
 {
 	m_img= COPY_RESOURCE("Boss", CImage*);
 	m_pos = CVector2D(WIGHT_SIZE / 2 - BOSS_X_SIZE / 4, HEIGHT_SIZE / 2 - BOSS_Y_SIZE / 2);
-	m_state = B::eIdle;
+	//m_state = B::eIdle;
 
 	m_player_pos = CVector2D(640, 300);//‰¼
 
