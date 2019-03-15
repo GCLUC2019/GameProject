@@ -78,17 +78,22 @@ void Player::Move()
 		return;
 
 	if (CInput::GetState(0, CInput::eHold, CInput::eUp)) {
-		m_pos.y -= m_speed;
-        if (m_jump_flg == false) {
-        
-            m_state = eMove;
-        }
+		
+        if (m_jump_flg)
+			m_pos_old.y -= m_speed;
+		else
+		{
+			m_pos.y -= m_speed;
+			m_state = eMove;
+		}
       
 	}
 	if (CInput::GetState(0, CInput::eHold, CInput::eDown)) {
-		m_pos.y += m_speed;
-        if (m_jump_flg == false) {
-         
+		
+        if (m_jump_flg )
+			m_pos_old.y += m_speed; 
+		else{
+			m_pos.y += m_speed;
             m_state = eMove;
         }
       
@@ -130,6 +135,7 @@ void Player::Jump()
 		time = 0;
 		m_jump_vec = 0;
 		m_jump_flg = false;
+		m_pos.y = m_pos_old.y;
     }
     m_pos += CVector2D(0, m_jump_vec);
 	g_game_data.m_scroll.y =  m_jump_vec;
@@ -329,7 +335,8 @@ void Player::Update()
 	if (m_special >= 100 && CInput::GetState(0, CInput::eHold, CInput::eButton5) && m_attack_flg == false)
 		m_special_flg = true;
 	m_state_old = m_state;
-	m_pos_old = m_pos;
+	if (m_jump_flg == false)
+		m_pos_old = m_pos;
 	if (m_special_flg) {
 		Special();
 		return;
@@ -404,7 +411,8 @@ void Player::Draw()
 	m_img.SetFlipH(m_flip);
 	m_shadow.SetSize(SAIZE_SD + m_depth + m_jump_vec / 5, SAIZE_SD - 70 );
 	m_shadow.SetCenter((SAIZE_SD + m_depth + m_jump_vec / 5) / 2, (SAIZE_SD - 70 ) / 2);
-    m_shadow.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3- m_jump_vec);
+	if (m_jump_flg)
+		m_shadow.SetPos(m_pos.x, m_pos_old.y - g_game_data.m_scroll.y / 3 - m_jump_vec);
 	m_shadow.Draw();
 	m_img.Draw();
 		
