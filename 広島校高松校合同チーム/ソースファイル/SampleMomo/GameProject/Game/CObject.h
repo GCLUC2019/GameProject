@@ -2,15 +2,16 @@
 #include "../Task/Task.h"
 #include "../stdafx.h"
 
-static CVector2D s_scroll = CVector2D(0, 0);
+#include "../Global.h"
+
 
 class CObject : public Task {
 private:
 protected:
 	CVector3D m_pos = CVector3D(0,0,0);
-	CVector3D m_pos_old;
-	CVector3D m_vec;
-	float m_speed;
+	CVector3D m_pos_old = CVector3D(0, 0, 0);
+	CVector3D m_vec = CVector3D(0, 0, 0);
+	float m_speed = 1.0f;
 	CVector2D m_size;
 	CVector3D m_rads;
 	bool m_is_flip = false;
@@ -52,8 +53,8 @@ public:
 	const CVector3D& GetRads() { return m_rads; };
 	const CVector2D& GetSize() { return m_size; };
 
-	static const CVector2D& GetScroll() { return s_scroll; };
-	static void SetScroll(const CVector2D& _scroll) { s_scroll = _scroll; };
+	static const CVector2D& GetScroll();
+	static void SetScroll(const CVector2D& _scroll);
 
 	bool CollisionCheck3D(CObject * _ob) { return CollisionCheck3D(m_pos, m_rads, _ob->GetPos(), _ob->GetRads()); };
 
@@ -78,6 +79,13 @@ public:
 		return false;
 		*/
 	};
+
+	//ベクトルによる移動を行う
+	void MovePos() {
+		m_pos += m_vec;
+	};
+
+
 };
 
 /*

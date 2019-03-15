@@ -12,13 +12,19 @@ CGameSceneObject::~CGameSceneObject()
 {
 }
 
+void CGameSceneObject::BeforeUpdate()
+{
+	SetPosOld(m_pos);
+	GameSceneObjectBeforeUpdate();
+}
+
 void CGameSceneObject::Update()
 {
 	GameSceneObjectUpdate();
-}
-
-void CGameSceneObject::GameSceneObjectUpdate()
-{
+	Gravity();
+	MovePos();
+	MoveLimit();
+	CalcScroll();
 }
 
 void CGameSceneObject::AfterUpdate()
@@ -33,12 +39,20 @@ void CGameSceneObject::AfterUpdate()
 	SetDrawPriority(m_pos.z);
 }
 
+void CGameSceneObject::GameSceneObjectUpdate()
+{
+}
+
+
+
 void CGameSceneObject::GameSceneObjectAfterUpdate()
 {
 }
 
 void CGameSceneObject::Gravity()
 {
+	if (GetIsReceiveGravity() == false) return;
+
 	//接地しているなら重力を加算しない
 	if (m_is_landing == true) {
 		return;
@@ -61,11 +75,7 @@ void CGameSceneObject::GameSceneObjectBeforeCollisionCheck()
 	
 }
 
-void CGameSceneObject::BeforeUpdate()
-{
-	SetPosOld(m_pos);
-	GameSceneObjectBeforeUpdate();
-}
+
 
 void CGameSceneObject::GameSceneObjectBeforeUpdate()
 {
@@ -82,10 +92,9 @@ void CGameSceneObject::DrawShadow()
 {
 	if (m_shadow_p == nullptr) return;
 
-	CVector2D draw_pos_shadow = CVector2D(m_pos.x, m_pos.z) - GetScroll();
+	register CVector2D draw_pos_shadow = CVector2D(m_pos.x, m_pos.z) - GetScroll();
 
-	CVector2D shadow_pos_adj = m_shadow_pos_adj;
-
+	register CVector2D shadow_pos_adj = m_shadow_pos_adj;
 	if (m_is_flip == true) shadow_pos_adj.x *= -1.0f;
 
 	m_shadow_p->SetFlipH(m_is_flip);
@@ -100,10 +109,11 @@ void CGameSceneObject::DrawAnimImage()
 	if (m_anim_image_p[m_play_anim_image] == nullptr) return;
 	m_anim_image_p[m_play_anim_image]->SetFlipH(m_is_flip);
 	m_anim_image_p[m_play_anim_image]->SetSize(m_size.x, m_size.y);
-	CVector2D draw_pos = CVector2D(m_pos.x, m_pos.y + m_pos.z) - GetScroll();
+	
+	register CVector2D draw_pos = CVector2D(m_pos.x, m_pos.y + m_pos.z) - GetScroll();
 
 
-	CVector2D draw_adj = m_draw_adj;
+	register CVector2D draw_adj = m_draw_adj;
 	if (m_is_flip == true) draw_adj.x *= -1.0f;
 
 
@@ -225,6 +235,8 @@ void CGameSceneObject::GameSceneObjectCollisionCheck(Task * _collision_task)
 
 void CGameSceneObject::MoveLimit()
 {
+	if (GetIsLimitMovePos() == false) return;
+
 	const CVector3D& limit_pos_max = CGameScene::GetInstance()->GetGameSceneLimitPosMax();
 	const CVector3D& limit_pos_min = CGameScene::GetInstance()->GetGameSceneLimitPosMin();
 
@@ -233,6 +245,60 @@ void CGameSceneObject::MoveLimit()
 
 	if (m_pos.z < limit_pos_min.z + m_rads.y / 2.0) m_pos.z = limit_pos_min.z + m_rads.y / 2.0;
 	if (m_pos.z > limit_pos_max.z) m_pos.z = limit_pos_max.z;
+}
+
+void CGameSceneObject::CalcScroll()
+{
+	if (GetIsCalcScrollBaseObject() == false) return;
+
+	//if (GetTaskId() == eTaskIdPlayer) printf("プレイヤーのcalcpos\n");
+
+	//printf("スクロール計算\n");
+	//画面上の座標
+
+	const CVector2D& scroll_pos = GetScroll();
+	//printf("scroll_pos x%lf scroll_pos y%lf \n", scroll_pos.x, scroll_pos.y);
+
+	CVector2D calc_scroll_pos = scroll_pos;
+
+	register const float offset_x = -120.0f;
+	register const float offset_y = -200.0f;
+
+	//スクロール限界値を設定
+	register const double max_x = CGameScene::GetInstance()->GetGameSceneLimitPosMax().x - 1280.0f;
+
+	//キャラ描画位置
+	register double draw_pos_y = m_pos.y + m_pos.z;
+
+
+	if (m_pos.x >= scroll_pos.x + 1280.0f + offset_x) {
+		calc_scroll_pos.x = m_pos.x - 1280.0f - offset_x;
+	}
+
+	else if (m_pos.x <= scroll_pos.x - offset_x) {
+		calc_scroll_pos.x = m_pos.x + offset_x;
+	}
+
+
+	if (calc_scroll_pos.x >= CGameScene::GetInstance()->GetGameSceneLimitPosMax().x + offset_x) {
+		calc_scroll_pos.x = CGameScene::GetInstance()->GetGameSceneLimitPosMax().x - offset_x;
+	}
+
+
+	if (calc_scroll_pos.x > max_x) calc_scroll_pos.x = max_x;
+
+	if (draw_pos_y <= scroll_pos.y - offset_y) {
+		calc_scroll_pos.y = draw_pos_y + offset_y;
+	}
+	else if (scroll_pos.y < 0) {
+		calc_scroll_pos.y = draw_pos_y + offset_y;
+	}
+
+	if (calc_scroll_pos.y > 0.0f) calc_scroll_pos.y = 0.0f;
+
+	//printf("m_pos.x %f m_pos.y %f m_pos.z %f\n", m_pos.x, m_pos.y,m_pos.z);
+	//printf("calc_scroll_pos.x %f calc_scroll_pos.y %f\n", calc_scroll_pos.x, calc_scroll_pos.y);
+	SetScroll(calc_scroll_pos);
 }
 
 void CGameSceneObject::SetAnim(int _anim_id)
@@ -254,3 +320,5 @@ void CGameSceneObject::PlayAnim()
 		m_play_anim_count = m_anim_info[m_play_anim_id].delay;
 	}
 }
+
+

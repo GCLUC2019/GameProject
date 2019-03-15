@@ -2,6 +2,8 @@
 
 
 
+static CVector2D s_scroll = CVector2D(0, 0);
+
 CObject::CObject(int _task_id, int _draw_priority) : Task(_task_id,_draw_priority)
 {
 }
@@ -31,21 +33,19 @@ void CObject::Draw()
 }
 
 
-//インライン展開します。
 
-/*
 const CVector2D& CObject::GetScroll()
 {
 	return s_scroll;
 }
-*/
 
-/*
+
+
 void CObject::SetScroll(const CVector2D& _scroll)
 {
 	s_scroll = _scroll;
 }
-*/
+
 
 
 //インライン展開します
