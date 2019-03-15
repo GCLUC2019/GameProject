@@ -9,6 +9,7 @@
 #include "../Item/ItemBox.h"
 #include "../GameProject/Game/Scene/Title.h"
 #include"../Character/EnemyBase/Enemy/Enemy01.h"
+#include "../../Game/UI/UI.h"
 GameScene::GameScene() : Task(eGameScene)
 {
 	new Resource();
@@ -23,6 +24,7 @@ GameScene::GameScene() : Task(eGameScene)
 	TaskManager::GetInstance()->AddTask(new ItemBox(Box_Typ::eDummyBox, CVector2D(768, 560)));
 	TaskManager::GetInstance()->AddTask(new Player());
 	TaskManager::GetInstance()->AddTask(new Enemy01(CVector2D(100, 100)));
+	TaskManager::GetInstance()->AddTask(new UI());
 
 }
 
