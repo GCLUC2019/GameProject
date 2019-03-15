@@ -25,7 +25,8 @@ private:
 	Task* GetNextTask() { return m_next_task; };
 
 	//@brief タスクを即座に削除する。
-	void Delete();
+	void Delete(){ TaskManager::GetInstance()->DeleteTask(this); };
+
 public:
 	//@brief タスククラスコンストラクタ
 	//@param [in] _task_id タスク識別用のID

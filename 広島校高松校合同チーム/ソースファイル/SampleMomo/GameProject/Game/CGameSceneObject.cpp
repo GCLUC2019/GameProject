@@ -63,6 +63,7 @@ void CGameSceneObject::GameSceneObjectBeforeCollisionCheck()
 
 void CGameSceneObject::BeforeUpdate()
 {
+	SetPosOld(m_pos);
 	GameSceneObjectBeforeUpdate();
 }
 
@@ -145,10 +146,46 @@ void CGameSceneObject::GameSceneObjectDraw()
 
 void CGameSceneObject::CollisionCheck(Task * _collision_task)
 {
+	register CObject* ob = dynamic_cast<CObject*>(_collision_task);
+	register const CVector3D& ob_pos = ob->GetPos();
+	register const CVector3D& ob_pos_old = ob->GetPosOld();
+	register const CVector3D& ob_rads = ob->GetRads();
+	register double ob_head_pos;
+
+	//‘Šè‚à“®‚­ê‡‚ÍAˆ—‚ª•¡G‚©‚à
+
+	if (CollisionCheck3D(CVector3D(m_pos.x, m_pos_old.y, m_pos_old.z), m_rads, ob_pos, ob_rads)) {
+		m_pos.x = m_pos_old.x;
+	};
+
+	if (CollisionCheck3D(CVector3D(m_pos_old.x, m_pos.y, m_pos_old.z), m_rads, ob_pos, ob_rads)) {
+		m_pos.y = m_pos_old.y;
+
+
+		//‚à‚µ–ß‚µ‚½À•W‚ª©•ª‚Ì“ªã‚æ‚èã‚È‚ç©•ª‚Ì“ªã‚Ò‚Á‚½‚è‚É‡‚í‚¹‚é
+
+		//ŒvZ® “G‚Ì“ªã‚Ò‚Á‚½‚è‚Æ‚È‚éˆÊ’u = “G‚ÌYˆÊ’u - “G‚ÌY”¼Œa - ©•ª‚ÌY”¼Œa - áŠ±•‚‚©‚¹‚é‚½‚ß‚Ì•â³’l
+
+
+		ob_head_pos = ob_pos.y - ob_rads.y - m_rads.y - 0.1f;
+		if (m_pos.y <= ob_head_pos) m_pos.y = ob_head_pos;
+
+
+		m_is_landing = true;
+	};
+
+	if (CollisionCheck3D(CVector3D(m_pos_old.x, m_pos_old.y, m_pos.z), m_rads, ob_pos, ob_rads)) {
+		m_pos.z = m_pos_old.z;
+	};
+
+	GameSceneObjectCollisionCheck(_collision_task);
+
+	//Œy—Ê‰»‘O
+	/*
 	CObject* ob = dynamic_cast<CObject*>(_collision_task);
-	CVector3D ob_pos = ob->GetPos();
-	CVector3D ob_pos_old = ob->GetPosOld();
-	CVector3D ob_rads = ob->GetRads();
+	const CVector3D& ob_pos = ob->GetPos();
+	const CVector3D& ob_pos_old = ob->GetPosOld();
+	const CVector3D& ob_rads = ob->GetRads();
 
 
 	//‘Šè‚à“®‚­ê‡‚ÍAˆ—‚ª•¡G‚©‚à
@@ -178,6 +215,7 @@ void CGameSceneObject::CollisionCheck(Task * _collision_task)
 	};
 
 	GameSceneObjectCollisionCheck(_collision_task);
+	*/
 }
 
 void CGameSceneObject::GameSceneObjectCollisionCheck(Task * _collision_task)
@@ -187,8 +225,8 @@ void CGameSceneObject::GameSceneObjectCollisionCheck(Task * _collision_task)
 
 void CGameSceneObject::MoveLimit()
 {
-	CVector3D limit_pos_max = CGameScene::GetInstance()->GetGameSceneLimitPosMax();
-	CVector3D limit_pos_min = CGameScene::GetInstance()->GetGameSceneLimitPosMin();
+	const CVector3D& limit_pos_max = CGameScene::GetInstance()->GetGameSceneLimitPosMax();
+	const CVector3D& limit_pos_min = CGameScene::GetInstance()->GetGameSceneLimitPosMin();
 
 	if (m_pos.x < limit_pos_min.x + m_rads.x / 2.0) m_pos.x = limit_pos_min.x + m_rads.x / 2.0;
 	if (m_pos.x > limit_pos_max.x) m_pos.x = limit_pos_max.x;
