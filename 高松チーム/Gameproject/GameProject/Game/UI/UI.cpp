@@ -120,7 +120,6 @@ void SpecialGageUI::Draw()
 }
 
 
-
 GageBaseUI::GageBaseUI() : UI(eGageBaseUI)
 {
 	m_img = COPY_RESOURCE("GageBaseUI", CImage*);
