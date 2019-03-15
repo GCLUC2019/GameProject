@@ -18,7 +18,6 @@ private:
 
 public:
 	TutorialEnemy(CVector2D _pos);
-	void Move();
 	void Damage();
 	void Update();
 	void Draw();

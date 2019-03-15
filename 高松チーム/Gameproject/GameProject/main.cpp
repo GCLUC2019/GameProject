@@ -12,6 +12,7 @@
 #include "Base\Task.h"
 #include "Base\TaskManager.h"
 #include "Game/Scene/Title.h"
+#include "../GameProject/Game/Tutorial/Tutorial.h"
 //--------------------------------------------
 //グローバル変数領域
 //--------------------------------------------
@@ -118,7 +119,7 @@ void Init(void)
 	//ゲーム起動時に一度だけ呼ばれる
 	//-----------------------------------------------------
     TaskManager::GetInstance()->AddTask(new Title());
-
+	//TaskManager::GetInstance()->AddTask(new Tutorial());
 }
 
 void release()
