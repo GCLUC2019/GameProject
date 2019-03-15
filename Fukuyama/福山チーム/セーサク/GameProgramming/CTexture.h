@@ -50,6 +50,7 @@ public:
 		float diffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 		//êFÇÃê›íË
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
+		glColor4fv(diffuse);
 
 		glBegin(GL_TRIANGLES);
 		glTexCoord2f(tleft / mHeader.width, (mHeader.height - ttop) / mHeader.height);
