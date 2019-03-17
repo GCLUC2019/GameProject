@@ -34,15 +34,14 @@ void CItem::Render(){
 void CItem::OnCollision(CCollider*p){
 	if (mTaskTag == EITEM&&p->mpTask->mTaskTag == EPLAYERTANK){
 		if (type == 1){  //‰ñ•œ
-
+			printf("CItem1::OnCollision\n");
 		}
 		if (type == 2){  //‹­‰»
-
+			printf("CItem2::OnCollision\n");
 		}
 		if (type == 3){  //–³“G
-
+			printf("CItem3::OnCollision\n");
 		}
-		printf("CItem::OnCollision\n");
 		mEnabled = false;
 	}
 }
