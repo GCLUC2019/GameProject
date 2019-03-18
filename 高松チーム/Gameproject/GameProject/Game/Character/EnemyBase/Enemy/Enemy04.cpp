@@ -39,33 +39,33 @@ void Enemy04::Update()
 	m_distance = TaskManager::GetInstance()->FindObject(ePlayer)->GetPos() - m_pos;
 	m_vec = m_distance.GetNormalize();
 	
-	if (m_distance.x < 0)
-		m_flip = false;
-	else
-		m_flip = true;
-
-	if (m_exattack_flg)
-		EXAttack();
-	else if (m_sattack_flg)
-		SAttack();
-	else if (m_lattack_flg)
-		LAttack();
-	else
-		MoveControl();
-	
-	AttackControl();
-	if (m_interval_flg)
-		m_cnt--;
-	if (m_cnt < 0);
-		m_interval_flg = false;
-
-
-	
-	//SetAnim();
-	if (m_pos.x <0 || m_pos.x > 1280)
-		m_pos.x = m_pos_old.x;
-	/*if (m_pos.y < 480 || m_pos.y > 720)
-		m_pos.y = m_pos_old.y;*/
+//	if (m_distance.x < 0)
+//		m_flip = false;
+//	else
+//		m_flip = true;
+//
+//	if (m_exattack_flg)
+//		EXAttack();
+//	else if (m_sattack_flg)
+//		SAttack();
+//	else if (m_lattack_flg)
+//		LAttack();
+//	else
+//		MoveControl();
+//	
+//	AttackControl();
+//	if (m_interval_flg)
+//		m_cnt--;
+//	if (m_cnt < 0);
+//		m_interval_flg = false;
+//
+//
+//	
+//	//SetAnim();
+//	if (m_pos.x <0 || m_pos.x > 1280)
+//		m_pos.x = m_pos_old.x;
+//	/*if (m_pos.y < 480 || m_pos.y > 720)
+//		m_pos.y = m_pos_old.y;*/
 }
 
 void Enemy04::Draw()
