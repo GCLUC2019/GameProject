@@ -2,6 +2,18 @@
 #include "CCharacterPlayer.h"
 #include "../Global.h"
 
+//ボスの初期表示位置
+#define DEF_BOSS_POS CVector3D(1000, -2060, 500);
+#define DEF_BOSS_VEC CVector3D(0, 0, 0);
+#define DEF_SAHDOW_POS CVector2D(-30.0, -90.0);
+
+//ボスのサイズ
+#define BOSS_SIZE CVector2D(500,500)
+#define BOSS_SHADOW_SIZE CVector2D(300, 50)
+
+//ボスのHP
+#define BOSS_HP 50.0f
+
 //起動誤差
 #define RANGE (150)
 
@@ -21,22 +33,38 @@
 #define IDLE_LIMIT 120
 #define WALK_LIMIT 180
 #define RUN_LIMIT  75
+#define AWAY_LIMIT  75
 
 //速度
 #define DEF_SPEED 1.5
 #define RUN_SPEED 4.5
 
 //攻撃範囲
-#define ATTACK1_RANGE_X 1.5
-#define RUN_SPEED 4.5
+#define ATTACK1_RANGE_BITE 400
+#define ATTACK1_RANGE_BARK 500
 
+//攻撃時間
+#define BITE_TIME 30.0
+#define BARK_TIME 50.0
+
+//跳躍力
+#define JUMP_POWER 40
+#define JUMP_POWER_X 10
+
+//減速係数
+#define FLICTION 0.7
+
+//最大速度
+#define MAX_SPEED 8.0f
 
 //ボスのアニメーションの種類番号
 enum {
 	eEnemyAnimBossIdIdle = 0,
 	eEnemyAnimBossIdRun,
 	eEnemyAnimBossIdWalk,
+	eEnemyAnimBossIdJump,
 	eEnemyAnimBossIdBark,
+	eEnemyAnimBossIdBite,
 	eEnmeyAnimBossIdMax,
 };
 
@@ -70,17 +98,22 @@ private:
 		double boss_idle = 0.0;
 		double boss_walk = 0.0;
 		double boss_run = 0.0;
+		double boss_attack = 0.0;
+		double boss_away = 0.0;
 	};
 
 	boss_mode_counts s_boss_mode;
 
 	CCharacterPlayer* m_player_p;
 
+	double m_attack_complete = 0.0;
+
 	int m_boss_state = eEnemyBossStateIdle;
 	int m_befor_state = m_boss_state;
 	int m_just_dist = DEF_JUST_DIST;
 	bool m_is_attack = true;
 	bool m_is_hit = false;
+	bool m_away_flg = false;
 	CVector3D m_player_pos = CVector3D(0, 0, 0);
 public:
 	CCharacterBoss();
@@ -96,6 +129,8 @@ public:
 	void ChangeDist();
 	//エネミーの状態を変更
 	void ChangeState();
+	void ChengeStateIdleOrAway();
+	void ChangeAttackState(int _state, int attack_time);
 	//以下、エネミーの行動状態
 	//移動系
 	void Idle();
@@ -107,11 +142,17 @@ public:
 	void Attack1();
 	void Attack2();
 	void AttackHub();
-	//vecの加算
-	void Move();
+	//移動の限界値
 	void MoveLimit();
 	//距離の精査
 	void CheckDist();
+	float CheckAttackRange();
+
+	//被ダメージ処理
+	void ReceiveAttack();
+
+	//初期化
+	void DefalutSet();
 
 	void CharacterBeforeCollisionCheck();
 };
