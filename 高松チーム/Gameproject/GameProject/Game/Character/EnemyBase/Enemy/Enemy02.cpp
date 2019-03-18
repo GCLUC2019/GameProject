@@ -21,7 +21,7 @@ m_jump_flg(false)
     m_vec = CVector2D(0, 0);
     m_dir = CVector2D(0, 0);
     m_state = eSearch;
-    m_depth = m_pos.y / DEP_N;
+    m_depth = (m_pos.y - DEP_N) / 3.5;
 
     cnt = 0;
 }
@@ -40,7 +40,7 @@ m_jump_flg(false)
     m_vec = CVector2D(0, 0);
     m_dir = CVector2D(0, 0);
     m_state = eSearch;
-    m_depth = m_pos.y / DEP_N;
+    m_depth = (m_pos.y - DEP_N) / 3.5;
 
     cnt = 0;
 }
@@ -72,7 +72,7 @@ void Enemy02::Update()
         default:
             break;
         }
-    
+        m_depth = (m_pos.y - DEP_N) / 3.5;
     m_pos += m_vec;
     MoveControl();
     m_img.UpdateAnimation();
