@@ -7,6 +7,7 @@
 #include"../Scene/Title.h"
 #include"../Item/Item.h"
 #include"../CollitionBase.h"
+#include "../GameProject/Game/CollitionBase.h"
 #include "../GameProject/Game/Stage/CollisionBox.h"
 #define GRAVITY -4//èdóÕ
 #define DEP_N 540//âúçsèdêŒ
@@ -36,12 +37,21 @@ m_special(0)
     m_before_jump_pos = m_pos.y;
 	SetAnim();
 	m_shadow.SetColor(0.3f, 0.3f, 0.3f, 0.4f);
-	m_rect = CRect(-50, -50, 50, 50);
+	m_rect = CRect(-50, -180, 60, 0);
 }
 
 void Player::HitCheck()
 {
-   
+	if (CollitionBase::CollisionCheckRect(this, eEnemy01) ||
+		CollitionBase::CollisionCheckRect(this, eEnemy02) ||
+		CollitionBase::CollisionCheckRect(this, eEnemy04) ||
+		CollitionBase::CollisionCheckRect(this, eEnemy05)) {
+		m_HP -= 1;
+		if (m_HP <= 0)	m_state = PlayerState::eDeath;
+		if (m_img.CheckAnimationEnd()) SetKill();
+
+		m_state = PlayerState::eDamage;
+   }
 }
 
 void Player::Move()
