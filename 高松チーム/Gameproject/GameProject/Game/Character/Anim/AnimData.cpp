@@ -48,8 +48,8 @@ static TexAnim EnemyIdle02[] = {
 };
 
 static TexAnim EnemyMove02[] = {
-	{ 0,50 },
-{ 1,50 },
+	{ 0,40 },
+{ 1,40 },
 };
 
 static TexAnim EnemyAttack02[] = {
@@ -118,7 +118,6 @@ static TexAnim EnemyIdle04[] = {
 };
 
 static TexAnim EnemyMove04[] = {
-	{ 0,50 },
 { 1,50 },
 };
 
@@ -135,12 +134,29 @@ static TexAnim EnemyDeath04[] = {
 	{ 3,50 },
 };
 
+static TexAnim ELAttack04[] = {
+	{ 0,50 },
+{ 5,10 },
+{ 4,30 },
+};
+
+static TexAnim EAttackp1[] = {
+	{ 4,50 },
+};
+
+static TexAnim EAttackp2[] = {
+	{ 5,50 },
+};
+
 TexAnimData Enemy04AnimData[] = {
 	ANIMDATA(EnemyIdle04),
 	ANIMDATA(EnemyMove04),
 	ANIMDATA(EnemyAttack04),
 	ANIMDATA(EnemyDamage04),
 	ANIMDATA(EnemyDeath04),
+	ANIMDATA(ELAttack04),
+	ANIMDATA(EAttackp1),
+	ANIMDATA(EAttackp2),
 };
 
 

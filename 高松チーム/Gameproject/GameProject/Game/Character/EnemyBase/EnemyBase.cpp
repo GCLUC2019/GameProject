@@ -2,7 +2,6 @@
 
 EnemyBase::EnemyBase(int _type) : Task(CharacterData::eEnemyBase)
 {
-	m_type = _type;
 }
 
 void EnemyBase::Move()

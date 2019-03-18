@@ -42,11 +42,19 @@ void CTank::Backward(){
 }
 
 void CTank::HeadLeftTurn(){
-	mHead.mRotation += 20.0f;
+	mHead.mRotation += 1.0f;
 }
 void CTank::HeadRightTurn(){
+	mHead.mRotation -= 1.0f;
+}
+void CTank::PHeadLeftTurn(){
+	mHead.mRotation += 20.0f;
+}
+void CTank::PHeadRightTurn(){
 	mHead.mRotation -= 20.0f;
 }
+
+
 
 //’Ç‰Á Š˜“c
 void CTank::EnemyUp(){

@@ -64,6 +64,7 @@ public:
 	void CharacterUpdate();
 	void CharacterDraw();
 	void ReceiveAttack();
+	void CharacterOutHitPoint();
 
 	void LoadAnimImage();
 	void Idle();         //‘Ò‹@ó‘Ô‚ÌŠÖ”

@@ -12,10 +12,14 @@ const enum CharacterData{
 	eBamboo,
 	eSkyBlue,
 	eSkyRed,
+    eMap,
 
 	eCharacterBase,
 	eEnemyBase,
 	eEnemyBaseManager,
+
+	eUI,
+	ePLogoUI,
 
 	eItem,
 	eItemBox,
@@ -26,13 +30,13 @@ const enum CharacterData{
 	ePEffectShortAttack02,
 	ePEffectShortAttack03,
 	ePEffectSpecialAttack,
-	ePEffectGetDamage,
 
 	eEnemy01,
 	eEnemy02,
 	eEnemy03,
 	eEnemy04,
 	eEnemy05,
+	eTutorialEnemy,
 
 	eBossManager,
 	eBossHead,

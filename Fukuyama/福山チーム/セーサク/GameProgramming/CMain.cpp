@@ -12,14 +12,23 @@
 #include "CBoss.h"
 #include "CTexture.h"
 
+
+
+#include"CSceneManager.h"
+
+#include"CSpeedEnemy.h"
+
 CTexture Texture;
 CRectangle*Explosion;
 
 CScene*mpScene;
+CMap*mpMap;
 
 CPlayerTank *Tank;
 
 CEnemyTank*EnemyTank;
+
+CSpeedEnemy*SpeedEnemy = NULL;
 
 CBoss *Boss = NULL;
 
@@ -28,16 +37,43 @@ CEnemy2*Enemy2;
 
 CScene::ESceneTag CMain::mSceneTag = CScene::EROOT;
 
+CMap::EScneMap CMain::mSceneMap = CMap::EStat; //変更　前岡
 //初めに1回だけ実行する処理の定義
 void CMain::Init() {
-	mSceneTag = CScene::EGAME;
+	mSceneMap = CMap::EStat;
+	mpMap = new CMap();
+	mpMap->Init();
+
+	/*mSceneTag = CScene::EGAME;
 	mpScene = new CSceneGame();
-	mpScene->Init();
+	mpScene->Init();*/
 }
 
 //繰り返し実行する処理の定義
 void CMain::Update() {
-	mpScene->Update();
+
+	mpMap->Update();
+	if (mpMap->mScneMap != mSceneMap){
+		delete mpMap;
+		mpMap = 0;
+		switch (mSceneMap){
+		case CMap::EMap1:
+			mpMap = new CMap1();
+			mpMap->Init();
+			break;
+		case CMap::EMap2:
+			mpMap = new CMap2();
+			mpMap->Init();
+			break;
+		case CMap::EMap3:
+			mpMap = new CMap3();
+			mpMap->Init();
+			break;
+		}
+		
+	}
+
+	/*mpScene->Update();
 	if (mpScene->mSceneTag != mSceneTag){
 		delete mpScene;
 		mpScene = 0;
@@ -55,6 +91,6 @@ void CMain::Update() {
 			mpScene->Init();
 			break;
 		}
-	}
+	}*/
 }
 

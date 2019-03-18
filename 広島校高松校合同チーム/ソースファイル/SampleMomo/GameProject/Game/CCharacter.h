@@ -82,6 +82,9 @@ public:
 	bool GetInvincible() { return m_is_invincible; };
 
 
+	//HP‚ªs‚«‚½‚ÉŒÄ‚Î‚ê‚é
+	virtual void CharacterOutHitPoint();
+	
 	/*
 	void SetWillPlayAnim(int _anim_id) { m_will_play_anim_id = _anim_id; };
 	void SetAnim(int _anim_id);

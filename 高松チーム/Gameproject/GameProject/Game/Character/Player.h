@@ -85,11 +85,21 @@ public:
 	@param _damage	[in]与えるダメージ 
 	*/
 	void Damage(int _damage);
+	/*
+	@brief 　			アイテム取得関数
+	@param _damage	[in]与えるダメージ
+	*/
+	void ItemGet(int _itemTyp);
+	void SpecialPuls(int _puls);
+
 	Player();
 	void HitCheck(/*Task* _t*/);
 	void Update();
 	void Draw();
 	int GetHP() {
 		return m_HP;
+	}
+	int GetSpecial() {
+		return m_special;
 	}
 };

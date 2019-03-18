@@ -3,6 +3,7 @@
 //#include "glut.h"
 #include "CCollider.h"
 #include "CScene.h"
+#include "CMap.h"
 
 
 #define W_H		800 //Windowïù
@@ -12,6 +13,8 @@ class CMain {
 	int		mState;
 public:
 	static CScene::ESceneTag mSceneTag;
+
+	static CMap::EScneMap mSceneMap;
 
 	CMain() : mState(0) {}
 

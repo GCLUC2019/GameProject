@@ -23,6 +23,7 @@
 
 #define ZERO 0
 #define IMAGE_SIZE 190
+#define SAIZE_SD 110
 
 #define SCREEN_MIN_SIZE_X 0
 #define SCREEN_MAX_SIZE_X 1280

@@ -32,6 +32,9 @@
     <ClCompile Include="CMatrix.cpp" />
     <ClCompile Include="Utility.cpp" />
     <ClCompile Include="CVector.cpp" />
+    <ClCompile Include="CSceneManager.cpp" />
+    <ClCompile Include="CSpeedEnemy.cpp" />
+    <ClCompile Include="CBossBullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CBoss.h" />
@@ -67,5 +70,9 @@
     <ClInclude Include="CMatrix.h" />
     <ClInclude Include="Utility.h" />
     <ClInclude Include="CVector.h" />
+    <ClInclude Include="CMap.h" />
+    <ClInclude Include="CSceneManager.h" />
+    <ClInclude Include="CSpeedEnemy.h" />
+    <ClInclude Include="CBossBullet.h" />
   </ItemGroup>
 </Project>
