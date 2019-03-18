@@ -20,7 +20,7 @@ BossManager::BossManager() : Task(eBossManager)
 
 	m_state = Manager::eIdle;
 
-	m_player_pos = CVector2D(640, 300);//仮
+	m_player_pos = CVector2D(0, 0);
 
 	m_boss_hp = 100;
 
@@ -73,8 +73,14 @@ void BossManager::Idle()
 
 void BossManager::Attack()
 {
-	if (m_boss_attack_type == 0) m_boss_attack_type = rand() % 100;
+	if (m_boss_attack_type == 0) {
+		//プレイヤーの座標取得
+		Task * p = TaskManager::GetInstance()->FindObject(ePlayer);
+		if (p == nullptr)return;
+		m_player_pos = p->GetPos();
 
+		m_boss_attack_type = rand() % 100;
+	}
 	if (m_boss_attack_type > 80) m_boss_attack_type = 5;
 	else if (m_boss_attack_type <= 80 && m_boss_attack_type > 60) m_boss_attack_type = 5;
 	else if (m_boss_attack_type <= 60 && m_boss_attack_type > 40) m_boss_attack_type = 5;
@@ -116,7 +122,6 @@ void BossManager::Death()
 
 void BossManager::Update()
 {
-
 	switch (m_state) {
 	case eIdle:
 		Idle();

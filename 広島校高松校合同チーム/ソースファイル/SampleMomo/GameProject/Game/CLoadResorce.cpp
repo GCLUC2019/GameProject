@@ -29,8 +29,11 @@ void CLoadResorce::LoadResorce()
 
 	ReadResorceFile("General/GENERAL_IMAGE.resorce");
 	ReadResorceFile("PlayerAnim/PLAYER_ANIM_IMAGE.resorce");
-	ReadResorceFile("EnemyAnim/ENEMY_ANIM_IMAGE.resorce");
+	ReadResorceFile("EnemyAnim/Spear/ENEMY_SPEAR_ANIM_IMAGE.resorce");
+	ReadResorceFile("EnemyAnim/Axe/ENEMY_AXE_ANIM_IMAGE.resorce");
 	ReadResorceFile("Story/STORY_IMAGE.resorce");
+	ReadResorceFile("BossDog/DOG_ANIM_IMAGE.resorce");
+
 	/*
 	ADD_RESOURCE("Player_Idle_Anim_0", CImage::LoadImage("momotaro_idle_anim_0.png"));
 	ADD_RESOURCE("Player_Idle_Anim_1", CImage::LoadImage("momotaro_idle_anim_1.png"));

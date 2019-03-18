@@ -6,13 +6,15 @@ const enum CharacterData{
 	eGameTutorial,
     eGameTitle,
 	eCollition,
+	eDescriptionUI,
+    eBalloon,
 
 	eStage01,
 	eGround,
 	eBamboo,
 	eSkyBlue,
 	eSkyRed,
-    eMap,
+    eCollisionBox,
 
 	eCharacterBase,
 	eEnemyBase,

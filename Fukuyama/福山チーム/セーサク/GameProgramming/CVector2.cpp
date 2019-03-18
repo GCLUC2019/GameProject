@@ -19,6 +19,11 @@ float CVector2::dot(const CVector2 &v){
 	return x*v.x + y*v.y;
 }
 
+//í«â¡Å@äòìc
+float CVector2::dot2(const CVector2 &v){
+	return x*v.x + y*v.y;
+}
+
 float CVector2::Length(){
 	return sqrtf(x*x + y*y);
 }

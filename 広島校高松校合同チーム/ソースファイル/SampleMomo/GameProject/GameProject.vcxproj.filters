@@ -38,9 +38,6 @@
     <ClCompile Include="Game\CStoryScene.cpp">
       <Filter>Game\Object\StoryScene</Filter>
     </ClCompile>
-    <ClCompile Include="Game\CSubWeapon.cpp">
-      <Filter>Game\Object\Interface</Filter>
-    </ClCompile>
     <ClCompile Include="Game\CCharacterPlayer.cpp">
       <Filter>Game\Object\GameSceneObject\Character\Player</Filter>
     </ClCompile>
@@ -67,6 +64,12 @@
     </ClCompile>
     <ClCompile Include="Game\CGameSceneObject.cpp">
       <Filter>Game\Object\GameSceneObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CCharacterBoss.cpp">
+      <Filter>Game\Object\GameSceneObject\Character\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CSubWeapon.cpp">
+      <Filter>Game\Object\GameSceneObject\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -113,9 +116,6 @@
     <ClInclude Include="Game\CStoryScene.h">
       <Filter>Game\Object\StoryScene</Filter>
     </ClInclude>
-    <ClInclude Include="Game\CSubWeapon.h">
-      <Filter>Game\Object\Interface</Filter>
-    </ClInclude>
     <ClInclude Include="Game\CStorySceneCrear1.h">
       <Filter>Game\Object\StoryScene</Filter>
     </ClInclude>
@@ -139,6 +139,12 @@
     </ClInclude>
     <ClInclude Include="Global.h">
       <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CCharacterBoss.h">
+      <Filter>Game\Object\GameSceneObject\Character\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CSubWeapon.h">
+      <Filter>Game\Object\GameSceneObject\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -189,6 +195,9 @@
     </Filter>
     <Filter Include="Game\Object\StoryScene">
       <UniqueIdentifier>{e98914e3-611f-4932-80db-2e39224d1cad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\GameSceneObject\Item">
+      <UniqueIdentifier>{094ccd28-9245-4f88-92fb-f11f6c2b00b1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -109,7 +109,7 @@ void Enemy05::Update()
 		break;
 	}
 
-
+    m_depth = (m_pos.y - DEP_N) / 3.5;
     m_pos += m_vec;
 	MoveControl();
 	m_img.UpdateAnimation();

@@ -25,9 +25,9 @@
 
 CGameOver::CGameOver()
 {
-	ADD_RESOURCE("GameOver", CImage::LoadImage("GameOver.png"));
+	/*ADD_RESOURCE("GameOver", CImage::LoadImage("GameOver.png"));
 	ADD_RESOURCE("Continue", CImage::LoadImage("Contineu.png"));
-	ADD_RESOURCE("Return", CImage::LoadImage("return.png"));
+	ADD_RESOURCE("Return", CImage::LoadImage("return.png"));*/
 	m_game_over_p = GET_RESOURCE("GameOver", CImage*);
 	m_continue_p = GET_RESOURCE("Continue", CImage*);
 	m_return_p = GET_RESOURCE("Return", CImage*);

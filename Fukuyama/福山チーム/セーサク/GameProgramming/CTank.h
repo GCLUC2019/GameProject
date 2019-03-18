@@ -33,6 +33,7 @@ public:
 	void EnemyDown();
 	void PForward();
 	void EForward();
-
+	void EnemyUp2();         //í«â¡Å@äòìc
+	void EnemyDown2();
 };
 #endif

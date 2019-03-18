@@ -106,7 +106,8 @@ private:
 	bool m_idle_flag;
 	bool m_draw_flag;
 	bool m_attack_flag;
-	bool m_hand_flag;
+	bool m_hand_flag;//‰º‚É‰º‚ª‚é‚Æ‚«‚Ì‚â‚Â
+	bool m_slash_flag;//UŒ‚
 
 protected:
 
