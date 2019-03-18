@@ -38,15 +38,26 @@ void CCharacterEnemy::LoadAnimImage()
 
 	switch (m_enemy_id) {
 	case eEnemyIdSpear:
-		m_receive_damage_frame = ENEMY_RECEIVE_DAMAGE_FRAME;
-		m_attack_power = ENEMY_ATTACK_POWER;
-		m_attacking_hit_start_frame = ENEMY_ATTACK_HIT_START_FRAME;
-		m_attacking_hit_end_frame = ENEMY_ATTACK_HIT_END_FRAME;
-		m_attack_frame = ENEMY_ATTACK_FRAME;
-		m_attack_length = ENEMY_ATTACK_LENGTH;
-		m_move_start_length = ENEMY_MOVE_START_LENGTH;
-		m_move_end_length = ENEMY_MOVE_END_LENGTH;
-		m_anim_p->ReadAnimDataFile("EnemyAnim/ENEMY_ANIM_DATA.anim");
+		m_receive_damage_frame = ENEMY_SPEAR_RECEIVE_DAMAGE_FRAME;
+		m_attack_power = ENEMY_SPEAR_ATTACK_POWER;
+		m_attacking_hit_start_frame = ENEMY_SPEAR_ATTACK_HIT_START_FRAME;
+		m_attacking_hit_end_frame = ENEMY_SPEAR_ATTACK_HIT_END_FRAME;
+		m_attack_frame = ENEMY_SPEAR_ATTACK_FRAME;
+		m_attack_length = ENEMY_SPEAR_ATTACK_LENGTH;
+		m_move_start_length = ENEMY_SPEAR_MOVE_START_LENGTH;
+		m_move_end_length = ENEMY_SPEAR_MOVE_END_LENGTH;
+		m_anim_p->ReadAnimDataFile("EnemyAnim/Spear/ENEMY_SPEAR_ANIM_DATA.anim");
+		break;
+	case eEnemyIdAxe:
+		m_receive_damage_frame = ENEMY_AXE_RECEIVE_DAMAGE_FRAME;
+		m_attack_power = ENEMY_AXE_ATTACK_POWER;
+		m_attacking_hit_start_frame = ENEMY_AXE_ATTACK_HIT_START_FRAME;
+		m_attacking_hit_end_frame = ENEMY_AXE_ATTACK_HIT_END_FRAME;
+		m_attack_frame = ENEMY_AXE_ATTACK_FRAME;
+		m_attack_length = ENEMY_AXE_ATTACK_LENGTH;
+		m_move_start_length = ENEMY_AXE_MOVE_START_LENGTH;
+		m_move_end_length = ENEMY_AXE_MOVE_END_LENGTH;
+		m_anim_p->ReadAnimDataFile("EnemyAnim/Axe/ENEMY_AXE_ANIM_DATA.anim");
 		break;
 	}
 	
@@ -219,29 +230,58 @@ void CCharacterEnemy::Attacking()
 
 void CCharacterEnemy::AdjAnim()
 {
-	switch (m_anim_p->GetWillPlayAnim()) {
-	case eEnemyAnimIdAttack:
-		SetSize(500, 400);
-		SetShadowSize(CVector2D(160, 50));
-		SetDrawAdjPos(CVector2D(-60, 0.0f));
+
+	switch (m_enemy_id) {
+	case eEnemyIdSpear:
+		switch (m_anim_p->GetWillPlayAnim()) {
+		case eEnemyAnimIdAttack:
+			SetSize(500, 400);
+			SetShadowSize(CVector2D(160, 50));
+			SetDrawAdjPos(CVector2D(-60, 0.0f));
+			break;
+		case eEnemyAnimIdMove:
+			SetSize(400, 400);
+			SetShadowSize(CVector2D(100, 50));
+			SetDrawAdjPos(CVector2D(0, 0.0f));
+			break;
+		case eEnemyAnimIdIdle:
+			SetSize(400, 400);
+			SetShadowSize(CVector2D(100, 50));
+			SetDrawAdjPos(CVector2D(10, 0.0f));
+			break;
+		default:
+			SetSize(400, 400);
+			SetShadowSize(CVector2D(100, 50));
+			SetDrawAdjPos(CVector2D(10, 0.0f));
+			break;
+		}
 		break;
-	case eEnemyAnimIdMove:
-		SetSize(400, 400);
-		SetShadowSize(CVector2D(100, 50));
-		SetDrawAdjPos(CVector2D(0, 0.0f));
-		break;
-	case eEnemyAnimIdIdle:
-		SetSize(400, 400);
-		SetShadowSize(CVector2D(100, 50));
-		SetDrawAdjPos(CVector2D(10, 0.0f));
-		break;
-	default:
-		SetSize(400, 400);
-		SetShadowSize(CVector2D(100, 50));
-		SetDrawAdjPos(CVector2D(10, 0.0f));
+	case eEnemyIdAxe:
+		switch (m_anim_p->GetWillPlayAnim()) {
+		case eEnemyAnimIdAttack:
+			SetSize(400, 500);
+			SetShadowSize(CVector2D(160, 50));
+			SetDrawAdjPos(CVector2D(0, 0.0f));
+			break;
+		case eEnemyAnimIdMove:
+			SetSize(400, 400);
+			SetShadowSize(CVector2D(100, 50));
+			SetDrawAdjPos(CVector2D(0, 0.0f));
+			break;
+		case eEnemyAnimIdIdle:
+			SetSize(400, 400);
+			SetShadowSize(CVector2D(100, 50));
+			SetDrawAdjPos(CVector2D(10, 0.0f));
+			break;
+		default:
+			SetSize(400, 400);
+			SetShadowSize(CVector2D(100, 50));
+			SetDrawAdjPos(CVector2D(10, 0.0f));
+			break;
+		}
 		break;
 	}
-
+	
 
 	//モーションのフレームに応じて影とかの見え方変える必要もでてきそうだ
 	
