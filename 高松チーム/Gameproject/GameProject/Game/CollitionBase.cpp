@@ -69,6 +69,39 @@ bool CollitionBase::CollisionCheckRect(Task * b1, int _type)
 	
 }
 
+bool CollitionBase::CollisionCheckPoint(Task * b1, int _type)
+{
+    Task* b2 = TaskManager::GetInstance()->GetHead();
+    if (b2 == b1)
+        b2 = b2->GetNext();
+    while (b2) {
+        if (b2->GetType() == _type)
+        {
+
+            CRect r2 = CRect(
+                b2->GetPos().x + b2->GetRect().m_left,
+                b2->GetPos().y + b2->GetRect().m_top,
+                b2->GetPos().x + b2->GetRect().m_right,
+                b2->GetPos().y + b2->GetRect().m_bottom);
+
+            CVector2D b1_pos = b1->GetPos();
+
+
+            if (CCollision::CollisionRectPoint(r2, b1_pos))
+                return true;
+            else b2 = b2->GetNext();
+        }
+        else
+            b2 = b2->GetNext();
+
+        if (b2 == b1)
+            b2 = b2->GetNext();
+    }
+
+    return false;
+
+}
+
 Task * CollitionBase::GetCollisionCheckRect(Task * b1, int _type)
 {
 	Task* b2 = TaskManager::GetInstance()->GetHead();

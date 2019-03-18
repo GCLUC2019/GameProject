@@ -6,6 +6,8 @@
 #include"../GameData/GameData.h"
 #include"../Scene/Title.h"
 #include"../Item/Item.h"
+#include"../CollitionBase.h"
+#include "../GameProject/Game/Stage/CollisionBox.h"
 #define GRAVITY -4//重力
 #define DEP_N 540//奥行重石
 #define JUMP_SPD 50
@@ -37,6 +39,7 @@ m_special(0)
 
 void Player::HitCheck()
 {
+   
 }
 
 void Player::Move()
@@ -126,6 +129,7 @@ void Player::Move()
 
 void Player::Jump()
 {
+    
 	static float time = 0;
 	m_pos = m_pos_old;
 	if (m_death_flg) {
@@ -149,6 +153,16 @@ void Player::Jump()
 		m_jump_flg = false;
 		m_pos = m_pos_old;
 	}
+    Task* t = CollitionBase::GetCollisionCheckRect(this, CharacterData::eCollisionBox);
+    if (CollitionBase::CollisionCheckPoint(this, CharacterData::eCollisionBox)) {
+        CollisionBox* b = dynamic_cast<CollisionBox*>(t);
+        m_pos_old.y = b->GetPos().y - b->GetRect().m_bottom;
+        time = 0;
+        m_jump_vec = 0;
+        m_jump_flg = false;
+        m_pos = m_pos_old;
+        printf("乗れた！\n");
+    }
 }
 
 void Player::Attack()
@@ -429,7 +443,7 @@ void Player::Draw()
 #define SAIZE_SD 100
 	
 	m_img.UpdateAnimation();
-    /*g_game_data.m_scroll.x = m_pos.x;
+     /*g_game_data.m_scroll.x = m_pos.x;
     if(g_game_data.m_scroll.x<0)g_game_data.m_scroll.x = 0;*/
 	if (m_jump_flg)
 		m_depth = (m_pos_old.y - DEP_N) / 3.5;

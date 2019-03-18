@@ -36,7 +36,7 @@ enum {
 	eEnemyAnimBossIdIdle = 0,
 	eEnemyAnimBossIdRun,
 	eEnemyAnimBossIdWalk,
-	eEnemyAnimBossIdJump,
+	eEnemyAnimBossIdBark,
 	eEnmeyAnimBossIdMax,
 };
 

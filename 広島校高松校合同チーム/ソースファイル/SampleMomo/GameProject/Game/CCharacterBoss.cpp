@@ -229,6 +229,8 @@ void CCharacterBoss::Attack2()
 	//’¼‘O‚Ìó‘Ô‚ª‘–‚èó‘Ô‚È‚ç™ôšK
 	if (m_befor_state != eEnemyBossStateRun)return;
 
+	m_anim_p->SetWillPlayAnim(eEnemyAnimBossIdBark);
+
 	if (abs(m_player_pos.x - m_pos.x) <= 400 && abs(m_player_pos.z - m_pos.z) <= 300 && m_is_attack) {
 		m_is_attack = false;
 		m_player_p->HitPointGainValue(-4.0);

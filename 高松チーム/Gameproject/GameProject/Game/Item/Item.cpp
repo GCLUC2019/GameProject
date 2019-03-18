@@ -8,6 +8,12 @@ Item::Item(int _m_item_type, CVector2D _m_pos) : Task(CharacterData::eItem),
 m_item_type(_m_item_type),
 m_pos(_m_pos)
 {
+	//•ÛŒ¯
+	/*if (TaskManager::GetInstance()->FindObject(CharacterData::eGameScene) == nullptr) {
+		SetKill();
+		return;
+	}*/
+		
 	/*m_item_type = _m_item_type;
 	m_pos = _m_pos;*/
 

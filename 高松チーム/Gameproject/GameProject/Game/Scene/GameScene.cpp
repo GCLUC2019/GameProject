@@ -10,10 +10,11 @@
 #include "../GameProject/Game/Scene/Title.h"
 #include"../Character/EnemyBase/Enemy/Enemy04.h"
 #include "../../Game/UI/UI.h"
+#include "../GameProject/Game/Stage/CollisionBox.h"
 GameScene::GameScene() : Task(eGameScene)
 {
 	new Resource();
-	TaskManager::GetInstance()->AddTask(new Stage01());
+	//TaskManager::GetInstance()->AddTask(new Stage01());
 	TaskManager::GetInstance()->AddTask(new EnemyManager());
 	TaskManager::GetInstance()->AddTask(new BossManager());
 	TaskManager::GetInstance()->AddTask(new Item(ItemList::eHyoutan,CVector2D(256,360)));
@@ -25,6 +26,7 @@ GameScene::GameScene() : Task(eGameScene)
 	TaskManager::GetInstance()->AddTask(new Player());
 	TaskManager::GetInstance()->AddTask(new Enemy04(CVector2D(300, 300)));
 	TaskManager::GetInstance()->AddTask(new UI());
+    TaskManager::GetInstance()->AddTask(new CollisionBox(CVector2D(500, 300), CRect(-200, -1, 200, 1)));
 
 }
 

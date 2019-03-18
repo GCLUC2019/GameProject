@@ -29,7 +29,7 @@ CGameOver::CGameOver()
 	ADD_RESOURCE("Continue", CImage::LoadImage("Contineu.png"));
 	ADD_RESOURCE("Return", CImage::LoadImage("return.png"));*/
 	m_game_over_p = GET_RESOURCE("GameOver", CImage*);
-	m_continue_p = GET_RESOURCE("Contineu", CImage*);
+	m_continue_p = GET_RESOURCE("Continue", CImage*);
 	m_return_p = GET_RESOURCE("Return", CImage*);
 	m_game_over_p->SetSize(GAMEOVER_SIZE);
 	m_game_over_p->SetPos(GAMEOVER_POS);

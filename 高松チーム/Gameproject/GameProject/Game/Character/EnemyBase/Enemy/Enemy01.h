@@ -19,7 +19,8 @@ private:
     int m_state;//状態
     float m_hover;//浮遊を表現するための変数
     bool m_search_flg;//プレイヤーを見つけたかどうかのフラグ
-
+    
+    
 public:
 	Enemy01();
     Enemy01(CVector2D &_pos);
@@ -30,6 +31,6 @@ public:
     void Attack();//攻撃
     void Damage();//ダメージ
     void MoveControl();
-    void HitCheck(Task*_t);
+    void HitCheck();
     bool PlayerCheck(Player*p, Task*e,float _l);//プレイヤーを検知する
 };
