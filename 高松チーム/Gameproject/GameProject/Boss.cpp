@@ -105,7 +105,7 @@ void BossHead::UpMove()
 void BossHead::FireDownMove()
 {
 	m_pos.y += 5;
-	//300はプレイヤーのY座標（仮）m_player_pos.y
+	//プレイヤーのY座標 m_player_pos.y
 	if (m_pos.y > m_player_pos.y) {
 		m_state = eFireAttack;
 		m_anim_flag = true;
@@ -115,7 +115,7 @@ void BossHead::FireDownMove()
 
 void BossHead::HeadDownMove()
 {
-	//３００=プレイヤーの座標（仮）m_player_pos.y
+	//プレイヤーの座標 m_player_pos.y
 	if (m_pos.y <= m_player_pos.y) {
 		m_pos.y += 5;
 	}
@@ -210,6 +210,7 @@ BossHand::BossHand(const CVector2D &player_pos, const int state) :EnemyBase(eBos
 	m_idle_flag = false;
 	m_draw_flag = false;
 	m_hand_flag = false;
+	m_slash_flag = false;
 
 	m_state = state;
 
@@ -263,12 +264,15 @@ void BossHand::Attack()
 void BossHand::HandAttack()
 {
 	m_cnt++;
-	if (m_cnt <= 120 && m_cnt > 0) {
-		m_ang -= DtoR(1);
-		TaskManager::GetInstance()->AddTask(new BossSlashEffect(m_pos));
-		
+	if (m_cnt <= 30 && m_cnt > 0) {
+		m_ang -= DtoR(4);
+		if (m_slash_flag == false) {
+			TaskManager::GetInstance()->AddTask(new BossSlashEffect(m_pos));
+			m_slash_flag = true;
+		}
 	}
 	if (m_cnt > 120) {
+		m_slash_flag = false;
 		m_state = eUp;
 	}
 }
