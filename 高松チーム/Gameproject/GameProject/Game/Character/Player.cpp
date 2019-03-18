@@ -329,12 +329,12 @@ void Player::SetAnim()
 
 void Player::Update()
 {
-#ifdef _DEBUG
+/*#ifdef _DEBUG
 	if (CInput::GetState(0, CInput::ePush, CInput::eMouseL))
 		Damage(50);
 	if (CInput::GetState(0, CInput::ePush, CInput::eMouseR))
 		SpecialPuls(10);
-#endif // _DEBUG
+#endif */// _DEBUG
 
 	if (m_death_flg) {
 		Death();
@@ -429,8 +429,8 @@ void Player::Draw()
 #define SAIZE_SD 100
 	
 	m_img.UpdateAnimation();
-    g_game_data.m_scroll.x = m_pos.x;
-    if(g_game_data.m_scroll.x<0)g_game_data.m_scroll.x = 0;
+    /*g_game_data.m_scroll.x = m_pos.x;
+    if(g_game_data.m_scroll.x<0)g_game_data.m_scroll.x = 0;*/
 	if (m_jump_flg)
 		m_depth = (m_pos_old.y - DEP_N) / 3.5;
 	else

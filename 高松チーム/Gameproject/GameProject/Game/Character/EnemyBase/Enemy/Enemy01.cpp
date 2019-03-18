@@ -19,6 +19,7 @@ m_search_flg (false)
     m_pos = CVector2D(200, 200);
     m_vec = CVector2D(0, 0);
     m_dir = CVector2D(0, 0);
+    m_rect = CRect(-100, -100, 100, 100);
     m_depth = m_pos.y / DEP_N;
 }
 
@@ -35,6 +36,7 @@ m_search_flg(false)
     m_pos = _pos;
     m_vec = CVector2D(0, 0);
     m_dir = CVector2D(0, 0);
+    m_rect = CRect(-100, -100, 100, 100);
     m_depth = m_pos.y / DEP_N;
 }
 
@@ -62,17 +64,32 @@ void Enemy01::Update()
     m_pos += m_vec;
     MoveControl();
     m_img.UpdateAnimation();
+#ifdef _DEBUG
+    if (CInput::GetState(0, CInput::ePush, CInput::eMouseL)) {
+        CVector2D mouse_pos = CInput::GetMousePoint();
+        printf("%f,%f,%f,%f\n", mouse_pos.x- g_game_data.m_scroll.x,mouse_pos.y- g_game_data.m_scroll.y,g_game_data.m_scroll.x, g_game_data.m_scroll.y);
+
+    }
+        
+#endif
 }
 
 void Enemy01::Draw()
 {
-    
+#ifdef _DEBUG//デバッグ表示　見れない場合は背景をなくしてください
+    Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+    Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+    Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+    Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+
+#endif//DEBUG
     m_hover += 0.1f;//リセットしたほうがいい？
 	m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
     m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
     m_img.SetPos(CVector2D(m_pos.x, m_pos.y + sin(m_hover)*10.0f - g_game_data.m_scroll.y / 3));
     m_img.SetFlipH(m_flip);
 	m_img.Draw();
+
 }
 
 void Enemy01::Move()
