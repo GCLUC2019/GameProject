@@ -6,6 +6,7 @@
 #include"../GameData/GameData.h"
 #include"../Scene/Title.h"
 #include"../Item/Item.h"
+#include"../CollitionBase.h"
 #define GRAVITY -4//重力
 #define DEP_N 540//奥行重石
 #define JUMP_SPD 50
@@ -37,6 +38,9 @@ m_special(0)
 
 void Player::HitCheck()
 {
+    if (CollitionBase::CollisionCheckPoint(this, CharacterData::eCollisionBox)) {
+        printf("乗れた！\n");
+    }
 }
 
 void Player::Move()
