@@ -40,19 +40,6 @@ BossManager::~BossManager()
 
 void BossManager::Nothing()
 {
-	/*m_idle_cnt = 0;
-	m_idle_flag = true;
-	m_boss_attack_type = 0;*/
-	//m_state = B::eIdle;
-	
-}
-
-void BossManager::Up()
-{
-	/*m_pos2.y -= 10;
-	if (m_pos.y < 0) {
-		m_state = eAttackDown;
-	}*/
 }
 
 void BossManager::Idle()
@@ -65,7 +52,7 @@ void BossManager::Idle()
 
 	m_idle_cnt++;
 
-	if (m_idle_cnt >= 540) {
+	if (m_idle_cnt >= 600) {
 		m_idle_flag = false;
 		m_state = Manager::eAttackDown;
 	}
@@ -134,9 +121,6 @@ void BossManager::Update()
 		break;
 	case eNothing:
 		Nothing();
-		break;
-	case eUp:
-		Up();
 		break;
 	default:
 		break;
