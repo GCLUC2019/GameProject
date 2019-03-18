@@ -93,6 +93,11 @@ void Init(void)
 	CInput::SetButton(0, CInput::eButton5, 'Q');
 
 	CInput::SetPadButton(0, CInput::eButton6, PadButton::e7);
+	CInput::SetButton(0, CInput::eButton6, 'B');
+
+	CInput::SetPadButton(0, CInput::eButton7, PadButton::e6);
+	CInput::SetButton(0, CInput::eButton7, 'N');
+
 	CInput::SetButton(0, CInput::eButton10, VK_RETURN);
 	CInput::SetButton(0, CInput::eUp, VK_UP);
 	CInput::SetButton(0, CInput::eDown, VK_DOWN);
@@ -119,8 +124,8 @@ void Init(void)
 	//‰Šú‰»‚Ì–½—ß‚ð‘‚­
 	//ƒQ[ƒ€‹N“®Žž‚Éˆê“x‚¾‚¯ŒÄ‚Î‚ê‚é
 	//-----------------------------------------------------
-    TaskManager::GetInstance()->AddTask(new Title());
-	//TaskManager::GetInstance()->AddTask(new Tutorial());
+    //TaskManager::GetInstance()->AddTask(new Title());
+	TaskManager::GetInstance()->AddTask(new Tutorial());
 }
 
 void release()

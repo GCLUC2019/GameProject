@@ -20,6 +20,10 @@ public:
 };
 
 class Balloon : public Task {
+private:
+	CVector2D m_pos;
+	CImage m_img;
+	int cnt;
 public:
 	Balloon();
 	void Update();
