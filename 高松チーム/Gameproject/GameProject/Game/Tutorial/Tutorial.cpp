@@ -31,6 +31,19 @@ void Tutorial::Draw()
 
 }
 
+Balloon::Balloon() : Task(eBalloon)
+{
+}
+
+void Balloon::Update()
+{
+}
+
+void Balloon::Draw()
+{
+}
+
+
 
 DescriptionUI::DescriptionUI() : Task(eDescriptionUI),
 m_font("",32)
@@ -73,3 +86,4 @@ void DescriptionUI::Draw()
 		m_font.Draw(10, 680, 1, 1, 1, m_text[m_line]);
 	}
 }
+

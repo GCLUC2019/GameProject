@@ -19,6 +19,13 @@ public:
 
 };
 
+class Balloon : public Task {
+public:
+	Balloon();
+	void Update();
+	void Draw();
+};
+
 class DescriptionUI : public Task {
 private:
 	CFont m_font;
