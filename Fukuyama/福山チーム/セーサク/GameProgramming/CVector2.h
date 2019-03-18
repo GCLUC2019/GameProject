@@ -6,6 +6,8 @@ public:
 	float x;
 	float y;
 	float dot(const CVector2 &v);
+	//’Ç‰Á@Š˜“c
+	float dot2(const CVector2 &v);
 	float Length();
 
 	CVector2()

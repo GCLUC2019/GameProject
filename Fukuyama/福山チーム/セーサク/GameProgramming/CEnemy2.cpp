@@ -10,21 +10,26 @@
 #include "CSceneGame.h"
 #include "CMain.h"
 
-#define FIREINTERVER_E 60
+#define FIREINTERVER_E 120
 
 extern CPlayerTank*Tank;
 
 extern int NotAttack;
 
+CTexture CEnemy2::mTexImage;
+
 void CEnemy2::Init(){
+	mTexImage.Load("enemy1-2.tga");
+	CRectangle::SetTexture(&mTexImage, 0, 500, 500, 0);
+
 	mFireIntervar = FIREINTERVER_E;
 	//CTank::Init();
-	SetVertex(-20.0f, 20.0f, -24.0f, 24.0f);
-	mBoxCollider.mSize.x = 20.0f;
-	mBoxCollider.mSize.y = 24.0f;
+	SetVertex(-38.0f, 38.0f, -25.0f, 25.0f);
+	mBoxCollider.mSize.x = 25.0f;
+	mBoxCollider.mSize.y = 38.0f;
 	mBoxCollider.mpTask = this;
 
-	SetColor(0.6f, 0.8f, 0.0f, 1.0f);
+	SetColor(1.0f, 1.0f, 1.0f, 1.0f);
 	mHead.SetColor(0.6f, 1.0f, 1.0f, 1.0f);
 	mCanon.SetColor(0.6f, 1.0f, 1.0f, 1.0f);
 	mCollider = new CCircleCollider();
@@ -33,7 +38,7 @@ void CEnemy2::Init(){
 	mpTarget = Tank;
 	CCollisionManager::Get()->Add(mCollider);
 	mTaskTag = EENEMY2;
-	mHpBar.SetHpBar(this, CVector2(0.0f, -35.0f), CVector2(50.0f, 8.0f), mColor, 100, 100);
+	mHpBar.SetHpBar(this, CVector2(0.0f, -50.0f), CVector2(50.0f, 8.0f), mColor, 100, 100);
 }
 
 void CEnemy2::Update(){
@@ -61,16 +66,16 @@ void CEnemy2::Update(){
 
 	//if (-0.1 < dot&&dot < 0.1)
 	//if (NotAttack > 0){
-		if (mFireIntervar <= 0){
-			mFireIntervar = FIREINTERVER_E;
-			CBullet*bullet = new CBullet();
-			bullet->mTaskTag = EENEMYBULLET;
-			bullet->mLife = CBULLET_LIFE;
-			bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, 25.0f);
-			bullet->mForward = bullet->mPosition - mCanon.mMatrix*CVector2(0.0f, 24.0f);
-			bullet->SetColor(mColor[0], mColor[1], mColor[2], mColor[3]);
-			CTaskManager::Get()->Add(bullet);
-		}
+	if (mFireIntervar <= 0){
+		mFireIntervar = FIREINTERVER_E;
+		CBullet*bullet = new CBullet();
+		bullet->mTaskTag = EENEMYBULLET;
+		bullet->mLife = CBULLET_LIFE;
+		bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, 25.0f);
+		bullet->mForward = bullet->mPosition - mCanon.mMatrix*CVector2(0.0f, 24.0f);
+		bullet->SetColor(mColor[0], mColor[1], mColor[2], mColor[3]);
+		CTaskManager::Get()->Add(bullet);
+	}
 	//}
 
 
@@ -91,7 +96,7 @@ void CEnemy2::OnCollision(CCollider*p){
 		p->SetTexture(&Texture, 0, 64, 64, 0);
 		p->mPosition = mPosition;
 		CTaskManager::Get()->Add(p);
-		mHpBar.mHp -= 40.0f;
+		mHpBar.mHp -= 20.0f;
 		if (mHpBar.mHp <= 0.0f){
 			mEnabled = false;
 			CMain::mSceneTag = CScene::EWIN;
@@ -102,10 +107,10 @@ void CEnemy2::OnCollision(CCollider*p){
 }
 
 void CEnemy2::OnCollision(CBoxCollider*p){
-	mPosition = mPosition + mCollider->mAdjust;
-
+	if (p->mpTask->mTaskTag == EPLAYERTANK){
+		mPosition = mPosition + mCollider->mAdjust;
+	}
 }
-
 void CEnemy2::Render(){
 	CTank::Render();
 	mHpBar.Render();

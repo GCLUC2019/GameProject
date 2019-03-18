@@ -109,6 +109,18 @@ void CBoss::OnCollision(CCollider*p){
 			CMain::mSceneTag = CScene::EWIN;
 		}
 	}
+	if (p->mpTask->mTaskTag == EPLAYERTANK){
+		CExplosion*p = new CExplosion();
+		p->SetTexture(&Texture, 0, 64, 64, 0);
+		p->mPosition = mPosition;
+		CTaskManager::Get()->Add(p);
+		mHpBar.mHp -= 1.0f;
+		//Counter -= 1;
+		if (mHpBar.mHp <= 0.0f){
+			mEnabled = false;
+			CMain::mSceneTag = CScene::EWIN;
+		}
+	}
 
 	/*if (p->mpTask->mTaskTag == EPLAYERTANK){
 	mPosition = mPosition + mCollider->mAdjust;
@@ -121,6 +133,6 @@ void CBoss::OnCollision(CBoxCollider*p){
 }
 void CBoss::Render(){
 	//CTank::Render();
-	//mHpBar.Render();
+	mHpBar.Render();
 	CRectangle::Render();
 }

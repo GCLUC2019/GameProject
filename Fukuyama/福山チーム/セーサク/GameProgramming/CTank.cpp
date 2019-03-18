@@ -70,6 +70,13 @@ void CTank::PForward(){
 void CTank::EForward(){
 	mPosition = mPosition + mEForward;
 }
+void CTank::EnemyUp2(){
+	mPosition.x += 0.5f;
+}
+void CTank::EnemyDown2(){
+	mPosition.x -= 0.5f;
+}
+
 
 
 void CTank::Render(){

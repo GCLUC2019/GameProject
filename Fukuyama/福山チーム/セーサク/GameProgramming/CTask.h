@@ -13,6 +13,7 @@ public:
 		EPLAYERBULLET,
 		EENEMYBULLET,
 		ESPEEDENEMY,
+		EBOSS,
 		EBOSSBULLET,
 		EARROW,
 		EENEMY1,      //í«â¡Å@äòìc

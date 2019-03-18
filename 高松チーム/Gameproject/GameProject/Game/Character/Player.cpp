@@ -429,7 +429,7 @@ void Player::Draw()
 #define SAIZE_SD 100
 	
 	m_img.UpdateAnimation();
-    /*g_game_data.m_scroll.x = m_pos.x;
+     /*g_game_data.m_scroll.x = m_pos.x;
     if(g_game_data.m_scroll.x<0)g_game_data.m_scroll.x = 0;*/
 	if (m_jump_flg)
 		m_depth = (m_pos_old.y - DEP_N) / 3.5;
