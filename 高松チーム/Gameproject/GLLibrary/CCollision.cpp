@@ -86,8 +86,8 @@ void COBB::Draw()
 	for(int i=0;i<6;i++) {
 		for(int j=0;j<4;j++) {
 			glVertex3f(v[idx[i][j]].x,v[idx[i][j]].y,v[idx[i][j]].z);
-		}
-	}
+		} 
+	} 
 	glEnd();
 	glPopMatrix();
 }
@@ -99,7 +99,7 @@ bool CCollision::CollisionRect(const CRect &rect1, const CRect &rect2) {
 		return true;
 	return false;
 }
-
+    
 bool CCollision::CollisionRectPoint(const CRect &rect, const CVector2D point) {
 	if (rect.m_left <= point.x && rect.m_right >= point.x &&
 		rect.m_top <= point.y && rect.m_bottom >= point.y)
