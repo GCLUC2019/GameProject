@@ -65,9 +65,9 @@ private:
 	};
 
 	struct boss_mode_counts {
-		int boss_idle = 0;
-		int boss_walk;
-		int boss_run = 0;
+		double boss_idle = 0.0;
+		double boss_walk = 0.0;
+		double boss_run = 0.0;
 	};
 
 	boss_mode_counts s_boss_mode;

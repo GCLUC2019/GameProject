@@ -135,6 +135,7 @@
     <ClInclude Include="Game\CAnimation.h" />
     <ClInclude Include="Game\CBar.h" />
     <ClInclude Include="Game\CCharacter.h" />
+    <ClInclude Include="Game\CCharacterBoss.h" />
     <ClInclude Include="Game\CCharacterEnemy.h" />
     <ClInclude Include="Game\CCharacterPlayer.h" />
     <ClInclude Include="Game\CCommonObject.h" />
@@ -161,6 +162,7 @@
     <ClCompile Include="Game\CAnimation.cpp" />
     <ClCompile Include="Game\CBar.cpp" />
     <ClCompile Include="Game\CCharacter.cpp" />
+    <ClCompile Include="Game\CCharacterBoss.cpp" />
     <ClCompile Include="Game\CCharacterEnemy.cpp" />
     <ClCompile Include="Game\CCharacterPlayer.cpp" />
     <ClCompile Include="Game\CCommonObject.cpp" />

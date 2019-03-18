@@ -8,6 +8,7 @@
 #include "CBar.h"
 #include "CGameSceneUI.h"
 #include "CCharacterEnemy.h"
+#include "CCharacterBoss.h"
 
 /*
 
@@ -84,11 +85,13 @@ void CGameScene::Setup()
 
 
 	//“G‚Ì”z’u
-	for(int i = 0; i < 140;i++) AddGameSceneObject(new CCharacterEnemy(eEnemyIdSpear,CVector3D(1000 +  200 * i,-2500,450 + 100 )));
+	//for(int i = 0; i < 140;i++) AddGameSceneObject(new CCharacterEnemy(eEnemyIdSpear,CVector3D(1000 +  200 * i,-2500,450 + 100 )));
 	
 
 	for (int i = 0; i < 0; i++) AddGameSceneObject(new CCharacterEnemy(eEnemyIdSpear, CVector3D(2000 + 200 * i, -2500, 450 + 100 * i)));
 
+
+	AddGameSceneObject(new CCharacterBoss());
 	
 	AddGameSceneObject(new CGameSceneUI());
 
