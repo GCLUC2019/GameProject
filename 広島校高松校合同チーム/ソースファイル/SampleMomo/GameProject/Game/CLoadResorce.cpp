@@ -31,6 +31,8 @@ void CLoadResorce::LoadResorce()
 	ReadResorceFile("PlayerAnim/PLAYER_ANIM_IMAGE.resorce");
 	ReadResorceFile("EnemyAnim/Spear/ENEMY_SPEAR_ANIM_IMAGE.resorce");
 	ReadResorceFile("EnemyAnim/Axe/ENEMY_AXE_ANIM_IMAGE.resorce");
+	ReadResorceFile("EnemyAnim/Gun/ENEMY_GUN_ANIM_IMAGE.resorce");
+
 	ReadResorceFile("Story/STORY_IMAGE.resorce");
 	ReadResorceFile("BossDog/DOG_ANIM_IMAGE.resorce");
 

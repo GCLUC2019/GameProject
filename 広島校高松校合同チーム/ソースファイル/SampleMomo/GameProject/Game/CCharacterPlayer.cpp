@@ -2,6 +2,7 @@
 #include "../Global.h"
 #include "CGameScene.h"
 #include "CAnimation.h"
+#include "CSubWeapon.h"
 
 #define PLAYER_SPEED (3.0f)
 
@@ -31,6 +32,8 @@ CCharacterPlayer::CCharacterPlayer() :CCharacter(eTaskIdPlayer, 0)
 
 	SetIsCalcScrollBaseObject(true);
 
+	//テスト用
+	m_equip_weapon_id = eWeaponGun;
 
 }
 
@@ -190,6 +193,13 @@ void CCharacterPlayer::LoadAnimImage()
 
 }
 
+void CCharacterPlayer::InputDestroyWeapon()
+{
+	if (CInput::GetState(0, CInput::ePush, CInput::eButton10) && m_equip_weapon_id != -1) {
+		m_equip_weapon_id = -1;
+	}
+}
+
 void CCharacterPlayer::InputDash()
 {
 	if (m_is_landing_action_now == true) return;
@@ -214,6 +224,17 @@ void CCharacterPlayer::InputAttack()
 		if (m_is_attacking == true) return;
 
 		m_is_early_input_attack = false;
+
+
+
+		//攻撃した敵のデータを初期化
+		for (int i = 0; i < MEMORY_HIT_ATTACKED_ENEMY_MAX; i++) {
+			m_memory_hit_attacked_enemy_p[i] = nullptr;
+
+		}
+		m_memory_hit_attacked_enemy_num = 0;
+
+
 
 		//DEBUG_PRINT("攻撃\n");
 		ClearEarlyInput();
@@ -243,54 +264,91 @@ void CCharacterPlayer::InputAttack()
 
 
 
+		//武器攻撃の場合の処理
+		m_is_weapon_attacking = false;
 
-		switch (m_attack_combo_count) {
-		case 0:
-			m_attack_hit_frame_start = PLAYER_ATTACK_HIT_FRAME_START;
-			m_attack_hit_frame_end = PLAYER_ATTACK_HIT_FRAME_END;
-			m_attacking_count = PLAYER_ATTACK_FRAME;
-			m_attack_power = PLAYER_ATTACK_POWER;
-			m_attack_length = PLAYER_ATTACK_LENGTH;
-			break;
-		case 1:
-			m_attack_hit_frame_start = PLAYER_SIDE_ATTACK_HIT_FRAME_START;
-			m_attack_hit_frame_end = PLAYER_SIDE_ATTACK_HIT_FRAME_END;
-			m_attacking_count = PLAYER_SIDE_ATTACK_FRAME;
-			m_attack_power = PLAYER_SIDE_ATTACK_POWER;
-			m_attack_length = PLAYER_SIDE_ATTACK_LENGTH;
-			break;
-		case 2:
-			m_attack_hit_frame_start = PLAYER_FINISH_ATTACK_HIT_FRAME_START;
-			m_attack_hit_frame_end = PLAYER_FINISH_ATTACK_HIT_FRAME_END;
-			m_attacking_count = PLAYER_FINISH_ATTACK_FRAME;
-			m_attack_power = PLAYER_FINISH_ATTACK_POWER;
-			m_attack_length = PLAYER_FINISH_ATTACK_LENGTH;
-			//若干上に上昇する
-			m_vec.y = -20.0f;
-			break;
+		//もし地上にいて武器をもっているなら武器攻撃を行う
+		if (m_is_landing == true) {
+			switch (m_equip_weapon_id) {
+			case eWeaponSpear:
+				m_attack_hit_frame_start = PLAYER_SPEAR_ATTACK_HIT_FRAME_START;
+				m_attack_hit_frame_end = PLAYER_SPEAR_ATTACK_HIT_FRAME_END;
+				m_attacking_count = PLAYER_SPEAR_ATTACK_FRAME;
+				m_attack_power = PLAYER_SPEAR_ATTACK_POWER;
+				m_attack_length = PLAYER_SPEAR_ATTACK_LENGTH;
+				m_anim_p->SetWillPlayAnim(ePlayerAnimIdSpearAttack);
+				m_is_weapon_attacking = true;
+				break;
+			case eWeaponAxe:
+				m_attack_hit_frame_start = PLAYER_AXE_ATTACK_HIT_FRAME_START;
+				m_attack_hit_frame_end = PLAYER_AXE_ATTACK_HIT_FRAME_END;
+				m_attacking_count = PLAYER_AXE_ATTACK_FRAME;
+				m_attack_power = PLAYER_AXE_ATTACK_POWER;
+				m_attack_length = PLAYER_AXE_ATTACK_LENGTH;
+				m_anim_p->SetWillPlayAnim(ePlayerAnimIdAxeAttack);
+				m_is_weapon_attacking = true;
+				break;
+			case eWeaponGun:
+				m_attack_hit_frame_start = PLAYER_GUN_ATTACK_HIT_FRAME_START;
+				m_attack_hit_frame_end = PLAYER_GUN_ATTACK_HIT_FRAME_END;
+				m_attacking_count = PLAYER_GUN_ATTACK_FRAME;
+				m_attack_power = PLAYER_GUN_ATTACK_POWER;
+				m_attack_length = PLAYER_GUN_ATTACK_LENGTH;
+				m_anim_p->SetWillPlayAnim(ePlayerAnimIdGunAttack);
+				m_is_weapon_attacking = true;
+				break;
+			}
 		}
+
+		//武器攻撃しない場合
+		if (m_is_weapon_attacking == false) {
+			switch (m_attack_combo_count) {
+			case 0:
+				m_attack_hit_frame_start = PLAYER_ATTACK_HIT_FRAME_START;
+				m_attack_hit_frame_end = PLAYER_ATTACK_HIT_FRAME_END;
+				m_attacking_count = PLAYER_ATTACK_FRAME;
+				m_attack_power = PLAYER_ATTACK_POWER;
+				m_attack_length = PLAYER_ATTACK_LENGTH;
+				break;
+			case 1:
+				m_attack_hit_frame_start = PLAYER_SIDE_ATTACK_HIT_FRAME_START;
+				m_attack_hit_frame_end = PLAYER_SIDE_ATTACK_HIT_FRAME_END;
+				m_attacking_count = PLAYER_SIDE_ATTACK_FRAME;
+				m_attack_power = PLAYER_SIDE_ATTACK_POWER;
+				m_attack_length = PLAYER_SIDE_ATTACK_LENGTH;
+				break;
+			case 2:
+				m_attack_hit_frame_start = PLAYER_FINISH_ATTACK_HIT_FRAME_START;
+				m_attack_hit_frame_end = PLAYER_FINISH_ATTACK_HIT_FRAME_END;
+				m_attacking_count = PLAYER_FINISH_ATTACK_FRAME;
+				m_attack_power = PLAYER_FINISH_ATTACK_POWER;
+				m_attack_length = PLAYER_FINISH_ATTACK_LENGTH;
+				//若干上に上昇する
+				m_vec.y = -20.0f;
+				break;
+			}
+
+			//アニメーションを再生
+			switch (m_attack_combo_count) {
+			case 0:
+				m_anim_p->SetWillPlayAnim(ePlayerAnimIdAttack);
+				break;
+			case 1:
+				m_anim_p->SetWillPlayAnim(ePlayerAnimIdSideAttack);
+				break;
+			case 2:
+				m_anim_p->SetWillPlayAnim(ePlayerAnimIdFinishAttack);
+				break;
+			}
+		}
+
+		
+
+		
+
+		//合計フレーム記録
 		m_attack_total_frame = m_attacking_count;
-
-
-		for (int i = 0; i < MEMORY_HIT_ATTACKED_ENEMY_MAX; i++) {
-			m_memory_hit_attacked_enemy_p[i] = nullptr;
-			
-		}
-		m_memory_hit_attacked_enemy_num = 0;
-
-
-		//アニメーションを再生
-		switch (m_attack_combo_count) {
-		case 0:
-			m_anim_p->SetWillPlayAnim(ePlayerAnimIdAttack);
-			break;
-		case 1:
-			m_anim_p->SetWillPlayAnim(ePlayerAnimIdSideAttack);
-			break;
-		case 2:
-			m_anim_p->SetWillPlayAnim(ePlayerAnimIdFinishAttack);
-			break;
-		}
+		
 	}
 }
 
@@ -330,6 +388,7 @@ void CCharacterPlayer::CharacterUpdate()
 	m_vec.z = 0.0f;
 
 
+	InputDestroyWeapon();
 	InputAttack();
 	InputDash();
 	InputMove();
@@ -482,6 +541,21 @@ void CCharacterPlayer::ReserveAttacking()
 		case 2:
 			m_anim_p->SetWillPlayAnim(ePlayerAnimIdAttackReserve);
 			break;
+		}
+
+		//武器の場合の予備動作
+		if (m_is_weapon_attacking == true) {
+			switch (m_equip_weapon_id) {
+			case eWeaponSpear:
+				m_anim_p->SetWillPlayAnim(ePlayerAnimIdSpearAttackReserve);
+				break;
+			case eWeaponAxe:
+				m_anim_p->SetWillPlayAnim(ePlayerAnimIdAxeAttackReserve);
+				break;
+			case eWeaponGun:
+				m_anim_p->SetWillPlayAnim(ePlayerAnimIdGunAttackReserve);
+				break;
+			}
 		}
 	}
 }
@@ -643,10 +717,13 @@ void CCharacterPlayer::DoingDown()
 	else m_anim_p->SetWillPlayAnim(ePlayerAnimIdDowned);
 
 
-	if (m_down_count <= 0) {
+	if (m_down_count <= 0.0) {
 		m_is_down  = false;
+		
 		//ゲームオーバー呼び出しとゲームシーンオブジェクトの削除
-		SetIsDelete();
+		//SetIsDelete();
+		CGameScene::GetInstance()->GameOver();
+
 	}
 }
 
@@ -691,6 +768,21 @@ void CCharacterPlayer::Attacking()
 			m_anim_p->SetWillPlayAnim(ePlayerAnimIdAttackReserve);
 			break;
 		}
+
+		if (m_is_weapon_attacking == true) {
+			switch (m_equip_weapon_id) {
+			case eWeaponSpear:
+				m_anim_p->SetWillPlayAnim(ePlayerAnimIdSpearAttackReserve);
+				break;
+			case eWeaponAxe:
+				m_anim_p->SetWillPlayAnim(ePlayerAnimIdAxeAttackReserve);
+				break;
+			case eWeaponGun:
+				m_anim_p->SetWillPlayAnim(ePlayerAnimIdGunAttackReserve);
+				break;
+			}
+		}
+
 		return;
 	}
 	else if (m_attacking_count <= m_attack_total_frame - m_attack_hit_frame_start && m_attacking_count > m_attack_total_frame - m_attack_hit_frame_end 
@@ -747,6 +839,8 @@ void CCharacterPlayer::Attacking()
 				//DEBUG_PRINT("length.x %lf length.y %lf length.z %lf \n", length.x, length.y, length.z);
 
 
+
+				printf("attack.x %lf attack.y %lf attack.z %lf\n", attack_length.x, attack_length.y, attack_length.z);
 				//攻撃範囲内に敵がいるなら
 				if (length_abs.x <= attack_length.x&& length_abs.y <= attack_length.y&&length_abs.z <= attack_length.z) {
 					
@@ -776,6 +870,7 @@ void CCharacterPlayer::Attacking()
 		free(enemy_array);
 		
 	}
+
 	switch (m_attack_combo_count) {
 	case 0:
 		m_anim_p->SetWillPlayAnim(ePlayerAnimIdAttack);
@@ -787,8 +882,22 @@ void CCharacterPlayer::Attacking()
 		m_anim_p->SetWillPlayAnim(ePlayerAnimIdFinishAttack);
 		break;
 	}
-	
 
+
+	
+	if (m_is_weapon_attacking == true) {
+		switch (m_equip_weapon_id) {
+		case eWeaponSpear:
+			m_anim_p->SetWillPlayAnim(ePlayerAnimIdSpearAttack);
+			break;
+		case eWeaponAxe:
+			m_anim_p->SetWillPlayAnim(ePlayerAnimIdAxeAttack);
+			break;
+		case eWeaponGun:
+			m_anim_p->SetWillPlayAnim(ePlayerAnimIdGunAttack);
+			break;
+		}
+	}
 
 }
 
@@ -890,6 +999,27 @@ void CCharacterPlayer::AdjAnim()
 		SetDrawAdjPos(CVector2D(-30.0f, 10.0f));
 		SetShadowPosAdj(CVector2D(-30.0f, 0));
 		SetShadowSize(CVector2D(100, 50));
+		break;
+	case ePlayerAnimIdSpearAttack:
+	case ePlayerAnimIdSpearAttackReserve:
+		SetSize(500, 400);
+		SetDrawAdjPos(CVector2D(75.0f, 10.0f));
+		SetShadowPosAdj(CVector2D(-25.0f, 0));
+		SetShadowSize(CVector2D(170, 50));
+		break;
+	case ePlayerAnimIdAxeAttack:
+	case ePlayerAnimIdAxeAttackReserve:
+		SetSize(400, 400);
+		SetDrawAdjPos(CVector2D(5.0f, 10.0f));
+		SetShadowPosAdj(CVector2D(-25.0f, 0));
+		SetShadowSize(CVector2D(170, 50));
+		break;
+	case ePlayerAnimIdGunAttack:
+	case ePlayerAnimIdGunAttackReserve:
+		SetSize(400, 400);
+		SetDrawAdjPos(CVector2D(5.0f, 10.0f));
+		SetShadowPosAdj(CVector2D(-25.0f, 0));
+		SetShadowSize(CVector2D(170, 50));
 		break;
 	case ePlayerAnimIdDown:
 	case ePlayerAnimIdDowned:
