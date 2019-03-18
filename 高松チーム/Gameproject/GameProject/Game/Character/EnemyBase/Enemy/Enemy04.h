@@ -8,23 +8,38 @@
 class Enemy04 : public EnemyBase {
 private:
 	enum Enemy04State {
+		eIdle,
 		eMove,
-		eSearch,
-		eAttack,
+		eEXAttack,
+		eLAttack,
+		eSAttack,
 		eDamage,
+		eDeath,
 	};
-	CVector2D m_dir;
-	float m_hight;//高さ
-	bool m_search_flg;//プレイヤーを見つけたかどうかのフラグ
+	
+	CVector2D m_distance; //プレイヤーとの距離
 
-	int cnt;
+	float m_hight;//高さ
+		
+	int m_cnt;
+	int m_state_old;
+
+	bool m_interval_flg;
+	bool m_exattack_flg;
+	bool m_sattack_flg;
+	bool m_lattack_flg;
+		
 	void Update();
 	void Draw();
-	void Move();//プレイヤー発見時の動き
-	void Search();//探索中の動き
-	void Attack();//攻撃
+	void EXAttack();//特殊攻撃
+	void LAttack();//遠距離攻撃
+	void SAttack();//近接攻撃
 	void Damage();//ダメージ
+	//void Move();
+	void Alignment_y();//y軸合わせ
+	void AttackControl();//
 	void MoveControl();
+	void SetAnim();
 public:
 	Enemy04();
 	Enemy04(CVector2D _pos);
