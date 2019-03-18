@@ -20,8 +20,10 @@ BossFireEffect::BossFireEffect(const CVector2D& pos) : Task(eBossFireEffectc)
 
 	m_img.SetCenter((FIRE_X_SIZE - BOSS_X_SIZE / 3)/2, FIRE_Y_SIZE / 8);
 
+	m_rect = CRect(-450, -120, 500, 120);
+
 	m_pos.x = FIRE_X_SIZE - pos.x + 300;
-	m_pos.y = pos.y + 100;
+	m_pos.y = pos.y;
 }
 
 
@@ -47,18 +49,28 @@ void BossFireEffect::Draw()
 BossLazerEffect::BossLazerEffect(const CVector2D& pos) : Task(eBossLazerEffectc)
 {
 	m_img = COPY_RESOURCE("BossLazer", CAnimImage*);
+	m_img2 = COPY_RESOURCE("SkyRed", CImage*);
 
 	m_img.SetCenter((LAZER_X_SIZE + 640) / 2, (LAZER_Y_SIZE + 528) / 2);
+	m_img2.SetCenter(LAZER_X_SIZE / 4, LAZER_Y_SIZE / 4);
 
 	m_pos.x = pos.x - LAZER_X_SIZE / 6.5;
 
-	m_pos.y = pos.y + LAZER_Y_SIZE / 6;
+	m_pos.y = pos.y + LAZER_Y_SIZE / 6.5;
+
+	m_pos2 = CVector2D(100, 625);
+
+	m_rect_pos = 0;
+
+	m_rect = CRect(-50, -200, 50, 75);
+
 	
 }
 
 
 void BossLazerEffect::Update()
 {
+	if (m_img.CheckAnimationEnd() == false) m_pos2.x += 15;
 	m_img.ChangeAnimation(eBossLazerEffect, false);
 	m_img.UpdateAnimation();
 	m_img.CheckAnimationEnd();
@@ -67,9 +79,20 @@ void BossLazerEffect::Update()
 
 void BossLazerEffect::Draw()
 {
+#ifdef _DEBUG
+	Utility::DrawQuad(CVector2D(m_pos2.x + m_rect.m_left, m_pos2.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	Utility::DrawQuad(CVector2D(m_pos2.x + m_rect.m_left, m_pos2.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	Utility::DrawQuad(CVector2D(m_pos2.x + m_rect.m_right, m_pos2.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	Utility::DrawQuad(CVector2D(m_pos2.x + m_rect.m_right, m_pos2.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+#endif
+	m_img2.SetRect(0, 0, LAZER_X_SIZE, LAZER_Y_SIZE);
+
 	m_img.SetSize(LAZER_X_SIZE + 640, LAZER_Y_SIZE + 528);
+	m_img2.SetSize(LAZER_X_SIZE/2, LAZER_Y_SIZE/2);
 	m_img.SetPos(m_pos/* - g_game_data.m_scroll*/);
+	m_img2.SetPos(m_pos2/* - g_game_data.m_scroll*/);
 	m_img.Draw();
+	//m_img2.Draw();
 }
 
 BossSlashEffect::BossSlashEffect(const CVector2D & pos) : Task(eBossLazerEffectc)
@@ -78,9 +101,13 @@ BossSlashEffect::BossSlashEffect(const CVector2D & pos) : Task(eBossLazerEffectc
 
 	m_img.SetCenter(SLASH_SIZE * 2 / 2, SLASH_SIZE * 2 / 2);
 
-	m_pos.x = pos.x;
+	m_pos.x = pos.x - 50;
 
-	m_pos.y = pos.y;
+	m_pos.y = pos.y + 50;
+
+	m_flip = false;
+
+	m_rect = CRect(-150, -100, 50, 100);
 }
 
 void BossSlashEffect::Update()
@@ -93,8 +120,11 @@ void BossSlashEffect::Update()
 
 void BossSlashEffect::Draw()
 {
+	
+	m_img.SetFlipH(m_flip);
 	m_img.SetSize(SLASH_SIZE * 2, SLASH_SIZE * 2);
 	m_img.SetPos(m_pos/* - g_game_data.m_scroll*/);
 	m_img.SetFlipH(false);
 	m_img.Draw();
+	
 }

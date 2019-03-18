@@ -16,14 +16,14 @@ static TexAnim BossHead[] = {
 };
 
 static TexAnim BossTail[] = {
-	{ 8,10 },
-{ 9,10 },
-{ 10,10 },
-{ 11,10 },
-{ 12,10 },
-{ 13,10 },
-{ 14,10 },
-{ 15,10 },
+	{ 8,4 },
+{ 9,4 },
+{ 10,4 },
+{ 11,4 },
+{ 12,4 },
+{ 13,4 },
+{ 14,12 },
+{ 15,12 },
 };
 
 static TexAnim BossHand[] = {
@@ -32,10 +32,10 @@ static TexAnim BossHand[] = {
 };
 
 static TexAnim BossTailAttackMotion[] = {
-	{ 24,12 },
-{ 25,12 },
-{ 26,12 },
-{ 27,12 },
+	{ 24,15 },
+{ 25,15 },
+{ 26,15 },
+{ 27,15 },
 };
 
 static TexAnim BossFireAttackMotion[] = {

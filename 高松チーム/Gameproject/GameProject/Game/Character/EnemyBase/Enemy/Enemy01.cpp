@@ -2,6 +2,7 @@
 #include "../GameProject/Game/Character/Player.h"
 #include "../../Anim/AnimData.h"
 #include "../GameProject/Game/GameData/GameData.h"
+#include "../GameProject/Game/CollitionBase.h"
 
 #define MOVE_SPEED 2.0f
 #define DEP_N 1200
@@ -19,7 +20,6 @@ m_search_flg (false)
     m_pos = CVector2D(200, 200);
     m_vec = CVector2D(0, 0);
     m_dir = CVector2D(0, 0);
-    m_rect = CRect(-100, -100, 100, 100);
     m_depth = (m_pos.y - DEP_N) / 3.5;
 }
 
@@ -34,9 +34,10 @@ m_search_flg(false)
     m_img.SetFlipH(m_flip);
     m_img.ChangeAnimation(eEMove01);
     m_pos = _pos;
+	m_hp = 100;
     m_vec = CVector2D(0, 0);
     m_dir = CVector2D(0, 0);
-    m_rect = CRect(-100, -100, 100, 100);
+	m_rect = CRect(-IMAGE_SIZE / 3.5f, -IMAGE_SIZE / 5.0f, IMAGE_SIZE / 3.5f, IMAGE_SIZE / 5.0f);
     m_depth = (m_pos.y - DEP_N) / 3.5;
 }
 
@@ -76,18 +77,21 @@ void Enemy01::Update()
 
 void Enemy01::Draw()
 {
-#ifdef _DEBUG//デバッグ表示　見れない場合は背景をなくしてください
-    Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
-    Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
-    Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
-    Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
-
-#endif//DEBUG
+//#ifdef _DEBUG//デバッグ表示　見れない場合は背景をなくしてください
+//    Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+//    Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+//    Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+//    Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+//
+//#endif//DEBUG
     m_hover += 0.1f;//リセットしたほうがいい？
 	m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
     m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
+	m_img.SetRect(-IMAGE_SIZE, -IMAGE_SIZE - g_game_data.m_scroll.y / 3,IMAGE_SIZE, IMAGE_SIZE - g_game_data.m_scroll.y / 3);
     m_img.SetPos(CVector2D(m_pos.x, m_pos.y + sin(m_hover)*10.0f - g_game_data.m_scroll.y / 3));
     m_img.SetFlipH(m_flip);
+	m_rect = CRect(-IMAGE_SIZE / 3.5f, -IMAGE_SIZE / 5.0f - g_game_data.m_scroll.y / 3, 
+					IMAGE_SIZE / 3.5f, IMAGE_SIZE / 5.0f - g_game_data.m_scroll.y / 3);
 	m_img.Draw();
 
 }
@@ -133,19 +137,34 @@ void Enemy01::Attack()
 }
 void Enemy01::Damage()
 {
-    m_img.ChangeAnimation(eEDamage01, false);
-    if (m_img.CheckAnimationEnd())
-        m_state = eSearch;
+	m_vec.x = 0;
+	if (m_hp <= 0) {
+		m_img.ChangeAnimation(Enemy01Anim::eEDeath01, false);
+		if (m_img.CheckAnimationEnd())
+			SetKill();
+	}
+	else {
+		m_img.ChangeAnimation(Enemy01Anim::eEDamage01, false);
+		if (m_img.CheckAnimationEnd())
+			m_state = Enemy01State::eSearch;
+	}
+
+	
 }
 void Enemy01::MoveControl()
 {
 }
-void Enemy01::HitCheck(Task * _t)
+void Enemy01::HitCheck()
 {
-    Task*t = TaskManager::FindObject(ePlayer);
+  /*  Task*t = TaskManager::FindObject(ePlayer);
     if (t) {
         printf("Player発見\n");
     }
+*/
+	if (CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectLongAttack)) {
+		m_hp -= 1;
+		m_state = Enemy01State::eDamage;
+	}
 }
 //2019/3/11タスクの探索処理ができ次第実装可能　田中
 bool Enemy01::PlayerCheck(Player*p, Task*e, float _l)

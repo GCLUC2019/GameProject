@@ -24,19 +24,28 @@ private:
 	};
 	CImage m_img2;//攻撃時
 	CAnimImage m_img3;//ボスの待機状態のアニメーション
+	CImage m_img4;//影
 	
 	CVector2D m_pos2;
 	CVector2D m_player_pos; //プレイヤーの座標を格納する
+	CVector2D m_shadow_pos;//影の座標
+
+	CRect m_rect2;//待機時の矩形
 
 	bool m_anim_flag;//アニメーションフラグ
 	bool m_move_flag;//移動フラグ
 	bool m_draw_flag;
 	bool m_idle_flag;
 	bool m_approach_flag; //助走フラグ
+	bool m_shadow_flag;//影を出すか消すか
 
 	int m_state;
 	int m_anim_cnt;//アニメーションカウント
 	int m_idle_cnt;//待機状態でいる時間
+	int m_boss_hp;
+	int m_shadow_size;
+
+
 protected:
 
 
@@ -95,8 +104,8 @@ private:
 	int m_cnt;//エフェクト用に使ってます
 	int m_state;
 	int m_idle_cnt;//待機状態でいる時間
+	
 	float m_ang;
-
 	float m_rot;//円周率
 	float m_rot2;//円周率
 	float m_r;  //半径

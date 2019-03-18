@@ -18,12 +18,12 @@ m_move_cnt(0)
 	//èâä˙âª
 	m_img = COPY_RESOURCE("Enemy05", CAnimImage*);
 	m_shadow = COPY_RESOURCE("Shadow", CImage*);
-	m_rect = CRect(-IMAGE_SIZE / 2.7f,-IMAGE_SIZE / 4.0f, IMAGE_SIZE / 3.0f, IMAGE_SIZE / 2.3f);
 	m_pos = _pos;
 	m_vec = CVector2D(0, 0);
 	m_hp = 100;
 	m_img.SetFlipH(m_flip);
 	m_move_cnt = 0;
+	m_rect = CRect(-IMAGE_SIZE / 3.0f, -IMAGE_SIZE / 5.0f, IMAGE_SIZE / 3.5f, IMAGE_SIZE / 2.5f);
 	m_depth = (m_pos.y - DEP_N) / 3.5;
 	m_state = Enemy05State::eMove;
 }
@@ -121,11 +121,15 @@ void Enemy05::Draw()
 	m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
 	m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
 	m_img.SetPos(CVector2D(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3));
+	m_img.SetRect(-IMAGE_SIZE / 2.7f, -IMAGE_SIZE / 4.0f - g_game_data.m_scroll.y / 3,
+					IMAGE_SIZE / 3.0f, IMAGE_SIZE / 2.3f - g_game_data.m_scroll.y / 3);
 	m_img.SetFlipH(m_flip);
 
 	m_shadow.SetSize(SAIZE_SD + m_depth / 5, 50);
 	m_shadow.SetCenter((SAIZE_SD + m_depth / 5) / 2, 50 / 2);
 	m_shadow.SetPos(CVector2D(m_pos.x,m_pos.y + 90 - g_game_data.m_scroll.y / 3));
+	m_rect = CRect(-IMAGE_SIZE / 3.0f, -IMAGE_SIZE / 5.0f - g_game_data.m_scroll.y / 3, 
+					IMAGE_SIZE / 3.5f, IMAGE_SIZE / 2.5f - g_game_data.m_scroll.y / 3);
 
 	m_shadow.Draw();
 	m_img.Draw();
@@ -134,17 +138,11 @@ void Enemy05::Draw()
 
 void Enemy05::HitCheck()
 {	
-
-	if (CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack01)){
-		printf("HitAttack");
-		m_hp -= 1;
-		m_state = Enemy05State::eDamage;
-	}
-	if (CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack02)) {
-		m_hp -= 1;
-		m_state = Enemy05State::eDamage;
-	}
-	if (CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack03)) {
+	if (CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack01) ||
+		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack02) ||
+		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack03) ||
+		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectLongAttack))
+	{
 		m_hp -= 1;
 		m_state = Enemy05State::eDamage;
 	}

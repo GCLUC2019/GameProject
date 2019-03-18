@@ -15,6 +15,8 @@ public:
 	void Update();
 	void Draw();
 	void MoveControl();
+	CVector2D GetPos() { return m_pos; }
+	CRect GetRect() { return m_rect; }
 
 };
 
