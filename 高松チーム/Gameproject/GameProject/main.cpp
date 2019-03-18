@@ -124,8 +124,8 @@ void Init(void)
 	//‰Šú‰»‚Ì–½—ß‚ð‘‚­
 	//ƒQ[ƒ€‹N“®Žž‚Éˆê“x‚¾‚¯ŒÄ‚Î‚ê‚é
 	//-----------------------------------------------------
-    //TaskManager::GetInstance()->AddTask(new Title());
-	TaskManager::GetInstance()->AddTask(new Tutorial());
+    TaskManager::GetInstance()->AddTask(new Title());
+	//TaskManager::GetInstance()->AddTask(new Tutorial());
 }
 
 void release()
