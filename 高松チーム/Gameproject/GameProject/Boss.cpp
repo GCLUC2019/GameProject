@@ -39,7 +39,6 @@ BossHead::BossHead(const CVector2D &player_pos, const int state) :EnemyBase(eBos
 
 	m_pos = CVector2D((1280 - BOSS_X_SIZE / 3) + 100, 0);
 	m_pos2 = CVector2D(WIGHT_SIZE - BOSS_X_SIZE / 2.5, HEIGHT_SIZE - BOSS_Y_SIZE / 2.5);
-	m_shadow_pos = CVector2D((WIGHT_SIZE - BOSS_X_SIZE / 2.5) - 100, (HEIGHT_SIZE - BOSS_Y_SIZE / 2.5) + 200);
 
 	m_player_pos.x = player_pos.x;
 	m_player_pos.y = player_pos.y - 50;
@@ -86,9 +85,10 @@ void BossHead::Idle()
 		m_pos2.x -= 0.5;
 	}
 	else {
+		m_shadow_size += 1;
 		m_pos2.y -= 5;
 	}
-	if (m_pos2.y < 0)m_shadow_flag = false;
+	if (m_pos2.y <  -BOSS_X_SIZE / 2)m_shadow_flag = false;
 }
 
 void BossHead::FireAttack()
@@ -120,7 +120,7 @@ void BossHead::UpMove()
 {
 	m_draw_flag = true;
 	m_pos.y -= 5;
-	if (m_pos.y < 0) SetKill();
+	if (m_pos.y < -BOSS_X_SIZE / 2) SetKill();
 }
 
 void BossHead::FireDownMove()
@@ -197,16 +197,20 @@ void BossHead::Draw()
 
 	m_img2.SetRect(0, BOSS_Y_SIZE * 4, BOSS_X_SIZE, BOSS_Y_SIZE * 5);
 
-	m_img4.SetSize(SHADOW_X_SIZE * 1.5, SHADOW_Y_SIZE);
+	m_img4.SetSize((SHADOW_X_SIZE * 1.5 - m_shadow_size), SHADOW_Y_SIZE);
 
-	m_img.SetPos(m_pos/* - g_game_data.m_scroll*/);
-	m_img2.SetPos(m_pos/* - g_game_data.m_scroll*/);
-	m_img3.SetPos(m_pos2/* - g_game_data.m_scroll*/);
-	m_img4.SetPos(m_shadow_pos/* - g_game_data.m_scroll*/);
+	m_img.SetPos(m_pos.x,m_pos.y - g_game_data.m_scroll.y / 3);
+	m_img2.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
+	m_img3.SetPos(m_pos2.x, m_pos2.y - g_game_data.m_scroll.y / 3);
 	
-	if (m_draw_flag == false && m_idle_flag == false) m_img.Draw();
+	
+	if (m_draw_flag == false && m_idle_flag == false) {
+		m_img4.SetPos(m_pos.x, m_pos.y + 50);
+		m_img.Draw();
+	}
 	if(m_draw_flag == true && m_idle_flag == false)m_img2.Draw();
 	if (m_shadow_flag == true) {
+		m_img4.SetPos(m_pos2.x - 100, HEIGHT_SIZE - BOSS_Y_SIZE / 2.5 + 200 - g_game_data.m_scroll.y / 3);
 		m_img4.Draw();
 		m_img3.Draw();
 	}
@@ -241,7 +245,7 @@ BossHand::BossHand(const CVector2D &player_pos, const int state) :EnemyBase(eBos
 	m_center = CVector2D(m_pos2.x + m_r, m_pos2.y);
 	m_center2 = CVector2D(m_pos3.x + m_r, m_pos3.y);
 
-	m_player_pos.x = player_pos.x + 300;
+	m_player_pos.x = player_pos.x + 100;
 	m_player_pos.y = player_pos.y - 200;
 
 	m_cnt = 0;
@@ -255,6 +259,7 @@ BossHand::BossHand(const CVector2D &player_pos, const int state) :EnemyBase(eBos
 	m_draw_flag = false;
 	m_hand_flag = false;
 	m_slash_flag = false;
+	m_lazerhand_flag = false;
 
 	m_state = state;
 
@@ -287,7 +292,7 @@ void BossHand::Idle()
 	else {
 		m_pos2.y -= 5;
 		m_pos3.y -= 5;
-		if (m_pos2.y < 0 && m_pos3.y < 0)m_idle_flag = false;
+		if (m_pos2.y <  -BOSS_X_SIZE / 2 && m_pos3.y <  -BOSS_X_SIZE / 2)m_idle_flag = false;
 	}
 	
 	
@@ -297,6 +302,7 @@ void BossHand::Idle()
 void BossHand::Attack()
 {
 	m_draw_flag = true;
+	m_lazerhand_flag = true;
 	m_cnt++;
 	if (m_anim_flag == true) {
 		TaskManager::GetInstance()->AddTask(new BossLazerEffect(m_pos));
@@ -326,7 +332,7 @@ void BossHand::HandAttack()
 void BossHand::UpMove()
 {
 	m_pos.y -= 5;
-	if (m_pos.y < 0) SetKill();
+	if (m_pos.y < -BOSS_X_SIZE / 2) SetKill();
 }
 
 void BossHand::DownMove()
@@ -345,6 +351,7 @@ void BossHand::DownMove()
 void BossHand::DownHandAttack()
 {
 	m_hand_flag = true;
+	m_pos.x = m_player_pos.x;
 	if (m_pos.y < m_player_pos.y && m_move_flag == false) {
 		m_pos.y += 5;
 	}
@@ -398,18 +405,18 @@ void BossHand::Draw()
 
 	m_img4.SetAng(m_ang);
 
-	m_img.SetPos(m_pos/* - g_game_data.m_scroll*/);
-	m_img2.SetPos(m_pos2/* - g_game_data.m_scroll*/);
-	m_img3.SetPos(m_pos3/* - g_game_data.m_scroll*/);
-	m_img4.SetPos(m_pos/* - g_game_data.m_scroll*/);
+	m_img.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
+	m_img2.SetPos(m_pos2.x, m_pos2.y - g_game_data.m_scroll.y / 3);
+	m_img3.SetPos(m_pos3.x, m_pos3.y - g_game_data.m_scroll.y / 3);
+	m_img4.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
 
 	if (m_idle_flag == true) {
 		m_img2.Draw();
 		m_img3.Draw();
 	}
 	
-	if (m_hand_flag == false)m_img.Draw();
-	else m_img4.Draw();
+	if (m_lazerhand_flag == true)m_img.Draw();
+	if(m_hand_flag == true)m_img4.Draw();
 }
 
 
@@ -481,7 +488,7 @@ void BossTail::Idle()
 		m_pos.x -= 0.5;
 	}
 	else m_pos.y -= 5;
-	if (m_pos.y < 0)m_idle_flag = false;
+	if (m_pos.y <  -BOSS_X_SIZE / 2)m_idle_flag = false;
 }
 
 void BossTail::TailAttack()
@@ -497,7 +504,7 @@ void BossTail::TailAttack()
 void BossTail::UpMove()
 {
 	m_pos2.y -= 5;
-	if (m_pos2.y < 0) SetKill();
+	if (m_pos2.y < -BOSS_X_SIZE / 2) SetKill();
 }
 
 void BossTail::DownMove()
@@ -525,9 +532,9 @@ void BossTail::Draw()
 	Utility::DrawQuad(CVector2D(m_pos2.x + m_rect.m_right, m_pos2.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
 	Utility::DrawQuad(CVector2D(m_pos2.x + m_rect.m_right, m_pos2.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));*/
 #endif
-	m_img.SetPos(m_pos/* - g_game_data.m_scroll*/);
-	m_img2.SetPos(m_pos2/* - g_game_data.m_scroll*/);
-	m_img3.SetPos(m_pos2/* - g_game_data.m_scroll*/);
+	m_img.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
+	m_img2.SetPos(m_pos2.x, m_pos2.y - g_game_data.m_scroll.y / 3);
+	m_img3.SetPos(m_pos2.x, m_pos2.y - g_game_data.m_scroll.y / 3);
 
 	m_img.SetSize(BOSS_X_SIZE / 3, BOSS_Y_SIZE / 3);
 	m_img2.SetSize(BOSS_X_SIZE / 2, BOSS_Y_SIZE / 2);

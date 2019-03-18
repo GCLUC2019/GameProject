@@ -117,6 +117,7 @@ private:
 	bool m_attack_flag;
 	bool m_hand_flag;//‰º‚É‰º‚ª‚é‚Æ‚«‚Ì‚â‚Â
 	bool m_slash_flag;//UŒ‚
+	bool m_lazerhand_flag;
 
 protected:
 

@@ -38,7 +38,7 @@ void BossFireEffect::Update()
 void BossFireEffect::Draw()
 {
 	m_img.SetSize(FIRE_X_SIZE - BOSS_X_SIZE / 3, FIRE_Y_SIZE / 4);
-	m_img.SetPos(m_pos/* - g_game_data.m_scroll*/);
+	m_img.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
 	m_img.Draw();
 }
 
@@ -89,8 +89,8 @@ void BossLazerEffect::Draw()
 
 	m_img.SetSize(LAZER_X_SIZE + 640, LAZER_Y_SIZE + 528);
 	m_img2.SetSize(LAZER_X_SIZE/2, LAZER_Y_SIZE/2);
-	m_img.SetPos(m_pos/* - g_game_data.m_scroll*/);
-	m_img2.SetPos(m_pos2/* - g_game_data.m_scroll*/);
+	m_img.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
+	m_img2.SetPos(m_pos2.x, m_pos2.y - g_game_data.m_scroll.y / 3);
 	m_img.Draw();
 	//m_img2.Draw();
 }
@@ -123,7 +123,7 @@ void BossSlashEffect::Draw()
 	
 	m_img.SetFlipH(m_flip);
 	m_img.SetSize(SLASH_SIZE * 2, SLASH_SIZE * 2);
-	m_img.SetPos(m_pos/* - g_game_data.m_scroll*/);
+	m_img.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
 	m_img.SetFlipH(false);
 	m_img.Draw();
 	
