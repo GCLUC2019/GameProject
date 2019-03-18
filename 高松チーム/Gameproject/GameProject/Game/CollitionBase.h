@@ -11,6 +11,7 @@ public:
 	void Update();
 
 	static bool CollisionCheckRect(Task* b1, int _type);
+    static bool CollisionCheckPoint(Task* b1, int _type);
 	static Task* GetCollisionCheckRect(Task* b1, int _type);
 	static bool CollitionCheckflip(int fliptype, Task* b1, Task*b2);
 };

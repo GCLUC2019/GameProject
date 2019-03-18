@@ -75,6 +75,10 @@ void ItemBox::Draw()
 
 ItemBox::~ItemBox()
 {
+	if (TaskManager::GetInstance()->FindObject(CharacterData::eGameTitle) != nullptr) {
+		return;
+	}
+
 	int k = 0;
 	k = Utility::Rand(20, 30);
 	switch (m_box_typ)

@@ -11,6 +11,7 @@ Tutorial::Tutorial() : Task(eGameTutorial)
 	TaskManager::GetInstance()->AddTask(new Stage01());
 	TaskManager::GetInstance()->AddTask(new Player());
 	TaskManager::GetInstance()->AddTask(new TutorialEnemy(CVector2D(800, 450)));
+	TaskManager::GetInstance()->AddTask(new Balloon());
 	TaskManager::GetInstance()->AddTask(new DescriptionUI());
 }
 
@@ -22,8 +23,8 @@ Tutorial::~Tutorial()
 
 void Tutorial::Update()
 {
-	if (CInput::GetState(0, CInput::ePush, CInput::eButton6))
-		SetKill();
+	/*if (CInput::GetState(0, CInput::ePush, CInput::eButton5))
+		SetKill();*/
 }
 
 void Tutorial::Draw()
@@ -31,16 +32,25 @@ void Tutorial::Draw()
 
 }
 
-Balloon::Balloon() : Task(eBalloon)
+Balloon::Balloon() : Task(CharacterData::eBalloon)
 {
+	m_img = COPY_RESOURCE("BalloonUI", CImage*);
+	m_pos = CVector2D(5, 595);
+	cnt = 0;
 }
 
 void Balloon::Update()
 {
+	
+	if (CInput::GetState(0, CInput::ePush, CInput::eButton6)) ++cnt;
+	if (cnt >= 9) SetKill();
 }
 
 void Balloon::Draw()
 {
+	m_img.SetPos(m_pos);
+	m_img.SetSize(1270, 120);
+	m_img.Draw();
 }
 
 
@@ -74,7 +84,7 @@ m_font("",32)
 
 void DescriptionUI::Update()
 {
-	if (CInput::GetState(0, CInput::ePush, CInput::eButton1)) {
+	if (CInput::GetState(0, CInput::ePush, CInput::eButton6)) {
 		m_line++;
 	}
 }
@@ -83,7 +93,7 @@ void DescriptionUI::Draw()
 {
 	if (m_line <= m_line_size) {
 		//1s•\Ž¦
-		m_font.Draw(10, 680, 1, 1, 1, m_text[m_line]);
+		m_font.Draw(20, 665, 1, 1, 1, m_text[m_line]);
 	}
 }
 
