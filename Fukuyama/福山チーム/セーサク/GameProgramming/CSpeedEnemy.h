@@ -17,6 +17,9 @@ public:
 	CHpBar mHpBar;
 	void Render();
 
+	CTexture*mTexture2;
+	static CTexture mTextImage2;
+
 };
 extern CSpeedEnemy*SpeedEnemy;
 #endif
