@@ -2,16 +2,97 @@
 
 class Task;
 
-//挿入ができれば描画順番とかをバブルソートとか負荷の高い事をしなくてよい
+//ピーク時の負荷が減少しやすい作りにする。
+//想定するピーク時とはオブジェクトの生成破棄が多く発生していることである。
 
+//class TaskManager;
+
+enum {
+	eSortDrawPriority,
+	eSortCollisionPriority,
+};
 class TaskManager {
 private:
+	
 	friend class Task;
 	int m_task_num = 0;
 	Task * m_head_task = nullptr;
 
-	void QuickSort(Task** _task_array, int* _task_dp_array, int _task_num);
+
+	//とりあえず優先度を示すパラメーターがあるなら、なんでもクイックソートできるように変更
+	//昇順ソートな点に注意(ただ基本的には後に処理する方が優先度が高くなるのが常なので問題はないか）
+	void QuickSort(Task** _task_array, int* _task_priority_array, int _task_num) {
+		register int base_ad = _task_num / 2;
+		register bool is_last_left;
+		register bool is_last_right;
+		register int left_ad;
+		register int right_ad;
+		register int left_task_num = _task_num / 2;
+		register int right_task_num = _task_num - left_task_num;
+		register int work;
+		register Task* work_task_p;
+
+
+		while (true) {
+			is_last_left = false;
+			is_last_right = false;
+
+
+			left_ad = 0;
+			while (true) {
+				if (_task_priority_array[left_ad] > _task_priority_array[base_ad]) break;
+				left_ad++;
+				if (left_ad >= base_ad) {
+					left_ad = base_ad;
+					is_last_left = true;
+					break;
+				}
+			}
+
+			right_ad = _task_num - 1;
+			while (true) {
+				if (_task_priority_array[right_ad] < _task_priority_array[base_ad]) break;
+				right_ad--;
+				if (right_ad <= base_ad) {
+					right_ad = base_ad;
+					is_last_right = true;
+					break;
+				}
+			}
+
+			if (is_last_left == true && is_last_right == true) {
+				if (left_task_num > 1) QuickSort(_task_array, _task_priority_array, left_task_num);
+				if (right_task_num > 1) QuickSort(_task_array + left_task_num, _task_priority_array + left_task_num, right_task_num);
+				break;
+			}
+				
+				
+			work = _task_priority_array[left_ad];
+			_task_priority_array[left_ad] = _task_priority_array[right_ad];
+			_task_priority_array[right_ad] = work;
+
+			work_task_p = _task_array[left_ad];
+			_task_array[left_ad] = _task_array[right_ad];
+			_task_array[right_ad] = work_task_p;
+			}
+		}
+
+
 	Task* GetHead() { return m_head_task; };
+
+
+	//ピーク時の負荷は変わらないので廃止
+	//タスクツリーに削除・追加等の変更が入っているかどうか。
+	//bool m_is_changed_task_tree = false;
+
+	//タスクのツリーの内容が変更ない(追加・削除が行われてない場合)に配列を使いまわす為のもの
+	//Task** m_keep_task_array = nullptr;
+	//int* m_keep_task_dp_array = nullptr;
+
+
+	
+
+
 public:
 	//@brief タスクを追加する
 	//@param [in] _task 該当タスクへのポインタ
@@ -54,8 +135,13 @@ public:
 	//@brief 全てのタスクに対してDraw関数を実行する。
 	void DrawAll();
 
+
+	void Sort(int _sort_type);
 	//@brief 描画優先度に応じてタスクの順番をソートする。
-	void Sort();
+	void SortDrawPriority();
+
+	//@brief 当たり判定優先度に応じてタスクの順番をソートする。
+	void SortCollisionPriority();
 
 	//@brief インスタンスを取得する。
 	static TaskManager* GetInstance();

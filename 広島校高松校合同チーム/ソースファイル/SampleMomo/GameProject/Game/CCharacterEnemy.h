@@ -1,81 +1,86 @@
 #pragma once
 #include "CCharacter.h"
-#include "../Global.h"
+
+//距離が250.0f以上になると移動を開始する
+#define ENEMY_MOVE_START_LENGTH (250.0f)
+
+//移動中は、距離が200.0f以下になるまで近づく
+#define ENEMY_MOVE_END_LENGTH (200.0f)
 
 
+#define ENEMY_ATTACK_FRAME (20.0)
 
-enum {	//アニメーションの種類の番号
+#define ENEMY_ATTACK_LENGTH (300.0f)
+#define ENEMY_ATTACK_POWER (1.0)
+
+#define ENEMY_ATTACK_HIT_START_FRAME (10.0)
+#define ENEMY_ATTACK_HIT_END_FRAME (20.0)
+
+#define ENEMY_RECEIVE_DAMAGE_FRAME (30.0)
+
+enum {
+	eEnemyIdSpear,
+};
+
+enum {
 	eEnemyAnimIdIdle,
 	eEnemyAnimIdMove,
 	eEnemyAnimIdAttack,
 	eEnemyAnimIdDamage,
-	eEnemyAnimIdMax,
 };
-
-enum {	//アニメーションの画像を入れる番号
-	eEnemyAnimIdle1,
-	eEnemyAnimIdle2,
-	eEnemyAnimIdle3,
-	eEnemyAnimIdle4,
-	eEnemyAnimMove1,
-	eEnemyAnimMove2,
-	eEnemyAnimMove3,
-	eEnemyAnimMove4,
-	eEnemyAnimMove5,
-	eEnemyAnimMove6,
-	eEnemyAnimMove7,
-	eEnemyAnimMove8,
-	eEnemyAnimAttack1,
-	eEnemyAnimAttack2,
-	eEnemyAnimDamage1,
-	eEnemyAnimMax,
-};
-
 
 class CCharacterEnemy : public CCharacter {
 private:
-	enum {	//エネミーの状態
-		eEnemyStateIdle,	//待機状態
-		eEnemyStateMove,	//移動状態
-		eEnemyStateAttack,	//攻撃状態
-		eEnemyStateDamage	//ダメージ状態
-	};
-	enum {  //エネミーのタイプ
-		eEnemyTypeSpear,	//槍
-		eEnemyTypeAxe,		//斧
-		eEnemyTypeGun		//銃
-	};
-	int m_enemy_type;        //エネミーのタイプです
-	int m_enemy_state;       //エネミーの状態
-	int m_old_enemy_state;   //エネミーがダメージを受けた時に記憶する直前の状態
-	int m_AI_cnt;            //状態が変化するまでのカウント
-	bool m_is_damage;        //エネミーがダメージを受けていいかどうかのフラグ
-	int m_damage_chance;     //プレイヤーの攻撃を当てられた回数
-	bool m_attack_chance;    //エネミーの攻撃が当たる距離かのフラグ
-	CVector2D m_attack_pos;      //適正射程距離
-	CVector3D m_player_pos;		 //プレイヤーの座標を記憶
-	CVector2D m_player_vec;      //プレイヤー方向へのベクトル
+	int m_enemy_id;
+	CCharacter* m_target_p = nullptr;//ターゲット 単純な話キャラならばいいので同士討ちも設定次第では可能か
+	
+	bool m_is_moving = false;
 
-	bool is_attack;          //エネミーの攻撃を当てたかどうかのフラグ
+
+	float m_attack_length;
+
+	double m_attack_power = 0.0;
+	double m_attacking_count = 0;
+	double m_attack_frame = 0;
+	double m_attacking_hit_start_frame = 0.0;
+	double m_attacking_hit_end_frame = 0.0;
+	
+	bool m_is_attacking = false;
+
+	bool m_is_hit_attack = false;
+
+	float m_move_start_length;
+	float m_move_end_length;
+
+
+	bool m_is_receive_damage_now = false;
+	double m_receive_damage_frame;
+	double m_receive_damage_count;
+
 
 public:
-	CCharacterEnemy();
+	CCharacterEnemy(int _enemy_id,CVector3D _enemy_pos);
 	~CCharacterEnemy();
-	void CharacterUpdate();
-	void CharacterDraw();
-	void ReceiveAttack();
-	void CharacterOutHitPoint();
 
 	void LoadAnimImage();
-	void Idle();         //待機状態の関数
-	void Move();		 //移動状態の関数
-	void Attack();		 //攻撃状態の関数
-	void Damage();		 //ダメージ状態の関数
-	void MovePos();		 //移動処理
 
-	void AiChange(int ai_cnt);				//状態を変更する時の関数
-	void CharacterBeforeCollisionCheck();	//プレイヤーとの位置関係を調べる関数
+	void CharacterBeforeUpdate();
+	void CharacterUpdate();
+	void CharacterBeforeCollisionCheck();
+	void CollisionCheckCharacter(Task* _collision_task);
+	void CharacterDraw();
+	void CharacterOutHitPoint();
+	void ReceiveAttack();
+	
+	void ReceiveDamageNow();
+
+	void EnemyMoving();
+	void EnemyAttack();
+	void Attacking();
+	
+	void AdjAnim();
 };
+
 /*
-2019/03/11 クラス定義。 by 堀川
+2019/03/17 クラス定義、機能実装。(スケジュール変動に合わせ、新規作成した為、テスト版のCCharacterEnemyとは別の物)  by shingai
 */

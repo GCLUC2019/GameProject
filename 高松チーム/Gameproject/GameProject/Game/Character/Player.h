@@ -99,4 +99,7 @@ public:
 	int GetHP() {
 		return m_HP;
 	}
+	int GetSpecial() {
+		return m_special;
+	}
 };

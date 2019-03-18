@@ -7,27 +7,32 @@
 上手くやれば隙は生じにくいはず
 */
 
-#define PLAYER_ATTACK_FRAME (30)
 
-#define PLAYER_ATTACK_ANIM_DELAY (PLAYER_ATTACK_FRAME / 3)
+#define PLAYER_ATTACK_FRAME (20)
+#define PLAYER_ATTACK_HIT_FRAME_START (5)
+#define PLAYER_ATTACK_HIT_FRAME_END (20)
 
+#define PLAYER_SIDE_ATTACK_FRAME (20)
+#define PLAYER_SIDE_ATTACK_HIT_FRAME_START (5)
+#define PLAYER_SIDE_ATTACK_HIT_FRAME_END (20)
 
+#define PLAYER_FINISH_ATTACK_FRAME (42)
+#define PLAYER_FINISH_ATTACK_HIT_FRAME_START (30)
+#define PLAYER_FINISH_ATTACK_HIT_FRAME_END (42)
 
-//攻撃判定が発生するフレーム
-#define PLAYER_ATTACK_HIT_FRAME_START (PLAYER_ATTACK_ANIM_DELAY * 1)
-//攻撃判定が終了するフレーム
-#define PLAYER_ATTACK_HIT_FRAME_END (PLAYER_ATTACK_ANIM_DELAY * 3)
-
-
-//予備動作のディレイ
-#define PLAYER_ATTACK_RESERVE_ANIM_DELAY (PLAYER_ATTACK_ANIM_DELAY * 2)
 //予備動作のフレーム
-#define PLAYER_ATTACK_RESERVE_ANIM_FRAME (PLAYER_ATTACK_RESERVE_ANIM_DELAY * 2)
+#define PLAYER_ATTACK_RESERVE_ANIM_FRAME (15)
 
-#define PLAYER_ATTACK_LENGTH CVector3D(300,50,75)
 
-#define PLAYER_ATTACK_POWER (1.0f)
+//攻撃の設定
+#define PLAYER_ATTACK_LENGTH CVector3D(300,100,200)
+#define PLAYER_ATTACK_POWER (1.0)
 
+#define PLAYER_SIDE_ATTACK_LENGTH CVector3D(300,100,250)
+#define PLAYER_SIDE_ATTACK_POWER (1.0)
+
+#define PLAYER_FINISH_ATTACK_LENGTH CVector3D(300,500,200)
+#define PLAYER_FINISH_ATTACK_POWER (1.0)
 
 
 #define PLAYER_DAMAGE_ANIM_FRAME (20)
@@ -47,8 +52,9 @@
 #define PLAYER_EVASION_ANIM_DELAY (PLAYER_EVASION_FRAME / 4)
 #define PLAYER_AFTER_DAMAGE_INVINCIBLE (60)
 #define PLAYER_EVASION_MOVE_START_FRAME (PLAYER_EVASION_ANIM_DELAY * 2)
-#define PLAYER_RECEIVE_INPUT_EVASION_TIME (10)
-#define PLAYER_RECEIVE_INPUT__EVASION_TIME_AFTER_EVASION (30 + 20)
+#define PLAYER_RECEIVE_INPUT_EVASION_TIME (10 + 5)
+#define PLAYER_RECEIVE_INPUT__EVASION_TIME_AFTER_EVASION (30 + 20 + 10)
+#define PLAYER_EVASION_MOVE_VEC (10.0f)
 
 //#define PLAYER_EVASION_MOVE_END_FRAME (PLAYER_EVASION_ANIM_DELAY * 5)
 
@@ -85,9 +91,15 @@ enum {
 	ePlayerAnimIdEvasionReserve,
 	ePlayerAnimIdDown,
 	ePlayerAnimIdDowned,
+	ePlayerAnimIdSideAttack,
+	ePlayerAnimIdFinishAttack,
+	ePlayerAnimIdSideAttackReserve,
+	ePlayerAnimIdFinishAttackKeepSlash,
 	ePlayerAnimIdMax,
 };
 
+
+//このenumの使用頻度もだいぶ減った。無くしていったほうがすっきりしそうではある
 enum {
 	ePlayerAnimIdle0,
 	ePlayerAnimIdle1,
@@ -131,6 +143,19 @@ enum {
 	ePlayerAnimEvasion5,
 	ePlayerAnimDown0,
 	ePlayerAnimDown1,
+	ePlayerAnimSideAttack0,
+	ePlayerAnimSideAttack1,
+	ePlayerAnimSideAttack2,
+	ePlayerAnimSideAttack3,
+	ePlayerAnimFinishAttack0,
+	ePlayerAnimFinishAttack1,
+	ePlayerAnimFinishAttack2,
+	ePlayerAnimFinishAttack3,
+	ePlayerAnimFinishAttack4,
+	ePlayerAnimFinishAttack5,
+	ePlayerAnimIdSideAttackReserve0,
+	ePlayerAnimIdSideAttackReserve1,
+	ePlayerAnimIdSideAttackReserve2,
 	ePlayerAnimMax,
 };
 
@@ -140,20 +165,26 @@ enum {
 class CCharacterPlayer : public CCharacter {
 private:
 	
+	CVector3D m_attack_length;
+	double m_attack_power;
+	int m_attack_total_frame;
+	int m_attack_hit_frame_start;
+	int m_attack_hit_frame_end;
 	
 	bool m_is_jumping = false;
-	int m_jumping_count = 0;
+	double m_jumping_count = 0.0;
 
 	bool m_is_attacking = false;
-	int m_attacking_count = 0;
+	double m_attacking_count = 0.0;
+	int m_attack_combo_count = 0;
 	
 	bool m_is_dashing = false;
 
-	int m_damage_anim_count = 0;
+	double m_damage_anim_count = 0;
 
 	bool m_is_landing_action_now = false;
-	int m_landing_anim_count = 0;
-	int m_landing_action_count = 0;
+	double m_landing_anim_count = 0;
+	double m_landing_action_count = 0;
 
 	//攻撃した敵を記憶しておくポインタ配列
 	int m_memory_hit_attacked_enemy_num = 0;
@@ -163,20 +194,23 @@ private:
 	bool m_is_input_evasion_flip = false;
 	bool m_is_input_evasion = false;
 	bool m_is_evasion = false;
-	int m_evasion_count = 0;
-	int m_evasion_reserve_count = 0;
+
+	bool m_is_early_input_attack = false;
+
+	double m_evasion_count = 0;
+	double m_evasion_reserve_count = 0;
 	bool m_is_fast_evasion = false;
 
 
-	int m_receive_input_evasion_time_count_l = 0;
-	int m_receive_input_evasion_time_count_r = 0;
+	double m_receive_input_evasion_time_count_l = 0;
+	double m_receive_input_evasion_time_count_r = 0;
 
-	int m_after_damage_invincible_count = 0;
+	double m_after_damage_invincible_count = 0;
 
-	int m_attack_reserve_count = 0;
+	double m_attack_reserve_count = 0;
 
 	bool m_is_down = false;
-	int m_down_count = 0;
+	double m_down_count = 0;
 
 public:
 	CCharacterPlayer();
@@ -196,6 +230,7 @@ public:
 	void AfterDamageInvincible();
 	void DoingLandingAction();
 	void Landing();
+	void ReserveAttacking();
 	void Attacking();
 	void Jumping();
 	void Falling();
@@ -216,12 +251,22 @@ public:
 
 
 	void AdjAnim();
-	void CalcScroll();
+	//void CalcScroll();
 
 	void ReceiveAttack();
+
+	static CCharacterPlayer* GetInstance();
 };
 
 /*
 2019/03/06 クラス定義。基本機能実装。 by shingai
-2019/03/11 移動、ジャンプ等、スクロール機能等実装。
+2019/03/11 移動、ジャンプ等、スクロール機能等実装。 by shingai
+～2019/03/17 色々な機能を実装 by shingai
+攻撃は移動入力なしでコンボ攻撃（3種類の技を繰り出す)
+
+横移動入力で攻撃1(X軸に判定が広い)
+縦移動入力で攻撃2(Z軸に判定が広い)
+空中にいる状態で入力で攻撃3(Y軸に判定が広く、着地まで攻撃判定がある)
+を繰り出すことができる。（コンボをせずに同じ攻撃を連続することも可能)
+
 */

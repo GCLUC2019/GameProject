@@ -4,37 +4,7 @@
 
 CStoryScene::CStoryScene() : CObject(0, 0)
 {
-	/*カットシーン作成クラスの使い方
-	コンストラクタ関連
-	①そのシーンで表示したいテキストと絵の総数を設定し、
-	　絵が複数ある場合は、絵が切り替わるタイミングと
-　　　表示位置を格納している配列の添え字も設定する
-   　（絵が１枚だけなら、タイミングをテキストの総数以上に設定しておく）
-	②そのシーンで表示するテキストや絵の画像データを追加する
-	③SetSntense関数（引数　テキストまたは絵の数　格納するchar型二重配列　
-	　　　　　　　　　　　　格納したい文字を入れておいたchar型二重配列）
-	　を使い、各画像データを読み込む。テキストと絵で一回ずつ使用
-	④DelValue関数（引数　格納する配列の添え字　絵の切り取り位置　表示サイズ・表示位置）　　
-	　を使い、テキストごとに表示する絵の切り取り位置と表示位置・表示サイズを設定する
-	  添え字のみint型で、残りはCVevtor4Dで設定している
-	⑤SetAll関数（引数はテキストの総数）
-	　を使い、各変数などを初期化する
 	
-	アップデート関連
-	①UpdateText関数（引数に最大表示文字と文章数)を呼び出す
-	  スペースキーを押すごとに次の文章が表示される
-	②UpdateStory2関数（引数に切り替えるタイミングと
-	　　　　　　　　　　表示位置など格納した配列の添え字)
-	　を呼び出す
-	  テキストが切り替わるたびに表示する絵の位置が変わる
-	③ChangeScene関数（引数は文章数）を呼び出す
-	　全ての文章を表示し終えるとクラスを破棄する
-
-	描写関連
-	①DrawAll関数を呼び出す
-	　設定した全ての画像が表示される
-
-	*/
 }
 
 CStoryScene::~CStoryScene()
@@ -163,7 +133,7 @@ void CStoryScene::UpdateText(int word,int limit)
 {
 	//文字出力完了していないなら、
 	if (complete_flg == false) {
-		if (dis_cnt == 4&& rect_cnt <= lim * word) {
+		if (dis_cnt >= 4&& rect_cnt <= lim * word) {
 			RectUp();
 			rect_cnt += RECTSIZE_X;
 			dis_cnt = 0;
@@ -190,7 +160,7 @@ void CStoryScene::UpdateText(int word,int limit)
 		}
 	}
 
-	dis_cnt++;
+	dis_cnt += CFPS::GetDeltaTime() * GAME_BASE_FPS;
 }
 
 void CStoryScene::UpdateStory(rect_pos_size& pos_now, rect_pos_size& pos_next)
@@ -209,12 +179,12 @@ void CStoryScene::UpdateStory2(int change, int next_array)
 
 void CStoryScene::ChangeAll(rect_pos_size & pos_a, rect_pos_size & pos_b)
 {
-	pos_a.top_x += ChangeRect(pos_a.top_x, pos_b.top_x);
-	pos_a.top_y += ChangeRect(pos_a.top_y, pos_b.top_y);
-	pos_a.bottom_x += ChangeRect(pos_a.bottom_x, pos_b.bottom_x);
-	pos_a.bottom_y += ChangeRect(pos_a.bottom_y, pos_b.bottom_y);
-	pos_a.pos += ChangeVector(pos_a.pos, pos_b.pos);
-	pos_a.size += ChangeVector(pos_a.size, pos_b.size);
+	pos_a.top_x += ChangeRect(pos_a.top_x, pos_b.top_x) * CFPS::GetDeltaTime() * GAME_BASE_FPS;
+	pos_a.top_y += ChangeRect(pos_a.top_y, pos_b.top_y) * CFPS::GetDeltaTime() * GAME_BASE_FPS;
+	pos_a.bottom_x += ChangeRect(pos_a.bottom_x, pos_b.bottom_x) * CFPS::GetDeltaTime() * GAME_BASE_FPS;
+	pos_a.bottom_y += ChangeRect(pos_a.bottom_y, pos_b.bottom_y) * CFPS::GetDeltaTime() * GAME_BASE_FPS;
+	pos_a.pos += ChangeVector(pos_a.pos, pos_b.pos) * CFPS::GetDeltaTime() * GAME_BASE_FPS;
+	pos_a.size += ChangeVector(pos_a.size, pos_b.size) * CFPS::GetDeltaTime() * GAME_BASE_FPS;
 }
 
 int CStoryScene::ChangeRect(int & now, int & next)
@@ -243,7 +213,7 @@ CVector2D CStoryScene::ChangeVector(CVector2D & now, CVector2D & next)
 
 void CStoryScene::IconDraw()
 {
-	draw_cnt++;
+	draw_cnt += CFPS::GetDeltaTime() * GAME_BASE_FPS;
 	if (draw_cnt <= 30) m_icon.Draw();
 	else if (draw_cnt > 60) draw_cnt = 0;
 }
@@ -265,8 +235,8 @@ void CStoryScene::RectUp()
 void CStoryScene::ChangeScene(int sent_num)
 {
 	if (complete_flg == true && subscript == sent_num - 1) {
-		scene_change_cnt++;
+		scene_change_cnt += CFPS::GetDeltaTime() * GAME_BASE_FPS;
 	}
 
-	if (scene_change_cnt == 60)SetIsDelete();
+	if (scene_change_cnt >= 60)SetIsDelete();
 }

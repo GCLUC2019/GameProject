@@ -43,7 +43,7 @@ void Bamboo::Update()
 void Bamboo::Draw()
 {
 	m_img.SetSize(2000, 700);
-	m_img.SetPos(0 - g_game_data.m_scroll.x, -100 - g_game_data.m_scroll.y/1000);
+	m_img.SetPos(0 - g_game_data.m_scroll.x,  - g_game_data.m_scroll.y/10);
 	m_img.Draw();
 }
 
@@ -60,7 +60,7 @@ void SkyBlue::Update()
 void SkyBlue::Draw()
 {
 	m_img.SetSize(2000, 700);
-	m_img.SetPos(0 - g_game_data.m_scroll.x, 0 - g_game_data.m_scroll.y / 100);
+	m_img.SetPos(0 - g_game_data.m_scroll.x, -200 - g_game_data.m_scroll.y / 10);
 	m_img.Draw();
 }
 
@@ -77,7 +77,7 @@ void SkyRed::Update()
 void SkyRed::Draw()
 {
 	m_img.SetSize(2000, 700);
-	m_img.SetPos(0 - g_game_data.m_scroll.x, 0 - g_game_data.m_scroll.y/100);
+	m_img.SetPos(0 - g_game_data.m_scroll.x, -350 - g_game_data.m_scroll.y/10);
 	m_img.Draw();
 }
 
