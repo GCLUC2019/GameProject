@@ -7,6 +7,7 @@
 #include"../Scene/Title.h"
 #include"../Item/Item.h"
 #include"../CollitionBase.h"
+#include "../GameProject/Game/CollitionBase.h"
 #include "../GameProject/Game/Stage/CollisionBox.h"
 #define GRAVITY -4//重力
 #define DEP_N 540//奥行重石
@@ -18,6 +19,7 @@ m_speed(4.0f),
 m_squat_flg(false),
 m_attack_flg(false),
 m_jump_flg(false),
+m_jump2_flg(false),
 m_flip(false),
 m_special_flg(false),
 m_damage_flg(false), 
@@ -32,14 +34,24 @@ m_special(0)
 	m_img = COPY_RESOURCE("Player",CAnimImage*);
 	m_shadow= COPY_RESOURCE("Shadow", CImage*);
 	m_depth = (m_pos.y - DEP_N)/3.5;
+    m_before_jump_pos = m_pos.y;
 	SetAnim();
 	m_shadow.SetColor(0.3f, 0.3f, 0.3f, 0.4f);
-	m_rect = CRect(-50, -50, 50, 50);
+	m_rect = CRect(-50, -180, 60, 0);
 }
 
 void Player::HitCheck()
 {
-   
+	if (CollitionBase::CollisionCheckRect(this, eEnemy01) ||
+		CollitionBase::CollisionCheckRect(this, eEnemy02) ||
+		CollitionBase::CollisionCheckRect(this, eEnemy04) ||
+		CollitionBase::CollisionCheckRect(this, eEnemy05)) {
+		m_HP -= 1;
+		if (m_HP <= 0)	m_state = PlayerState::eDeath;
+		if (m_img.CheckAnimationEnd()) SetKill();
+
+		m_state = PlayerState::eDamage;
+   }
 }
 
 void Player::Move()
@@ -72,6 +84,7 @@ void Player::Move()
 		}
 		if (CInput::GetState(0, CInput::ePush, CInput::eButton3) && m_squat_flg == false && m_attack_flg == false) {
 			m_jump_flg = true;
+            m_before_jump_pos = m_pos.y;
 			m_state = eJumpUp;
 		}
 	}
@@ -129,40 +142,48 @@ void Player::Move()
 
 void Player::Jump()
 {
-    
-	static float time = 0;
-	m_pos = m_pos_old;
-	if (m_death_flg) {
-		m_jump_flg = false;
-		time = 0;
-		return;
-	}
-	static int jump_vec_old = m_jump_vec;
-	jump_vec_old = m_jump_vec;
-	m_jump_vec = 0 + JUMP_SPD * time + GRAVITY * (time*time) / 2;
-	m_jump_vec *= -1;
-	if (jump_vec_old - m_jump_vec < 0)
-		m_state = eJumpDown;
-	time += 0.5f;
-	
-	g_game_data.m_scroll.y = m_jump_vec;
-    m_pos += CVector2D(0, m_jump_vec);
-	if (m_jump_vec > 0) {
-		time = 0;
-		m_jump_vec = 0;
-		m_jump_flg = false;
+        static float time = 0;
+		static int jump_vec_old = m_jump_vec;
 		m_pos = m_pos_old;
-	}
-    Task* t = CollitionBase::GetCollisionCheckRect(this, CharacterData::eCollisionBox);
-    if (CollitionBase::CollisionCheckPoint(this, CharacterData::eCollisionBox)) {
-        CollisionBox* b = dynamic_cast<CollisionBox*>(t);
-        m_pos_old.y = b->GetPos().y - b->GetRect().m_bottom;
-        time = 0;
-        m_jump_vec = 0;
-        m_jump_flg = false;
-        m_pos = m_pos_old;
-        printf("乗れた！\n");
-    }
+		m_jump2_flg = false;
+		if (m_death_flg) {
+			m_jump_flg = false;
+			time = 0;
+			return;
+		}
+		
+		Task* t = CollitionBase::GetCollisionCheckRect(this, CharacterData::eCollisionBox);
+		if (t != nullptr&& jump_vec_old - m_jump_vec < 0) {
+			CollisionBox* b = dynamic_cast<CollisionBox*>(t);
+			//time = 0;
+			if (b == nullptr)
+				return;
+			m_pos.y = b->GetPos().y - b->GetRect().m_bottom - 5;
+
+			m_jump2_flg = true;
+			printf("乗れた！\n");
+		}
+       
+		if (m_jump2_flg == false) {
+			jump_vec_old = m_jump_vec;
+			m_jump_vec = 0 + JUMP_SPD * time + GRAVITY * (time*time) / 2;
+			m_jump_vec *= -1;
+			if (jump_vec_old - m_jump_vec < 0)
+				m_state = eJumpDown;
+
+
+			time += 0.5f;
+
+			g_game_data.m_scroll.y = m_jump_vec;
+			m_pos += CVector2D(0, m_jump_vec);
+			//
+			if (m_jump_vec > 0) {
+				time = 0;
+				m_jump_vec = 0;
+				m_jump_flg = false;
+				m_pos = m_pos_old;
+			}
+		}
 }
 
 void Player::Attack()

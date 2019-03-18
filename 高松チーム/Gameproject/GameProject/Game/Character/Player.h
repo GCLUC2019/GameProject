@@ -40,12 +40,13 @@ private:
 	int m_state_old;		// 前状態
 	float m_jump_vec;			//ジャンプ値
 	float m_depth;			//描画奥行き
-
+    float m_before_jump_pos;
 
 	//フラグ
 	bool m_flip;			//反転フラグ
 	bool m_damage_flg;		//ダメージフラグ
 	bool m_jump_flg;		//ジャンプフラグ
+    bool m_jump2_flg;       //何かに乗っているときのフラグ
 	bool m_squat_flg;		//しゃがみフラグ
 	bool m_attack_flg;		//攻撃フラグ
 	bool m_special_flg;		//必殺攻撃フラグ

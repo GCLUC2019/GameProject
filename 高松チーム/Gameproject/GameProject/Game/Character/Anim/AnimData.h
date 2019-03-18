@@ -35,6 +35,8 @@ enum Enemy04Anim {
 	eEAttack04,
 	eEDamage04,
 	eEDeath04,
+	eAttackCat01,
+	eAttackCat02,
 };
 
 enum Enemy05Anim {
@@ -44,6 +46,7 @@ enum Enemy05Anim {
 	eEAttack05,
 	eEDamage05,
 	eEDeath05,
+	
 };
 
 extern TexAnimData Enemy01AnimData[];

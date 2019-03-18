@@ -1,6 +1,7 @@
 #include "BossManager.h"
 #include "../GameProject/Game/Character/Anim/AnimBoss.h"
 #include "../GameProject/Boss.h"
+#include "../GameProject/Game/GameData/GameData.h"
 
 #define BOSS_X_SIZE 768
 #define BOSS_Y_SIZE 768
@@ -14,9 +15,8 @@
 BossManager::BossManager() : Task(eBossManager)
 {
 	m_img= COPY_RESOURCE("Boss", CImage*);
-	m_img2 = COPY_RESOURCE("Boss", CImage*);
+	
 	m_pos = CVector2D(WIGHT_SIZE / 2 - BOSS_X_SIZE / 4, HEIGHT_SIZE / 2 - BOSS_Y_SIZE / 2);
-	m_pos2 = CVector2D(420, BOSS_Y_SIZE / 2);
 
 	m_state = Manager::eIdle;
 
@@ -40,19 +40,6 @@ BossManager::~BossManager()
 
 void BossManager::Nothing()
 {
-	/*m_idle_cnt = 0;
-	m_idle_flag = true;
-	m_boss_attack_type = 0;*/
-	//m_state = B::eIdle;
-	
-}
-
-void BossManager::Up()
-{
-	/*m_pos2.y -= 10;
-	if (m_pos.y < 0) {
-		m_state = eAttackDown;
-	}*/
 }
 
 void BossManager::Idle()
@@ -65,7 +52,7 @@ void BossManager::Idle()
 
 	m_idle_cnt++;
 
-	if (m_idle_cnt >= 540) {
+	if (m_idle_cnt >= 600) {
 		m_idle_flag = false;
 		m_state = Manager::eAttackDown;
 	}
@@ -135,9 +122,6 @@ void BossManager::Update()
 	case eNothing:
 		Nothing();
 		break;
-	case eUp:
-		Up();
-		break;
 	default:
 		break;
 	}
@@ -149,6 +133,7 @@ void BossManager::Update()
 void BossManager::Draw()
 {
 	m_img.SetRect(0, BOSS_Y_SIZE * 5, BOSS_X_SIZE, BOSS_Y_SIZE * 6);
+	m_img.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
 
 	switch (m_state) {
 	case eDeath:

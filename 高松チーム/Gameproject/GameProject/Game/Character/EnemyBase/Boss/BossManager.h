@@ -40,8 +40,6 @@ public:
 
 	void Nothing();
 
-	void Up();
-
 	void Idle();
 
 	void Attack();

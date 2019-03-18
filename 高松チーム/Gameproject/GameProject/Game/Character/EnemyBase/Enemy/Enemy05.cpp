@@ -23,6 +23,7 @@ m_move_cnt(0)
 	m_hp = 100;
 	m_img.SetFlipH(m_flip);
 	m_move_cnt = 0;
+	m_rect = CRect(-IMAGE_SIZE / 3.0f, -IMAGE_SIZE / 5.0f, IMAGE_SIZE / 3.5f, IMAGE_SIZE / 2.5f);
 	m_depth = (m_pos.y - DEP_N) / 3.5;
 	m_state = Enemy05State::eMove;
 }
@@ -127,6 +128,8 @@ void Enemy05::Draw()
 	m_shadow.SetSize(SAIZE_SD + m_depth / 5, 50);
 	m_shadow.SetCenter((SAIZE_SD + m_depth / 5) / 2, 50 / 2);
 	m_shadow.SetPos(CVector2D(m_pos.x,m_pos.y + 90 - g_game_data.m_scroll.y / 3));
+	m_rect = CRect(-IMAGE_SIZE / 3.0f, -IMAGE_SIZE / 5.0f - g_game_data.m_scroll.y / 3, 
+					IMAGE_SIZE / 3.5f, IMAGE_SIZE / 2.5f - g_game_data.m_scroll.y / 3);
 
 	m_shadow.Draw();
 	m_img.Draw();

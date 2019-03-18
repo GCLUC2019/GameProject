@@ -34,6 +34,7 @@ m_search_flg(false)
     m_img.SetFlipH(m_flip);
     m_img.ChangeAnimation(eEMove01);
     m_pos = _pos;
+	m_hp = 100;
     m_vec = CVector2D(0, 0);
     m_dir = CVector2D(0, 0);
 	m_rect = CRect(-IMAGE_SIZE / 3.5f, -IMAGE_SIZE / 5.0f, IMAGE_SIZE / 3.5f, IMAGE_SIZE / 5.0f);
@@ -76,19 +77,21 @@ void Enemy01::Update()
 
 void Enemy01::Draw()
 {
-#ifdef _DEBUG//デバッグ表示　見れない場合は背景をなくしてください
-    Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
-    Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
-    Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
-    Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
-
-#endif//DEBUG
+//#ifdef _DEBUG//デバッグ表示　見れない場合は背景をなくしてください
+//    Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+//    Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+//    Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+//    Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+//
+//#endif//DEBUG
     m_hover += 0.1f;//リセットしたほうがいい？
 	m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
     m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
 	m_img.SetRect(-IMAGE_SIZE, -IMAGE_SIZE - g_game_data.m_scroll.y / 3,IMAGE_SIZE, IMAGE_SIZE - g_game_data.m_scroll.y / 3);
     m_img.SetPos(CVector2D(m_pos.x, m_pos.y + sin(m_hover)*10.0f - g_game_data.m_scroll.y / 3));
     m_img.SetFlipH(m_flip);
+	m_rect = CRect(-IMAGE_SIZE / 3.5f, -IMAGE_SIZE / 5.0f - g_game_data.m_scroll.y / 3, 
+					IMAGE_SIZE / 3.5f, IMAGE_SIZE / 5.0f - g_game_data.m_scroll.y / 3);
 	m_img.Draw();
 
 }

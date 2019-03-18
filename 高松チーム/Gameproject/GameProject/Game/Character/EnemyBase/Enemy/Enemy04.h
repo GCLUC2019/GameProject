@@ -22,6 +22,7 @@ private:
 	float m_hight;//‚‚³
 		
 	int m_cnt;
+	int m_attack_cnt;
 	int m_state_old;
 
 	bool m_interval_flg;
@@ -35,11 +36,8 @@ private:
 	void LAttack();//‰“‹——£UŒ‚
 	void SAttack();//‹ßÚUŒ‚
 	void Damage();//ƒ_ƒ[ƒW
-	//void Move();
+	void Move();
 	void Alignment_y();//y²‡‚í‚¹
-	void AttackControl();//
-	void MoveControl();
-	void SetAnim();
 public:
 	Enemy04();
 	Enemy04(CVector2D _pos);

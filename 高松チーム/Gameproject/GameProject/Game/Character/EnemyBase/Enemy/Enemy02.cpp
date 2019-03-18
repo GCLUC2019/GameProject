@@ -21,8 +21,8 @@ m_jump_flg(false)
     m_pos = CVector2D(200, 200);
     m_vec = CVector2D(0, 0);
     m_dir = CVector2D(0, 0);
-	m_rect = CRect(-IMAGE_SIZE / 2.7f, -IMAGE_SIZE / 4.0f, IMAGE_SIZE / 3.0f, IMAGE_SIZE / 2.3f);
     m_state = eSearch;
+	m_rect = CRect(-IMAGE_SIZE / 3.5f, -IMAGE_SIZE / 5.0f, IMAGE_SIZE / 3.5f, IMAGE_SIZE / 5.0f);
     m_depth = (m_pos.y - DEP_N) / 3.5;
 	m_hp = 100;
     cnt = 0;
@@ -43,9 +43,9 @@ m_jump_flg(false)
     m_dir = CVector2D(0, 0);
     m_state = eSearch;
     m_depth = (m_pos.y - DEP_N) / 3.5;
-	m_rect = CRect(-IMAGE_SIZE / 2.7f, -IMAGE_SIZE / 4.0f, IMAGE_SIZE / 3.0f, IMAGE_SIZE / 2.3f);
 	m_hp = 100;
-
+	m_rect = CRect(-IMAGE_SIZE / 3.5f, -IMAGE_SIZE / 6.0f - g_game_data.m_scroll.y / 3, 
+					IMAGE_SIZE / 3.5f, IMAGE_SIZE / 2.0f - g_game_data.m_scroll.y / 3);
     cnt = 0;
 }
 
@@ -87,8 +87,6 @@ void Enemy02::Draw()
     m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
     m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
     m_img.SetPos(CVector2D(m_pos.x , m_pos.y + m_hight - g_game_data.m_scroll.y/3));
-	m_img.SetRect(-IMAGE_SIZE, -IMAGE_SIZE + m_hight - g_game_data.m_scroll.y / 3 ,
-					IMAGE_SIZE, IMAGE_SIZE + m_hight - g_game_data.m_scroll.y / 3 );
     m_img.SetFlipH(m_flip);
     m_img.Draw();
 }

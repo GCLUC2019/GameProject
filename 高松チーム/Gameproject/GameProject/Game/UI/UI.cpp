@@ -153,6 +153,8 @@ void PlayerGageUI::Update()
 	m_player_hp_now = n->GetHP();
 
 	m_player_hp_now = m_player_hp_now / m_player_hp_max;
+
+	if (m_player_hp_now <= 0) m_player_hp_now = 0;
 }
 
 void PlayerGageUI::Draw()
