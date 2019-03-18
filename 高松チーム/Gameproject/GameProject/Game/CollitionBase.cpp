@@ -85,6 +85,7 @@ bool CollitionBase::CollisionCheckPoint(Task * b1, int _type)
                 b2->GetPos().y + b2->GetRect().m_bottom);
 
             CVector2D b1_pos = b1->GetPos();
+            b1_pos = CVector2D(b1_pos.x, b1_pos.y + b1->GetRect().m_bottom);
 
 
             if (CCollision::CollisionRectPoint(r2, b1_pos))

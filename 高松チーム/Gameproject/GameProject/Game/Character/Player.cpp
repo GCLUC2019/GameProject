@@ -18,6 +18,7 @@ m_speed(4.0f),
 m_squat_flg(false),
 m_attack_flg(false),
 m_jump_flg(false),
+m_jump2_flg(false),
 m_flip(false),
 m_special_flg(false),
 m_damage_flg(false), 
@@ -32,6 +33,7 @@ m_special(0)
 	m_img = COPY_RESOURCE("Player",CAnimImage*);
 	m_shadow= COPY_RESOURCE("Shadow", CImage*);
 	m_depth = (m_pos.y - DEP_N)/3.5;
+    m_before_jump_pos = m_pos.y;
 	SetAnim();
 	m_shadow.SetColor(0.3f, 0.3f, 0.3f, 0.4f);
 	m_rect = CRect(-50, -50, 50, 50);
@@ -72,6 +74,7 @@ void Player::Move()
 		}
 		if (CInput::GetState(0, CInput::ePush, CInput::eButton3) && m_squat_flg == false && m_attack_flg == false) {
 			m_jump_flg = true;
+            m_before_jump_pos = m_pos.y;
 			m_state = eJumpUp;
 		}
 	}
@@ -129,40 +132,81 @@ void Player::Move()
 
 void Player::Jump()
 {
-    
-	static float time = 0;
-	m_pos = m_pos_old;
-	if (m_death_flg) {
-		m_jump_flg = false;
-		time = 0;
-		return;
-	}
-	static int jump_vec_old = m_jump_vec;
-	jump_vec_old = m_jump_vec;
-	m_jump_vec = 0 + JUMP_SPD * time + GRAVITY * (time*time) / 2;
-	m_jump_vec *= -1;
-	if (jump_vec_old - m_jump_vec < 0)
-		m_state = eJumpDown;
-	time += 0.5f;
-	
-	g_game_data.m_scroll.y = m_jump_vec;
-    m_pos += CVector2D(0, m_jump_vec);
-	if (m_jump_vec > 0) {
-		time = 0;
-		m_jump_vec = 0;
-		m_jump_flg = false;
-		m_pos = m_pos_old;
-	}
-    Task* t = CollitionBase::GetCollisionCheckRect(this, CharacterData::eCollisionBox);
-    if (CollitionBase::CollisionCheckPoint(this, CharacterData::eCollisionBox)) {
-        CollisionBox* b = dynamic_cast<CollisionBox*>(t);
-        m_pos_old.y = b->GetPos().y - b->GetRect().m_bottom;
-        time = 0;
-        m_jump_vec = 0;
-        m_jump_flg = false;
+    //if (m_jump2_flg == false) {
+        static float time = 0;
+        
         m_pos = m_pos_old;
-        printf("èÊÇÍÇΩÅI\n");
-    }
+        if (m_death_flg) {
+            m_jump_flg = false;
+            time = 0;
+            return;
+        }
+        static int jump_vec_old = m_jump_vec;
+        jump_vec_old = m_jump_vec;
+        m_jump_vec = 0 + JUMP_SPD * time + GRAVITY * (time*time) / 2;
+        m_jump_vec *= -1;
+        if (jump_vec_old - m_jump_vec < 0)
+            m_state = eJumpDown;
+        time += 0.5f;
+
+        g_game_data.m_scroll.y = m_jump_vec;
+        m_pos += CVector2D(0, m_jump_vec);
+        Task* t = CollitionBase::GetCollisionCheckRect(this, CharacterData::eCollisionBox);
+        if (CollitionBase::CollisionCheckRect(this, CharacterData::eCollisionBox)) {
+            CollisionBox* b = dynamic_cast<CollisionBox*>(t);
+            time = 0;
+            m_jump_vec = jump_vec_old;
+            m_pos_old.y = b->GetPos().y - b->GetRect().m_bottom;
+            m_pos = m_pos_old;
+            m_jump_flg = false;
+            m_jump2_flg = true;
+            printf("èÊÇÍÇΩÅI\n");
+        }
+        else if (m_jump_vec > 0) {
+            time = 0;
+            m_jump_vec = 0;
+            m_jump_flg = false;
+            m_pos = m_pos_old;
+        }
+    //}
+    /*if (m_jump2_flg==true) {
+        static float time = 0;
+        m_pos = m_pos_old;
+        if (m_death_flg) {
+            m_jump_flg = false;
+            time = 0;
+            return;
+        }
+        static int jump_vec_old = m_jump_vec;
+        jump_vec_old = m_jump_vec;
+        m_jump_vec = m_jump_vec + JUMP_SPD * time + GRAVITY * (time*time) / 2;
+        m_jump_vec *= -1;
+        if (jump_vec_old - m_jump_vec < 0)
+            m_state = eJumpDown;
+        time += 0.5f;
+
+        g_game_data.m_scroll.y = m_jump_vec;
+        m_pos += CVector2D(0, m_jump_vec);
+        Task* t = CollitionBase::GetCollisionCheckRect(this, CharacterData::eCollisionBox);
+        if (CollitionBase::CollisionCheckRect(this, CharacterData::eCollisionBox)) {
+            CollisionBox* b = dynamic_cast<CollisionBox*>(t);
+            time = 0;
+            m_jump_vec = jump_vec_old;
+            m_pos_old.y = b->GetPos().y - b->GetRect().m_bottom;
+            m_pos = m_pos_old;
+            m_jump_flg = false;
+            m_jump2_flg = true;
+            printf("èÊÇÍÇΩÅI\n");
+        }
+        else if (m_jump_vec > m_before_jump_pos) {
+            time = 0;
+            m_jump_vec = 0;
+            m_jump2_flg = false;
+            m_jump_flg = false;
+            m_pos = m_pos_old;
+        }
+
+    }*/
 }
 
 void Player::Attack()
