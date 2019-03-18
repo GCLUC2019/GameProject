@@ -6,6 +6,7 @@ const enum CharacterData{
 	eGameTutorial,
     eGameTitle,
 	eCollition,
+	eDescriptionUI,
 
 	eStage01,
 	eGround,

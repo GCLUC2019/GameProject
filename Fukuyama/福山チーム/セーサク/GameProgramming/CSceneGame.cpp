@@ -20,10 +20,10 @@ void CSceneGame::Init(){
 
 	Enemy1->Init();                       //追加　釜田
 	Enemy1->mPosition = CVector2(-300.0f, 150.0f);
-	Enemy1->mRotation = 250.0f;
+	Enemy1->mRotation = 270.0f;
 
 	Enemy2->Init();                       //追加　釜田
-	Enemy2->mPosition = CVector2(-380.0f, 150.0f);
+	Enemy2->mPosition = CVector2(-370.0f, 150.0f);
 	Enemy2->mRotation = 270.0f;
 
 	SpeedEnemy->Init();
