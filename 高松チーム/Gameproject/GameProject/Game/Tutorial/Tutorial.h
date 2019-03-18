@@ -1,0 +1,22 @@
+#pragma once
+#include "../../Base/Task.h"
+/*担当
+　国見　class Tutorial 
+*/
+
+class Tutorial : public Task {
+private:
+	bool m_state_flg;
+protected:
+public:
+	Tutorial();
+	~Tutorial();
+	void Draw();
+	void Update();
+	/*
+	　@brief　チュートリアル用説明UI
+	*/
+	void DescriptionUI();
+
+
+};

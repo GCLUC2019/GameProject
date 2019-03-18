@@ -1,0 +1,21 @@
+﻿  CAnimImage.cpp
+c:\users\gntk_\desktop\高松チーム\高松チーム\gameproject\gllibrary\canimimage.h(123): warning C4244: 'return': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\gntk_\desktop\高松チーム\高松チーム\gameproject\gllibrary\canimimage.cpp(23): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\gntk_\desktop\高松チーム\高松チーム\gameproject\gllibrary\canimimage.cpp(53): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+  CCollision.cpp
+  CFont.cpp
+  CFPS.cpp
+  CImage.cpp
+  CInput.cpp
+c:\users\gntk_\desktop\高松チーム\高松チーム\gameproject\gllibrary\cinput.cpp(124): warning C4244: '引数': 'LONG' から 'float' への変換です。データが失われる可能性があります。
+  CMatrix.cpp
+  CResource.cpp
+  CSound.cpp
+c:\users\gntk_\desktop\高松チーム\高松チーム\gameproject\gllibrary\csound.cpp(164): warning C4101: 'ret': ローカル変数は 1 度も使われていません。
+  CTexture.cpp
+  CVector.cpp
+  GL.cpp
+  Utility.cpp
+  コードを生成中...
+  glpng.lib(glpng.obj) : MSIL .netmodule または /GL を伴ってコンパイルされたモジュールが見つかりました。/LTCG を使用して再開始してください。リンカーのパフォーマンスを向上させるためには、コマンドラインに /LTCG を追加してください。
+  GLLibrary.vcxproj -> C:\Users\gntk_\Desktop\高松チーム\高松チーム\Gameproject\Debug\GLLibrary.lib
