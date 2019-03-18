@@ -133,7 +133,7 @@ void CStoryScene::UpdateText(int word,int limit)
 {
 	//•¶šo—ÍŠ®—¹‚µ‚Ä‚¢‚È‚¢‚È‚çA
 	if (complete_flg == false) {
-		if (dis_cnt == 4&& rect_cnt <= lim * word) {
+		if (dis_cnt >= 4&& rect_cnt <= lim * word) {
 			RectUp();
 			rect_cnt += RECTSIZE_X;
 			dis_cnt = 0;
@@ -160,7 +160,7 @@ void CStoryScene::UpdateText(int word,int limit)
 		}
 	}
 
-	dis_cnt++;
+	dis_cnt += CFPS::GetDeltaTime() * GAME_BASE_FPS;
 }
 
 void CStoryScene::UpdateStory(rect_pos_size& pos_now, rect_pos_size& pos_next)
@@ -179,12 +179,12 @@ void CStoryScene::UpdateStory2(int change, int next_array)
 
 void CStoryScene::ChangeAll(rect_pos_size & pos_a, rect_pos_size & pos_b)
 {
-	pos_a.top_x += ChangeRect(pos_a.top_x, pos_b.top_x);
-	pos_a.top_y += ChangeRect(pos_a.top_y, pos_b.top_y);
-	pos_a.bottom_x += ChangeRect(pos_a.bottom_x, pos_b.bottom_x);
-	pos_a.bottom_y += ChangeRect(pos_a.bottom_y, pos_b.bottom_y);
-	pos_a.pos += ChangeVector(pos_a.pos, pos_b.pos);
-	pos_a.size += ChangeVector(pos_a.size, pos_b.size);
+	pos_a.top_x += ChangeRect(pos_a.top_x, pos_b.top_x) * CFPS::GetDeltaTime() * GAME_BASE_FPS;
+	pos_a.top_y += ChangeRect(pos_a.top_y, pos_b.top_y) * CFPS::GetDeltaTime() * GAME_BASE_FPS;
+	pos_a.bottom_x += ChangeRect(pos_a.bottom_x, pos_b.bottom_x) * CFPS::GetDeltaTime() * GAME_BASE_FPS;
+	pos_a.bottom_y += ChangeRect(pos_a.bottom_y, pos_b.bottom_y) * CFPS::GetDeltaTime() * GAME_BASE_FPS;
+	pos_a.pos += ChangeVector(pos_a.pos, pos_b.pos) * CFPS::GetDeltaTime() * GAME_BASE_FPS;
+	pos_a.size += ChangeVector(pos_a.size, pos_b.size) * CFPS::GetDeltaTime() * GAME_BASE_FPS;
 }
 
 int CStoryScene::ChangeRect(int & now, int & next)
@@ -213,7 +213,7 @@ CVector2D CStoryScene::ChangeVector(CVector2D & now, CVector2D & next)
 
 void CStoryScene::IconDraw()
 {
-	draw_cnt++;
+	draw_cnt += CFPS::GetDeltaTime() * GAME_BASE_FPS;
 	if (draw_cnt <= 30) m_icon.Draw();
 	else if (draw_cnt > 60) draw_cnt = 0;
 }
@@ -235,8 +235,8 @@ void CStoryScene::RectUp()
 void CStoryScene::ChangeScene(int sent_num)
 {
 	if (complete_flg == true && subscript == sent_num - 1) {
-		scene_change_cnt++;
+		scene_change_cnt += CFPS::GetDeltaTime() * GAME_BASE_FPS;
 	}
 
-	if (scene_change_cnt == 60)SetIsDelete();
+	if (scene_change_cnt >= 60)SetIsDelete();
 }

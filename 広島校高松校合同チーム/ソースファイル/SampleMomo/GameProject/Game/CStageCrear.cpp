@@ -15,7 +15,7 @@
 
 CStageCrear::CStageCrear():CObject(0, 0)
 {
-	ADD_RESOURCE("Crear", CImage::LoadImage("StageCrear.png"));
+	//ADD_RESOURCE("Crear", CImage::LoadImage("StageCrear.png"));
 	m_crear = COPY_RESOURCE("Crear", CImage*);
 	m_crear.SetSize(DRAW_SIZE);
 	m_crear.SetPos(DRAW_POS);

@@ -10,7 +10,7 @@ void TaskManager::AddTask(Task * _task)
 	m_task_num++;
 
 
-	m_is_changed_task_tree = true;
+	//m_is_changed_task_tree = true;
 
 	if (m_head_task == nullptr) {
 		m_head_task = _task;
@@ -78,7 +78,7 @@ Task** TaskManager::FindTaskArray(int _task_id)
 
 void TaskManager::DeleteTask(Task * _task)
 {
-	m_is_changed_task_tree = true;
+	//m_is_changed_task_tree = true;
 
 	if (m_head_task == _task) {
 		Task* head_next = m_head_task->GetNextTask();
@@ -233,39 +233,23 @@ void TaskManager::DrawAll()
 	}
 }
 
+void TaskManager::SortCollisionPriority()
+{
+	
+}
 
-//タスクを描画優先度に合わせてソートする。
-//新規タスク追加時 タスク削除時に呼ばれる。
 
-//Zソートとしても使えるソート
-//描画順番は後の方が優先度が高い(前に表示される)ので値が大きい程順番を後にする。
-//なので昇順ソート
-
-void TaskManager::Sort()
+void TaskManager::Sort(int _sort_type)
 {
 	//軽量化
 	if (m_head_task == nullptr) return;
 
 	register Task** task_array;
-	register int* task_dp_array;
+	register int* task_priority_array;
 
-	//使いまわせる場合は、使いまわす
-	if (m_is_changed_task_tree == false) {
-		task_array = m_keep_task_array;
-		task_dp_array = m_keep_task_dp_array;
-	}
-	else {
-
-		//配列の内容をクリア
-		if (m_keep_task_array != nullptr) free(m_keep_task_array);
-		if (m_keep_task_dp_array != nullptr) free(m_keep_task_dp_array);
-
-		//配列を作成(callocで領域確保)
-		task_array = (Task**)calloc(m_task_num, sizeof(Task*));
-		task_dp_array = (int*)calloc(m_task_num, sizeof(int));
-	}
-
-	
+	//配列を作成(callocで領域確保)
+	task_array = (Task**)calloc(m_task_num, sizeof(Task*));
+	task_priority_array = (int*)calloc(m_task_num, sizeof(int));
 
 	//ソート用の情報を集める
 	register Task* t = GetHead();
@@ -277,13 +261,22 @@ void TaskManager::Sort()
 	while (true) {
 		if (t == nullptr) break;
 		task_array[i] = t;
-		task_dp_array[i] = t->GetDrawPriority();
+
+		switch (_sort_type) {
+		case eSortDrawPriority:
+			task_priority_array[i] = t->GetDrawPriority();
+			break;
+		case eSortCollisionPriority:
+			task_priority_array[i] = t->GetCollisionPriority();
+			break;
+		}
+		
 		t = t->GetNextTask();
 		i++;
 	}
 
 	//ソート作業する(クイックソート)
-	QuickSort(task_array, task_dp_array, m_task_num);
+	QuickSort(task_array, task_priority_array, m_task_num);
 
 
 
@@ -292,7 +285,7 @@ void TaskManager::Sort()
 	m_head_task->SetBeforeTask(nullptr);
 
 
-	
+
 	for (register int i = 0; i < m_task_num; i++) {
 		tp = task_array[i];
 		if (i == m_task_num - 1) {
@@ -302,82 +295,159 @@ void TaskManager::Sort()
 			tp->SetNextTask(task_array[i + 1]);
 			task_array[i + 1]->SetBeforeTask(tp);
 		}
-
-
 	}
-
-	//使いまわせるかもしれないのでキープしておく
-	m_keep_task_array = task_array;
-	m_keep_task_dp_array = task_dp_array;
-
-	//callocで取得した領域を解放
-	//free(task_array);
-	//free(task_dp_array);
-
-	//軽量化前
-	/*
-	if (m_head_task == nullptr) return;
-
-	//配列を作成(callocで領域確保)
-
-	//Taskポインタ型配列(配列を表す為にTaskポインタ型ポインタを利用する)
-	Task** task_array = (Task**)calloc(m_task_num, sizeof(Task*));
-
-
-	//int型配列
-	int* task_dp_array = (int*)calloc(m_task_num, sizeof(int));
-
-
-	//あとはソートしていくだけ
-
-	//とりあえずソート用の情報を集める
-	Task* t = GetHead();
-
-
-	//ここで宣言してるので取り扱い注意
-	int i = 0;
-	while (true) {
-		if (t == nullptr) break;
-		task_array[i] = t;
-		task_dp_array[i] = t->GetDrawPriority();
-		t = t->GetNextTask();
-		i++;
-	}
-
-
-	//printf("m_task_num %d\n", m_task_num);
-
-	//ソート作業する(クイックソート)
-	QuickSort(task_array,task_dp_array,m_task_num);
-
-
-	
-	//タスクリストを再構成
-	m_head_task = task_array[0];
-	m_head_task->SetBeforeTask(nullptr);
-
-
-	Task* tp;
-	for (int i = 0; i < m_task_num; i++) {
-		tp = task_array[i];
-		if (i == m_task_num - 1) {
-			tp->SetNextTask(nullptr);
-		}
-		else {
-			tp->SetNextTask(task_array[i + 1]);
-			task_array[i + 1]->SetBeforeTask(tp);
-		}
-
-		
-	}
-
-
-	//とりあえず取得したデータを確認
-	//callocで取得した領域を解放
-	free(task_array);
-	free(task_dp_array);
-	*/
 }
+
+//タスクを描画優先度に合わせてソートする。
+//新規タスク追加時 タスク削除時に呼ばれる。
+
+//Zソートとしても使えるソート
+//描画順番は後の方が優先度が高い(前に表示される)ので値が大きい程順番を後にする。
+//なので昇順ソート
+
+
+
+//void TaskManager::SortDrawPriority()
+//{
+//	//軽量化
+//	if (m_head_task == nullptr) return;
+//
+//	register Task** task_array;
+//	register int* task_dp_array;
+//
+//	/*
+//	//使いまわせる場合は、使いまわす
+//	if (m_is_changed_task_tree == false) {
+//		task_array = m_keep_task_array;
+//		task_dp_array = m_keep_task_dp_array;
+//	}
+//	else {
+//
+//		//配列の内容をクリア
+//		if (m_keep_task_array != nullptr) free(m_keep_task_array);
+//		if (m_keep_task_dp_array != nullptr) free(m_keep_task_dp_array);
+//
+//		//配列を作成(callocで領域確保)
+//		task_array = (Task**)calloc(m_task_num, sizeof(Task*));
+//		task_dp_array = (int*)calloc(m_task_num, sizeof(int));
+//	}
+//	*/
+//
+//	//配列を作成(callocで領域確保)
+//	task_array = (Task**)calloc(m_task_num, sizeof(Task*));
+//	task_dp_array = (int*)calloc(m_task_num, sizeof(int));
+//
+//	//ソート用の情報を集める
+//	register Task* t = GetHead();
+//	register Task* tp;
+//
+//	//ここで宣言してるので取り扱い注意
+//	register int i = 0;
+//
+//	while (true) {
+//		if (t == nullptr) break;
+//		task_array[i] = t;
+//		task_dp_array[i] = t->GetDrawPriority();
+//		t = t->GetNextTask();
+//		i++;
+//	}
+//
+//	//ソート作業する(クイックソート)
+//	QuickSort(task_array, task_dp_array, m_task_num);
+//
+//
+//
+//	//タスクリストを再構成
+//	m_head_task = task_array[0];
+//	m_head_task->SetBeforeTask(nullptr);
+//
+//
+//	
+//	for (register int i = 0; i < m_task_num; i++) {
+//		tp = task_array[i];
+//		if (i == m_task_num - 1) {
+//			tp->SetNextTask(nullptr);
+//		}
+//		else {
+//			tp->SetNextTask(task_array[i + 1]);
+//			task_array[i + 1]->SetBeforeTask(tp);
+//		}
+//
+//
+//	}
+//
+//	//使いまわせるかもしれないのでキープしておく
+//	//m_keep_task_array = task_array;
+//	//m_keep_task_dp_array = task_dp_array;
+//
+//	//callocで取得した領域を解放
+//	//free(task_array);
+//	//free(task_dp_array);
+//
+//	//軽量化前
+//	/*
+//	if (m_head_task == nullptr) return;
+//
+//	//配列を作成(callocで領域確保)
+//
+//	//Taskポインタ型配列(配列を表す為にTaskポインタ型ポインタを利用する)
+//	Task** task_array = (Task**)calloc(m_task_num, sizeof(Task*));
+//
+//
+//	//int型配列
+//	int* task_dp_array = (int*)calloc(m_task_num, sizeof(int));
+//
+//
+//	//あとはソートしていくだけ
+//
+//	//とりあえずソート用の情報を集める
+//	Task* t = GetHead();
+//
+//
+//	//ここで宣言してるので取り扱い注意
+//	int i = 0;
+//	while (true) {
+//		if (t == nullptr) break;
+//		task_array[i] = t;
+//		task_dp_array[i] = t->GetDrawPriority();
+//		t = t->GetNextTask();
+//		i++;
+//	}
+//
+//
+//	//printf("m_task_num %d\n", m_task_num);
+//
+//	//ソート作業する(クイックソート)
+//	QuickSort(task_array,task_dp_array,m_task_num);
+//
+//
+//	
+//	//タスクリストを再構成
+//	m_head_task = task_array[0];
+//	m_head_task->SetBeforeTask(nullptr);
+//
+//
+//	Task* tp;
+//	for (int i = 0; i < m_task_num; i++) {
+//		tp = task_array[i];
+//		if (i == m_task_num - 1) {
+//			tp->SetNextTask(nullptr);
+//		}
+//		else {
+//			tp->SetNextTask(task_array[i + 1]);
+//			task_array[i + 1]->SetBeforeTask(tp);
+//		}
+//
+//		
+//	}
+//
+//
+//	//とりあえず取得したデータを確認
+//	//callocで取得した領域を解放
+//	free(task_array);
+//	free(task_dp_array);
+//	*/
+//}
 
 
 //QuickSortインライン化

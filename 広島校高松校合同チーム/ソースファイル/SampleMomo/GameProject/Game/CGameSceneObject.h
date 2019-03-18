@@ -4,27 +4,34 @@
 /*
 ゲームシーン(ゲームのメインとなるゲームシーン)で使われるオブジェクトのベース。
 キャラクタークラスなどに派生する。
-アニメーション再生機能もほしいな……。
 */
 
-#define ANIMATION_INFO_MAX (100)
-#define ANIMATION_IMAGE_MAX (500)
 
 #define DEFAULT_BLIND_DELAY (5)
 #define DEFAULT_BLIND_ALPHA (0.75f)
 
+
+/*
+
+#define ANIMATION_INFO_MAX (100)
+#define ANIMATION_IMAGE_MAX (500)
+#define ANIMATION_DELAY_MAX (100)
+
 struct AnimInfo {
 	int image_id;
 	int image_num = 0;
-	int delay;
+	double delay[ANIMATION_DELAY_MAX];
 };
 
+*/
 
-
+class CAnimation;
 
 class CGameSceneObject : public CObject {
 private:
 protected:
+	CAnimation * m_anim_p = nullptr;
+
 	//影表示関連
 	CVector2D m_shadow_size;
 	CImage * m_shadow_p = nullptr;
@@ -40,13 +47,16 @@ protected:
 	bool m_is_landing_old = false;
 	//CImage * m_static_image_p = nullptr;
 
+	/*
 	//アニメーション関連(アニメーションクラスに分離したほうがよいかも)
 	AnimInfo m_anim_info[ANIMATION_INFO_MAX];
+
 	int m_play_anim_id = 0;
 	int m_play_anim_image = 0;
 	int m_will_play_anim_id = 0;
-	int m_play_anim_count = 0;
+	double m_play_anim_count = 0;
 	CImage* m_anim_image_p[ANIMATION_IMAGE_MAX];
+	*/
 
 	bool m_is_blind_draw = false;
 	bool m_is_blind_now = false;
@@ -62,9 +72,10 @@ protected:
 
 	//スクロールの基準のオブジェクトにするか
 	bool m_is_calc_scroll_base_object = false;
+	
+	//double m_calc_one_sec = 0.0;
 
 	
-
 
 public:
 	CGameSceneObject(int _task_id = 0, int _draw_priority = 0);
@@ -125,11 +136,12 @@ public:
 	void SetIsCalcScrollBaseObject(bool _is) { m_is_calc_scroll_base_object = _is; }
 	bool GetIsCalcScrollBaseObject() { return  m_is_calc_scroll_base_object; }
 
-
+	/*
 	//アニメーション再生関連
 	void SetWillPlayAnim(int _anim_id) { m_will_play_anim_id = _anim_id; };
 	void SetAnim(int _anim_id);
 	void PlayAnim();
+	*/
 };
 
 

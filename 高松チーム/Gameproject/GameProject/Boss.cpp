@@ -25,8 +25,8 @@ BossHead::BossHead(const CVector2D &player_pos, const int state) :EnemyBase(eBos
 	m_img2 = COPY_RESOURCE("Boss", CImage*);
 	m_img3 = COPY_RESOURCE("Boss", CAnimImage*);
 	
-	m_img.SetSize(BOSS_X_SIZE / 3, BOSS_Y_SIZE / 3);
-	m_img2.SetSize(BOSS_X_SIZE / 3, BOSS_Y_SIZE / 3);
+	m_img.SetSize(BOSS_X_SIZE / 2, BOSS_Y_SIZE / 2);
+	m_img2.SetSize(BOSS_X_SIZE / 2, BOSS_Y_SIZE / 2);
 	m_img3.SetSize(BOSS_X_SIZE / 2, BOSS_Y_SIZE / 2);
 
 	m_pos = CVector2D(1280 - BOSS_X_SIZE / 3, 0);
@@ -55,6 +55,7 @@ BossHead::BossHead(const CVector2D &player_pos, const int state) :EnemyBase(eBos
 
 BossHead::~BossHead()
 {
+	TaskManager::GetInstance()->AddTask(new BossManager());
 }
 
 void BossHead::Idle()
@@ -64,7 +65,9 @@ void BossHead::Idle()
 	if (m_pos2.x >= WIGHT_SIZE / 2.2) {
 		m_pos2.x -= 0.5;
 	}
-	else SetKill();
+	else {
+		m_pos2.y -= 5;
+	}
 }
 
 void BossHead::FireAttack()
@@ -96,13 +99,13 @@ void BossHead::UpMove()
 {
 	m_draw_flag = true;
 	m_pos.y -= 5;
-	if (m_pos.y < -10) SetKill();
+	if (m_pos.y < 0) SetKill();
 }
 
 void BossHead::FireDownMove()
 {
 	m_pos.y += 5;
-	//300はプレイヤーのY座標（仮）m_player_pos.y
+	//プレイヤーのY座標 m_player_pos.y
 	if (m_pos.y > m_player_pos.y) {
 		m_state = eFireAttack;
 		m_anim_flag = true;
@@ -112,7 +115,7 @@ void BossHead::FireDownMove()
 
 void BossHead::HeadDownMove()
 {
-	//３００=プレイヤーの座標（仮）m_player_pos.y
+	//プレイヤーの座標 m_player_pos.y
 	if (m_pos.y <= m_player_pos.y) {
 		m_pos.y += 5;
 	}
@@ -145,20 +148,18 @@ void BossHead::Update()
 	default:
 		break;
 	}
-		m_img.ChangeAnimation(eBossFireAttackMotion,false);
-		m_img.UpdateAnimation();
+	m_img.ChangeAnimation(eBossFireAttackMotion,false);
+	m_img.UpdateAnimation();
 
-		m_img3.ChangeAnimation(eBossHeadAnim);
-		m_img3.UpdateAnimation();
+	m_img3.ChangeAnimation(eBossHeadAnim);
+	m_img3.UpdateAnimation();
 
-		//printf("aaaaaaaaaaa   %d,%d\n", g_game_data.m_scroll);
 }
 
 void BossHead::Draw()
 {
 	
 	m_img2.SetRect(0, BOSS_Y_SIZE * 4, BOSS_X_SIZE, BOSS_Y_SIZE * 5);
-
 	
 	m_img.SetPos(m_pos/* - g_game_data.m_scroll*/);
 	m_img2.SetPos(m_pos/* - g_game_data.m_scroll*/);
@@ -209,6 +210,7 @@ BossHand::BossHand(const CVector2D &player_pos, const int state) :EnemyBase(eBos
 	m_idle_flag = false;
 	m_draw_flag = false;
 	m_hand_flag = false;
+	m_slash_flag = false;
 
 	m_state = state;
 
@@ -219,6 +221,7 @@ BossHand::BossHand(const CVector2D &player_pos, const int state) :EnemyBase(eBos
 
 BossHand::~BossHand()
 {
+	TaskManager::GetInstance()->AddTask(new BossManager());
 }
 
 void BossHand::Idle()
@@ -228,15 +231,20 @@ void BossHand::Idle()
 	if (m_pos2.x >= WIGHT_SIZE / 3) {
 		m_center.x -= 0.5;
 		m_center2.x -= 0.5;
-		
+
+		m_rot += 0.05;
+		if (m_rot >= PIE * 2)m_rot = 0;
+
+		m_pos2 = m_center + CVector2D(sin(m_rot), cos(m_rot))*m_r;
+		m_pos3 = m_center2 + CVector2D(cos(m_rot), sin(m_rot))*m_r;
+
 	}
-	else SetKill();
-	m_rot += 0.05;
-	if (m_rot >= PIE * 2)m_rot = 0;
-
-	m_pos2 = m_center + CVector2D(sin(m_rot), cos(m_rot))*m_r;
-	m_pos3 = m_center2 + CVector2D(cos(m_rot), sin(m_rot))*m_r;
-
+	else {
+		m_pos2.y -= 5;
+		m_pos3.y -= 5;
+	}
+	
+	
 	
 }
 
@@ -256,12 +264,15 @@ void BossHand::Attack()
 void BossHand::HandAttack()
 {
 	m_cnt++;
-	if (m_cnt <= 120 && m_cnt > 0) {
-		m_ang -= DtoR(2);
-		TaskManager::GetInstance()->AddTask(new BossSlashEffect(m_pos));
-		
+	if (m_cnt <= 30 && m_cnt > 0) {
+		m_ang -= DtoR(4);
+		if (m_slash_flag == false) {
+			TaskManager::GetInstance()->AddTask(new BossSlashEffect(m_pos));
+			m_slash_flag = true;
+		}
 	}
 	if (m_cnt > 120) {
+		m_slash_flag = false;
 		m_state = eUp;
 	}
 }
@@ -364,7 +375,7 @@ BossTail::BossTail(const CVector2D & player_pos, const int state):EnemyBase(eBos
 	m_img3.SetCenter(BOSS_X_SIZE / 4, BOSS_Y_SIZE / 4);
 
 	//待機状態の時の座標
-	m_pos = CVector2D(WIGHT_SIZE - BOSS_X_SIZE / 1.4, HEIGHT_SIZE - BOSS_Y_SIZE / 3);
+	m_pos = CVector2D(WIGHT_SIZE - BOSS_X_SIZE / 1.6, HEIGHT_SIZE - BOSS_Y_SIZE / 3);
 	//攻撃状態の座標
 	m_player_pos.x = player_pos.x + BOSS_X_SIZE / 6;
 	m_player_pos.y = player_pos.y;
@@ -381,6 +392,7 @@ BossTail::BossTail(const CVector2D & player_pos, const int state):EnemyBase(eBos
 
 BossTail::~BossTail()
 {
+	TaskManager::GetInstance()->AddTask(new BossManager());
 }
 
 void BossTail::Update()
@@ -401,7 +413,7 @@ void BossTail::Update()
 	default:
 		break;
 	}
-	m_img.ChangeAnimation(eBossTailAnim);
+	m_img.ChangeAnimation(eBossTailAttackMotion);
 	m_img.UpdateAnimation();
 
 }
@@ -410,18 +422,18 @@ void BossTail::Idle()
 {
 	m_idle_flag = true;
 
-	if (m_pos.x >= WIGHT_SIZE / 2.5) {
+	if (m_pos.x >= WIGHT_SIZE / 2.2) {
 		m_pos.x -= 0.5;
 	}
-	else SetKill();
+	else m_pos.y -= 5;
 }
 
 void BossTail::TailAttack()
 {
 	m_anim_cnt++;
 	m_anim_flag = true;
-	m_draw_flag = false;
-	m_img2.ChangeAnimation(eBossTailAttackMotion, false);
+	m_draw_flag = false; 
+	m_img2.ChangeAnimation(eBossTailAnim, false);
 	m_img2.UpdateAnimation();
 	if(m_anim_cnt > 120)m_state = eUp;
 }
@@ -429,7 +441,7 @@ void BossTail::TailAttack()
 void BossTail::UpMove()
 {
 	m_pos2.y -= 5;
-	if (m_pos.y < -100) SetKill();
+	if (m_pos2.y < 0) SetKill();
 }
 
 void BossTail::DownMove()
@@ -453,11 +465,11 @@ void BossTail::Draw()
 	m_img2.SetPos(m_pos2/* - g_game_data.m_scroll*/);
 	m_img3.SetPos(m_pos2/* - g_game_data.m_scroll*/);
 
-	m_img.SetSize(BOSS_X_SIZE / 2, BOSS_Y_SIZE / 2);
+	m_img.SetSize(BOSS_X_SIZE / 3, BOSS_Y_SIZE / 3);
 	m_img2.SetSize(BOSS_X_SIZE / 2, BOSS_Y_SIZE / 2);
 	m_img3.SetSize(BOSS_X_SIZE / 2, BOSS_Y_SIZE / 2);
 	
-	m_img3.SetRect(0, BOSS_Y_SIZE * 3, BOSS_X_SIZE, BOSS_Y_SIZE * 4);
+	m_img3.SetRect(0, BOSS_Y_SIZE, BOSS_X_SIZE, BOSS_Y_SIZE * 2);
 
 	if (m_idle_flag == true) {
 		m_img.Draw();

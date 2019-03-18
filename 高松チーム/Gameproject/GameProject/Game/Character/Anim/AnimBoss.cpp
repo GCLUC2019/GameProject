@@ -32,10 +32,10 @@ static TexAnim BossHand[] = {
 };
 
 static TexAnim BossTailAttackMotion[] = {
-	{ 24,10 },
-{ 25,10 },
-{ 26,10 },
-{ 27,10 },
+	{ 24,12 },
+{ 25,12 },
+{ 26,12 },
+{ 27,12 },
 };
 
 static TexAnim BossFireAttackMotion[] = {
@@ -119,14 +119,14 @@ TexAnimData BossLazerEffectAnimData[] = {
 };
 
 static TexAnim BossSlashEffect[] = {
-	{ 0,1 },
-{ 1,1 },
-{ 2,1 },
-{ 3,1 },
-{ 4,1 },
-{ 5,1 },
-{ 6,1 },
-{ 7,1 },
+	{ 0,2 },
+{ 1,2 },
+{ 2,2 },
+{ 3,2 },
+{ 4,2 },
+{ 5,2 },
+{ 6,2 },
+{ 7,2 },
 };
 
 TexAnimData BossSlashEffectAnimData[] = {

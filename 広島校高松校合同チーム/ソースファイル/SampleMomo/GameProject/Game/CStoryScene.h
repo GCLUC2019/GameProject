@@ -61,14 +61,14 @@ protected:
 	CImage m_text_box;
 	CImage m_text;
 	CImage m_icon;
-	short int rect_cnt;
-	short int dis_cnt;
+	int rect_cnt;
+	double dis_cnt;
 	short int lim;
 	short int sentence_num;
-	short int draw_cnt;
+	double draw_cnt;
 	short int subscript;
 	short int num_decison;
-	short int scene_change_cnt;
+	double scene_change_cnt;
 
 	struct rect_pos_size {
 		int top_x;

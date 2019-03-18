@@ -11,13 +11,8 @@
 #include "../GLLibrary/CFPS.h"
 #include "Base\Task.h"
 #include "Base\TaskManager.h"
-<<<<<<< HEAD
-#include "Game\Scene\GameScene.h"
-
-=======
 #include "Game/Scene/Title.h"
 #include "../GameProject/Game/Tutorial/Tutorial.h"
->>>>>>> 7b7833fccc61631035d5b5e9c0ad3425b18ce63d
 //--------------------------------------------
 //グローバル変数領域
 //--------------------------------------------
@@ -124,13 +119,8 @@ void Init(void)
 	//初期化の命令を書く
 	//ゲーム起動時に一度だけ呼ばれる
 	//-----------------------------------------------------
-<<<<<<< HEAD
-	new GameScene();
-
-=======
     TaskManager::GetInstance()->AddTask(new Title());
 	//TaskManager::GetInstance()->AddTask(new Tutorial());
->>>>>>> 7b7833fccc61631035d5b5e9c0ad3425b18ce63d
 }
 
 void release()

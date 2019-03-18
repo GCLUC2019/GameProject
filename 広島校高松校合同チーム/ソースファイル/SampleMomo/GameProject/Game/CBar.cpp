@@ -1,9 +1,7 @@
 #include "CBar.h"
-#include "CCharacterPlayer.h"
-CBar::CBar(CImage* _img, float* _hp, float _max_hp, CVector2D _pos, CVector2D _size) :CObject(0, 0)
-{
-	//ADD_RESOURCE("HPbar", CImage::LoadImage("HPbar.png"));
 
+CBar::CBar(CImage* _img, float* _hp, float _max_hp, CVector2D _pos, CVector2D _size) :CObject(0, DP_UI + 1)
+{
 	m_HPbar_img = _img;
 	m_size = _size;
 	m_bar_pos = _pos;
@@ -38,10 +36,13 @@ void CBar::Update()
 
 void CBar::Draw()
 {
-	float now_bar_size = m_size.x*m_mult_hp;
+	float now_bar_size = m_size.x * m_mult_hp;
+	//printf("size.x %lf size.y %lf\n", now_bar_size, m_size.y);
 	m_HPbar_img->SetSize(CVector2D(now_bar_size,m_size.y));
-	
 	m_HPbar_img->SetRect(0, now_bar_size, now_bar_size, now_bar_size);
+
+	//printf("pos x%lf y%lf\n", m_bar_pos.x, m_bar_pos.y);
+	m_HPbar_img->SetColor(2.55f,2.55f,2.55f,2.55f);
 	m_HPbar_img->SetPos(m_bar_pos);
 	m_HPbar_img->Draw();
 }

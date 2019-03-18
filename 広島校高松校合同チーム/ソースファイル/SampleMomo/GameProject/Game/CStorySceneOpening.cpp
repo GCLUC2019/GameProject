@@ -76,9 +76,11 @@ void CStorySceneOpening::Draw()
 
 void CStorySceneOpening::AddRAll()
 {
+	/*
 	ADD_RESOURCE("Story", CImage::LoadImage("story1.png"));
 	ADD_RESOURCE("Story2", CImage::LoadImage("story2.png"));
 	ADD_RESOURCE("Textbox", CImage::LoadImage("TextBox.png"));
+
 	ADD_RESOURCE("Text1-1", CImage::LoadImage("Text1-1.png"));
 	ADD_RESOURCE("Text1-2", CImage::LoadImage("Text1-3.png"));
 	ADD_RESOURCE("Text1-3", CImage::LoadImage("Text1-2.png"));
@@ -90,6 +92,7 @@ void CStorySceneOpening::AddRAll()
 	ADD_RESOURCE("Text1-9", CImage::LoadImage("Text1-9.png"));
 	ADD_RESOURCE("Text1-10", CImage::LoadImage("Text1-10.png"));
 	ADD_RESOURCE("Send", CImage::LoadImage("SendIcon.png"));
+	*/
 }
 
 void CStorySceneOpening::Setchar()

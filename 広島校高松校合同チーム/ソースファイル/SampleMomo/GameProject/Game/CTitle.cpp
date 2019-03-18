@@ -4,10 +4,14 @@
 #include "CBar.h"
 CTitle::CTitle() : CObject(0, 0)
 {
-	ADD_RESOURCE("Back", CImage::LoadImage("Back.png"));
+	//ADD_RESOURCE("Back", CImage::LoadImage("Back.png"));
+	
 	m_background_image_p= GET_RESOURCE("Back", CImage*);
-	ADD_RESOURCE("Back_txt", CImage::LoadImage("Back_txt.png"));
+	
+	//ADD_RESOURCE("Back_txt", CImage::LoadImage("Back_txt.png"));
+	
 	m_backtxt_p = GET_RESOURCE("Back_txt", CImage*);
+	
 	m_backtxt_p->SetPos(1050, -50);
 }
 
@@ -26,21 +30,23 @@ void CTitle::Update()
 	}
 	//2秒間タイトルの文字を表示させる
 	if (m_flash_txt == true) {
-		if (m_count_txt % 120 == 0) {
+		if (m_count_txt >= 120) {
+			m_count_txt -= 120;
 			m_draw_txt = false;
 			m_count_txt = 0;
 			m_flash_txt = false;
 		}
-		++m_count_txt;
+		m_count_txt += CFPS::GetDeltaTime() * GAME_BASE_FPS;
 	}
 	//1秒間タイトルの文字を消す
 	if (m_flash_txt == false) {
-		if (m_count_txt2 % 60 == 0) {
+		if (m_count_txt2 >= 60) {
+			m_count_txt2 -= 60;
 			m_draw_txt = true;
 			m_count_txt2 = 0;
 			m_flash_txt = true;
 		}
-		++m_count_txt2;
+		m_count_txt2 += CFPS::GetDeltaTime() * GAME_BASE_FPS;
 	}
 	
 }

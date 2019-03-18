@@ -23,8 +23,6 @@ public:
 	Item(int _m_item_type,CVector2D _m_pos);
 	void Update();
 	void Draw();
-<<<<<<< HEAD
-=======
 	void HitCheck(/*Task* _t*/);
 	 CVector2D GetPos() {
 		 return m_pos;
@@ -32,5 +30,4 @@ public:
 	 CRect GetRect() {
 		 return m_rect;
 	 }
->>>>>>> 7b7833fccc61631035d5b5e9c0ad3425b18ce63d
 };

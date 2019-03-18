@@ -4,6 +4,7 @@
 
 class BossFireEffect : public Task {
 private:
+	CImage m_flip;
 	CAnimImage m_img;
 	CVector2D m_pos;
 public:

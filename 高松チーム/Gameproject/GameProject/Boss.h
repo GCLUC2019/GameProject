@@ -22,10 +22,9 @@ private:
 		eFireAttack,
 		eHeadAttack,
 	};
-	CImage m_img2;
+	CImage m_img2;//攻撃時
 	CAnimImage m_img3;//ボスの待機状態のアニメーション
 	
-
 	CVector2D m_pos2;
 	CVector2D m_player_pos; //プレイヤーの座標を格納する
 
@@ -107,7 +106,8 @@ private:
 	bool m_idle_flag;
 	bool m_draw_flag;
 	bool m_attack_flag;
-	bool m_hand_flag;
+	bool m_hand_flag;//下に下がるときのやつ
+	bool m_slash_flag;//攻撃時
 
 protected:
 

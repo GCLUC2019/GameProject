@@ -8,7 +8,7 @@
 */
 class BossManager : public Task {
 private:
-	enum B{
+	enum Manager{
 		eIdle,
 		eAttackDown = 2,
 		eAttackDown2,
