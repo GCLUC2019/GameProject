@@ -10,6 +10,7 @@ PlayerEffectLongAttack::PlayerEffectLongAttack(const CVector2D& pos, bool _flip)
 	m_pos = pos;
 	m_vec = CVector2D(ZERO,ZERO);
 	m_img = COPY_RESOURCE("PEffectLongAttack", CAnimImage*);
+	m_rect = CRect(-50, -50, -50, -50);
 	m_img.SetFlipH(m_flip);
 
 }
@@ -32,6 +33,7 @@ void PlayerEffectLongAttack::Draw()
 	m_img.SetCenter(70 / 2, 70 / 2);
 	m_img.SetPos(m_pos-CVector2D(0,70));
 	m_img.SetFlipH(m_flip);
+	m_rect = CRect(-60, -120, -20, -40);
 	m_img.Draw();
 }
 
