@@ -142,81 +142,48 @@ void Player::Move()
 
 void Player::Jump()
 {
-    //if (m_jump2_flg == false) {
         static float time = 0;
-        
-        m_pos = m_pos_old;
-        if (m_death_flg) {
-            m_jump_flg = false;
-            time = 0;
-            return;
-        }
-        static int jump_vec_old = m_jump_vec;
-        jump_vec_old = m_jump_vec;
-        m_jump_vec = 0 + JUMP_SPD * time + GRAVITY * (time*time) / 2;
-        m_jump_vec *= -1;
-        if (jump_vec_old - m_jump_vec < 0)
-            m_state = eJumpDown;
-        time += 0.5f;
+		static int jump_vec_old = m_jump_vec;
+		m_pos = m_pos_old;
+		m_jump2_flg = false;
+		if (m_death_flg) {
+			m_jump_flg = false;
+			time = 0;
+			return;
+		}
+		
+		Task* t = CollitionBase::GetCollisionCheckRect(this, CharacterData::eCollisionBox);
+		if (t != nullptr&& jump_vec_old - m_jump_vec < 0) {
+			CollisionBox* b = dynamic_cast<CollisionBox*>(t);
+			//time = 0;
+			if (b == nullptr)
+				return;
+			m_pos.y = b->GetPos().y - b->GetRect().m_bottom - 5;
 
-        g_game_data.m_scroll.y = m_jump_vec;
-        m_pos += CVector2D(0, m_jump_vec);
-        Task* t = CollitionBase::GetCollisionCheckRect(this, CharacterData::eCollisionBox);
-        if (CollitionBase::CollisionCheckRect(this, CharacterData::eCollisionBox)) {
-            CollisionBox* b = dynamic_cast<CollisionBox*>(t);
-            time = 0;
-            m_jump_vec = jump_vec_old;
-            m_pos_old.y = b->GetPos().y - b->GetRect().m_bottom;
-            m_pos = m_pos_old;
-            m_jump_flg = false;
-            m_jump2_flg = true;
-            printf("æ‚ê‚½I\n");
-        }
-        else if (m_jump_vec > 0) {
-            time = 0;
-            m_jump_vec = 0;
-            m_jump_flg = false;
-            m_pos = m_pos_old;
-        }
-    //}
-    /*if (m_jump2_flg==true) {
-        static float time = 0;
-        m_pos = m_pos_old;
-        if (m_death_flg) {
-            m_jump_flg = false;
-            time = 0;
-            return;
-        }
-        static int jump_vec_old = m_jump_vec;
-        jump_vec_old = m_jump_vec;
-        m_jump_vec = m_jump_vec + JUMP_SPD * time + GRAVITY * (time*time) / 2;
-        m_jump_vec *= -1;
-        if (jump_vec_old - m_jump_vec < 0)
-            m_state = eJumpDown;
-        time += 0.5f;
+			m_jump2_flg = true;
+			printf("æ‚ê‚½I\n");
+		}
+       
+		if (m_jump2_flg == false) {
+			jump_vec_old = m_jump_vec;
+			m_jump_vec = 0 + JUMP_SPD * time + GRAVITY * (time*time) / 2;
+			m_jump_vec *= -1;
+			if (jump_vec_old - m_jump_vec < 0)
+				m_state = eJumpDown;
 
-        g_game_data.m_scroll.y = m_jump_vec;
-        m_pos += CVector2D(0, m_jump_vec);
-        Task* t = CollitionBase::GetCollisionCheckRect(this, CharacterData::eCollisionBox);
-        if (CollitionBase::CollisionCheckRect(this, CharacterData::eCollisionBox)) {
-            CollisionBox* b = dynamic_cast<CollisionBox*>(t);
-            time = 0;
-            m_jump_vec = jump_vec_old;
-            m_pos_old.y = b->GetPos().y - b->GetRect().m_bottom;
-            m_pos = m_pos_old;
-            m_jump_flg = false;
-            m_jump2_flg = true;
-            printf("æ‚ê‚½I\n");
-        }
-        else if (m_jump_vec > m_before_jump_pos) {
-            time = 0;
-            m_jump_vec = 0;
-            m_jump2_flg = false;
-            m_jump_flg = false;
-            m_pos = m_pos_old;
-        }
 
-    }*/
+			time += 0.5f;
+
+			g_game_data.m_scroll.y = m_jump_vec;
+			m_pos += CVector2D(0, m_jump_vec);
+			//
+			if (m_jump_vec > 0) {
+				time = 0;
+				m_jump_vec = 0;
+				m_jump_flg = false;
+				m_pos = m_pos_old;
+			}
+		}
 }
 
 void Player::Attack()
