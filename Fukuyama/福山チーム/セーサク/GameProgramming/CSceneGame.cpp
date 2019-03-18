@@ -27,13 +27,13 @@ void CSceneGame::Init(){
 	Enemy2->mRotation = 270.0f;
 
 	SpeedEnemy->Init();
-	SpeedEnemy->mPosition = CVector2(90.0f, 0.0f);
-	SpeedEnemy->mRotation = 150.0f;
+	SpeedEnemy->mPosition = CVector2(400.0f, -200.0f);
+	SpeedEnemy->mRotation = 90.0f;
 
 
 	Boss->Init();
-	Boss->mPosition = CVector2(400.0f, -250.0f);
-	Boss->mRotation = -270.0f;
+	Boss->mPosition = CVector2(400.0f, -150.0f);
+	Boss->mRotation = 90.0f;
 
 	CTaskManager::Get()->Add(Tank);
 	CTaskManager::Get()->Add(EnemyTank);

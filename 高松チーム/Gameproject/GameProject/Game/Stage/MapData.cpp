@@ -8,6 +8,7 @@ MapData::MapData():Task(eMap)
 
 void MapData::Update()
 {
+    
 }
 
 void MapData::Draw()
