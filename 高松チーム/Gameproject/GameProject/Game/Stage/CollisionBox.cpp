@@ -1,10 +1,9 @@
 #include "CollisionBox.h"
 
-CollisionBox::CollisionBox(CVector2D _pos, CRect _rect):Task(eCollisionBox),
-m_pos(_pos),
-m_rect(_rect)
+CollisionBox::CollisionBox(const CVector2D &_pos, const CRect &_rect):Task(eCollisionBox)
 {
-
+    m_pos = _pos;
+    m_rect = _rect;
 }
 
 void CollisionBox::Update()

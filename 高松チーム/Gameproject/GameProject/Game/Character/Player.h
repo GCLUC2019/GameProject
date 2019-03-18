@@ -38,7 +38,7 @@ private:
 	float m_speed;			//移動速度
 	int m_state;			// 状態
 	int m_state_old;		// 前状態
-	int m_jump_vec;			//ジャンプ値
+	float m_jump_vec;			//ジャンプ値
 	float m_depth;			//描画奥行き
 
 
