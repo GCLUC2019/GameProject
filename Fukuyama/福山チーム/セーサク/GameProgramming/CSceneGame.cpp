@@ -20,20 +20,20 @@ void CSceneGame::Init(){
 
 	Enemy1->Init();                       //追加　釜田
 	Enemy1->mPosition = CVector2(-300.0f, 150.0f);
-	Enemy1->mRotation = 250.0f;
+	Enemy1->mRotation = 270.0f;
 
 	Enemy2->Init();                       //追加　釜田
-	Enemy2->mPosition = CVector2(-380.0f, 150.0f);
+	Enemy2->mPosition = CVector2(-370.0f, 150.0f);
 	Enemy2->mRotation = 270.0f;
 
 	SpeedEnemy->Init();
-	SpeedEnemy->mPosition = CVector2(90.0f, 0.0f);
-	SpeedEnemy->mRotation = 150.0f;
+	SpeedEnemy->mPosition = CVector2(400.0f, -200.0f);
+	SpeedEnemy->mRotation = 90.0f;
 
 
 	Boss->Init();
-	Boss->mPosition = CVector2(400.0f, -250.0f);
-	Boss->mRotation = -270.0f;
+	Boss->mPosition = CVector2(400.0f, -150.0f);
+	Boss->mRotation = 90.0f;
 
 	CTaskManager::Get()->Add(Tank);
 	CTaskManager::Get()->Add(EnemyTank);

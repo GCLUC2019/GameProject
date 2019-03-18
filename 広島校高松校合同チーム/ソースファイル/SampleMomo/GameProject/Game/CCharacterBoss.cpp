@@ -176,7 +176,7 @@ void CCharacterBoss::Walk()
 		return;
 	}
 
-	m_anim_p->SetWillPlayAnim(eEnemyAnimBossIdIdle);
+	m_anim_p->SetWillPlayAnim(eEnemyAnimBossIdWalk);
 	CloseToPlayer();
 }
 

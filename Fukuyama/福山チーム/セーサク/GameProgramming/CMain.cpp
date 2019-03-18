@@ -54,12 +54,12 @@ void CMain::Init() {
 
 //ŒJ‚è•Ô‚µŽÀs‚·‚éˆ—‚Ì’è‹`
 void CMain::Update() {
+	BackImage.SetColor(1.0f, 1.0f, 1.0f, 1.0f);
 	BackImage.Draw(MapTexture, 0, 1000, 0, 750);
 	BackImage.x = 0;
 	BackImage.y = 0;
 	BackImage.h = 300;
 	BackImage.w = 400;
-	BackImage.SetColor(1.0f, 1.0f, 1.0f, 1.0f);
 	/*mpMap->Update();  //‘O‰ª
 	if (mpMap->mScneMap != mMapTag){
 	delete mpMap;
