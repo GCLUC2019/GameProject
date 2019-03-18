@@ -8,20 +8,26 @@
 class Tutorial : public Task {
 private:
 	bool m_state_flg;
-    CFont m_font;
-    char m_text[MAX_LINE][128];
-    int m_line;
-    int m_line_size;
+   
 protected:
 public:
 	Tutorial();
 	~Tutorial();
 	void Draw();
 	void Update();
-	/*
-	　@brief　チュートリアル用説明UI
-	*/
-	void DescriptionUI();
 
 
+};
+
+class DescriptionUI : public Task {
+private:
+	CFont m_font;
+	char m_text[MAX_LINE][128];
+	int m_line;
+	int m_line_size;
+
+public:
+	DescriptionUI();
+	void Update();
+	void Draw();
 };
