@@ -8,8 +8,8 @@
 class Enemy04 : public EnemyBase {
 private:
 	enum Enemy04State {
-		eIdile,
 		eMove,
+		eSearch,
 		eAttack,
 		eDamage,
 	};
@@ -25,10 +25,6 @@ private:
 	void Attack();//攻撃
 	void Damage();//ダメージ
 	void MoveControl();
-	/*
-	@brief アニメーション設定関数
-	*/
-	void SetAnim();
 public:
 	Enemy04();
 	Enemy04(CVector2D _pos);

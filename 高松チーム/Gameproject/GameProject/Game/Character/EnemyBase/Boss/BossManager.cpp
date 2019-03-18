@@ -18,7 +18,7 @@ BossManager::BossManager() : Task(eBossManager)
 	m_pos = CVector2D(WIGHT_SIZE / 2 - BOSS_X_SIZE / 4, HEIGHT_SIZE / 2 - BOSS_Y_SIZE / 2);
 	m_pos2 = CVector2D(420, BOSS_Y_SIZE / 2);
 
-	m_state = B::eIdle;
+	m_state = Manager::eIdle;
 
 	m_player_pos = CVector2D(640, 300);//‰¼
 
@@ -40,35 +40,35 @@ BossManager::~BossManager()
 
 void BossManager::Nothing()
 {
-	m_idle_cnt = 0;
+	/*m_idle_cnt = 0;
 	m_idle_flag = true;
-	m_boss_attack_type = 0;
-	m_state = B::eIdle;
+	m_boss_attack_type = 0;*/
+	//m_state = B::eIdle;
 	
 }
 
 void BossManager::Up()
 {
-	m_pos2.y -= 10;
+	/*m_pos2.y -= 10;
 	if (m_pos.y < 0) {
 		m_state = eAttackDown;
-	}
+	}*/
 }
 
 void BossManager::Idle()
 {
-	/*if (m_idle_cnt <= 0 && m_idle_flag == true) {
-		TaskManager::GetInstance()->AddTask(new BossHand(m_player_pos,B::eIdle));
-		TaskManager::GetInstance()->AddTask(new BossHead(m_player_pos, B::eIdle));
-		TaskManager::GetInstance()->AddTask(new BossTail(m_player_pos, B::eIdle));
+	if (m_idle_cnt <= 0 && m_idle_flag == true) {
+		TaskManager::GetInstance()->AddTask(new BossHand(m_player_pos, Manager::eIdle));
+		TaskManager::GetInstance()->AddTask(new BossHead(m_player_pos, Manager::eIdle));
+		TaskManager::GetInstance()->AddTask(new BossTail(m_player_pos, Manager::eIdle));
 	}
 
 	m_idle_cnt++;
 
-	if (m_idle_cnt >= 420) {
+	if (m_idle_cnt >= 540) {
 		m_idle_flag = false;
-		m_state = B::eUp;
-	}*/
+		m_state = Manager::eAttackDown;
+	}
 }
 
 void BossManager::Attack()
@@ -76,38 +76,36 @@ void BossManager::Attack()
 	if (m_boss_attack_type == 0) m_boss_attack_type = rand() % 100;
 
 	if (m_boss_attack_type > 80) m_boss_attack_type = 5;
-	else if (m_boss_attack_type <= 80 && m_boss_attack_type > 60) m_boss_attack_type = 4;
-	else if (m_boss_attack_type <= 60 && m_boss_attack_type > 40) m_boss_attack_type = 3;
-	else if (m_boss_attack_type <= 40 && m_boss_attack_type > 20) m_boss_attack_type = 2;
-	else if (m_boss_attack_type <= 20 && m_boss_attack_type > 0) m_boss_attack_type = 1;
+	else if (m_boss_attack_type <= 80 && m_boss_attack_type > 60) m_boss_attack_type = 5;
+	else if (m_boss_attack_type <= 60 && m_boss_attack_type > 40) m_boss_attack_type = 5;
+	else if (m_boss_attack_type <= 40 && m_boss_attack_type > 20) m_boss_attack_type = 5;
+	else if (m_boss_attack_type <= 20 && m_boss_attack_type > 0) m_boss_attack_type = 5;
 
 
 	switch (m_boss_attack_type) {
 	case 1:
-		TaskManager::GetInstance()->AddTask(new BossHead(m_player_pos, B::eAttackDown));
-		m_state = B::eNothing;
+		TaskManager::GetInstance()->AddTask(new BossHead(m_player_pos, Manager::eAttackDown));
+		m_state = Manager::eNothing;
 		break;
 	case 2:
-		TaskManager::GetInstance()->AddTask(new BossHand(m_player_pos, B::eAttackDown));
-		m_state = B::eNothing;
+		TaskManager::GetInstance()->AddTask(new BossHand(m_player_pos, Manager::eAttackDown));
+		m_state = Manager::eNothing;
 		break;
 	case 3:
-		TaskManager::GetInstance()->AddTask(new BossTail(m_player_pos, B::eAttackDown));
-		m_state = B::eNothing;
+		TaskManager::GetInstance()->AddTask(new BossTail(m_player_pos, Manager::eAttackDown));
+		m_state = Manager::eNothing;
 		break;
 	case 4:
-		TaskManager::GetInstance()->AddTask(new BossHead(m_player_pos, B::eAttackDown2));
-		m_state = B::eNothing;
+		TaskManager::GetInstance()->AddTask(new BossHead(m_player_pos, Manager::eAttackDown2));
+		m_state = Manager::eNothing;
 		break;
 	case 5:
-		TaskManager::GetInstance()->AddTask(new BossHand(m_player_pos, B::eAttackDown2));
-		m_state = B::eNothing;
+		TaskManager::GetInstance()->AddTask(new BossHand(m_player_pos, Manager::eAttackDown2));
+		m_state = Manager::eNothing;
 		break;
 	default:
 		break;
 	}
-	
-	
 }
 
 void BossManager::Death()
@@ -146,18 +144,12 @@ void BossManager::Update()
 void BossManager::Draw()
 {
 	m_img.SetRect(0, BOSS_Y_SIZE * 5, BOSS_X_SIZE, BOSS_Y_SIZE * 6);
-	m_img2.SetRect(0, BOSS_Y_SIZE * 5, BOSS_X_SIZE, BOSS_Y_SIZE * 6);
 
-	m_img2.SetSize(BOSS_X_SIZE / 2, BOSS_Y_SIZE / 2);
-
-	if (m_idle_flag == false) {
-		m_img2.SetPos(m_pos2);
-		m_img2.Draw();
-	}
-
-	
-
-	if (m_death_flag == true) {
+	switch (m_state) {
+	case eDeath:
 		m_img.Draw();
+		break;
+	default:
+		break;
 	}
 }

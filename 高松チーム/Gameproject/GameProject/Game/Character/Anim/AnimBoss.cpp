@@ -32,10 +32,10 @@ static TexAnim BossHand[] = {
 };
 
 static TexAnim BossTailAttackMotion[] = {
-	{ 24,10 },
-{ 25,10 },
-{ 26,10 },
-{ 27,10 },
+	{ 24,12 },
+{ 25,12 },
+{ 26,12 },
+{ 27,12 },
 };
 
 static TexAnim BossFireAttackMotion[] = {

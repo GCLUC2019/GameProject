@@ -126,10 +126,22 @@ static TexAnim PlayerEffectSpecialAttack[] = {
 {9,10},
 };
 
+static TexAnim PlayerEffectGetDamage[] = {
+	{0,2},
+{1,2},
+{2,2},
+{3,2},
+{4,2},
+{5,2},
+{6,2},
+{7,2},
+};
+
 TexAnimData PlayerEffectAnimData[] = {
 	ANIMDATA(PlayerEffectLongAttack),
 	ANIMDATA(PLayerEffectShortAttack01),
 	ANIMDATA(PLayerEffectShortAttack02),
 	ANIMDATA(PLayerEffectShortAttack03),
 	ANIMDATA(PlayerEffectSpecialAttack),
+	ANIMDATA(PlayerEffectGetDamage),
 };

@@ -80,3 +80,15 @@ public:
 	void Update();
 	void Draw();
 };
+
+class PlayerEffectGetDamage : public Task {
+private:
+	CAnimImage m_img;
+	CVector2D m_pos;
+	CVector2D m_vec;
+
+public:
+	PlayerEffectGetDamage(const CVector2D & pos);
+	void Update();
+	void Draw();
+};

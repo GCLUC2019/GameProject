@@ -54,7 +54,6 @@ BossLazerEffect::BossLazerEffect(const CVector2D& pos) : Task(eBossLazerEffectc)
 
 	m_pos.y = pos.y + LAZER_Y_SIZE / 6;
 	
-	
 }
 
 
@@ -96,5 +95,6 @@ void BossSlashEffect::Draw()
 {
 	m_img.SetSize(SLASH_SIZE * 2, SLASH_SIZE * 2);
 	m_img.SetPos(m_pos/* - g_game_data.m_scroll*/);
+	m_img.SetFlipH(false);
 	m_img.Draw();
 }

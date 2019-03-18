@@ -4,7 +4,8 @@ enum AnimItemBox{
 	eTrueBoxClose,
 	eTrueBoxOpen,
 	eDummyBoxClose,
-	eDummyBoxOpen,
+	eDummyBoxOpen01,
+	eDummyBoxOpen02,
 };
 
 extern TexAnimData ItemBoxAnimData[];

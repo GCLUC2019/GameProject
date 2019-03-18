@@ -35,9 +35,6 @@ enum Enemy04Anim {
 	eEAttack04,
 	eEDamage04,
 	eEDeath04,
-	eELAttack04,
-	eEAttackp1,
-	eEAttackp2,
 };
 
 enum Enemy05Anim {

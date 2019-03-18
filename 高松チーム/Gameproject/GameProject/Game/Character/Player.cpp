@@ -330,17 +330,10 @@ void Player::SetAnim()
 void Player::Update()
 {
 #ifdef _DEBUG
-<<<<<<< HEAD
-	if (CInput::GetState(0, CInput::eHold, CInput::eMouseL))
-		Damage(10);
-	if (CInput::GetState(0, CInput::eHold, CInput::eMouseR))
-		SetKill();
-=======
 	if (CInput::GetState(0, CInput::ePush, CInput::eMouseL))
 		Damage(50);
 	if (CInput::GetState(0, CInput::ePush, CInput::eMouseR))
 		SpecialPuls(10);
->>>>>>> 7b7833fccc61631035d5b5e9c0ad3425b18ce63d
 #endif // _DEBUG
 
 	if (m_death_flg) {
