@@ -10,9 +10,14 @@
 #include<stdio.h>
 #include "CHpBar.h"
 
+
 class CEnemy1 :public CTank{
 public:
 	int mFireIntervar;
+	int mAttackIntervar;
+	static CTexture mTexImage;
+	static CTexture mTexImage2;
+
 	void Init();
 	void Update();
 	void Render();
