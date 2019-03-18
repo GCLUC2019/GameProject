@@ -98,6 +98,9 @@
     <ClCompile Include="Game\Scene\Result.cpp">
       <Filter>Game\Resource</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Stage\CollisionBox.cpp">
+      <Filter>Game\Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GID.h" />
@@ -201,6 +204,9 @@
     </ClInclude>
     <ClInclude Include="Game\Character\EnemyBase\Enemy\Enemy04.h">
       <Filter>Game\Character\EnemyBase\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Stage\CollisionBox.h">
+      <Filter>Game\Stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
