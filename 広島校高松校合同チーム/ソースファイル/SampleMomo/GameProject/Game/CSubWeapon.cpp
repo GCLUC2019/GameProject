@@ -18,10 +18,10 @@ CSubWeaponItem::CSubWeaponItem(CVector3D pos, int weapon_num) :CGameSceneObject(
 	LoadAnimImage();
 
 	SetIsShowShadow(true);
-	SetRads(75, 150, 10);
+	SetRads(0, 0, 0);
 
 	SetShadowSize(CVector2D(60, 15));
-	SetDrawAdjPos(CVector2D(0, -375.0f));
+	SetDrawAdjPos(CVector2D(0, -68.0f));
 
 	//“–‚½‚è”»’è‚Ì—Dæ“x
 	SetCollisionPriority(5);
@@ -39,8 +39,18 @@ CSubWeaponItem::~CSubWeaponItem()
 
 void CSubWeaponItem::LoadAnimImage()
 {
-	m_anim_p->SetAnimImage(eItemAnimIdle1, GET_RESOURCE("IconSpear", CImage*));
-	//m_anim_image_p[eItemAnimIdle1] = GET_RESOURCE("Enemy_Damage_0", CImage*);
+	switch (m_weapon_num) {
+	case eWeaponSpear:
+		m_anim_p->SetAnimImage(eItemAnimIdle1, GET_RESOURCE("IconSpear", CImage*));
+		break;
+	case eWeaponAxe:
+		m_anim_p->SetAnimImage(eItemAnimIdle1, GET_RESOURCE("IconAxe", CImage*));
+		break;
+	case eWeaponGun:
+		m_anim_p->SetAnimImage(eItemAnimIdle1, GET_RESOURCE("IconGun", CImage*));
+		break;
+	}
+	
 
 	AnimInfo* m_anim_info = m_anim_p->GetAnimInfoArray();
 	m_anim_info[eItemAnimIdIdle].image_num = 1;
@@ -70,5 +80,5 @@ void CSubWeaponItem::GameSceneObjectUpdate()
 void CSubWeaponItem::PlayerGetItem()
 {
 	m_get_flag = false;
-
+	CCharacterPlayer::GetInstance()->PlayerGainEquip(m_weapon_num,m_energy);
 }

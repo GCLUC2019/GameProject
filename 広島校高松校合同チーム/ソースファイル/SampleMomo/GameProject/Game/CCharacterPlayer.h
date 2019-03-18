@@ -20,7 +20,23 @@
 #define PLAYER_FINISH_ATTACK_HIT_FRAME_START (30)
 #define PLAYER_FINISH_ATTACK_HIT_FRAME_END (42)
 
-//予備動作のフレーム
+
+#define PLAYER_SPEAR_ATTACK_FRAME (20)
+#define PLAYER_SPEAR_ATTACK_HIT_FRAME_START (5)
+#define PLAYER_SPEAR_ATTACK_HIT_FRAME_END (20)
+
+
+#define PLAYER_AXE_ATTACK_FRAME (20)
+#define PLAYER_AXE_ATTACK_HIT_FRAME_START (7)
+#define PLAYER_AXE_ATTACK_HIT_FRAME_END (20)
+
+
+
+#define PLAYER_GUN_ATTACK_FRAME (40)
+#define PLAYER_GUN_ATTACK_HIT_FRAME_START (21)
+#define PLAYER_GUN_ATTACK_HIT_FRAME_END (22)
+
+//予備動作のフレーム(これも攻撃ごとにしたほうがよい)
 #define PLAYER_ATTACK_RESERVE_ANIM_FRAME (15)
 
 
@@ -33,6 +49,17 @@
 
 #define PLAYER_FINISH_ATTACK_LENGTH CVector3D(300,500,200)
 #define PLAYER_FINISH_ATTACK_POWER (1.0)
+
+#define PLAYER_SPEAR_ATTACK_LENGTH CVector3D(400,500,200)
+#define PLAYER_SPEAR_ATTACK_POWER (1.5)
+
+
+#define PLAYER_AXE_ATTACK_LENGTH CVector3D(300,500,300)
+#define PLAYER_AXE_ATTACK_POWER (2.0)
+
+
+#define PLAYER_GUN_ATTACK_LENGTH CVector3D(1200,200,50)
+#define PLAYER_GUN_ATTACK_POWER (1.0)
 
 
 #define PLAYER_DAMAGE_ANIM_FRAME (20)
@@ -95,6 +122,12 @@ enum {
 	ePlayerAnimIdFinishAttack,
 	ePlayerAnimIdSideAttackReserve,
 	ePlayerAnimIdFinishAttackKeepSlash,
+	ePlayerAnimIdSpearAttack,
+	ePlayerAnimIdSpearAttackReserve,
+	ePlayerAnimIdAxeAttack,
+	ePlayerAnimIdAxeAttackReserve,
+	ePlayerAnimIdGunAttack,
+	ePlayerAnimIdGunAttackReserve,
 	ePlayerAnimIdMax,
 };
 
@@ -177,6 +210,17 @@ private:
 	bool m_is_attacking = false;
 	double m_attacking_count = 0.0;
 	int m_attack_combo_count = 0;
+
+
+	//武器の情報
+	int m_equip_weapon_id = -1;
+
+	//武器耐久値
+	float m_equip_endurance = 0;
+
+	//武器攻撃しているかのステート
+	bool m_is_weapon_attacking = false;
+
 	
 	bool m_is_dashing = false;
 
@@ -217,6 +261,8 @@ public:
 	~CCharacterPlayer();
 	void LoadAnimImage();
 
+
+	void InputDestroyWeapon();
 	void InputDash();
 	void InputAttack();
 	void InputMove();
@@ -244,6 +290,7 @@ public:
 	void CharacterBeforeCollisionCheck();
 	void CollisionCheckCharacter(Task* _collision_task);
 	void CharacterDraw();
+
 	
 
 	//新たな入力をした場合、あらかじめ入力しておいたものを破棄する
@@ -255,6 +302,15 @@ public:
 
 	void ReceiveAttack();
 
+	void PlayerGainEquip(int _equip_id, float _equip_endurance) {
+		m_equip_weapon_id = _equip_id;
+		m_equip_endurance = _equip_endurance;
+	};
+
+	void PlayerDestroyEquip() {
+		m_equip_weapon_id = -1;
+	}
+		
 	static CCharacterPlayer* GetInstance();
 };
 

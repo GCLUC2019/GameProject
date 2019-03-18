@@ -1,4 +1,4 @@
-BASE_FILE_PATH: EnemyAnim/
+BASE_FILE_PATH: EnemyAnim/Spear/
 LOAD_RESORCE_IMAGE: IMAGE_NAME: Enemy_Spear_Move_0 LOAD_IMAGE_FILE_PATH: Enemy_Spear_Move_0.png
 LOAD_RESORCE_IMAGE: IMAGE_NAME: Enemy_Spear_Move_1 LOAD_IMAGE_FILE_PATH: Enemy_Spear_Move_1.png
 LOAD_RESORCE_IMAGE: IMAGE_NAME: Enemy_Spear_Move_2 LOAD_IMAGE_FILE_PATH: Enemy_Spear_Move_2.png

@@ -1,7 +1,8 @@
 #include "CCharacterEnemy.h"
 #include "CAnimation.h"
 #include "CCharacterPlayer.h"
-
+#include "CGameScene.h"
+#include "CSubWeapon.h"
 
 CCharacterEnemy::CCharacterEnemy(int _enemy_id, CVector3D _enemy_pos) :CCharacter(eTaskIdEnemy, 0)
 {
@@ -29,6 +30,22 @@ CCharacterEnemy::CCharacterEnemy(int _enemy_id, CVector3D _enemy_pos) :CCharacte
 
 CCharacterEnemy::~CCharacterEnemy()
 {
+	//アイテムドロップ
+	int drop_weapon_id = 0;
+
+	switch (m_enemy_id) {
+	case eEnemyIdSpear:
+		drop_weapon_id = eWeaponSpear;
+		break;
+	case eEnemyIdAxe:
+		drop_weapon_id = eWeaponAxe;
+		break;
+	case eEnemyIdGun:
+		drop_weapon_id = eWeaponGun;
+		break;
+	}
+
+	CGameScene::GetInstance()->AddGameSceneObject(new CSubWeaponItem(m_pos,drop_weapon_id));
 }
 
 void CCharacterEnemy::LoadAnimImage()
@@ -38,26 +55,43 @@ void CCharacterEnemy::LoadAnimImage()
 
 	switch (m_enemy_id) {
 	case eEnemyIdSpear:
+		m_is_range = false;
 		m_receive_damage_frame = ENEMY_SPEAR_RECEIVE_DAMAGE_FRAME;
 		m_attack_power = ENEMY_SPEAR_ATTACK_POWER;
 		m_attacking_hit_start_frame = ENEMY_SPEAR_ATTACK_HIT_START_FRAME;
 		m_attacking_hit_end_frame = ENEMY_SPEAR_ATTACK_HIT_END_FRAME;
 		m_attack_frame = ENEMY_SPEAR_ATTACK_FRAME;
 		m_attack_length = ENEMY_SPEAR_ATTACK_LENGTH;
-		m_move_start_length = ENEMY_SPEAR_MOVE_START_LENGTH;
+		m_find_length = ENEMY_SPEAR_FIND_LENGTH;
 		m_move_end_length = ENEMY_SPEAR_MOVE_END_LENGTH;
+		m_space_length = ENEMY_SPEAR_SPACE_LENGTH;
 		m_anim_p->ReadAnimDataFile("EnemyAnim/Spear/ENEMY_SPEAR_ANIM_DATA.anim");
 		break;
 	case eEnemyIdAxe:
+		m_is_range = false;
 		m_receive_damage_frame = ENEMY_AXE_RECEIVE_DAMAGE_FRAME;
 		m_attack_power = ENEMY_AXE_ATTACK_POWER;
 		m_attacking_hit_start_frame = ENEMY_AXE_ATTACK_HIT_START_FRAME;
 		m_attacking_hit_end_frame = ENEMY_AXE_ATTACK_HIT_END_FRAME;
 		m_attack_frame = ENEMY_AXE_ATTACK_FRAME;
 		m_attack_length = ENEMY_AXE_ATTACK_LENGTH;
-		m_move_start_length = ENEMY_AXE_MOVE_START_LENGTH;
+		m_find_length = ENEMY_AXE_FIND_LENGTH;
 		m_move_end_length = ENEMY_AXE_MOVE_END_LENGTH;
+		m_space_length = ENEMY_AXE_SPACE_LENGTH;
 		m_anim_p->ReadAnimDataFile("EnemyAnim/Axe/ENEMY_AXE_ANIM_DATA.anim");
+		break;
+	case eEnemyIdGun:
+		m_is_range = true;
+		m_receive_damage_frame = ENEMY_GUN_RECEIVE_DAMAGE_FRAME;
+		m_attack_power = ENEMY_GUN_ATTACK_POWER;
+		m_attacking_hit_start_frame = ENEMY_GUN_ATTACK_HIT_START_FRAME;
+		m_attacking_hit_end_frame = ENEMY_GUN_ATTACK_HIT_END_FRAME;
+		m_attack_frame = ENEMY_GUN_ATTACK_FRAME;
+		m_attack_length = ENEMY_GUN_ATTACK_LENGTH;
+		m_find_length = ENEMY_GUN_FIND_LENGTH;
+		m_move_end_length = ENEMY_GUN_MOVE_END_LENGTH;
+		m_space_length = ENEMY_GUN_SPACE_LENGTH;
+		m_anim_p->ReadAnimDataFile("EnemyAnim/Gun/ENEMY_GUN_ANIM_DATA.anim");
 		break;
 	}
 	
@@ -74,8 +108,9 @@ void CCharacterEnemy::CharacterUpdate()
 	Attacking();
 	ReceiveDamageNow();
 
-	EnemyMoving();
 	EnemyAttack();
+	EnemyMoving();
+	
 
 	
 
@@ -143,11 +178,12 @@ void CCharacterEnemy::EnemyMoving()
 	//もし攻撃中なら移動しない
 	if (m_is_attacking == true) return;
 
-	//もし移動中でなくて既定の距離以下なら移動しない
-	if (m_is_moving == false && target_length <= m_move_start_length) return;
+	//既定の距離より離れてるなら、視認できないとして移動しない
+	if (target_length > m_find_length) return;
 
-	//もし既定の距離まで近づいているなら移動をやめる
-	if (target_length <= m_move_end_length) {
+	//もし既定の距離まで近づいていてなおかつ攻撃可能な範囲なら移動を完了する
+	if (target_vec.x <= m_move_end_length.x && target_vec.y <= m_move_end_length.y && target_vec.z <= m_move_end_length.z
+		&& abs(target_vec.x) <= m_attack_length.x && abs(target_vec.y) <= m_attack_length.y && abs(target_vec.z) <= m_attack_length.z) {
 		m_is_moving = false;
 		return;
 	}
@@ -177,9 +213,10 @@ void CCharacterEnemy::EnemyAttack()
 
 	const CVector3D& target_pos = m_target_p->GetPos();
 	CVector3D target_vec = target_pos - m_pos;
-	float target_length = sqrt(target_vec.x * target_vec.x + target_vec.y * target_vec.y + target_vec.z * target_vec.z);
+	//float target_length = sqrt(target_vec.x * target_vec.x + target_vec.y * target_vec.y + target_vec.z * target_vec.z);
 
-	if (target_length <= m_attack_length) {
+	printf("abs(target_vec.x) %lf abs(target_vec.y) %lf abs(target_vec.z) %lf \n", abs(target_vec.x), abs(target_vec.y), abs(target_vec.z));
+	if (abs(target_vec.x) <= m_attack_length.x && abs(target_vec.y) <= m_attack_length.y && abs(target_vec.z) <= m_attack_length.z) {
 		m_is_attacking = true;
 		m_is_hit_attack = false;
 		m_attacking_count = m_attack_frame;
@@ -206,12 +243,12 @@ void CCharacterEnemy::Attacking()
 		//距離計算
 		const CVector3D& target_pos = m_target_p->GetPos();
 		CVector3D target_vec = target_pos - m_pos;
-		float target_length = sqrt(target_vec.x * target_vec.x + target_vec.y * target_vec.y + target_vec.z * target_vec.z);
+		//float target_length = sqrt(target_vec.x * target_vec.x + target_vec.y * target_vec.y + target_vec.z * target_vec.z);
 
 		//printf("攻撃判定フレーム\n");
 
 		//もし攻撃範囲内なら
-		if (target_length <= m_attack_length && m_is_hit_attack == false) {
+		if (abs(target_vec.x) <= m_attack_length.x && abs(target_vec.y) <= m_attack_length.y && abs(target_vec.z) <= m_attack_length.z && m_is_hit_attack == false) {
 			//printf("ダメージを与えた\n");
 			m_is_hit_attack = true;
 
@@ -226,6 +263,12 @@ void CCharacterEnemy::Attacking()
 
 
 	m_anim_p->SetWillPlayAnim(eEnemyAnimIdAttack);
+
+	//もし遠距離かつ攻撃完了しているなら発射モーション再生
+	if (m_is_range == true && m_is_hit_attack == true) {
+		m_anim_p->SetWillPlayAnim(eEnemyAnimIdShot);
+	}
+	
 }
 
 void CCharacterEnemy::AdjAnim()
@@ -262,6 +305,30 @@ void CCharacterEnemy::AdjAnim()
 			SetSize(400, 500);
 			SetShadowSize(CVector2D(160, 50));
 			SetDrawAdjPos(CVector2D(0, 0.0f));
+			break;
+		case eEnemyAnimIdMove:
+			SetSize(400, 400);
+			SetShadowSize(CVector2D(100, 50));
+			SetDrawAdjPos(CVector2D(0, 0.0f));
+			break;
+		case eEnemyAnimIdIdle:
+			SetSize(400, 400);
+			SetShadowSize(CVector2D(100, 50));
+			SetDrawAdjPos(CVector2D(10, 0.0f));
+			break;
+		default:
+			SetSize(400, 400);
+			SetShadowSize(CVector2D(100, 50));
+			SetDrawAdjPos(CVector2D(10, 0.0f));
+			break;
+		}
+		break;
+	case eEnemyIdGun:
+		switch (m_anim_p->GetWillPlayAnim()) {
+		case eEnemyAnimIdAttack:
+			SetSize(400, 400);
+			SetShadowSize(CVector2D(160, 50));
+			SetDrawAdjPos(CVector2D(-35, 0.0f));
 			break;
 		case eEnemyAnimIdMove:
 			SetSize(400, 400);
