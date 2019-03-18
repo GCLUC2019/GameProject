@@ -4,8 +4,12 @@ CCommonObject::CCommonObject(CImage * _image, CVector3D _pos, CVector2D _size, C
 {
 	m_object_image_p = _image;
 	SetPos(_pos);
+	SetPosOld(_pos);
 	SetSize(_size);
 	SetRads(_rads);
+
+	//‚»‚à‚»‚à“®‚©‚È‚¢‚Ì‚Å‚Æ‚Ä‚Â‚à‚È‚­‘å‚«‚¢’l‚ð“ü‚ê‚Ä‚¨‚­
+	SetCollisionPriority(10000);
 }
 
 void CCommonObject::Draw()

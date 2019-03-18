@@ -9,7 +9,7 @@ CDropItem::CDropItem(int _item_id):CGameSceneObject(eTaskIdDropItem)
 		m_anim_image_p[eItemAnimStatic0] = GET_RESOURCE("IconSpear", CImage*);
 		m_anim_info[eItemAnimIdStatic].image_num = 1;
 		m_anim_info[eItemAnimIdStatic].image_id = eItemAnimStatic0;
-		m_anim_info[eItemAnimIdStatic].delay = 10;
+		m_anim_info[eItemAnimIdStatic].delay[0] = 10;
 		break;
 	}
 }

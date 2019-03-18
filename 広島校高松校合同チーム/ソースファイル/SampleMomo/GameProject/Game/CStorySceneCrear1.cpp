@@ -91,6 +91,7 @@ void CStorySceneCrear1::Draw()
 
 void CStorySceneCrear1::AddRAll()
 {
+	/*
 	ADD_RESOURCE("CrearIvent", CImage::LoadImage("Stage1CrearIvent.png"));
 	ADD_RESOURCE("Textbox", CImage::LoadImage("TextBox.png"));
 	ADD_RESOURCE("Text2-1", CImage::LoadImage("Text2-1.png"));
@@ -105,6 +106,7 @@ void CStorySceneCrear1::AddRAll()
 	ADD_RESOURCE("Text2-10", CImage::LoadImage("Text2-10.png"));
 	ADD_RESOURCE("Text2-11", CImage::LoadImage("Text2-11.png"));
 	ADD_RESOURCE("Send", CImage::LoadImage("SendIcon.png")); 
+	*/
 }
 
 void CStorySceneCrear1::Setchar()

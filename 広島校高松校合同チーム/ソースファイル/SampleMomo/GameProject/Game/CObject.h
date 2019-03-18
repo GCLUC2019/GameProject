@@ -5,6 +5,14 @@
 #include "../Global.h"
 
 
+
+enum {
+	eReceiveCollisionX,
+	eReceiveCollisionY,
+	eReceiveCollisionZ,
+};
+
+
 class CObject : public Task {
 private:
 protected:
@@ -30,6 +38,7 @@ public:
 	void SetPos(float _x,float _y,float _z) { m_pos = CVector3D(_x,_y,_z); };
 	void SetPosOld(const CVector3D& _pos) { m_pos_old = _pos; };
 
+
 	void SetRads(const CVector3D& _rads) { m_rads = _rads; };
 	void SetRads(float _x, float _y, float _z) { m_rads = CVector3D(_x, _y, _z); };
 
@@ -47,7 +56,6 @@ public:
 	
 	const CVector3D& GetPos() { return m_pos; };
 	const CVector3D& GetPosOld() { return m_pos_old; };
-
 
 	const CVector3D& GetVec() { return m_vec; };
 	const CVector3D& GetRads() { return m_rads; };
@@ -80,12 +88,12 @@ public:
 		*/
 	};
 
+	
+
 	//ベクトルによる移動を行う
 	void MovePos() {
-		m_pos += m_vec;
+		m_pos += m_vec * CFPS::GetDeltaTime() * GAME_BASE_FPS;
 	};
-
-
 };
 
 /*

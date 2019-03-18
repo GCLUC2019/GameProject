@@ -1,0 +1,61 @@
+BASE_FILE_PATH: PlayerAnim/
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Idle_Anim_0 LOAD_IMAGE_FILE_PATH: momotaro_idle_anim_0.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Idle_Anim_1 LOAD_IMAGE_FILE_PATH: momotaro_idle_anim_1.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Idle_Anim_2 LOAD_IMAGE_FILE_PATH: momotaro_idle_anim_2.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Idle_Anim_3 LOAD_IMAGE_FILE_PATH: momotaro_idle_anim_3.png
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Move_Anim_0 LOAD_IMAGE_FILE_PATH: momotaro_move_anim_0.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Move_Anim_1 LOAD_IMAGE_FILE_PATH: momotaro_move_anim_1.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Move_Anim_2 LOAD_IMAGE_FILE_PATH: momotaro_move_anim_2.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Move_Anim_3 LOAD_IMAGE_FILE_PATH: momotaro_move_anim_3.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Move_Anim_4 LOAD_IMAGE_FILE_PATH: momotaro_move_anim_4.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Move_Anim_5 LOAD_IMAGE_FILE_PATH: momotaro_move_anim_5.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Move_Anim_6 LOAD_IMAGE_FILE_PATH: momotaro_move_anim_6.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Move_Anim_7 LOAD_IMAGE_FILE_PATH: momotaro_move_anim_7.png
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Jump_Anim_0 LOAD_IMAGE_FILE_PATH: momotaro_jump_anim_0.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Jump_Anim_1 LOAD_IMAGE_FILE_PATH: momotaro_jump_anim_1.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Jump_Anim_2 LOAD_IMAGE_FILE_PATH: momotaro_jump_anim_2.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Jump_Anim_3 LOAD_IMAGE_FILE_PATH: momotaro_jump_anim_3.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Jump_Anim_4 LOAD_IMAGE_FILE_PATH: momotaro_jump_anim_4.png
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Run_Anim_0 LOAD_IMAGE_FILE_PATH: momotaro_run_anim_0.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Run_Anim_1 LOAD_IMAGE_FILE_PATH: momotaro_run_anim_1.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Run_Anim_2 LOAD_IMAGE_FILE_PATH: momotaro_run_anim_2.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Run_Anim_3 LOAD_IMAGE_FILE_PATH: momotaro_run_anim_3.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Run_Anim_4 LOAD_IMAGE_FILE_PATH: momotaro_run_anim_4.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Run_Anim_5 LOAD_IMAGE_FILE_PATH: momotaro_run_anim_5.png
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Damage_Anim_0 LOAD_IMAGE_FILE_PATH: momotaro_damage_anim_0.png
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Evasion_Anim_0 LOAD_IMAGE_FILE_PATH: momotaro_evasion_anim_0.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Evasion_Anim_1 LOAD_IMAGE_FILE_PATH: momotaro_evasion_anim_1.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Evasion_Anim_2 LOAD_IMAGE_FILE_PATH: momotaro_evasion_anim_2.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Evasion_Anim_3 LOAD_IMAGE_FILE_PATH: momotaro_evasion_anim_3.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Evasion_Anim_4 LOAD_IMAGE_FILE_PATH: momotaro_evasion_anim_4.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Evasion_Anim_5 LOAD_IMAGE_FILE_PATH: momotaro_evasion_anim_5.png
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Attack_Anim_0 LOAD_IMAGE_FILE_PATH: momotaro_attack_anim_0.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Attack_Anim_1 LOAD_IMAGE_FILE_PATH: momotaro_attack_anim_1.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Attack_Anim_2 LOAD_IMAGE_FILE_PATH: momotaro_attack_anim_2.png
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Down_Anim_0 LOAD_IMAGE_FILE_PATH: momotaro_down_anim_0.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Down_Anim_1 LOAD_IMAGE_FILE_PATH: momotaro_down_anim_1.png
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Side_Attack_Anim_0 LOAD_IMAGE_FILE_PATH: momotaro_side_attack_anim_0.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Side_Attack_Anim_1 LOAD_IMAGE_FILE_PATH: momotaro_side_attack_anim_1.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Side_Attack_Anim_2 LOAD_IMAGE_FILE_PATH: momotaro_side_attack_anim_2.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Side_Attack_Anim_3 LOAD_IMAGE_FILE_PATH: momotaro_side_attack_anim_3.png
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Finish_Attack_Anim_0 LOAD_IMAGE_FILE_PATH: momotaro_finish_attack_anim_0.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Finish_Attack_Anim_1 LOAD_IMAGE_FILE_PATH: momotaro_finish_attack_anim_1.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Finish_Attack_Anim_2 LOAD_IMAGE_FILE_PATH: momotaro_finish_attack_anim_2.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Finish_Attack_Anim_3 LOAD_IMAGE_FILE_PATH: momotaro_finish_attack_anim_3.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Finish_Attack_Anim_4 LOAD_IMAGE_FILE_PATH: momotaro_finish_attack_anim_4.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Finish_Attack_Anim_5 LOAD_IMAGE_FILE_PATH: momotaro_finish_attack_anim_5.png
+
+
+
+
+
+

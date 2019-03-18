@@ -47,7 +47,6 @@ void CObject::SetScroll(const CVector2D& _scroll)
 }
 
 
-
 //ƒCƒ“ƒ‰ƒCƒ““WŠJ‚µ‚Ü‚·
 //bool CObject::CollisionCheck3D(CObject * _ob)
 //{

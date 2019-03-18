@@ -2,10 +2,11 @@
 #include <stdio.h>
 #include "TaskManager.h"
 
-Task::Task(int _task_id, int _draw_priority)
+Task::Task(int _task_id, int _draw_priority, int _collision_priority)
 {
 	m_task_id = _task_id;
 	m_draw_priority = _draw_priority;
+	m_collision_priority = _collision_priority;
 }
 
 

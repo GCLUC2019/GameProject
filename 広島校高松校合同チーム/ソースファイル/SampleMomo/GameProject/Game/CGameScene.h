@@ -16,11 +16,11 @@ public:
 	void Init();
 	void Setup();
 
-	void SetGameSceneLimitPosMax(CVector3D _limit_pos) { m_game_scene_limit_pos_max = _limit_pos; };
-	CVector3D GetGameSceneLimitPosMax() {return m_game_scene_limit_pos_max;  };
+	void SetGameSceneLimitPosMax(const CVector3D& _limit_pos) { m_game_scene_limit_pos_max = _limit_pos; };
+	const CVector3D& GetGameSceneLimitPosMax() {return m_game_scene_limit_pos_max;  };
 	
-	void SetGameSceneLimitPosMin(CVector3D _limit_pos) { m_game_scene_limit_pos_min = _limit_pos; };
-	CVector3D GetGameSceneLimitPosMin() { return m_game_scene_limit_pos_min; };
+	void SetGameSceneLimitPosMin(const CVector3D& _limit_pos) { m_game_scene_limit_pos_min = _limit_pos; };
+	const CVector3D& GetGameSceneLimitPosMin() { return m_game_scene_limit_pos_min; };
 
 	void AddGameSceneObject(Task* _object);
 	void ClearGameSceneObject();

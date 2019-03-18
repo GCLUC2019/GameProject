@@ -38,12 +38,14 @@ void MainLoop(void) {
 	//当たり判定前更新
 	TaskManager::GetInstance()->BeforeCollisionAll();
 
-
+	//判定順ソート
+	TaskManager::GetInstance()->Sort(eSortCollisionPriority);
+	
 	//当たり判定チェック
 	TaskManager::GetInstance()->CollisionAll();
 
 	//描画順ソート
-	TaskManager::GetInstance()->Sort();
+	TaskManager::GetInstance()->Sort(eSortDrawPriority);
 
 	//描画
 	TaskManager::GetInstance()->DrawAll();
@@ -62,7 +64,7 @@ void Init(void)
 	glEnable(GL_ALPHA_TEST);
 
 	//フレームレート設定
-	CFPS::SetFPS(60);
+	CFPS::SetFPS(FPS);
 	//フレーム制御初期化
 	CFPS::Init();
 	//ボタンの設定

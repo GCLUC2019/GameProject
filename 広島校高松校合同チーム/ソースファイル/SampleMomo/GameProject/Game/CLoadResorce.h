@@ -9,4 +9,5 @@ public:
 	CLoadResorce();
 	static CLoadResorce* GetInstance();
 	void LoadResorce();
+	void ReadResorceFile(char* _file_path);
 };

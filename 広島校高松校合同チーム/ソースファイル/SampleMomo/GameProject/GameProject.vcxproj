@@ -132,15 +132,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Game\CAnimation.h" />
     <ClInclude Include="Game\CBar.h" />
     <ClInclude Include="Game\CCharacter.h" />
-    <ClInclude Include="Game\CCharacterBoss.h" />
     <ClInclude Include="Game\CCharacterEnemy.h" />
     <ClInclude Include="Game\CCharacterPlayer.h" />
     <ClInclude Include="Game\CCommonObject.h" />
-    <ClInclude Include="Game\CDropItem.h" />
     <ClInclude Include="Game\CGameScene.h" />
     <ClInclude Include="Game\CGameSceneObject.h" />
+    <ClInclude Include="Game\CGameSceneUI.h" />
     <ClInclude Include="Game\CLoadResorce.h" />
     <ClInclude Include="Game\CStageCrear.h" />
     <ClInclude Include="Game\CStoryScene.h" />
@@ -158,15 +158,15 @@
     <ClInclude Include="Task\TaskManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Game\CAnimation.cpp" />
     <ClCompile Include="Game\CBar.cpp" />
     <ClCompile Include="Game\CCharacter.cpp" />
-    <ClCompile Include="Game\CCharacterBoss.cpp" />
     <ClCompile Include="Game\CCharacterEnemy.cpp" />
     <ClCompile Include="Game\CCharacterPlayer.cpp" />
     <ClCompile Include="Game\CCommonObject.cpp" />
-    <ClCompile Include="Game\CDropItem.cpp" />
     <ClCompile Include="Game\CGameScene.cpp" />
     <ClCompile Include="Game\CGameSceneObject.cpp" />
+    <ClCompile Include="Game\CGameSceneUI.cpp" />
     <ClCompile Include="Game\CGameSceneWave.cpp" />
     <ClCompile Include="Game\CLoadResorce.cpp" />
     <ClCompile Include="Game\CObject.cpp" />

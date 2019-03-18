@@ -11,6 +11,11 @@ private:
 	//描画優先度 高い程優先して描画される == 後から描画される(優先度が高い程 画面の前に出やすくなる)
 	int m_draw_priority = 0;
 
+	//当たり判定優先度 高い程自分の位置が優先される == 後から当たり判定されやすくなる。 (当たり判定は先に判定を行ったオブジェクトの位置が変わる為、後からのオブジェクトの方が元の位置を保持する、2つのオブジェクトがぶつかってどっちが避けるかといったところ）
+	int m_collision_priority = 0;
+
+
+
 	//削除フラグ(一括削除の方が軽いケースなどに用いる)
 	bool m_is_delete = false;
 
@@ -31,7 +36,7 @@ public:
 	//@brief タスククラスコンストラクタ
 	//@param [in] _task_id タスク識別用のID
 	//@param [in] _draw_priority 描画優先度(値の大きいものを優先して手前に描画する)
-	Task(int _task_id = 0,int _draw_priority = 0);
+	Task(int _task_id = 0,int _draw_priority = 0, int _collision_priority = 0);
 
 	//@brief タスククラスデストラクタ
 	virtual ~Task();
@@ -62,6 +67,15 @@ public:
 
 	//@brief 描画優先度の取得
 	int GetDrawPriority() { return m_draw_priority; };
+
+
+	//@brief 判定優先度の設定
+	//@param [in] _priority 判定優先度
+	void SetCollisionPriority(int _priority) { m_collision_priority = _priority; };
+
+	//@brief 判定優先度の取得
+	int GetCollisionPriority() { return m_collision_priority; };
+
 
 	//@brief タスクIDの設定
 	//@param [in] _priority _task_id 設定するタスクID
