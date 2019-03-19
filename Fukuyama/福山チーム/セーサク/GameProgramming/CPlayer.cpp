@@ -88,7 +88,7 @@ void CPlayer::Update() {
 ƒvƒŒƒCƒ„[‚ÌÕ“Ëˆ—
 */
 bool CPlayer::Collision(CCharacter *m, CCharacter *yo) {
-	int dx, dy;
+	//int dx, dy;
 	//‘Šè‚ÆÕ“Ë‚µ‚Ä‚¢‚é‚©”»’è
 	//if (CRectangle::Collision(yo, &dx, &dy)) {
 	//	switch (yo->mTag) {

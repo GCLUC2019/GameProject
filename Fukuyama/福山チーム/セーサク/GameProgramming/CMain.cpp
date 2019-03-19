@@ -45,21 +45,16 @@ void CMain::Init() {
 	/*mMapTag = CMap::EStat;  //前岡
 	mpMap = new CMap();
 	mpMap->Init();*/
-	MapTexture.Load("1eria.tga");
+	
 
-	mSceneTag = CScene::EGAME;
+	mSceneTag = CScene::ETITLE;
 	mpScene = new CSceneGame();
 	mpScene->Init();
 }
 
 //繰り返し実行する処理の定義
 void CMain::Update() {
-	BackImage.SetColor(1.0f, 1.0f, 1.0f, 1.0f);
-	BackImage.Draw(MapTexture, 0, 1000, 0, 750);
-	BackImage.x = 0;
-	BackImage.y = 0;
-	BackImage.h = 300;
-	BackImage.w = 400;
+	
 	/*mpMap->Update();  //前岡
 	if (mpMap->mScneMap != mMapTag){
 	delete mpMap;
@@ -96,6 +91,10 @@ void CMain::Update() {
 			break;
 		case CScene::ELOSE:
 			mpScene = new CSceneLose();
+			mpScene->Init();
+			break;
+		case CScene::ETITLE:
+			mpScene = new CSceneTitle();
 			mpScene->Init();
 			break;
 			//前岡

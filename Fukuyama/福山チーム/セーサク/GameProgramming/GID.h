@@ -20,3 +20,11 @@ enum {
 	eRd_Ball,
 	eRd_Max,
 };
+
+enum{
+	EMap=0,
+	ECharactorFar=1,
+	ECharactorNear=250,
+	EUi,
+	EMax,
+};

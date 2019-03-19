@@ -3,13 +3,15 @@
 
 #include"CVector2.h"
 #include"CMatrix33.h"
-#include "CTask.h"
+#include "Task.h"
 #include "CTexture.h"
+#include"CTask.h"
 
 class CCollider;
 
-class CRectangle:public CTask{
+class CRectangle:public CTask,Task{
 public:
+	
 	int x;	//中心のX座標
 	int y, w, h;	//中心のY座標,幅,高さ
 	int mU[2]; //マッピング横
@@ -41,6 +43,16 @@ public:
 	*/
 	void Draw(const CTexture &t, int left, int right, int bottom, int top);
 
+	//CRectangle(const CVector2&pos);                                         //追加前岡
+	//void Update(float delta_time);
+
+	/*CRectangle::CRectangle(const CVector2&pos) :
+		Task(EMap, ECharactorFar, ECharactorNear, EUi, EMax)
+	new CRectangle(CVector2D(0, 0));*/
+
+	/*CRectangle*b =
+		dynamic_cast<CRectangle*>(TaskManager::GetInstance()->GetTask(ECharactorNear));*/
+	
 };
 
 #endif

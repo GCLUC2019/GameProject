@@ -3,7 +3,8 @@
 #include "Windows.h"
 #include"CBoss.h"
 #include"CSpeedEnemy.h"
-
+extern CRectangle BackImage;
+extern CTexture MapTexture;
 
 void CSceneGame::Init(){
 	Tank = new CPlayerTank();
@@ -36,16 +37,22 @@ void CSceneGame::Init(){
 	Boss->mRotation = 90.0f;
 
 	CTaskManager::Get()->Add(Tank);
-	CTaskManager::Get()->Add(EnemyTank);
+	//CTaskManager::Get()->Add(EnemyTank);
 	CTaskManager::Get()->Add(Boss);
 	CTaskManager::Get()->Add(Enemy1);      //’Ç‰Á@Š˜“c
 	CTaskManager::Get()->Add(Enemy2);
 	CTaskManager::Get()->Add(SpeedEnemy);
-
+	MapTexture.Load("1eria.tga");
 	Texture.Load("exp.tga");
 }
 
 void CSceneGame::Update(){
+	BackImage.SetColor(1.0f, 1.0f, 1.0f, 1.0f);
+	BackImage.Draw(MapTexture, 0, 1000, 0, 750);
+	BackImage.x = 0;
+	BackImage.y = 0;
+	BackImage.h = 300;
+	BackImage.w = 400;
 	CTaskManager::Get()->Update();
 	CTaskManager::Get()->Render();
 	CCollisionManager::Get()->Remove();
@@ -63,20 +70,42 @@ void CSceneWin::Update(){
 	mWin.Update();
 	mWin.Render();
 	if (GetKeyState(VK_RETURN) & 0x8000){
-		CMain::mSceneTag = CScene::EGAME;
+		CMain::mSceneTag = CScene::ETITLE;
 	}
 }
 
 void CSceneLose::Init(){
-	mTexture.Load("Result.tga");
-	mLose.SetVertex(-200, 200, -100, 100);
+	mTexture.Load("game-over.tga");
+	mLose.SetVertex(-400, 400, -300, 300);
 	mLose.SetColor(1.0f, 1.0f, 1.0f, 1.0f);
-	mLose.SetTexture(&mTexture, 0, 358, 0, -142);
+	mLose.SetTexture(&mTexture, 0, 800, 0, 600);
 }
 
 void CSceneLose::Update(){
 	mLose.Update();
 	mLose.Render();
+	if (GetKeyState(VK_RETURN) & 0x8000){
+		CMain::mSceneTag = CScene::ETITLE;
+	}
+}
+
+void CSceneTitle::Init(){
+	mTexture.Load("title.tga");
+	mTitle.SetVertex(-300, 300, -100, 100);
+	mTitle.SetColor(1.0f, 1.0f, 1.0f, 1.0f);
+	mTitle.SetTexture(&mTexture,0, 766, 0, 152);
+
+}
+
+void CSceneTitle::Update(){
+	BackImage.SetColor(1.0f, 1.0f, 1.0f, 1.0f);
+	BackImage.Draw(MapTexture, 0, 1000, 0, 750);
+	BackImage.x = 0;
+	BackImage.y = 0;
+	BackImage.h = 300;
+	BackImage.w = 400;
+	mTitle.Update();
+	mTitle.Render();
 	if (GetKeyState(VK_RETURN) & 0x8000){
 		CMain::mSceneTag = CScene::EGAME;
 	}

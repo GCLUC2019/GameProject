@@ -1,5 +1,8 @@
 //êßçÏëOâ™
 
+#ifndef CSCENEMANAGER_H
+#define CSCENEMANAGER_H
+
 #include"CMap.h"
 #include"CCollider.h"
 #include"CRectangle.h"
@@ -21,7 +24,7 @@ public:
 	CMap1(){
 		mScneMap = EMap1;
 	}
-	CTexture Texture;
+	CTexture TextureMap1;
 	CRectangle mMap1;
 	void Init();
 	void Update();
@@ -32,7 +35,7 @@ public:
 	CMap2(){
 		mScneMap = EMap2;
 	}
-	CTexture Texture;
+	CTexture TextureMap2;
 	CRectangle mMap2;
 	void Init();
 	void Update();
@@ -43,9 +46,10 @@ public:
 	CMap3(){
 		mScneMap = EMap3;
 	}
-	CTexture Texture;
+	CTexture TextureMap3;
 	CRectangle mMap3;
 	void Init();
 	void Update();
 };
 
+#endif

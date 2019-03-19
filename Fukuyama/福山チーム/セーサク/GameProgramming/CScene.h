@@ -20,6 +20,7 @@ public:
 		EGAME,
 		EWIN,
 		ELOSE,
+		ETITLE
 	};
 	ESceneTag mSceneTag;
 	virtual ~CScene(){}

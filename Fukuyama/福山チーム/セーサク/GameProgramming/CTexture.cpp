@@ -24,6 +24,6 @@ void CTexture::Load(const char*filename){
 		gluBuild2DMipmaps(GL_TEXTURE_2D, 4, header.width, header.height, GL_BGRA_EXT, GL_UNSIGNED_BYTE, data);
 	else
 		gluBuild2DMipmaps(GL_TEXTURE_2D, 3, header.width, header.height, GL_BGRA_EXT, GL_UNSIGNED_BYTE, data);
-	glBindTexture(GL_TEXTURE_2D, 0);
+ 	glBindTexture(GL_TEXTURE_2D, 0);
 	delete[]data;
 }
