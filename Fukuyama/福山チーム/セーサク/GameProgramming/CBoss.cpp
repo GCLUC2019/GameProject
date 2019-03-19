@@ -10,7 +10,6 @@
 //#include"CRectangle.h"
 #define FIREINTERVAL_E 60
 
-
 extern CPlayerTank *Tank;
 extern CTexture Texture;
 
