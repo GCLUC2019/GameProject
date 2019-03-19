@@ -115,11 +115,11 @@ void Enemy02::Search()
             m_flip = true;
     }
     
-    /*Player*p ;
-    if (PlayerCheck(p, this,300.0f)) {
-    m_dir=GetNormalize(playerpos-m_pos);
-    m_state = eMove;
-    }*/
+    Task*t = TaskManager::FindObject(ePlayer);
+    Player*p = dynamic_cast<Player*>(t);
+    if (p!=nullptr&&PlayerCheck(p,50.0f)) {
+        Move();
+    }
 }
 
 void Enemy02::Attack()
@@ -168,4 +168,9 @@ void Enemy02::HitCheck()
 		m_hp -= 1;
 		m_state = Enemy02State::eDamage;
 	}
+}
+
+bool Enemy02::PlayerCheck(Player * p, float _l)
+{
+    return false;
 }

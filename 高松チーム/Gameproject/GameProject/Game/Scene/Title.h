@@ -2,7 +2,10 @@
 #include "../../Base/Task.h"
 #include "../../Game/Scene/GameScene.h"
 #include "../../Game/Resource/Resource.h"
-
+/*
+担当
+田中  class Title
+*/
 class Title : public Task {
 private:
     //画像データ

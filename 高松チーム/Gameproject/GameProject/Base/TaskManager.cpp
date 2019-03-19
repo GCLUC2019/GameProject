@@ -138,11 +138,6 @@ void TaskManager::CheckKillAll()
 	//mp_last = k;
 }
 
-void TaskManager::Search()
-{
-
-}
-
 void TaskManager::Swap(Task * t1, Task * t2)
 {
 	if (t1 == t2 || t1 == nullptr || t2 == nullptr)
@@ -172,10 +167,13 @@ void TaskManager::Swap(Task * t1, Task * t2)
 	else
 		s1->SetNext(t2);
 }
-
-void TaskManager::TaskSort(float _comp)
+//ソート用
+void TaskManager::TaskSort(Task*_this, float _value)
 {
+    Task*t = _this;
+    if (_value) {
 
+    }
 }
 
 void TaskManager::Insert(Task * _t)

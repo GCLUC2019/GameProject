@@ -54,8 +54,19 @@ LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Finish_Attack_Anim_3 LOAD_IMAGE_FILE_PATH
 LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Finish_Attack_Anim_4 LOAD_IMAGE_FILE_PATH: momotaro_finish_attack_anim_4.png
 LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Finish_Attack_Anim_5 LOAD_IMAGE_FILE_PATH: momotaro_finish_attack_anim_5.png
 
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Spear_Attack_Anim_0 LOAD_IMAGE_FILE_PATH: momotaro_spear_attack_anim_0.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Spear_Attack_Anim_1 LOAD_IMAGE_FILE_PATH: momotaro_spear_attack_anim_1.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Spear_Attack_Anim_2 LOAD_IMAGE_FILE_PATH: momotaro_spear_attack_anim_2.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Spear_Attack_Anim_3 LOAD_IMAGE_FILE_PATH: momotaro_spear_attack_anim_3.png
 
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Axe_Attack_Anim_0 LOAD_IMAGE_FILE_PATH: momotaro_axe_attack_anim_0.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Axe_Attack_Anim_1 LOAD_IMAGE_FILE_PATH: momotaro_axe_attack_anim_1.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Axe_Attack_Anim_2 LOAD_IMAGE_FILE_PATH: momotaro_axe_attack_anim_2.png
 
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Gun_Attack_Anim_0 LOAD_IMAGE_FILE_PATH: momotaro_gun_attack_anim_0.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Gun_Attack_Anim_1 LOAD_IMAGE_FILE_PATH: momotaro_gun_attack_anim_1.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Gun_Attack_Anim_2 LOAD_IMAGE_FILE_PATH: momotaro_gun_attack_anim_2.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Gun_Attack_Anim_3 LOAD_IMAGE_FILE_PATH: momotaro_gun_attack_anim_3.png
 
 
 
