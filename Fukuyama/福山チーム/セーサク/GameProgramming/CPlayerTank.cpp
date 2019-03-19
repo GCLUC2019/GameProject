@@ -119,10 +119,12 @@ void CPlayerTank::Update(){
 	if (GetKeyState('A') & 0x8000){
 		mPosition.x -= P_VELOCITY;
 		AttackSide = 0;
+		CRectangle::SetTexture(&mTexture, 0, 84, -592, -517);
 	}
 	if (GetKeyState('D') & 0x8000){
 		mPosition.x += P_VELOCITY;
 		AttackSide = 1;
+		CRectangle::SetTexture(&mTexture, 0, 84, -517, -592);
 	}
 	if (GetKeyState(' ') & 0x8000){
 		mGravityV = P_VELOCITY_JUMP;
