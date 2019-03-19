@@ -13,7 +13,9 @@
 #define SAIZE_SD 110
 
 Enemy05::Enemy05(CVector2D& _pos) : EnemyBase(CharacterData::eEnemy05),
-m_move_cnt(0)
+m_move_cnt(0),
+m_damage_flg(false),
+m_death_flg(false)
 {
 	//初期化
 	m_img = COPY_RESOURCE("Enemy05", CAnimImage*);
@@ -126,7 +128,7 @@ void Enemy05::Draw()
 {
 	//サイズ指定と描画
 	m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
-	m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
+	m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE/* - IMAGE_SIZE / 2*/);
 	m_img.SetPos(CVector2D(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3));
 	m_img.SetRect(-IMAGE_SIZE / 2.7f, -IMAGE_SIZE / 4.0f - g_game_data.m_scroll.y / 3,
 					IMAGE_SIZE / 3.0f, IMAGE_SIZE / 2.3f - g_game_data.m_scroll.y / 3);
@@ -134,7 +136,7 @@ void Enemy05::Draw()
 
 	m_shadow.SetSize(SAIZE_SD + m_depth / 5, 50);
 	m_shadow.SetCenter((SAIZE_SD + m_depth / 5) / 2, 50 / 2);
-	m_shadow.SetPos(CVector2D(m_pos.x,m_pos.y + 90 - g_game_data.m_scroll.y / 3));
+	m_shadow.SetPos(CVector2D(m_pos.x,m_pos.y - g_game_data.m_scroll.y / 3));
 	m_rect = CRect(-IMAGE_SIZE / 3.0f, -IMAGE_SIZE / 5.0f - g_game_data.m_scroll.y / 3, 
 					IMAGE_SIZE / 3.5f, IMAGE_SIZE / 2.5f - g_game_data.m_scroll.y / 3);
 
@@ -145,6 +147,7 @@ void Enemy05::Draw()
 
 void Enemy05::HitCheck()
 {	
+
 	if (CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack01) ||
 		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack02) ||
 		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack03) ||
