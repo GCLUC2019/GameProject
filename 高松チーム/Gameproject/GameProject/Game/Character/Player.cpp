@@ -42,16 +42,15 @@ m_special(0)
 
 void Player::HitCheck()
 {
-	if (CollitionBase::CollisionCheckRect(this, eEnemy01) ||
+	/*if (CollitionBase::CollisionCheckRect(this, eEnemy01) ||
 		CollitionBase::CollisionCheckRect(this, eEnemy02) ||
 		CollitionBase::CollisionCheckRect(this, eEnemy04) ||
 		CollitionBase::CollisionCheckRect(this, eEnemy05)) {
-		m_HP -= 1;
 		if (m_HP <= 0)	m_state = PlayerState::eDeath;
 		if (m_img.CheckAnimationEnd()) SetKill();
 
 		m_state = PlayerState::eDamage;
-   }
+   }*/
 }
 
 void Player::Move()
@@ -364,12 +363,12 @@ void Player::SetAnim()
 
 void Player::Update()
 {
-/*#ifdef _DEBUG
+#ifdef _DEBUG
 	if (CInput::GetState(0, CInput::ePush, CInput::eMouseL))
 		Damage(50);
 	if (CInput::GetState(0, CInput::ePush, CInput::eMouseR))
 		SpecialPuls(10);
-#endif */// _DEBUG
+#endif // _DEBUG
 
 	if (m_death_flg) {
 		Death();
@@ -476,10 +475,14 @@ void Player::Draw()
 	m_img.SetFlipH(m_flip);
 	m_shadow.SetSize(SAIZE_SD + m_depth + m_jump_vec / 5, SAIZE_SD - 70 );
 	m_shadow.SetCenter((SAIZE_SD + m_depth + m_jump_vec / 5) / 2, (SAIZE_SD - 70 ) / 2);
-	if (m_jump_flg)
+	if (m_jump2_flg)
+		m_shadow.SetPos(m_pos);
+	else if (m_jump_flg)
 		m_shadow.SetPos(m_pos.x, m_pos_old.y - g_game_data.m_scroll.y / 3);
 	else
-		m_shadow.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3 );
+		m_shadow.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
+	
+
 	m_shadow.Draw();
 	m_img.Draw();
 		

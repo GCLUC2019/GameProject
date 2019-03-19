@@ -24,7 +24,7 @@ public:
 	static void KillAll();
     static void CheckKillAll();
 	static void Swap(Task* t1, Task* t2);
-    static void TaskSort(Task*_this, float _value);//ソート用
+    static void TaskSort(/*Task*_this, float _value*/);//ソート用
 	/*
 	@brief          新たなタスクを挿入する
 	@param  [in]    挿入するタスク
