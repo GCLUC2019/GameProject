@@ -13,9 +13,7 @@
 #define SAIZE_SD 110
 
 Enemy05::Enemy05(CVector2D& _pos) : EnemyBase(CharacterData::eEnemy05),
-m_move_cnt(0),
-m_damage_flg(false),
-m_death_flg(false)
+m_move_cnt(0)
 {
 	//‰Šú‰»
 	m_img = COPY_RESOURCE("Enemy05", CAnimImage*);
@@ -113,10 +111,6 @@ void Enemy05::Update()
 		break;
 	}
 
-	/*if (m_death_flg) {
-		Death();
-		return;
-	}*/
 
     m_depth = (m_pos.y - DEP_N) / 3.5;
     m_pos += m_vec;
