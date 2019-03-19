@@ -15,10 +15,12 @@ m_hight(0.0f)
 Enemy04::Enemy04(CVector2D _pos) : EnemyBase(CharacterData::eEnemy04),
 m_hight(0.0f),
 m_interval_flg(false),
-m_cnt(0),
-m_exattack_flg(false),
+m_attack_flg(false),
 m_sattack_flg(false),
 m_lattack_flg(false),
+m_exattack_flg(false),
+m_movetyp_flg(false),
+m_cnt(0),
 m_attack_cnt(0)
 {
 	m_img = COPY_RESOURCE("Enemy04", CAnimImage*);
@@ -43,12 +45,38 @@ void Enemy04::Update()
 		m_flip = true;
 	else
 		m_flip = false;
-	if (m_pos.x == m_pos_old.x &&m_pos.y == m_pos_old.y)
-		m_img.ChangeAnimation(Enemy04Anim::eEIdile04);
-	else 
-		m_img.ChangeAnimation(Enemy04Anim::eEMove04);
+	m_img.ChangeAnimation(Enemy04Anim::eEIdile04);
 	
-	Move();
+	
+
+
+
+	if (m_attack_flg == false) {
+		if (m_cnt >= 0) {
+			m_cnt--;
+			if (m_cnt == 0) {
+				m_cnt = -60;
+				m_movetyp_flg = !m_movetyp_flg;
+			}
+				
+		}
+
+		if (m_cnt <= 0) {
+			m_cnt++;
+			Move();
+			if (m_cnt == 0)
+				m_cnt = 60;
+		}
+	}
+	else {
+		if (m_sattack_flg)
+			SAttack();
+		if (m_lattack_flg)
+			LAttack();
+		if (m_exattack_flg)
+			EXAttack();
+	}
+	
 
 	//SetAnim();
 	if (m_pos.x <-30 || m_pos.x > 1310)
@@ -72,17 +100,18 @@ void Enemy04::Draw()
 	m_img.UpdateAnimation();
 	m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
 	m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE );
-	m_img.SetPos(m_pos + CVector2D(0, -m_hight));//(CVector2D(m_pos.x - g_game_data.m_scroll.x, m_pos.y + m_hight - g_game_data.m_scroll.y / 3));
+	m_img.SetPos(m_pos + CVector2D(0, -m_hight - g_game_data.m_scroll.y / 3));
 	m_img.SetFlipH(m_flip);
 	m_shadow.SetSize(SAIZE_SD, SAIZE_SD);
 	m_shadow.SetCenter(SAIZE_SD / 2, SAIZE_SD / 2);
-	m_shadow.SetPos(m_pos);
+	m_shadow.SetPos(m_pos - CVector2D(0,  g_game_data.m_scroll.y / 3));
 	m_shadow.Draw();
 	m_img.Draw();
 }
 
 void Enemy04::EXAttack()
 {
+	m_attack_flg = true;
 	m_exattack_flg = true;
 	if (m_interval_flg) {
 		m_flip = !m_flip;
@@ -91,6 +120,7 @@ void Enemy04::EXAttack()
 			m_cnt = 120;
 			m_attack_cnt = 0;
 			m_interval_flg = false;
+			m_attack_flg = false;
 			m_exattack_flg = false;
 		}
 		
@@ -120,6 +150,7 @@ void Enemy04::EXAttack()
 
 void Enemy04::LAttack()
 {
+	m_attack_flg = true;
 	m_lattack_flg = true;
 	if (m_interval_flg) {
 		m_img.ChangeAnimation(Enemy04Anim::eAttackCat01);
@@ -127,6 +158,7 @@ void Enemy04::LAttack()
 			m_cnt = 120;
 			m_attack_cnt = 0;
 			m_interval_flg = false;
+			m_attack_flg = false;
 			m_lattack_flg = false;
 		}
 	}
@@ -147,12 +179,14 @@ void Enemy04::LAttack()
 void Enemy04::SAttack()
 {
 	m_sattack_flg = true;
+	m_attack_flg = true;
 	if (m_interval_flg) {
 		m_img.ChangeAnimation(Enemy04Anim::eAttackCat02);
 		if (m_attack_cnt > 40) {
 			m_cnt = 120;
 			m_attack_cnt = 0;
 			m_interval_flg = false;
+			m_attack_flg = false;
 			m_sattack_flg = false;
 		}
 	}
@@ -174,26 +208,45 @@ void Enemy04::Damage()
 
 void Enemy04::Move()
 {
-
-	if (m_cnt > 0)
-		m_cnt--;
-	if (m_cnt <= 0)
-		SAttack();
-	else
+	if (m_movetyp_flg)
 		Alignment_y();
+	else
+		AttackControl();
 
-	
+			
+}
+
+void Enemy04::AttackControl()
+{
+	m_attack_flg = true;
+	m_sattack_flg = true;
+	float p = m_distance.x;
+	if (p<3.1f&&p>-3.1f)
+		return;
+	if (p > 0) {
+		m_img.ChangeAnimation(Enemy04Anim::eEMove04);
+		m_pos.x += 3.0f;
+	}
+	else {
+		m_img.ChangeAnimation(Enemy04Anim::eEMove04);
+		m_pos.x -= 3.0f;
+	}
+
 }
 
 void Enemy04::Alignment_y()
 {
 	float p = m_distance.y;
-	 if (p<3.1f&&p>-3.1f)
-		 return;
-	if (p > 0)
+	if (p<3.1f&&p>-3.1f)
+		return;
+	if (p > 0) {
+		m_img.ChangeAnimation(Enemy04Anim::eEMove04);
 		m_pos.y += 3.0f;
-	else
+	}
+	else {
+		m_img.ChangeAnimation(Enemy04Anim::eEMove04);
 		m_pos.y -= 3.0f;
+	}
 
 }
 

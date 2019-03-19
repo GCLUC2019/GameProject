@@ -15,6 +15,8 @@ private:
 	};
 private:
 	int m_move_cnt;	//‰¼UŒ‚ƒJƒEƒ“ƒg•Ï”
+	bool m_damage_flg;
+	bool m_death_flg;
 public:
 	Enemy05(CVector2D& _pos);
 	void Move();
