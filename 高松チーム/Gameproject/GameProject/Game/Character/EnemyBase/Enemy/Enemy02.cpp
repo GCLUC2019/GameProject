@@ -4,6 +4,7 @@
 #include "../GameProject/Global.h"
 #include "../GameProject/Game/GameData/GameData.h"
 #include "../GameProject/Game/CollitionBase.h"
+#include "../GameProject/Game/Character/Effect/EnemyEffect.h"
 #define MOVE_SPEED 2.5f
 #define DEP_N 1200
 #define JUMP_SPD -20.0f
@@ -85,7 +86,7 @@ void Enemy02::Update()
 void Enemy02::Draw()
 {
     m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
-    m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
+    m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE);
     m_img.SetPos(CVector2D(m_pos.x , m_pos.y + m_hight - g_game_data.m_scroll.y/3));
     m_img.SetFlipH(m_flip);
     m_img.Draw();
@@ -133,6 +134,7 @@ void Enemy02::Attack()
             m_hight = 0;
             cnt = 1;
             m_jump_flg = false;
+            TaskManager::AddTask(new E2Effect(CVector2D(m_pos.x,m_pos.y-IMAGE_SIZE/3)));
         }
     }
     if (m_img.CheckAnimationEnd()) {
@@ -172,5 +174,7 @@ void Enemy02::HitCheck()
 
 bool Enemy02::PlayerCheck(Player * p, float _l)
 {
+    CollisionLine l1, l2;
+    l1.s = m_pos; l1.e = m_pos + CVector2D(1, 1)*_l;
     return false;
 }

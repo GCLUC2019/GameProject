@@ -132,3 +132,34 @@ static TexAnim BossSlashEffect[] = {
 TexAnimData BossSlashEffectAnimData[] = {
 	ANIMDATA(BossSlashEffect),
 };
+
+static TexAnim BossDeathEffect1[] = {
+	{ 0,20 },
+{ 1,20 },
+{ 2,20 },
+{ 3,20 },
+{ 4,20 },
+{ 5,20 },
+{ 6,20 },
+{ 7,20 },
+{ 8,20 },
+{ 9,20 },
+};
+
+static TexAnim BossDeathEffect2[] = {
+	{ 0,20 },
+{ 1,20 },
+{ 2,20 },
+{ 3,20 },
+{ 4,20 },
+{ 5,20 },
+{ 6,20 },
+{ 7,20 },
+{ 8,20 },
+{ 9,20 },
+};
+
+TexAnimData BossDeathEffectAnimData[] = {
+	ANIMDATA(BossDeathEffect1),
+	ANIMDATA(BossDeathEffect2),
+};

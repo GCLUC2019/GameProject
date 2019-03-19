@@ -137,7 +137,7 @@ Task * CollitionBase::GetCollisionCheckRect(Task * b1, int _type)
 			Utility::DrawQuad(CVector2D(r2.m_right, r2.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
 #endif // _DEBUG
 
-			if (CCollision::CollisionRect(r1, r2))
+			if (CCollision::CollisionRect(r1, r2) && CollitionCheckY(b1->GetPos(), b2->GetPos(), 50.0f))
 				return b2;
 			else b2 = b2->GetNext();
 		}
@@ -180,4 +180,15 @@ bool CollitionBase::CollitionCheckflip(int fliptype, Task * b1, Task * b2)
 	}
 	*/
 	return false;
+}
+
+bool CollitionBase::CollitionCheckY(const CVector2D& b1, const CVector2D& b2, const float&  _length)
+{
+	CVector2D l = b1 - b2;
+	l.x *= 0;
+
+	if (l.Length() <= _length)
+		return true;
+	else
+		return false;
 }

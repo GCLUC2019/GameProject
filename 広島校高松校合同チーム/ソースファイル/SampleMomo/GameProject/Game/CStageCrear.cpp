@@ -13,7 +13,7 @@
 #define CHANGE_INTERVAL 3
 
 
-CStageCrear::CStageCrear():CObject(0, 0)
+CStageCrear::CStageCrear():CObject(0, 5)
 {
 	//ADD_RESOURCE("Crear", CImage::LoadImage("StageCrear.png"));
 	m_crear = COPY_RESOURCE("Crear", CImage*);

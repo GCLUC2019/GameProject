@@ -27,7 +27,7 @@ public:
 	void Update();
 	void Render();
 
-	CCircleCollider*mCollider;
+	CBoxCollider*mBoxCollider;
 
 	void OnCollision(CCircleCollider*p);
 

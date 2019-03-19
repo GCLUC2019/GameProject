@@ -5,10 +5,11 @@
 
 void CArrow::Init(){
 	SetVertex(-10.0f, 50.0f, -5.0f, 5.0f);
-	mCollider = new CCircleCollider();
-	mCollider->mRadius = 10.0f;
-	mCollider->mpTask = this;
-	CCollisionManager::Get()->Add(mCollider);
+	mBoxCollider = new CBoxCollider();
+	mBoxCollider->mSize.x = 60.0f;
+	mBoxCollider->mSize.y = 10.0f;
+	mBoxCollider->mpTask = this;
+	CCollisionManager::Get()->Add(mBoxCollider);
 }
 
 void CArrow::Update(){
@@ -20,7 +21,7 @@ void CArrow::Update(){
 	else{
 		mEnabled = false;
 	}
-	CCollisionManager::Get()->Collision(mCollider);
+	CCollisionManager::Get()->Collision(mBoxCollider);
 }
 
 void CArrow::Render(){

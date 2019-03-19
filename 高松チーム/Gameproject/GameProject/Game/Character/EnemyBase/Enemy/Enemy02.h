@@ -34,3 +34,4 @@ public:
 	void HitCheck();
     bool PlayerCheck(Player*p,float _l);//プレイヤーを検知する
 };
+

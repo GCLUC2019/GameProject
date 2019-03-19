@@ -1,0 +1,22 @@
+WaveData1_1
+EnemyData1_1
+
+31 100 550
+31 300 650
+27 500 500
+27 500 600
+
+END_Enemy1_1
+END1_1
+
+
+WaveData1_2
+EnemyData1_2
+
+31 200 550
+31 700 650
+27 800 500
+27 100 600
+
+END_Enemy1_2
+END1_2

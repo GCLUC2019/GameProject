@@ -10,6 +10,7 @@
 
 class CItem :public CRectangle, Task{
 public:
+	static CItem *spInstance;
 	int mType;
 	CItem()
 		:mType(rand() % 3 + 1)

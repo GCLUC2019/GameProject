@@ -7,7 +7,7 @@
 
 Tutorial::Tutorial() : Task(eGameTutorial)
 {
-	new Resource();
+    TaskManager::GetInstance()->AddTask(new Resource());
 	TaskManager::GetInstance()->AddTask(new Stage01());
 	TaskManager::GetInstance()->AddTask(new Player());
 	TaskManager::GetInstance()->AddTask(new TutorialEnemy(CVector2D(800, 450)));

@@ -42,7 +42,6 @@ private:
 	int m_state;
 	int m_anim_cnt;//アニメーションカウント
 	int m_idle_cnt;//待機状態でいる時間
-	int m_boss_hp;
 	int m_shadow_size;
 
 

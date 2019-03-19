@@ -44,3 +44,7 @@ public:
         return m_depth;
     }
 };
+struct CollisionLine {
+    CVector2D s;//始点
+    CVector2D e;//終点
+};

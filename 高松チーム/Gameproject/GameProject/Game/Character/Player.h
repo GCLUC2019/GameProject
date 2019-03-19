@@ -88,7 +88,7 @@ public:
 	void Damage(int _damage);
 	/*
 	@brief 　			アイテム取得関数
-	@param _damage	[in]与えるダメージ
+	@param _damage	[in]アイテムの種類
 	*/
 	void ItemGet(int _itemTyp);
 	void SpecialPuls(int _puls);

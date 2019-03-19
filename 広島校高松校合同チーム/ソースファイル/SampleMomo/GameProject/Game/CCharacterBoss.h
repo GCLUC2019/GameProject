@@ -2,8 +2,21 @@
 #include "CCharacterPlayer.h"
 #include "../Global.h"
 
+//ボスの初期表示位置
+#define DEF_BOSS_POS CVector3D(1000, -2060, 500);
+#define DEF_BOSS_VEC CVector3D(0, 0, 0);
+#define DEF_SAHDOW_POS CVector2D(-30.0, -90.0);
+
+//ボスのサイズ
+#define BOSS_SIZE CVector2D(500,500)
+#define BOSS_SHADOW_SIZE CVector2D(300, 50)
+
+//ボスのHP
+#define BOSS_HP 10.0f
+
 //起動誤差
 #define RANGE (150)
+#define RANGE_Z (50)
 
 //攻撃の適正距離の初期値
 #define DEF_JUST_DIST 350
@@ -21,14 +34,44 @@
 #define IDLE_LIMIT 120
 #define WALK_LIMIT 180
 #define RUN_LIMIT  75
+#define AWAY_LIMIT  75
+#define DAMAGE_LIMIT 60
 
 //速度
-#define DEF_SPEED 1.5
+#define DEF_SPEED 2.0
 #define RUN_SPEED 4.5
 
 //攻撃範囲
-#define ATTACK1_RANGE_X 1.5
-#define RUN_SPEED 4.5
+#define ATTACK1_RANGE_BITE 400
+#define ATTACK1_RANGE_BARK 500
+#define EX1_RANGE_RASH 100
+
+//攻撃時間
+#define BITE_TIME 30.0
+#define BARK_TIME 50.0
+#define RASH_TIME 250.0
+
+//跳躍力
+#define JUMP_POWER 40
+#define JUMP_POWER_X 10
+
+//減速係数
+#define FLICTION 0.7
+
+//最大速度
+#define MAX_SPEED 8.0f
+
+//攻撃力
+#define ATTACK 1.0
+
+//必殺技の各数値
+#define RASH_STEP1_TIME 30.0
+#define RASH_STEP2_TIME 120.0
+#define RASH_STEP3_TIME 240.0
+#define RASH_Z_SPEED 5.0
+#define RASH_SPEED 18.0
+#define RASH_JIMP_POWER 30
+#define RASH_ATTACK 3.0
 
 
 //ボスのアニメーションの種類番号
@@ -36,7 +79,10 @@ enum {
 	eEnemyAnimBossIdIdle = 0,
 	eEnemyAnimBossIdRun,
 	eEnemyAnimBossIdWalk,
+	eEnemyAnimBossIdJump,
 	eEnemyAnimBossIdBark,
+	eEnemyAnimBossIdBite,
+	eEnemyAnimBossIdRush,
 	eEnmeyAnimBossIdMax,
 };
 
@@ -63,24 +109,47 @@ private:
 		eEnemyBossStateWalk,
 		eEnemyBossStateRun,
 		eEnemyBossStateAttack,
+		eEnemyBossStateRush,
 		eEnemyBossStateAway,
+		eEnemyBossStateDamage,
+	};
+
+	enum {
+		eExStepStart = 0,
+		eExRashStep1,
+		eExRashStep2,
+		eExRashStep3,
+		eExRashStep4,
 	};
 
 	struct boss_mode_counts {
 		double boss_idle = 0.0;
 		double boss_walk = 0.0;
 		double boss_run = 0.0;
+		double boss_attack = 0.0;
+		double boss_rush = 0.0;
+		double boss_damage = 0.0;
+		double boss_away = 0.0;
 	};
 
 	boss_mode_counts s_boss_mode;
 
 	CCharacterPlayer* m_player_p;
 
+	double m_attack_complete = 0.0;
+
 	int m_boss_state = eEnemyBossStateIdle;
 	int m_befor_state = m_boss_state;
+	int m_ex_attack_state = eExStepStart;
+	int m_ex_state = 0;
 	int m_just_dist = DEF_JUST_DIST;
+	int m_ex_count = 0;
+	int m_hit_count = 0; //プレイヤーから攻撃が当たった回数
+
 	bool m_is_attack = true;
 	bool m_is_hit = false;
+	bool m_away_flg = false;
+	
 	CVector3D m_player_pos = CVector3D(0, 0, 0);
 public:
 	CCharacterBoss();
@@ -96,6 +165,8 @@ public:
 	void ChangeDist();
 	//エネミーの状態を変更
 	void ChangeState();
+	void ChengeStateIdleOrAway();
+	void ChangeAttackState(int _state, int attack_time);
 	//以下、エネミーの行動状態
 	//移動系
 	void Idle();
@@ -106,12 +177,21 @@ public:
 	//攻撃系
 	void Attack1();
 	void Attack2();
+	void SpecialAttack1();
 	void AttackHub();
-	//vecの加算
-	void Move();
+	//ダメージ系
+	void Damage();
+	//移動の限界値
 	void MoveLimit();
 	//距離の精査
 	void CheckDist();
+	float CheckAttackRange();
+
+	//被ダメージ処理
+	void ReceiveAttack();
+
+	//初期化
+	void DefalutSet();
 
 	void CharacterBeforeCollisionCheck();
 };

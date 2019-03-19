@@ -138,6 +138,7 @@
     <ClInclude Include="Game\Character\Anim\AnimBoss.h" />
     <ClInclude Include="Game\Character\Anim\AnimData.h" />
     <ClInclude Include="Game\Character\Anim\AnimDataPlayer.h" />
+    <ClInclude Include="Game\Character\Anim\AnimEnemyEffect.h" />
     <ClInclude Include="Game\Character\Anim\AnimUI.h" />
     <ClInclude Include="Game\Character\CharacterBase.h" />
     <ClInclude Include="Game\Character\Effect\BossEffect.h" />
@@ -159,6 +160,7 @@
     <ClInclude Include="Game\Item\Item.h" />
     <ClInclude Include="Game\Item\ItemBox.h" />
     <ClInclude Include="Game\Resource\Resource.h" />
+    <ClInclude Include="Game\Resource\Sound\Sound.h" />
     <ClInclude Include="Game\Scene\GameScene.h" />
     <ClInclude Include="Game\Scene\Result.h" />
     <ClInclude Include="Game\Scene\Title.h" />
@@ -177,6 +179,7 @@
     <ClCompile Include="Game\Character\Anim\AnimBoss.cpp" />
     <ClCompile Include="Game\Character\Anim\AnimData.cpp" />
     <ClCompile Include="Game\Character\Anim\AnimDataPlayer.cpp" />
+    <ClCompile Include="Game\Character\Anim\AnimEnemyEffect.cpp" />
     <ClCompile Include="Game\Character\Anim\AnimUI.cpp" />
     <ClCompile Include="Game\Character\CharacterBase.cpp" />
     <ClCompile Include="Game\Character\Effect\BossEffect.cpp" />
@@ -197,6 +200,7 @@
     <ClCompile Include="Game\Item\Item.cpp" />
     <ClCompile Include="Game\Item\ItemBox.cpp" />
     <ClCompile Include="Game\Resource\Resource .cpp" />
+    <ClCompile Include="Game\Resource\Sound\Sound.cpp" />
     <ClCompile Include="Game\Scene\GameScene.cpp" />
     <ClCompile Include="Game\Scene\Result.cpp" />
     <ClCompile Include="Game\Scene\Title.cpp" />

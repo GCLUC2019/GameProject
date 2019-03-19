@@ -138,44 +138,62 @@ void TaskManager::CheckKillAll()
 	//mp_last = k;
 }
 
-void TaskManager::Search()
-{
-
-}
-
 void TaskManager::Swap(Task * t1, Task * t2)
 {
 	if (t1 == t2 || t1 == nullptr || t2 == nullptr)
 		return;
 	Task *s1 = t1->GetNext();
 	Task *s2 = t2->GetNext();
-	t1->SetNext(s2);
-	if (s2 == nullptr)
-		SetLast(t1);
-	else
-		s2->SetPrev(t1);
-	t2->SetNext(s1);
-	if (s1 == nullptr)
+	
+	if (s1 == nullptr) {
 		SetLast(t2);
-	else
+		t1->SetNext(s2);
+		s2->SetPrev(t1);
+		t2->SetNext(nullptr);
+	}else if (s2 == nullptr) {
+			SetLast(t1);
+			t2->SetNext(s1);
+			s1->SetPrev(t2);
+			t1->SetNext(nullptr);
+		}
+	else {
+		t1->SetNext(s2);
+		s2->SetPrev(t1);
+		t2->SetNext(s1);
 		s1->SetPrev(t2);
+	}
+	
+	
 	s1 = t1->GetPrev();
 	s2 = t2->GetPrev();
-	t1->SetPrev(s2);
-	if (s2 == nullptr)
-		SetHead(t1);
-	else
-		s2->SetNext(t1);
-	t2->SetPrev(s1);
-	if (s1 == nullptr)
+	if (s1 == nullptr) {
 		SetHead(t2);
-	else
+		t1->SetPrev(s2);
+		s2->SetNext(t1);
+		t2->SetPrev(nullptr);
+	}
+	else if (s2 == nullptr) {
+		SetHead(t1);
+		t2->SetPrev(s1);
 		s1->SetNext(t2);
+		t1->SetPrev(nullptr);
+	}
+	else {
+		t1->SetPrev(s2);
+		s2->SetNext(t1);
+		t2->SetPrev(s1);
+		s1->SetNext(t2);
+	}
 }
-
-void TaskManager::TaskSort(float _comp)
+//ソート用
+void TaskManager::TaskSort(/*Task*_this, float _value*/)
 {
+    Task*t = mp_head;
 
+	while (t) {
+		t->ThisSort();
+		t = t->GetNext();
+	}
 }
 
 void TaskManager::Insert(Task * _t)

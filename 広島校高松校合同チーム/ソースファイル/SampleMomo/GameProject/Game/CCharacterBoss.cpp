@@ -1,44 +1,22 @@
 #include "CCharacterBoss.h"
 #include "CCharacterPlayer.h"
+#include "CStageCrear.h"
 #include "CAnimation.h"
 
 
 
 CCharacterBoss::CCharacterBoss():CCharacter(eTaskIdEnemy,0)
 {
-	/*
-	ADD_RESOURCE("Idle1", CImage::LoadImage("DogIdle1.png"));
-	ADD_RESOURCE("Idle2", CImage::LoadImage("DogIdle2.png"));
-	ADD_RESOURCE("Run1", CImage::LoadImage("DogRun1.png"));
-	ADD_RESOURCE("Run2", CImage::LoadImage("DogRun2.png"));
-	ADD_RESOURCE("Run3", CImage::LoadImage("DogRun3.png"));
-	ADD_RESOURCE("Run4", CImage::LoadImage("DogRun4.png"));
-	ADD_RESOURCE("Run5", CImage::LoadImage("DogRun5.png"));
-	ADD_RESOURCE("Run6", CImage::LoadImage("DogRun6.png"));
-	ADD_RESOURCE("Run7", CImage::LoadImage("DogRun7.png"));
-	ADD_RESOURCE("Run8", CImage::LoadImage("DogRun8.png"));
-	*/
-
 	m_player_p  = dynamic_cast<CCharacterPlayer*>(TaskManager::GetInstance()->FindTask(eTaskIdPlayer));
 
-	m_vec = CVector3D(0, 0, 0);
-	//初期値のy軸は地面に埋まらないように少し浮かせる
-	m_pos = CVector3D(1000, -160, 500);  
-
-	m_rads = CVector3D(75, 120, 10);
-	SetSize(500, 500);
-	m_is_flip = false;
-
-	LoadAnimImage();
-
-	m_anim_p->SetAnim(eEnemyAnimBossIdIdle);
-	SetIsShowShadow(true);
-	SetShadowSize(CVector2D(300, 50));
-	SetDrawAdjPos(CVector2D(-30.0, -90.0));
+	//各パラメータを初期化
+	DefalutSet();
 }
 
 CCharacterBoss::~CCharacterBoss()
 {
+	CStageCrear* Crear_p = new CStageCrear();
+	TaskManager::GetInstance()->AddTask(Crear_p);
 }
 
 void CCharacterBoss::CharacterUpdate()
@@ -51,10 +29,10 @@ void CCharacterBoss::CharacterUpdate()
 	Walk();
 	Run();
 	Away();
+	Damage();
 	AttackHub();
-	CheckDist();
-	//Move();
-	//Gravity();
+	MoveLimit();
+	printf("State:%d\n", m_boss_state);
 }
 
 void CCharacterBoss::CharacterDraw()
@@ -64,44 +42,22 @@ void CCharacterBoss::CharacterDraw()
 
 void CCharacterBoss::LoadAnimImage()
 {
-	
-	/*
-	//待機アニメーションの読み込み
-	m_anim_image_p[eEnemyAnimBossIdle1] = GET_RESOURCE("Idle1", CImage*);
-	m_anim_image_p[eEnemyAnimBossIdle2] = GET_RESOURCE("Idle2", CImage*);
-
-	//走るアニメーションの読み込み
-	m_anim_image_p[eEnemyAnimBossRun1] = GET_RESOURCE("Run1", CImage*);
-	m_anim_image_p[eEnemyAnimBossRun2] = GET_RESOURCE("Run2", CImage*);
-	m_anim_image_p[eEnemyAnimBossRun3] = GET_RESOURCE("Run3", CImage*);
-	m_anim_image_p[eEnemyAnimBossRun4] = GET_RESOURCE("Run4", CImage*);
-	m_anim_image_p[eEnemyAnimBossRun5] = GET_RESOURCE("Run5", CImage*);
-	m_anim_image_p[eEnemyAnimBossRun6] = GET_RESOURCE("Run6", CImage*);
-	m_anim_image_p[eEnemyAnimBossRun7] = GET_RESOURCE("Run7", CImage*);
-	m_anim_image_p[eEnemyAnimBossRun8] = GET_RESOURCE("Run8", CImage*);
-
-	//アニメーションデータの設定
-	m_anim_info[eEnemyAnimBossIdIdle].image_num = 2;
-	m_anim_info[eEnemyAnimBossIdIdle].image_id = eEnemyAnimBossIdle1;
-	m_anim_info[eEnemyAnimBossIdIdle].delay = DEFAULT_ANIM_DELAY;
-
-	m_anim_info[eEnemyAnimBossIdRun].image_num = 8;
-	m_anim_info[eEnemyAnimBossIdRun].image_id = eEnemyAnimBossRun1;
-	m_anim_info[eEnemyAnimBossIdRun].delay = DEFAULT_ANIM_DELAY;
-	*/
-
 	m_anim_p->ReadAnimDataFile("BossDog/DOG_ANIM_DATA.anim");
 }
 
 void CCharacterBoss::ChangeFlip()
 {
 	//プレイヤーがいる方を向く
-	if (m_player_pos.x > m_pos.x + RANGE)m_is_flip = false;
-	if (m_player_pos.x < m_pos.x - RANGE) m_is_flip = true;
+	if (m_player_pos.x > m_pos.x + RANGE)
+		m_is_flip = false;
+	//必殺技発動時は通り過ぎても振り向かない
+	if (m_player_pos.x < m_pos.x - RANGE && m_ex_attack_state != eExRashStep3)
+		m_is_flip = true;
 }
 
 void CCharacterBoss::ModeCount()
 {
+	//各状態が続けいている時間を記録する
 	if (m_boss_state == eEnemyBossStateIdle) {
 		s_boss_mode.boss_idle += CFPS::GetDeltaTime() * GAME_BASE_FPS;
 	}
@@ -113,10 +69,23 @@ void CCharacterBoss::ModeCount()
 	if (m_boss_state == eEnemyBossStateRun) {
 		s_boss_mode.boss_run += CFPS::GetDeltaTime() * GAME_BASE_FPS;
 	}
+
+	if (m_boss_state == eEnemyBossStateAway) {
+		s_boss_mode.boss_away += CFPS::GetDeltaTime() * GAME_BASE_FPS;
+	}
+
+	if (m_ex_state == eEnemyBossStateRush) {
+		s_boss_mode.boss_rush += CFPS::GetDeltaTime() * GAME_BASE_FPS;
+	}
+
+	if (m_ex_state == eEnemyBossStateDamage) {
+		s_boss_mode.boss_damage += CFPS::GetDeltaTime() * GAME_BASE_FPS;
+	}
 }
 
 void CCharacterBoss::ChangeDist()
 {
+	//攻撃を開始する距離の変更
 	if (m_boss_state == eEnemyBossStateWalk)
 		m_just_dist = NEXT_JUST_DIST2;
 	else if (m_boss_state == eEnemyBossStateRun)
@@ -125,6 +94,7 @@ void CCharacterBoss::ChangeDist()
 
 void CCharacterBoss::ChangeState()
 {
+	//経過した時間によって、動作の状態を変える
 	if (s_boss_mode.boss_idle >= IDLE_LIMIT) {
 		if (abs(m_player_pos.x - m_pos.x) >= PLAYER_DIST＿FAR)
 			m_boss_state = eEnemyBossStateRun;
@@ -134,15 +104,53 @@ void CCharacterBoss::ChangeState()
 	}
 
 	if (s_boss_mode.boss_walk >= WALK_LIMIT) {
-		m_boss_state = eEnemyBossStateIdle;
+		m_befor_state = m_boss_state;
+		m_boss_state = eEnemyBossStateAttack;
 		s_boss_mode.boss_walk = 0;
 	}
 
 	if (s_boss_mode.boss_run >= RUN_LIMIT) {
-		m_boss_state = eEnemyBossStateIdle;
+		m_befor_state = m_boss_state;
+		m_boss_state = eEnemyBossStateAttack;
 		s_boss_mode.boss_run = 0;
 	}
 
+	if (s_boss_mode.boss_away >= AWAY_LIMIT) {
+		m_boss_state = eEnemyBossStateIdle;
+		s_boss_mode.boss_away = 0;
+	}
+
+	if (s_boss_mode.boss_damage >= DAMAGE_LIMIT) {
+		m_ex_state = 0;
+		SetIsBlindDraw(false);
+		s_boss_mode.boss_damage = 0;
+	}
+
+	if (m_ex_count == 5) {
+		m_ex_state = eEnemyBossStateRush;
+		m_ex_count = 0;
+	}
+
+	if (m_hit_count == 5) {
+		m_boss_state = eEnemyBossStateAttack;
+		m_hit_count = 0;
+	}
+
+}
+
+void CCharacterBoss::ChengeStateIdleOrAway()
+{
+	//攻撃が当たると、逃げ状態に遷移
+	if (m_is_hit == true)m_boss_state = eEnemyBossStateAway;
+	//当たらなかったら、待機状態に戻る
+	else if (m_is_hit == false) m_boss_state = eEnemyBossStateIdle;
+}
+
+void CCharacterBoss::ChangeAttackState(int _state, int attack_time)
+{
+	//攻撃アニメーションと、攻撃アニメーションが完了する時間を変更させる
+	m_anim_p->SetWillPlayAnim(_state);
+	m_attack_complete = attack_time;
 }
 
 void CCharacterBoss::Idle()
@@ -153,7 +161,8 @@ void CCharacterBoss::Idle()
 	}
 		
 	m_anim_p->SetWillPlayAnim(eEnemyAnimBossIdIdle);
-	m_vec = CVector3D(0, 0, 0);
+	m_vec.x = 0;
+	m_vec.z = 0;
 	m_is_attack = true;
 	m_is_hit = false;
 }
@@ -186,13 +195,22 @@ void CCharacterBoss::Away()
 	//ボスの後方に跳ぶ
 	if (m_boss_state != eEnemyBossStateAway)return;
 
-	/*m_vec.y -= 50;*/
-	if (m_is_flip == true)
-		m_vec.x += 5;
-	if (m_is_flip == false)
-		m_vec.x -=5;
+	m_anim_p->SetWillPlayAnim(eEnemyAnimBossIdJump);
 
-	if (abs(m_player_pos.x - m_pos.x) >= AWAY_DIST)m_boss_state = eEnemyBossStateIdle;
+	if (m_away_flg == false) {
+	/*	m_vec.y -= JUMP_POWER;*/
+		m_away_flg = true;
+	}
+
+	if (m_is_flip == true)
+		m_vec.x += JUMP_POWER_X;
+	if (m_is_flip == false)
+		m_vec.x -= JUMP_POWER_X;
+
+	if (abs(m_player_pos.x - m_pos.x) >= AWAY_DIST) {
+		m_boss_state = eEnemyBossStateIdle;
+		m_away_flg = false;
+	}
 }
 
 void CCharacterBoss::CloseToPlayer()
@@ -213,12 +231,18 @@ void CCharacterBoss::Attack1()
 {
 	//直前の状態が歩行状態なら、ひっかき攻撃
 	if (m_befor_state != eEnemyBossStateWalk)return;
+	if (m_ex_state == eEnemyBossStateRush)return;
+	if (m_is_attack == false)return;
 
-
-
-	if (abs(m_player_pos.x - m_pos.x) <= 300 && abs(m_player_pos.z - m_pos.z) <= 100 && m_is_attack) {
+	ChangeAttackState(eEnemyAnimBossIdBite, BITE_TIME);
+	
+	//プレイヤーが範囲内にいるとダメージを与える
+	if (float length = CheckAttackRange() <= ATTACK1_RANGE_BITE) {
 		m_is_attack = false;
-		m_player_p->HitPointGainValue(-1.0);
+		m_player_p->ReceiveAttack();
+		m_player_p->HitPointGainValue(-ATTACK);
+		//攻撃が当たると、カウント減少
+		m_ex_count++;
 		m_is_hit = true;
 	}
 
@@ -228,13 +252,78 @@ void CCharacterBoss::Attack2()
 {
 	//直前の状態が走り状態なら咆哮
 	if (m_befor_state != eEnemyBossStateRun)return;
+	if (m_ex_state == eEnemyBossStateRush)return;
+	if (m_is_attack == false)return;
 
-	m_anim_p->SetWillPlayAnim(eEnemyAnimBossIdBark);
+	ChangeAttackState(eEnemyAnimBossIdBark, BARK_TIME);
 
-	if (abs(m_player_pos.x - m_pos.x) <= 400 && abs(m_player_pos.z - m_pos.z) <= 300 && m_is_attack) {
+
+	//プレイヤーが範囲内にいると、ひるませる
+	if (float length= CheckAttackRange() <= ATTACK1_RANGE_BARK) {
 		m_is_attack = false;
-		m_player_p->HitPointGainValue(-4.0);
+		m_player_p->ReceiveAttack();
+		//攻撃が当たると、カウント減少
+		m_ex_count++;
 		m_is_hit = true;
+	}
+}
+
+void CCharacterBoss::SpecialAttack1()
+{
+	if (m_ex_state != eEnemyBossStateRush)return;
+
+
+	//ステップごとに処理が違う
+	switch (m_ex_attack_state)
+	{
+	//第一段階：上に向かって跳躍する
+	case eExStepStart:
+		ChangeAttackState(eEnemyAnimBossIdJump, RASH_TIME);
+		m_vec.y -= RASH_JIMP_POWER;
+		m_ex_attack_state = eExRashStep1;
+		break;
+	//第二段階：画面左端に移動する
+	case eExRashStep1:
+		if (s_boss_mode.boss_rush <= RASH_STEP1_TIME) {
+			m_pos.x = -10.0;
+			m_ex_attack_state = eExRashStep2;
+		}
+		break;
+	//第三段階：ｚ座標を決定する
+	case eExRashStep2:
+		if (s_boss_mode.boss_rush <= RASH_STEP2_TIME) {
+			m_anim_p->SetWillPlayAnim(eEnemyAnimBossIdRun);
+			if (m_pos.z > m_player_pos.z + RANGE_Z)m_vec.z -= RASH_Z_SPEED;
+			if (m_pos.z < m_player_pos.z - RANGE_Z)m_vec.z += RASH_Z_SPEED;
+			printf("attack:%f ex:%f\n", s_boss_mode.boss_attack, s_boss_mode.boss_rush);
+		}
+		else if (s_boss_mode.boss_rush > RASH_STEP2_TIME) {
+			m_ex_attack_state = eExRashStep3;
+		}
+		break;
+	//第四段階：プレイヤーに向かって突進する
+	case eExRashStep3:
+		if (s_boss_mode.boss_rush < RASH_STEP3_TIME) {
+			m_anim_p->SetWillPlayAnim(eEnemyAnimBossIdRush);
+			m_pos.x += RASH_SPEED;
+			if (float length = CheckAttackRange() <= EX1_RANGE_RASH && m_is_attack == true  ) {
+				m_is_attack = false;
+				m_player_p->HitPointGainValue(-RASH_ATTACK);
+			}
+		}
+		else if (s_boss_mode.boss_rush > RASH_STEP3_TIME) {
+			m_ex_attack_state = eExRashStep4;
+		}
+		break;
+	//第五段階；突進終了後、初期値に戻す
+	case eExRashStep4:
+		s_boss_mode.boss_rush = 0;
+		m_is_hit = true;
+		m_ex_state = 0;
+		m_ex_attack_state = eExStepStart;
+		break;
+	default:
+		break;
 	}
 }
 
@@ -244,34 +333,53 @@ void CCharacterBoss::AttackHub()
 		return;
 	}
 
-	
+
 	Attack1();
 	Attack2();
+	SpecialAttack1();
+	s_boss_mode.boss_attack += CFPS::GetDeltaTime() * GAME_BASE_FPS;
+	printf("attack:%f comp:%f\n", s_boss_mode.boss_attack, m_attack_complete);
 
-	//攻撃が当たると、逃げ状態に遷移
-	if(m_is_hit==true)m_boss_state = eEnemyBossStateAway;
-	//当たらなかったら、待機状態に戻る
-	else m_boss_state = eEnemyBossStateIdle;
+	//攻撃の動作が終わると、待機が逃げに移行する
+	if (s_boss_mode.boss_attack >= m_attack_complete) {
+		s_boss_mode.boss_attack = 0;
+		ChengeStateIdleOrAway();
+	}
 }
 
-void CCharacterBoss::Move()
+void CCharacterBoss::Damage()
 {
-	CheckDist();
-	m_pos += m_vec*0.7;
-	MoveLimit();
+	if (m_ex_state != eEnemyBossStateDamage)return;
+
+	if ((int)m_hit_point % 6 == 0)m_boss_state = eEnemyBossStateAway;
 }
+
+
 
 void CCharacterBoss::MoveLimit()
 {
+	CheckDist();
+	m_vec.x *= FLICTION;
+	m_vec.z *= FLICTION;
+	m_vec.x = min(max(m_vec.x, -MAX_SPEED), MAX_SPEED);
+	m_vec.z = min(max(m_vec.z, -MAX_SPEED), MAX_SPEED);
+
 	//とりあえずテスト用なので
-	/*if (m_pos.x <= 0) m_pos.x = 0;
-	if (m_pos.z <= 430.0f) m_pos.z = 430.0f;
-	if (m_pos.x >= 1020.0f) m_pos.x = 1020.0f;*/
+	if (m_ex_state != eEnemyBossStateRush) {
+		if (m_player_pos.x<m_pos.x - 1000) m_pos.x = m_player_pos.x + 900;
+		if (m_player_pos.x>m_pos.x + 1000) m_pos.x == m_player_pos.x - 100;
+	}
+
 }
 
 void CCharacterBoss::CheckDist()
 {
 	if (m_boss_state == eEnemyBossStateAway)return;
+	
+	if (m_ex_state == eEnemyBossStateRush) {
+		m_boss_state = eEnemyBossStateAttack;
+		return;
+	}
 
 	ChangeDist();
 
@@ -284,6 +392,44 @@ void CCharacterBoss::CheckDist()
 			m_boss_state = eEnemyBossStateAttack;
 		}
 	}
+}
+
+float CCharacterBoss::CheckAttackRange()
+{
+	CVector3D target_vec = m_player_pos - m_pos;
+	float target_length = sqrt(target_vec.x * target_vec.x + target_vec.y * target_vec.y + target_vec.z * target_vec.z);
+	return target_length;
+}
+
+void CCharacterBoss::ReceiveAttack()
+{
+	//無敵ならなにもしない
+	if (GetInvincible() == true) return;
+	m_ex_state = eEnemyBossStateDamage;
+	SetIsBlindDraw(true);
+	m_hit_count++;
+	if (m_hit_point < 0)SetIsDelete();
+}
+
+void CCharacterBoss::DefalutSet()
+{
+	m_vec = DEF_BOSS_VEC;
+	//初期値のy軸は地面に埋まらないように少し浮かせる
+	m_pos = DEF_BOSS_POS;
+
+	m_rads = CVector3D(75, 120, 10);
+	SetSize(BOSS_SIZE);
+	m_is_flip = false;
+
+	m_hit_point = BOSS_HP;
+	m_hit_point_max = BOSS_HP;
+
+	LoadAnimImage();
+
+	m_anim_p->SetAnim(eEnemyAnimBossIdIdle);
+	SetIsShowShadow(true);
+	SetShadowSize(BOSS_SHADOW_SIZE);
+	SetDrawAdjPos(CVector2D(-30.0, -90.0));
 }
 
 void CCharacterBoss::CharacterBeforeCollisionCheck()
