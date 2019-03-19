@@ -61,8 +61,6 @@ BossHead::BossHead(const CVector2D &player_pos, const int state) :EnemyBase(eBos
 
 	m_state = state;
 
-	m_boss_hp = 1000;
-
 	m_shadow_size = 0;
 
 }
@@ -78,7 +76,7 @@ void BossHead::Idle()
 	m_draw_flag = true;
 	m_idle_flag = true;
 	m_shadow_flag = true;
-	m_rect = CRect(-300, -100, 250, 300);
+	
 
 	if (m_pos2.x >= WIGHT_SIZE / 1.7) {
 		m_shadow_pos.x -= 0.5;
@@ -215,6 +213,9 @@ void BossHead::Draw()
 		m_img3.Draw();
 	}
 }
+
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -418,6 +419,8 @@ void BossHand::Draw()
 	if (m_lazerhand_flag == true)m_img.Draw();
 	if(m_hand_flag == true)m_img4.Draw();
 }
+
+
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
