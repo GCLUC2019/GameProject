@@ -68,7 +68,7 @@ void ItemBox::Draw()
 {
 	m_img.UpdateAnimation();
 	m_img.SetSize(200, 200);
-	m_img.SetCenter(100, 100);
+	m_img.SetCenter(100, 150);
 	m_img.SetPos(m_pos);
 	m_img.Draw();
 }
