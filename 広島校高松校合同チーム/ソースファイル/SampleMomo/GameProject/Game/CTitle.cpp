@@ -3,9 +3,11 @@
 #include "CStorySceneOpening.h"
 #include "CBar.h"
 #include "CGameScene.h"
+#include "CFade.h"
 
 CTitle::CTitle() : CObject(0, 0)
 {
+
 	m_background_image_p= GET_RESOURCE("Back", CImage*);
 
 	m_blind_text_p = GET_RESOURCE("Start_By_Space", CImage*);
@@ -66,6 +68,8 @@ void CTitle::Draw()
 
 void CTitle::NextScene()
 {
+	CFade::GetInstance()->SetFadeOut(0);
+	CFade::GetInstance()->SetFadeIn(25);
 	TaskManager::GetInstance()->AddTask(new CStorySceneOpening());
 }
 

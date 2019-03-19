@@ -202,6 +202,7 @@ void CCharacterPlayer::LoadAnimImage()
 
 void CCharacterPlayer::InputDestroyWeapon()
 {
+	if (m_is_freeze == true) return;
 	if (CInput::GetState(0, CInput::ePush, CInput::eButton10) && m_equip_weapon_id != -1) {
 		PlayerDestroyEquip();
 	}
@@ -212,7 +213,7 @@ void CCharacterPlayer::InputDash()
 	if (m_is_landing_action_now == true) return;
 	if (m_is_evasion == true) return;
 	if (m_is_down == true) return;
-
+	if (m_is_freeze == true) return;
 
 	if (CInput::GetState(0, CInput::eHold, CInput::eButton3)) {
 		m_is_dashing = true;
@@ -229,6 +230,7 @@ void CCharacterPlayer::InputAttack()
 		if (m_is_evasion == true) return;
 		if (m_is_down == true) return;
 		if (m_is_attacking == true) return;
+		if (m_is_freeze == true) return;
 
 		m_is_early_input_attack = false;
 		m_is_range_attack = false;
@@ -422,6 +424,7 @@ void CCharacterPlayer::CharacterUpdate()
 	Landing();
 	Jumping();
 	Falling();
+	Freezing();
 
 	//Gravity();
 	
@@ -451,6 +454,7 @@ void CCharacterPlayer::InputMove()
 	if (m_is_evasion == true) return;
 	if (m_is_down == true) return;
 	if (m_is_landing_action_now == true) return;
+	if (m_is_freeze == true) return;
 	
 	bool is_move = false;
 	if (CInput::GetState(0,CInput::eHold, CInput::eRight)) {
@@ -490,6 +494,7 @@ void CCharacterPlayer::InputJump()
 	if (m_is_attacking == true) return;
 	if (m_is_evasion == true) return;
 	if (m_is_down == true) return;
+	if (m_is_freeze == true) return;
 
 	if (CInput::GetState(0, CInput::ePush, CInput::eButton1) && m_is_jumping == false && m_is_landing == true) {
 		ClearEarlyInput();
@@ -586,6 +591,7 @@ void CCharacterPlayer::ReserveAttacking()
 
 void CCharacterPlayer::InputEvasion()
 {
+	if (m_is_freeze == true) return;
 
 	int receive_input_time = PLAYER_RECEIVE_INPUT_EVASION_TIME;
 	
@@ -672,7 +678,7 @@ void CCharacterPlayer::BeginEvasion()
 	//回避予備動作中だが入力した方角が違う場合なにもしない
 	if (m_is_evasion == true && m_evasion_reserve_count > 0 && m_is_flip != m_is_input_evasion_flip) return;
 
-
+	if (m_is_freeze == true) return;
 
 	//空中にいるなら回避しない
 	if (m_is_landing == false) return;
@@ -788,12 +794,10 @@ void CCharacterPlayer::DoingDown()
 	else m_anim_p->SetWillPlayAnim(ePlayerAnimIdDowned);
 
 
-	if (m_down_count <= 0.0) {
-		m_is_down  = false;
-		
-		//ゲームオーバー呼び出しとゲームシーンオブジェクトの削除
-		//SetIsDelete();
-		CGameScene::GetInstance()->GameOver();
+	if (m_down_count <= 0.0 && m_is_sended_miss == false) {
+		//m_is_down  = false;
+		m_is_sended_miss = true;
+		CGameScene::GetInstance()->Miss();
 
 	}
 }
@@ -1210,6 +1214,16 @@ void CCharacterPlayer::CheckEquipEndurance()
 	if (m_equip_endurance <= 0.0) {
 		PlayerDestroyEquip();
 	}
+}
+
+void CCharacterPlayer::Freezing()
+{
+	if (m_is_freeze == false) return;
+	m_freeze_count -= CFPS::GetDeltaTime() * GAME_BASE_FPS;
+	if (m_freeze_count <= 0) {
+		m_is_freeze = false;
+	}
+	m_anim_p->SetWillPlayAnim(ePlayerAnimIdDown);
 }
 
 CCharacterPlayer * CCharacterPlayer::GetInstance()

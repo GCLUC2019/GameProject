@@ -12,6 +12,7 @@
 #include "CGameOver.h"
 #include "CFade.h"
 #include "CStorySceneClear.h"
+#include "CGameSceneWave.h"
 
 
 
@@ -35,6 +36,7 @@ void CGameScene::Init()
 
 void CGameScene::Setup()
 {
+	m_reserve_num = RESERVE_MAX;
 	m_now_scene = eStage1;
 	PopPlayer();
 	SetupScene();
@@ -56,8 +58,21 @@ void CGameScene::ClearGameSceneObject()
 	m_game_scene_object_num = 0;
 }
 
-void CGameScene::WaveDone()
+void CGameScene::WaveDone(int _next_wave)
 {
+	switch (m_now_scene) {
+	case eStage1:
+		SetGameSceneLimitPosMin(CVector3D(100.0f, 0.0f, 340.0f));
+		SetGameSceneLimitPosMax(CVector3D(1280.0f * 4, 720.0f, 720.0f));
+		break;
+	case eStage1Boss:
+		SetGameSceneLimitPosMin(CVector3D(100.0f, 0.0f, 340.0f));
+		SetGameSceneLimitPosMax(CVector3D(1280.0f * 2, 720.0f, 720.0f));
+		break;
+	}
+
+	if(_next_wave != -1) AddGameSceneObject(new CGameSceneWave(_next_wave));
+
 }
 
 void CGameScene::Update()
@@ -76,8 +91,15 @@ void CGameScene::CheckSceneChange()
 	}
 }
 
-void CGameScene::GameOver()
+void CGameScene::Miss()
 {
+	m_reserve_num--;
+	if (m_reserve_num < 0) {
+		//ゲームオーバー呼び出し
+		TaskManager::GetInstance()->AddTask(new CGameOver());
+		return;
+	}
+
 	ClearGameSceneObject();
 	DeletePlayer();
 	PopPlayer();
@@ -121,16 +143,18 @@ void CGameScene::SetupScene()
 
 	switch (m_now_scene) {
 	case eStage1:
-
-		m_player_object_p->SetPos(CVector3D(5000, -201, 550));//テスト用
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 4; i++) {
 			//床張り(役割は単純なので処理の軽い汎用オブジェクトで代用)
 			AddGameSceneObject(new CCommonObject(nullptr, CVector3D(1280.0f * i, 10000.0f, 0.0f), CVector2D(0, 0), CVector3D(1280.0f, 1.0f + 10000.0f, 720.0f)));
 			AddGameSceneObject(new CObjectImage(GET_RESOURCE("Stage_Background_0_Bot", CImage*), CVector3D(1280 * i, 0, 0), CVector2D(1280, 720), -1));
 			AddGameSceneObject(new CObjectImage(GET_RESOURCE("Stage_Background_0_Top", CImage*), CVector3D(1280 * i, -720, 0), CVector2D(1280, 720), -1));			
 		}
 		SetGameSceneLimitPosMin(CVector3D(100.0f, 0.0f, 340.0f));
-		SetGameSceneLimitPosMax(CVector3D(1280.0f * 6, 720.0f, 720.0f));
+		SetGameSceneLimitPosMax(CVector3D(1280.0f * 4, 720.0f, 720.0f));
+		
+		AddGameSceneObject(new CGameSceneWave(eWave1));
+
+		/*
 		AddGameSceneObject(new CCharacterEnemy(eEnemyIdGun, CVector3D(2000, -151, 450 + 100)));
 		AddGameSceneObject(new CCharacterEnemy(eEnemyIdSpear, CVector3D(1500, -151, 450 + 100)));
 		AddGameSceneObject(new CCharacterEnemy(eEnemyIdAxe, CVector3D(1000, -151, 450 + 100)));
@@ -140,11 +164,12 @@ void CGameScene::SetupScene()
 		AddGameSceneObject(new CCharacterEnemy(eEnemyIdSpear, CVector3D(4200, -151, 450 + 100)));
 		AddGameSceneObject(new CCharacterEnemy(eEnemyIdSpear, CVector3D(4400, -151, 450 + 100)));
 		AddGameSceneObject(new CCharacterEnemy(eEnemyIdSpear, CVector3D(4600, -151, 450 + 100)));
+		*/
 		m_next_scene = eStage1Boss;
-		m_next_scene_pos = 1280 * 6 - 100;
+		m_next_scene_pos = 1280 * 4 - 100;
 		break;
 	case eStage1Boss:
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 2; i++) {
 			//床張り(役割は単純なので処理の軽い汎用オブジェクトで代用)
 			AddGameSceneObject(new CCommonObject(nullptr, CVector3D(1280.0f * i, 10000.0f, 0.0f), CVector2D(0, 0), CVector3D(1280.0f, 1.0f + 10000.0f, 720.0f)));
 
@@ -160,13 +185,29 @@ void CGameScene::SetupScene()
 
 		}
 		SetGameSceneLimitPosMin(CVector3D(100.0f, 0.0f, 340.0f));
-		SetGameSceneLimitPosMax(CVector3D(1280.0f * 3, 720.0f, 720.0f));
+		SetGameSceneLimitPosMax(CVector3D(1280.0f * 2, 720.0f, 720.0f));
 
 		AddGameSceneObject(new CCharacterBoss());
 		m_next_scene = -1;
 		break;
 	}
 	CFPS::Wait();//deltatime安定化用
+}
+
+void CGameScene::ReturnTitle()
+{
+	ClearGameSceneObject();
+	DeletePlayer();
+	CFade::GetInstance()->SetFadeOut(0);
+	CFade::GetInstance()->SetFadeIn(30);
+	TaskManager::GetInstance()->AddTask(new CTitle());
+}
+
+void CGameScene::Continue()
+{
+	ClearGameSceneObject();
+	DeletePlayer();
+	Setup();
 }
 
 void CGameScene::ChangeScene(int _scene_id)

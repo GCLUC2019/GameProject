@@ -4,7 +4,7 @@
 #include "CGameScene.h"
 #include "CSubWeapon.h"
 
-CCharacterEnemy::CCharacterEnemy(int _enemy_id, CVector3D _enemy_pos) :CCharacter(eTaskIdEnemy, 0)
+CCharacterEnemy::CCharacterEnemy(int _enemy_id, CVector3D _enemy_pos, CGameSceneWave* _from_wave) :CCharacter(eTaskIdEnemy, 0)
 {
 	m_enemy_id = _enemy_id;
 	SetPos(_enemy_pos);
@@ -27,6 +27,7 @@ CCharacterEnemy::CCharacterEnemy(int _enemy_id, CVector3D _enemy_pos) :CCharacte
 	//敵はプレイヤーを設定（ここを変えれば味方のトランプ兵も作れるかも）
 	m_target_p = CCharacterPlayer::GetInstance();
 	
+	m_from_wave_p = _from_wave;
 }
 
 CCharacterEnemy::~CCharacterEnemy()

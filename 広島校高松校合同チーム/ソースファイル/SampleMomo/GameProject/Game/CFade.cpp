@@ -29,7 +29,7 @@ void CFade::Update()
 
 void CFade::Draw()
 {
-	printf("alpha %lf\n", m_alpha);
+	//printf("alpha %lf\n", m_alpha);
 	m_black_screen_p->SetSize(1280, 720);
 	m_black_screen_p->SetColor(0, 0, 0, m_alpha);
 	m_black_screen_p->SetPos(0, 0);

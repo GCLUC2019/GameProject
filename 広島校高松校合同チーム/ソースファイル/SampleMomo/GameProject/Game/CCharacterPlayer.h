@@ -279,7 +279,13 @@ private:
 
 	bool m_is_down = false;
 	double m_down_count = 0;
+
+	bool m_is_sended_miss = false;
 	
+
+	//É{ÉXÇÃì¡éÍçUåÇÇ»Ç«Ç…ÇÊÇÈçdíº
+	bool m_is_freeze = false;
+	double m_freeze_count = 0.0;
 
 public:
 	CCharacterPlayer(CVector3D _pos);
@@ -338,6 +344,15 @@ public:
 	};
 
 
+	void SetFreeze(int _count) {
+		m_is_freeze = true;
+		m_freeze_count = _count;
+		m_is_attacking = false;
+		m_is_evasion = false;
+		m_is_jumping = false;
+	};
+
+	void Freezing();
 	
 
 	void PlayerDestroyEquip() {

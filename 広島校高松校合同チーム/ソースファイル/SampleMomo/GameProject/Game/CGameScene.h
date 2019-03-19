@@ -4,6 +4,7 @@
 
 #define GAME_SCENE_OBJECT_MAX (3000)
 
+#define RESERVE_MAX (6)
 class CCharacterPlayer;
 
 enum {
@@ -21,6 +22,9 @@ private:
 	int m_next_scene = -1;
 	float m_next_scene_pos = 0;//この地点まで到達するとシーン遷移
 	CCharacterPlayer* m_player_object_p = nullptr;
+
+	//残機の数
+	int m_reserve_num = 0;
 
 public:
 	CGameScene();
@@ -40,13 +44,13 @@ public:
 	void ClearGameSceneObject();
 
 	//ウェーブが完了したら呼ばれる
-	void WaveDone();
+	void WaveDone(int _next_wave);
 
 	void Update();
 
 	void CheckSceneChange();
 
-	void GameOver();
+	void Miss();
 
 	void StageClear();
 
@@ -54,7 +58,12 @@ public:
 	void DeletePlayer();
 	void SetupScene();
 
+	void ReturnTitle();
+	void Continue();
+
 	void ChangeScene(int _scene_id);
+
+	int* GetReserveNumPointer() { return &m_reserve_num; };
 
 	static CGameScene* GetInstance();
 };

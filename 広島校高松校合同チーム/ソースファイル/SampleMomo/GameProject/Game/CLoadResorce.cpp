@@ -36,6 +36,12 @@ void CLoadResorce::LoadResorce()
 	ReadResorceFile("Story/STORY_IMAGE.resorce");
 	ReadResorceFile("BossDog/DOG_ANIM_IMAGE.resorce");
 
+	//CSound::GetInstance()->GetSound("BGM_Boss")->Load("Sound/boss_bgm.wav", 10);
+	//CSound::GetInstance()->GetSound("BGM_Stage_Clear")->Load("Sound/stage_clear_bgm.wav", 10);
+
+	//m_bgm[e_BGM_Party_Menu] = CSound::GetInstance()->GetSound("BGM_Party_Menu");
+
+
 	/*
 	ADD_RESOURCE("Player_Idle_Anim_0", CImage::LoadImage("momotaro_idle_anim_0.png"));
 	ADD_RESOURCE("Player_Idle_Anim_1", CImage::LoadImage("momotaro_idle_anim_1.png"));

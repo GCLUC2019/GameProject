@@ -32,7 +32,6 @@
 #define ENEMY_GUN_RECEIVE_DAMAGE_FRAME (50.0)
 #define ENEMY_GUN_SPACE_LENGTH (300.0)
 
-
 /*
 遠距離攻撃は、当たるのが確定したら撃つアニメーションを再生する。（わかりやすさのため)
 */
@@ -89,7 +88,7 @@ private:
 
 
 public:
-	CCharacterEnemy(int _enemy_id,CVector3D _enemy_pos);
+	CCharacterEnemy(int _enemy_id,CVector3D _enemy_pos,CGameSceneWave* _from_wave = nullptr);
 	~CCharacterEnemy();
 
 	void LoadAnimImage();

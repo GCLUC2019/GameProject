@@ -6,7 +6,8 @@
 
 CCharacterBoss::CCharacterBoss():CCharacter(eTaskIdEnemy,0)
 {
-	m_player_p  = dynamic_cast<CCharacterPlayer*>(TaskManager::GetInstance()->FindTask(eTaskIdPlayer));
+	//m_player_p  = dynamic_cast<CCharacterPlayer*>(TaskManager::GetInstance()->FindTask(eTaskIdPlayer));
+	m_player_p = CCharacterPlayer::GetInstance();
 
 	//各パラメータを初期化
 	DefalutSet();
@@ -237,8 +238,8 @@ void CCharacterBoss::Attack1()
 	//プレイヤーが範囲内にいるとダメージを与える
 	if (float length = CheckAttackRange() <= ATTACK1_RANGE_BITE) {
 		m_is_attack = false;
-		m_player_p->ReceiveAttack();
 		m_player_p->HitPointGainValue(-ATTACK);
+		m_player_p->ReceiveAttack();
 		//攻撃が当たると、カウント減少
 		m_ex_count++;
 		m_is_hit = true;
@@ -259,7 +260,8 @@ void CCharacterBoss::Attack2()
 	//プレイヤーが範囲内にいると、ひるませる
 	if (float length= CheckAttackRange() <= ATTACK1_RANGE_BARK) {
 		m_is_attack = false;
-		m_player_p->ReceiveAttack();
+		m_player_p->SetFreeze(BARK_FREEZE_TIME);
+
 		//攻撃が当たると、カウント減少
 		m_ex_count++;
 		m_is_hit = true;
@@ -304,9 +306,11 @@ void CCharacterBoss::SpecialAttack1()
 		if (s_boss_mode.boss_rush < RASH_STEP3_TIME) {
 			m_anim_p->SetWillPlayAnim(eEnemyAnimBossIdRush);
 			m_pos.x += RASH_SPEED;
-			if (float length = CheckAttackRange() <= EX1_RANGE_RASH && m_is_attack == true  ) {
+			//if (float length = CheckAttackRange() <= EX1_RANGE_RASH && m_is_attack == true  ) {
+			if (float length = CheckAttackRange() <= EX1_RANGE_RASH) {
 				m_is_attack = false;
 				m_player_p->HitPointGainValue(-RASH_ATTACK);
+				m_player_p->ReceiveAttack();
 			}
 		}
 		else if (s_boss_mode.boss_rush > RASH_STEP3_TIME) {
@@ -415,7 +419,8 @@ void CCharacterBoss::DefalutSet()
 	m_pos = DEF_BOSS_POS;
 	m_pos_old = m_pos;
 
-	m_rads = CVector3D(75, 200, 10);
+	//飛び越えれないくらいの高さにはしておく
+	m_rads = CVector3D(75, 300, 10);
 	
 	m_is_flip = false;
 
@@ -440,12 +445,12 @@ void CCharacterBoss::AdjAnim()
 	case eEnemyAnimBossIdJump:
 		SetSize(500,750);
 		SetShadowSize(BOSS_SHADOW_SIZE);
-		SetDrawAdjPos(CVector2D(-20.0, -15.0 - 125));
+		SetDrawAdjPos(CVector2D(-20.0, -15.0 - 125 + 100));
 		break;
 	default:
 		SetSize(BOSS_SIZE);
 		SetShadowSize(BOSS_SHADOW_SIZE);
-		SetDrawAdjPos(CVector2D(-20.0, -15.0));
+		SetDrawAdjPos(CVector2D(-20.0, -15.0 + 100));
 		break;
 	}
 }
