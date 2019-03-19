@@ -93,7 +93,7 @@ void CSceneTitle::Init(){
 	mTexture.Load("title.tga");
 	mTitle.SetVertex(-300, 300, -100, 100);
 	mTitle.SetColor(1.0f, 1.0f, 1.0f, 1.0f);
-	mTitle.SetTexture(&mTexture,0, 766, 0, 152);
+	mTitle.SetTexture(&mTexture,0, 766, 0, 151);
 
 }
 
