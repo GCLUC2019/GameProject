@@ -30,6 +30,7 @@ public:
 	EnemyManager();
 	void Update();
 	void Draw();
+	void EnemyLoad();
 	void WaveLoad();
 
 };

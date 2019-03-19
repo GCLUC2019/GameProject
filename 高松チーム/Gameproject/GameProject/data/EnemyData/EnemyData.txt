@@ -1,6 +1,10 @@
-EnemyData
+WaveData1
+EnemyData1
 
-31 100 100
-31 300 300
+31 100 550
+31 300 650
+27 500 500
+28 500 600
 
-END
+END_Enemy1
+END1
