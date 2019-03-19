@@ -28,5 +28,7 @@ public:
 	//ウェーブが完了したら呼ばれる
 	void WaveDone();
 
+	void GameOver();
+
 	static CGameScene* GetInstance();
 };

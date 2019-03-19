@@ -16,6 +16,7 @@
 
 //起動誤差
 #define RANGE (150)
+#define RANGE_Z (50)
 
 //攻撃の適正距離の初期値
 #define DEF_JUST_DIST 350
@@ -36,16 +37,18 @@
 #define AWAY_LIMIT  75
 
 //速度
-#define DEF_SPEED 1.5
+#define DEF_SPEED 2.0
 #define RUN_SPEED 4.5
 
 //攻撃範囲
 #define ATTACK1_RANGE_BITE 400
 #define ATTACK1_RANGE_BARK 500
+#define EX1_RANGE_RASH 100
 
 //攻撃時間
 #define BITE_TIME 30.0
 #define BARK_TIME 50.0
+#define RASH_TIME 250.0
 
 //跳躍力
 #define JUMP_POWER 40
@@ -57,6 +60,19 @@
 //最大速度
 #define MAX_SPEED 8.0f
 
+//攻撃力
+#define ATTACK 1.0
+
+//必殺技の各数値
+#define RASH_STEP1_TIME 30.0
+#define RASH_STEP2_TIME 120.0
+#define RASH_STEP3_TIME 240.0
+#define RASH_Z_SPEED 5.0
+#define RASH_SPEED 18.0
+#define RASH_JIMP_POWER 50
+#define RASH_ATTACK 3.0
+
+
 //ボスのアニメーションの種類番号
 enum {
 	eEnemyAnimBossIdIdle = 0,
@@ -65,6 +81,7 @@ enum {
 	eEnemyAnimBossIdJump,
 	eEnemyAnimBossIdBark,
 	eEnemyAnimBossIdBite,
+	eEnemyAnimBossIdRush,
 	eEnmeyAnimBossIdMax,
 };
 
@@ -91,7 +108,16 @@ private:
 		eEnemyBossStateWalk,
 		eEnemyBossStateRun,
 		eEnemyBossStateAttack,
+		eEnemyBossStateRush,
 		eEnemyBossStateAway,
+	};
+
+	enum {
+		eExStepStart = 0,
+		eExRashStep1,
+		eExRashStep2,
+		eExRashStep3,
+		eExRashStep4,
 	};
 
 	struct boss_mode_counts {
@@ -99,6 +125,7 @@ private:
 		double boss_walk = 0.0;
 		double boss_run = 0.0;
 		double boss_attack = 0.0;
+		double boss_rush = 0.0;
 		double boss_away = 0.0;
 	};
 
@@ -110,10 +137,15 @@ private:
 
 	int m_boss_state = eEnemyBossStateIdle;
 	int m_befor_state = m_boss_state;
+	int m_ex_state = eExStepStart;
+	int m_ex_attack = 0;
 	int m_just_dist = DEF_JUST_DIST;
+	int m_ex_count = 0;
+
 	bool m_is_attack = true;
 	bool m_is_hit = false;
 	bool m_away_flg = false;
+	
 	CVector3D m_player_pos = CVector3D(0, 0, 0);
 public:
 	CCharacterBoss();
@@ -141,6 +173,7 @@ public:
 	//攻撃系
 	void Attack1();
 	void Attack2();
+	void SpecialAttack1();
 	void AttackHub();
 	//移動の限界値
 	void MoveLimit();
