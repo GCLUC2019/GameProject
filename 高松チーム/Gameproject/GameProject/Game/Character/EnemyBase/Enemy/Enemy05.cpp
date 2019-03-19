@@ -79,10 +79,11 @@ void Enemy05::Damage()
 {
 	m_vec.x = 0;
 	if (m_hp <= 0){
+		g_game_data.m_dead_cnt++;
 		m_img.ChangeAnimation(Enemy05Anim ::eEDeath05, false);
 		if (m_img.CheckAnimationEnd())
 			SetKill();
-		g_game_data.m_dead_cnt++;
+	
 	}
 	else {
 		m_img.ChangeAnimation(Enemy05Anim::eEDamage05, false);
@@ -109,6 +110,11 @@ void Enemy05::Update()
 	default:
 		break;
 	}
+
+	/*if (m_death_flg) {
+		Death();
+		return;
+	}*/
 
     m_depth = (m_pos.y - DEP_N) / 3.5;
     m_pos += m_vec;

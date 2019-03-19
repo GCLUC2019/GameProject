@@ -31,6 +31,6 @@ public:
 	void Update();
 	void Draw();
 	void EnemyLoad();
-	void WaveLoad();
+	void WaveLoad1();
 
 };
