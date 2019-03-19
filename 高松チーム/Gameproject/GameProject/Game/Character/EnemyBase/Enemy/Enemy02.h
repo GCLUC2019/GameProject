@@ -32,5 +32,5 @@ public:
     void Damage();//ダメージ
     void MoveControl();
 	void HitCheck();
-    //bool PlayerCheck(Player*p, Task*e, float _l);//プレイヤーを検知する
+    bool PlayerCheck(Player*p,float _l);//プレイヤーを検知する
 };
