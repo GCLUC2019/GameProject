@@ -39,4 +39,6 @@ public:
 		return CRect(0, 0, 0, 0);
 	}
     
+	void ThisSort();
+
 };

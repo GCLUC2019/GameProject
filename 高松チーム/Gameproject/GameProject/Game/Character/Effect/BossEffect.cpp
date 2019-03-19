@@ -80,10 +80,10 @@ void BossLazerEffect::Update()
 void BossLazerEffect::Draw()
 {
 #ifdef _DEBUG
-	Utility::DrawQuad(CVector2D(m_pos2.x + m_rect.m_left, m_pos2.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	/*Utility::DrawQuad(CVector2D(m_pos2.x + m_rect.m_left, m_pos2.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
 	Utility::DrawQuad(CVector2D(m_pos2.x + m_rect.m_left, m_pos2.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
 	Utility::DrawQuad(CVector2D(m_pos2.x + m_rect.m_right, m_pos2.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
-	Utility::DrawQuad(CVector2D(m_pos2.x + m_rect.m_right, m_pos2.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	Utility::DrawQuad(CVector2D(m_pos2.x + m_rect.m_right, m_pos2.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));*/
 #endif
 	m_img2.SetRect(0, 0, LAZER_X_SIZE, LAZER_Y_SIZE);
 

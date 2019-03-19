@@ -23,6 +23,25 @@ void Task::Draw()
 	//printf("Task Draw\n");
 }
 
+void Task::ThisSort()
+{
+
+	bool s = false;
+
+
+	do {
+		s = false;
+		if (this->GetPrev() != nullptr&&this->GetPos().y < this->GetPrev()->GetPos().y) {
+			TaskManager::Swap(this, this->GetPrev());
+			s = true;
+		}
+		if (this->GetNext() != nullptr&&this->GetPos().y > this->GetNext()->GetPos().y) {
+			TaskManager::Swap(this, this->GetNext());
+			s = true;
+		}
+	} while (s);
+}
+
 
 
 
