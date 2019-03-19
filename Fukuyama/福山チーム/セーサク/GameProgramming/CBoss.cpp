@@ -6,9 +6,7 @@
 #include"CMain.h"
 #include"CScene.h"
 #include"CBossBullet.h"
-//#include"CRectangle.h"
 #define FIREINTERVAL_E 60
-//#define TEXTUREINTERVAL_B 60
 #define BOSSLIFE_B 50
 
 
@@ -25,9 +23,8 @@ void CBoss::Init(){
 
 
 	CRectangle::SetTexture(&mTextImage, 0, 1299, 992, 0);
-	mBossLife = BOSSLIFE_B;
 	mFireInterval = FIREINTERVAL_E;
-	//mTextureInterval = TEXTUREINTERVAL_B;
+	
 	CTank::Init();
 	SetVertex(-100.0f, 100.0f, -100.0f, 100.0f);
 	SetColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -46,14 +43,13 @@ void CBoss::Init(){
 	mCollider->mpTask = this;
 	mpTarget = Tank;
 	CCollisionManager::Get()->Add(mCollider);
-	mTaskTag = EENEMYTANK;
+	mTaskTag = EBOSS;
 	mHpBar.SetHpBar(this, CVector2(0.0f, -120.0f), CVector2(200.0f, 8.0f), mColor, 200, 200);
 }
 
 
 
 void CBoss::Update(){
-	mBossLife -= 10;
 	if (mFireInterval > 0){
 		mFireInterval--;
 	}
@@ -67,10 +63,6 @@ void CBoss::Update(){
 
 	CTank::Update();
 
-	/*if (mPosition.x > 400){
-	mPosition = CVector2(400.0f, 150.0f);
-	mRotation = 90.0f;
-	}*/
 	if (mPosition.x <-400){
 		mPosition = CVector2(250.0f, -150.0f);
 		mRotation = 90.0f;
@@ -113,26 +105,28 @@ void CBoss::Update(){
 void CBoss::OnCollision(CCollider*p){
 	if (p->mpTask->mTaskTag == EPLAYERBULLET){
 		CRectangle::SetTexture(&mTextImage3, 200, 338, -520, -416);
-		mBossLife -= 25;
 		CExplosion*p = new CExplosion();
 		p->SetTexture(&Texture, 0, 64, 64, 0);
 		p->mPosition = mPosition;
 		CTaskManager::Get()->Add(p);
 		mHpBar.mHp -= 1.0f;
-		//CRectangle::SetTexture(&mTextImage3, 165, 20, 551, 408);
-		/*if (mBossLife < 0){
-		CRectangle::SetTexture(&mTextImage, 0, 1299, 992, 0);
-		mBossLife = 50;
-		}*/
 		if (mHpBar.mHp <= 0.0f){
 			CRectangle::SetTexture(&mTextImage3, -17, 160, -380, -191);
-			//-17, 103, -362, -191
+			
 		}
 	}
+	if (p->mpTask->mTaskTag == EBOSS){
+		CRectangle::SetTexture(&mTextImage3, 200, 338, -520, -416);
+		CExplosion*p = new CExplosion();
+		p->SetTexture(&Texture, 0, 64, 64, 0);
+		p->mPosition = mPosition;
+		CTaskManager::Get()->Add(p);
+		mHpBar.mHp -= 1.0f;
+		if (mHpBar.mHp <= 0.0f){
+			CRectangle::SetTexture(&mTextImage3, -17, 160, -380, -191);
 
-	/*if (p->mpTask->mTaskTag == EPLAYERTANK){
-	mPosition = mPosition + mCollider->mAdjust;
-	}*/
+		}
+	}
 }
 void CBoss::OnCollision(CBoxCollider*p){
 	if (p->mpTask->mTaskTag == EPLAYERTANK){
@@ -140,7 +134,6 @@ void CBoss::OnCollision(CBoxCollider*p){
 	}
 }
 void CBoss::Render(){
-	//CTank::Render();
 	mHpBar.Render();
 	CRectangle::Render();
 }
