@@ -1,11 +1,14 @@
 #pragma once
 #include "../../Gameproject/GameProject/stdafx.h"
 
-enum {
+
+enum Motion1{
 	eBossHeadAnim,
-	eBossTailAnim,
-	eBossHandAnim,
 	eBossTailAttackMotion,
+};
+enum Motion2{
+	
+	eBossTailAnim,
 	eBossFireAttackMotion,
 	
 };
@@ -25,6 +28,8 @@ enum {
 	eBossDeathEffect2,
 };
 
+
+extern TexAnimData BossAnimData2[];
 extern TexAnimData BossAnimData[];
 extern TexAnimData BossFireEffectAnimData[];
 extern TexAnimData BossLazerEffectAnimData[];

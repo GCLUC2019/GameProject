@@ -37,6 +37,13 @@ void BossFireEffect::Update()
 
 void BossFireEffect::Draw()
 {
+#ifdef _DEBUG
+	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+#endif
+
 	m_img.SetSize(FIRE_X_SIZE - BOSS_X_SIZE / 3, FIRE_Y_SIZE / 4);
 	m_img.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
 	m_img.Draw();
@@ -49,14 +56,14 @@ void BossFireEffect::Draw()
 BossLazerEffect::BossLazerEffect(const CVector2D& pos) : Task(eBossLazerEffectc)
 {
 	m_img = COPY_RESOURCE("BossLazer", CAnimImage*);
-	m_img2 = COPY_RESOURCE("SkyRed", CImage*);
+	m_img2 = COPY_RESOURCE("SkyRed", CImage*);//矩形確認しやすくするために作った。表示はしていない
 
 	m_img.SetCenter((LAZER_X_SIZE + 640) / 2, (LAZER_Y_SIZE + 528) / 2);
 	m_img2.SetCenter(LAZER_X_SIZE / 4, LAZER_Y_SIZE / 4);
 
-	m_pos.x = pos.x - LAZER_X_SIZE / 6.5;
+	m_pos.x = pos.x - LAZER_X_SIZE / 6.5 + 150;
 
-	m_pos.y = pos.y + LAZER_Y_SIZE / 6.5;
+	m_pos.y = pos.y + LAZER_Y_SIZE / 6.5 + 50;
 
 	m_pos2 = CVector2D(100, 625);
 
@@ -80,13 +87,12 @@ void BossLazerEffect::Update()
 void BossLazerEffect::Draw()
 {
 #ifdef _DEBUG
-	/*Utility::DrawQuad(CVector2D(m_pos2.x + m_rect.m_left, m_pos2.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	Utility::DrawQuad(CVector2D(m_pos2.x + m_rect.m_left, m_pos2.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
 	Utility::DrawQuad(CVector2D(m_pos2.x + m_rect.m_left, m_pos2.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
 	Utility::DrawQuad(CVector2D(m_pos2.x + m_rect.m_right, m_pos2.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
-	Utility::DrawQuad(CVector2D(m_pos2.x + m_rect.m_right, m_pos2.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));*/
+	Utility::DrawQuad(CVector2D(m_pos2.x + m_rect.m_right, m_pos2.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
 #endif
 	m_img2.SetRect(0, 0, LAZER_X_SIZE, LAZER_Y_SIZE);
-
 	m_img.SetSize(LAZER_X_SIZE + 640, LAZER_Y_SIZE + 528);
 	m_img2.SetSize(LAZER_X_SIZE/2, LAZER_Y_SIZE/2);
 	m_img.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
@@ -120,6 +126,12 @@ void BossSlashEffect::Update()
 
 void BossSlashEffect::Draw()
 {
+#ifdef _DEBUG
+	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+#endif
 	
 	m_img.SetFlipH(m_flip);
 	m_img.SetSize(SLASH_SIZE * 2, SLASH_SIZE * 2);
