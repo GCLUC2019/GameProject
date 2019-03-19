@@ -139,6 +139,7 @@
     <ClInclude Include="Game\CCharacterEnemy.h" />
     <ClInclude Include="Game\CCharacterPlayer.h" />
     <ClInclude Include="Game\CCommonObject.h" />
+    <ClInclude Include="Game\CGameOver.h" />
     <ClInclude Include="Game\CGameScene.h" />
     <ClInclude Include="Game\CGameSceneObject.h" />
     <ClInclude Include="Game\CGameSceneUI.h" />
@@ -166,6 +167,7 @@
     <ClCompile Include="Game\CCharacterEnemy.cpp" />
     <ClCompile Include="Game\CCharacterPlayer.cpp" />
     <ClCompile Include="Game\CCommonObject.cpp" />
+    <ClCompile Include="Game\CGameOver.cpp" />
     <ClCompile Include="Game\CGameScene.cpp" />
     <ClCompile Include="Game\CGameSceneObject.cpp" />
     <ClCompile Include="Game\CGameSceneUI.cpp" />
