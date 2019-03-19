@@ -159,6 +159,7 @@
     <ClInclude Include="Game\Item\Item.h" />
     <ClInclude Include="Game\Item\ItemBox.h" />
     <ClInclude Include="Game\Resource\Resource.h" />
+    <ClInclude Include="Game\Resource\Sound\Sound.h" />
     <ClInclude Include="Game\Scene\GameScene.h" />
     <ClInclude Include="Game\Scene\Result.h" />
     <ClInclude Include="Game\Scene\Title.h" />
@@ -197,6 +198,7 @@
     <ClCompile Include="Game\Item\Item.cpp" />
     <ClCompile Include="Game\Item\ItemBox.cpp" />
     <ClCompile Include="Game\Resource\Resource .cpp" />
+    <ClCompile Include="Game\Resource\Sound\Sound.cpp" />
     <ClCompile Include="Game\Scene\GameScene.cpp" />
     <ClCompile Include="Game\Scene\Result.cpp" />
     <ClCompile Include="Game\Scene\Title.cpp" />

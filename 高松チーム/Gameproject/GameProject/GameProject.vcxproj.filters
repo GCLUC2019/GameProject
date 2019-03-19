@@ -101,6 +101,9 @@
     <ClCompile Include="Game\Stage\CollisionBox.cpp">
       <Filter>Game\Stage</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Resource\Sound\Sound.cpp">
+      <Filter>Game\Resource\Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GID.h" />
@@ -208,6 +211,9 @@
     <ClInclude Include="Game\Stage\CollisionBox.h">
       <Filter>Game\Stage</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Resource\Sound\Sound.h">
+      <Filter>Game\Resource\Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game">
@@ -263,6 +269,9 @@
     </Filter>
     <Filter Include="Game\UI">
       <UniqueIdentifier>{3eeda70f-6317-497c-9186-b4fd238d3b42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Resource\Sound">
+      <UniqueIdentifier>{ef7f4ea7-15ae-4722-a8da-313f80b7407d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
