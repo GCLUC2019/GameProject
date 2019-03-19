@@ -20,6 +20,8 @@ public:
 		Init();
 	}
 
+	static CTexture mTextImage5;
+
 	void Init();
 	void Update();
 	void Render();

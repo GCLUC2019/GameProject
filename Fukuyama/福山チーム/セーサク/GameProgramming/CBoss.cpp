@@ -1,4 +1,3 @@
-
 #include"CBoss.h"
 #include"CPlayerTank.h"
 #include <stdio.h>
@@ -9,17 +8,26 @@
 #include"CBossBullet.h"
 //#include"CRectangle.h"
 #define FIREINTERVAL_E 60
+//#define TEXTUREINTERVAL_B 60
+#define BOSSLIFE_B 50
+
 
 extern CPlayerTank *Tank;
 extern CTexture Texture;
 
 CTexture CBoss::mTextImage;
+CTexture CBoss::mTextImage3;
+
 
 void CBoss::Init(){
 	mTextImage.Load("Boss.ikaku.tga");
-	CRectangle::SetTexture(&mTextImage, 0, 1299, 992, 0);
+	mTextImage3.Load("Boss.tga");
 
+
+	CRectangle::SetTexture(&mTextImage, 0, 1299, 992, 0);
+	mBossLife = BOSSLIFE_B;
 	mFireInterval = FIREINTERVAL_E;
+	//mTextureInterval = TEXTUREINTERVAL_B;
 	CTank::Init();
 	SetVertex(-100.0f, 100.0f, -100.0f, 100.0f);
 	SetColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -42,14 +50,19 @@ void CBoss::Init(){
 	mHpBar.SetHpBar(this, CVector2(0.0f, -120.0f), CVector2(200.0f, 8.0f), mColor, 200, 200);
 }
 
-int Counter = 1;
+
 
 void CBoss::Update(){
+	mBossLife -= 10;
 	if (mFireInterval > 0){
 		mFireInterval--;
 	}
+	if (mHpBar.mHp > 0){
 
-	Forward();
+		Forward();
+
+	}
+
 
 
 	CTank::Update();
@@ -59,7 +72,7 @@ void CBoss::Update(){
 	mRotation = 90.0f;
 	}*/
 	if (mPosition.x <-400){
-		mPosition = CVector2(400.0f, -150.0f);
+		mPosition = CVector2(250.0f, -150.0f);
 		mRotation = 90.0f;
 	}
 
@@ -77,18 +90,20 @@ void CBoss::Update(){
 	CCollisionManager::Get()->Collision(mCollider);
 
 
-	//if (-0.1 < dot&&dot < 0.1){
-	//	if (mFireInterval <= 0){
-	//		mFireInterval = FIREINTERVAL_E;
-	//		CBossBullet*cbullet = new CBossBullet();
-	//		cbullet->mTaskTag = EBOSSBULLET;
-	//		cbullet->mLife = CBULLET_LIFE;
-	//		cbullet->mPosition = mCanon.mMatrix*CVector2(0.0f, 30.0f);
-	//		cbullet->mForward = cbullet->mPosition - mCanon.mMatrix*CVector2(0.0f, 24.0f);
-	//		cbullet->SetColor(mColor[0], mColor[1], mColor[2], mColor[3]);
-	//		CTaskManager::Get()->Add(cbullet);
-	//	}
-	//}
+	if (-0.1 < dot&&dot < 0.1){
+		if (mFireInterval <= 0 && mHpBar.mHp > 0){
+			mFireInterval = FIREINTERVAL_E;
+			CBossBullet*cbullet = new CBossBullet();
+			CRectangle::SetTexture(&mTextImage3, 24, 162, -150, -32);
+
+			cbullet->mTaskTag = EBOSSBULLET;
+			cbullet->mLife = CBULLET_LIFE;
+			cbullet->mPosition = mCanon.mMatrix*CVector2(0.0f, 30.0f);
+			cbullet->mForward = cbullet->mPosition - mCanon.mMatrix*CVector2(0.0f, 24.0f);
+			cbullet->SetColor(mColor[0], mColor[1], mColor[2], mColor[3]);
+			CTaskManager::Get()->Add(cbullet);
+		}
+	}
 
 
 
@@ -97,27 +112,21 @@ void CBoss::Update(){
 
 void CBoss::OnCollision(CCollider*p){
 	if (p->mpTask->mTaskTag == EPLAYERBULLET){
-		CExplosion*p = new CExplosion();
-		p->SetTexture(&Texture, 0, 64, 64, 0);
-		p->mPosition = mPosition;
-		CTaskManager::Get()->Add(p);
-		mHpBar.mHp -= 40.0f;
-		//Counter -= 1;
-		if (mHpBar.mHp <= 0.0f){
-			mEnabled = false;
-			CMain::mSceneTag = CScene::EWIN;
-		}
-	}
-	if (p->mpTask->mTaskTag == EPLAYERTANK){
+		CRectangle::SetTexture(&mTextImage3, 200, 338, -520, -416);
+		mBossLife -= 25;
 		CExplosion*p = new CExplosion();
 		p->SetTexture(&Texture, 0, 64, 64, 0);
 		p->mPosition = mPosition;
 		CTaskManager::Get()->Add(p);
 		mHpBar.mHp -= 1.0f;
-		//Counter -= 1;
+		//CRectangle::SetTexture(&mTextImage3, 165, 20, 551, 408);
+		/*if (mBossLife < 0){
+		CRectangle::SetTexture(&mTextImage, 0, 1299, 992, 0);
+		mBossLife = 50;
+		}*/
 		if (mHpBar.mHp <= 0.0f){
-			mEnabled = false;
-			CMain::mSceneTag = CScene::EWIN;
+			CRectangle::SetTexture(&mTextImage3, -17, 160, -380, -191);
+			//-17, 103, -362, -191
 		}
 	}
 
