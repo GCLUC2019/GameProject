@@ -13,7 +13,7 @@ void EnemyBase::Attack()
 {
 }
 
-void EnemyBase::Damage()
+void EnemyBase::Damage(const float& _damage)
 {
 }
 
