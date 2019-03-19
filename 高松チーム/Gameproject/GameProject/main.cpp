@@ -43,6 +43,8 @@ void MainLoop(void) {
 
 	TaskManager::GetInstance()->UpdateAll();
 
+	TaskManager::GetInstance()->TaskSort();
+
 	TaskManager::GetInstance()->DrawAll();
 
 
