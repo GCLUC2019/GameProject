@@ -1,6 +1,7 @@
 //¬ì
 
 #include "CItem.h"
+#include "CPlayerTank.h"
 
 int type;
 
@@ -14,13 +15,13 @@ void CItem::Init(){
 
 void CItem::Update(){
 	/*
-	if (type == 1){
+	if (mType == 1){
 	SetUv(heal);
 	}
-	if (type == 2){
+	if (mType == 2){
 	SetUv(strengthen);
 	}
-	if (type == 3){
+	if (mType == 3){
 	SetUv(Invincible);
 	}
 	*/
@@ -34,12 +35,15 @@ void CItem::Render(){
 void CItem::OnCollision(CCollider*p){
 	if (mTaskTag == EITEM&&p->mpTask->mTaskTag == EPLAYERTANK){
 		if (mType == 1){  //‰ñ•œ
+			//CPlayerTank::spInstance->mHpBar.mHp += 40.0f;
 			printf("CItem1::OnCollision\n");
 		}
 		if (mType == 2){  //‹­‰»
+
 			printf("CItem2::OnCollision\n");
 		}
 		if (mType == 3){  //–³“G
+
 			printf("CItem3::OnCollision\n");
 		}
 		mEnabled = false;

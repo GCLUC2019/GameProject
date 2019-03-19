@@ -9,6 +9,7 @@
 #include "CExplosion.h"
 #include "CSceneGame.h"
 #include "CMain.h"
+#include "CItem.h"
 
 #define FIREINTERVER_E 60
 #define ATTACKINTERVAR_E 58
@@ -126,6 +127,13 @@ void CEnemy1::OnCollision(CCollider*p){
 		CTaskManager::Get()->Add(p);
 		mHpBar.mHp -= 20.0f;
 		if (mHpBar.mHp <= 0.0f){
+			
+			//è¨êÏ
+			CItem*Item = new CItem();
+			Item->mTaskTag = EITEM;
+			Item->mPosition = mCanon.mMatrix*CVector2(0.0f, 0.0f);
+			CTaskManager::Get()->Add(Item);
+			//è¨êÏ
 			mEnabled = false;
 			CMain::mSceneTag = CScene::EWIN;
 		}
