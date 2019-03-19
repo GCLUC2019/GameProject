@@ -26,9 +26,8 @@ private:
 	int m_state_old;
 
 	bool m_interval_flg;
-	bool m_exattack_flg;
-	bool m_sattack_flg;
-	bool m_lattack_flg;
+	bool m_attack_flg;
+	bool m_movetyp_flg;
 		
 	void Update();
 	void Draw();
@@ -37,6 +36,7 @@ private:
 	void SAttack();//‹ßÚUŒ‚
 	void Damage();//ƒ_ƒ[ƒW
 	void Move();
+	void AttackControl();//UŒ‚ŠÇ—
 	void Alignment_y();//y²‡‚í‚¹
 public:
 	Enemy04();

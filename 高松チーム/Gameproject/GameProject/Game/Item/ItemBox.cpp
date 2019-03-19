@@ -80,7 +80,7 @@ ItemBox::~ItemBox()
 	}
 
 	int k = 0;
-	k = Utility::Rand(20, 30);
+	k = Utility::Rand(15, 20);
 	switch (m_box_typ)
 	{
 	case Box_Typ::eDummyBox:
