@@ -82,6 +82,7 @@ void Enemy05::Damage()
 		m_img.ChangeAnimation(Enemy05Anim ::eEDeath05, false);
 		if (m_img.CheckAnimationEnd())
 			SetKill();
+		g_game_data.m_dead_cnt++;
 	}
 	else {
 		m_img.ChangeAnimation(Enemy05Anim::eEDamage05, false);
