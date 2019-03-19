@@ -13,7 +13,7 @@ void EnemyBase::Attack()
 {
 }
 
-void EnemyBase::Damage()
+void EnemyBase::Damage(const float& _damage)
 {
 }
 
@@ -30,22 +30,22 @@ void EnemyBase::HitCheck(Task * _t)
 {
 }
 
-bool EnemyBase::CollisionCheckRect(EnemyBase * b1, EnemyBase * b2)
-{
-	CRect r1 = CRect(
-		b1->m_pos.x + b1->m_rect.m_left,
-		b1->m_pos.y + b1->m_rect.m_top,
-		b1->m_pos.x + b1->m_rect.m_right,
-		b1->m_pos.y + b1->m_rect.m_bottom);
-
-	CRect r2 = CRect(
-		b2->m_pos.x + b2->m_rect.m_left,
-		b2->m_pos.y + b2->m_rect.m_top,
-		b2->m_pos.x + b2->m_rect.m_right,
-		b2->m_pos.y + b2->m_rect.m_bottom);
-	return CCollision::CollisionRect(r1, r2);
-
-}
+//bool EnemyBase::CollisionCheckRect(EnemyBase * b1, EnemyBase * b2)
+//{
+//	CRect r1 = CRect(
+//		b1->m_pos.x + b1->m_rect.m_left,
+//		b1->m_pos.y + b1->m_rect.m_top,
+//		b1->m_pos.x + b1->m_rect.m_right,
+//		b1->m_pos.y + b1->m_rect.m_bottom);
+//
+//	CRect r2 = CRect(
+//		b2->m_pos.x + b2->m_rect.m_left,
+//		b2->m_pos.y + b2->m_rect.m_top,
+//		b2->m_pos.x + b2->m_rect.m_right,
+//		b2->m_pos.y + b2->m_rect.m_bottom);
+//	return CCollision::CollisionRect(r1, r2);
+//
+//}
 
 bool EnemyBase::CollitionCheckflip(int fliptype, EnemyBase * b1, EnemyBase * b2)
 {

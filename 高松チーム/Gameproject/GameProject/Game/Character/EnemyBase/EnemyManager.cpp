@@ -218,8 +218,8 @@ void EnemyManager::WaveLoad1()
 				}
 			}
 		}
-	}
 
+	}
 	fclose(fp);
 }
 

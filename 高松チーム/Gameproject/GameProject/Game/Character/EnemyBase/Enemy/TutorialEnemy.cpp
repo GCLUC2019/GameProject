@@ -1,6 +1,7 @@
 #include "TutorialEnemy.h"
 #include "../GameProject/Game/Character/Anim/AnimData.h"
 #include "../GameProject/Game/CollitionBase.h"
+#include "../GameProject/Game/GameData/GameData.h"
 
 
 TutorialEnemy::TutorialEnemy(CVector2D _pos) : EnemyBase(CharacterData::eTutorialEnemy)
@@ -10,7 +11,7 @@ TutorialEnemy::TutorialEnemy(CVector2D _pos) : EnemyBase(CharacterData::eTutoria
 	m_img.ChangeAnimation(eEMove02);
 	m_state = eMove;
 
-	m_rect = CRect(-47.0f, -17.0f, 54.0f, 82.0f);
+	m_rect = CRect(-47.0f, -120.0f, 54.0f, -20.0f);
 	m_pos = _pos;
 	m_flip = false;
 }
@@ -41,13 +42,23 @@ void TutorialEnemy::Update()
 
 void TutorialEnemy::Draw()
 {
+#ifdef _DEBUG
+	//Utility::DrawQuad(CVector2D(0, 720 / 2), CVector2D(1280, 720), CVector4D(1.0f, 0, 0, 1));
+
+	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+
+#endif // _DEBUG
+
 	m_shadow.SetSize(SAIZE_SD + m_depth / 5, 30);
 	m_shadow.SetCenter((SAIZE_SD + m_depth / 5) / 2, 30);
-	m_shadow.SetPos(CVector2D(m_pos.x, m_pos.y + 90));
+	m_shadow.SetPos(CVector2D(m_pos.x, m_pos.y -g_game_data.m_scroll.y/3));
 
 	m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
-	m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
-	m_img.SetPos(m_pos);
+	m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE);
+	m_img.SetPos(m_pos - CVector2D(0, g_game_data.m_scroll.y/3));
 	m_img.SetFlipH(m_flip);
 
 	m_shadow.Draw();
