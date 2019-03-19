@@ -86,7 +86,7 @@ void Enemy02::Update()
 void Enemy02::Draw()
 {
     m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
-    m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
+    m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE);
     m_img.SetPos(CVector2D(m_pos.x , m_pos.y + m_hight - g_game_data.m_scroll.y/3));
     m_img.SetFlipH(m_flip);
     m_img.Draw();
@@ -134,7 +134,7 @@ void Enemy02::Attack()
             m_hight = 0;
             cnt = 1;
             m_jump_flg = false;
-            TaskManager::AddTask(new E2Effect(CVector2D(m_pos.x,m_pos.y-5)));
+            TaskManager::AddTask(new E2Effect(CVector2D(m_pos.x,m_pos.y-IMAGE_SIZE/3)));
         }
     }
     if (m_img.CheckAnimationEnd()) {

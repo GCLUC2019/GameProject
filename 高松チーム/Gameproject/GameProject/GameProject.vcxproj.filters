@@ -218,7 +218,7 @@
       <Filter>Game\Resource\Sound</Filter>
     </ClInclude>
     <ClInclude Include="Game\Character\Anim\AnimEnemyEffect.h">
-      <Filter>Game\Character\Effect</Filter>
+      <Filter>Game\Character\Anim</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

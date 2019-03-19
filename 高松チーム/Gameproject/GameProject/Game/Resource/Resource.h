@@ -6,9 +6,10 @@
 #include "../Character/Anim/AnimUI.h"
 #include"../Item/AnimItemBox.h"
 #include "../Character/Anim/AnimEnemyEffect.h"
-class Resource {
+#include "../../Base/Task.h"
+class Resource :public Task{
 public:
-	Resource()
+	Resource():Task(eResource)
 	{
 		/*　
 			使用する.cppに　

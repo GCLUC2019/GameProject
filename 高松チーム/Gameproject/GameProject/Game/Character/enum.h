@@ -1,6 +1,7 @@
 #pragma once
 
 const enum CharacterData{
+    eResource,
 	eGameScene,
 	eGameClear,
 	eGameTutorial,

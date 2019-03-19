@@ -29,7 +29,7 @@ GameScene::GameScene() : Task(eGameScene)
 	TaskManager::GetInstance()->AddTask(new Enemy04(CVector2D(300, 300)));
 	TaskManager::GetInstance()->AddTask(new UI());
     TaskManager::GetInstance()->AddTask(new CollisionBox(CVector2D(500, 300), CRect(-200, -1, 200, 1)));
-    TaskManager::GetInstance()->AddTask(new Enemy02(CVector2D(300, 300)));
+    TaskManager::GetInstance()->AddTask(new Enemy02(CVector2D(300, 500)));
 
 }
 
