@@ -12,6 +12,10 @@ private:
 	CSound mSound;
 	//CRectangle mPlayer;
 public:
+	//CPlayerTank()
+	//	:mPlayer()
+	//	,mGravityV(0)
+	//{}
 	float p_max_hp;	//ステータス類追加	宮原
 	float p_max_sp;
 	float p_min_sp;
@@ -25,7 +29,10 @@ public:
 	CTexture mTexture;
 	static CTexture mTexImage;
 	int mFireInterval;
+	int JumpCount;
+	int AttackSide;
 	CHpBar mHpBar;
+
 
 	void Render();
 

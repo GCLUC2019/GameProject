@@ -8,8 +8,8 @@ void CTank::Init(){
 	mHead.mPosition.y = -4.0f;
 	mCanon.SetVertex(-3.0, 3.0f, 12.0f, 25.0f);
 
-	mBoxCollider.mSize.x = 20.0f;
-	mBoxCollider.mSize.y = 24.0f;
+	mBoxCollider.mSize.x = 30.0f;
+	mBoxCollider.mSize.y = 34.0f;
 	mBoxCollider.mpTask = this;
 
 }
@@ -58,23 +58,28 @@ void CTank::PHeadRightTurn(){
 
 //’Ç‰Á Š˜“c
 void CTank::EnemyUp(){
-	mPosition.y += 1;
+	mPosition.y += 0.7f;
 }
 void CTank::EnemyDown(){
-	mPosition.y -= 1;
+	mPosition.y -= 0.7f;
 }
 void CTank::PForward(){
 	mPosition = mPosition + mPForward;
 }
-
 void CTank::EForward(){
 	mPosition = mPosition + mEForward;
 }
 void CTank::EnemyUp2(){
-	mPosition.x += 0.5f;
+	mPosition.y += 1;
 }
 void CTank::EnemyDown2(){
-	mPosition.x -= 0.5f;
+	mPosition.y -= 1;
+}
+void CTank::EnemyRight(){
+	mPosition.x += 1.0f;
+}
+void CTank::EnemyLeft(){
+	mPosition.x -= 1.0f;
 }
 
 

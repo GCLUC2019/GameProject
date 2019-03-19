@@ -35,5 +35,7 @@ public:
 	void EForward();
 	void EnemyUp2();         //í«â¡Å@äòìc
 	void EnemyDown2();
+	void EnemyRight();
+	void EnemyLeft();
 };
 #endif
