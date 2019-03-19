@@ -29,7 +29,10 @@ public:
 	CTexture mTexture;
 	static CTexture mTexImage;
 	int mFireInterval;
+	int p_Jump;
 	int JumpCount;
+	int EffectCount;
+	int EffectCount2;
 	int AttackSide;
 	CHpBar mHpBar;
 
