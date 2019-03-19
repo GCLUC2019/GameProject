@@ -172,5 +172,7 @@ void Enemy02::HitCheck()
 
 bool Enemy02::PlayerCheck(Player * p, float _l)
 {
+    CollisionLine l1, l2;
+    l1.s = m_pos; l1.e = m_pos + CVector2D(1, 1)*_l;
     return false;
 }
