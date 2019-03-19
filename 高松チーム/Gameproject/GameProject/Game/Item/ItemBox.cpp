@@ -2,6 +2,7 @@
 #include"AnimItemBox.h"
 #include "../Resource/Resource.h"
 #include "Item.h"
+#include"../GameData/GameData.h"
 
 ItemBox::ItemBox(int _m_box_typ, CVector2D _m_pos) :Task(CharacterData::eItemBox),
 m_pos(_m_pos),
@@ -69,7 +70,7 @@ void ItemBox::Draw()
 	m_img.UpdateAnimation();
 	m_img.SetSize(200, 200);
 	m_img.SetCenter(100, 150);
-	m_img.SetPos(m_pos);
+	m_img.SetPos(m_pos - CVector2D(0, g_game_data.m_scroll.y / 3));
 	m_img.Draw();
 }
 

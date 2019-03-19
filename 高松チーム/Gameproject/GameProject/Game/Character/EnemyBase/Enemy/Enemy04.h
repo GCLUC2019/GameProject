@@ -27,6 +27,9 @@ private:
 
 	bool m_interval_flg;
 	bool m_attack_flg;
+	bool m_lattack_flg;
+	bool m_sattack_flg;
+	bool m_exattack_flg;
 	bool m_movetyp_flg;
 		
 	void Update();
