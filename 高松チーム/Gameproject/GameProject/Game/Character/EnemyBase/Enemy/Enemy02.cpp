@@ -4,6 +4,7 @@
 #include "../GameProject/Global.h"
 #include "../GameProject/Game/GameData/GameData.h"
 #include "../GameProject/Game/CollitionBase.h"
+#include "../GameProject/Game/Character/Effect/EnemyEffect.h"
 #define MOVE_SPEED 2.5f
 #define DEP_N 1200
 #define JUMP_SPD -20.0f
@@ -133,6 +134,7 @@ void Enemy02::Attack()
             m_hight = 0;
             cnt = 1;
             m_jump_flg = false;
+            TaskManager::AddTask(new E2Effect(CVector2D(m_pos.x,m_pos.y-5)));
         }
     }
     if (m_img.CheckAnimationEnd()) {

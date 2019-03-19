@@ -36,6 +36,7 @@ const enum CharacterData{
 
 	eEnemy01,
 	eEnemy02,
+    eE2AttackEffect,
 	eEnemy03,
 	eEnemy04,
 	eEnemy05,
@@ -43,7 +44,10 @@ const enum CharacterData{
 
 	eBossManager,
 	eBossHead,
-	eBossHund,
+    eBossHund,
+	eBossRightHand,
+    eBossLeftHand,
+    eBossTail,
 	eBossFireEffectc,
 	eBossLazerEffectc,
 
