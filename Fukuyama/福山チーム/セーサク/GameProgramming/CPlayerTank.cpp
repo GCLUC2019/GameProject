@@ -27,19 +27,22 @@
 //プレイヤー移動速度
 #define P_VELOCITY 2
 //ジャンプ初速
-#define P_VELOCITY_JUMP 15
+#define P_VELOCITY_JUMP 30
 //重力加速度
 #define GRAVITY 1
 //間隔
-#define P_FIREINTERVAL 30
+#define P_FIREINTERVAL 80
+
+#define CBLLET_LIFE 80
 
 //extern CTexture mTexture;	//TextureからmTextureに変更
 CTexture CPlayerTank::mTexImage;
 
 void CPlayerTank::Init(){
-	mTexture.Load("player1.tga");
-	CRectangle::SetTexture(&mTexture, 56, 10, 63, 50);
-
+	mTexture.Load("Player-1.tga");
+	CRectangle::SetTexture(&mTexture, 0, 84, -592, -517);
+	mGravityV = 0;
+	AttackSide = 1;
 	/*
 	mTexture.Load("Player1.tga");
 	mPlayer.SetVertex(0, 576, 384, 0);
@@ -68,9 +71,12 @@ void CPlayerTank::Init(){
 
 	mpBoxCollider = new CBoxCollider();
 
-	mpBoxCollider->mSize.x = 20.0f;
-	mpBoxCollider->mSize.y = 24.0f;
+	mpBoxCollider->mSize.x = 40.0f;
+	mpBoxCollider->mSize.y = 44.0f;
+	SetVertex(-83.0f, 83.0f, -60.0f, 60.0f);
+	mRotation = -90.0f;
 	mpBoxCollider->mpTask = this;
+
 	//mPlayer.SetVertex(0, 576, 384, 0);
 	//mPlayer.SetColor(1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -88,12 +94,22 @@ void CPlayerTank::Update(){
 	if (mPosition.x <-390){
 		mPosition.x = -390;
 	}
+	if (mPosition.y > -10){
+		mPosition.y = -10;
+	}
+	if (mPosition.y <-280){
+		mPosition.y = -280;
+	}
 	if (mFireInterval > 0){
 		mFireInterval--;
 	}
 
+	if (JumpCount > 0){
+		JumpCount -= 1;
+		mPosition.y -= 10;
+	}
 	CTank::Update();
-	
+
 	if (GetKeyState('W') & 0x8000){
 		mPosition.y += P_VELOCITY;
 	}
@@ -102,51 +118,76 @@ void CPlayerTank::Update(){
 	}
 	if (GetKeyState('A') & 0x8000){
 		mPosition.x -= P_VELOCITY;
+		AttackSide = 0;
+		CRectangle::SetTexture(&mTexture, 0, 84, -592, -517);
 	}
 	if (GetKeyState('D') & 0x8000){
 		mPosition.x += P_VELOCITY;
+		AttackSide = 1;
+		CRectangle::SetTexture(&mTexture, 0, 84, -517, -592);
 	}
-	if (GetKeyState('J') & 0x8000){
-		PHeadLeftTurn();
-	}
-	if (GetKeyState('L') & 0x8000){
-		PHeadRightTurn();
-	}
-
 	if (GetKeyState(' ') & 0x8000){
-			mGravityV = P_VELOCITY_JUMP;
-		
-		if (mGravityV < -GRAVITY)
+		mGravityV = P_VELOCITY_JUMP;
+
+		//if (mGravityV < -GRAVITY)
 
 		////重力速度分移動
 		mPosition.y += mGravityV;
 		////重力速度更新
 		mGravityV -= GRAVITY;
+		JumpCount = 10;
+	}
+	if (GetKeyState('J') & 0x8000){
 		if (mFireInterval <= 0){
-			mFireInterval = P_FIREINTERVAL;
+			mFireInterval = 30;
 			CBullet*bullet = new CBullet();
-			bullet->mTaskTag = EPLAYERBULLET;
-			bullet->mLife = CBULLET_LIFE;
-			bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, 25.0f);
-			bullet->mForward = bullet->mPosition - mCanon.mMatrix*CVector2(0.0f, 24.0f);
+			//bullet->mTaskTag = EPLAYERBULLET;
+			bullet->mLife = 5;
+			if (AttackSide == 1){
+				bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, 30.0f);
+				bullet->mForward = bullet->mPosition - mCanon.mMatrix*CVector2(0.0f, 24.0f);
+			}
+			if (AttackSide == 0){
+				bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, -30.0f);
+				bullet->mForward = bullet->mPosition - mCanon.mMatrix*CVector2(0.0f, -24.0f);
+			}
 			bullet->SetColor(mColor[0], mColor[1], mColor[2], mColor[3]);
 			CTaskManager::Get()->Add(bullet);
 		}
 	}
+	if (GetKeyState('K') & 0x8000){
+		if (mFireInterval <= 0){
+			mFireInterval = P_FIREINTERVAL;
+			CBullet*bullet = new CBullet();
+			//bullet->mTaskTag = EPLAYERBULLET;
+			bullet->mLife = CBULLET_LIFE;
+			if (AttackSide == 1){
+				bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, 30.0f);
+				bullet->mForward = bullet->mPosition - mCanon.mMatrix*CVector2(0.0f, 24.0f);
+			}
+			if (AttackSide == 0){
+				bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, -30.0f);
+				bullet->mForward = bullet->mPosition - mCanon.mMatrix*CVector2(0.0f, -24.0f);
+			}
+			bullet->SetColor(mColor[0], mColor[1], mColor[2], mColor[3]);
+			CTaskManager::Get()->Add(bullet);
+		}
+	}
+
 	mHpBar.Update();
 	mItem.mMatrix = mHead.mMatrix*mItem.mMatrix;
 }
 void CPlayerTank::OnCollision(CCollider*p){
 	if (p->mpTask->mTaskTag == EENEMYBULLET){
 		CExplosion*p = new CExplosion();
-		HeadRightTurn();
-		HeadRightTurn();
-		HeadRightTurn();
-		HeadRightTurn();
-		HeadRightTurn();
-		HeadRightTurn();
-		HeadRightTurn();
-		HeadRightTurn();
+		//HeadRightTurn();
+		//HeadRightTurn();
+		//HeadRightTurn();
+		//HeadRightTurn();
+		//HeadRightTurn();
+		//HeadRightTurn();
+		//HeadRightTurn();
+		//HeadRightTurn();
 		p->SetTexture(&Texture, 0, 64, 64, 0);
 		p->mPosition = mPosition;
 		CTaskManager::Get()->Add(p);
@@ -158,14 +199,14 @@ void CPlayerTank::OnCollision(CCollider*p){
 	}
 	if (p->mpTask->mTaskTag == EBOSSBULLET){
 		CExplosion*p = new CExplosion();
-		HeadRightTurn();
-		HeadRightTurn();
-		HeadRightTurn();
-		HeadRightTurn();
-		HeadRightTurn();
-		HeadRightTurn();
-		HeadRightTurn();
-		HeadRightTurn();
+		//HeadRightTurn();
+		//HeadRightTurn();
+		//HeadRightTurn();
+		//HeadRightTurn();
+		//HeadRightTurn();
+		//HeadRightTurn();
+		//HeadRightTurn();
+		//HeadRightTurn();
 		p->SetTexture(&Texture, 0, 64, 64, 0);
 		p->mPosition = mPosition;
 		CTaskManager::Get()->Add(p);
@@ -177,14 +218,14 @@ void CPlayerTank::OnCollision(CCollider*p){
 	}
 	if (p->mpTask->mTaskTag == ESPEEDENEMY){
 		CExplosion*p = new CExplosion();
-		HeadRightTurn();
-		HeadRightTurn();
-		HeadRightTurn();
-		HeadRightTurn();
-		HeadRightTurn();
-		HeadRightTurn();
-		HeadRightTurn();
-		HeadRightTurn();
+		//HeadRightTurn();
+		//HeadRightTurn();
+		//HeadRightTurn();
+		//HeadRightTurn();
+		//HeadRightTurn();
+		//HeadRightTurn();
+		//HeadRightTurn();
+		//HeadRightTurn();
 		p->SetTexture(&Texture, 0, 64, 64, 0);
 		p->mPosition = mPosition;
 		CTaskManager::Get()->Add(p);

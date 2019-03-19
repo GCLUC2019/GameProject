@@ -12,7 +12,7 @@
 #define BOSS_SHADOW_SIZE CVector2D(300, 50)
 
 //ボスのHP
-#define BOSS_HP 50.0f
+#define BOSS_HP 10.0f
 
 //起動誤差
 #define RANGE (150)
@@ -35,6 +35,7 @@
 #define WALK_LIMIT 180
 #define RUN_LIMIT  75
 #define AWAY_LIMIT  75
+#define DAMAGE_LIMIT 60
 
 //速度
 #define DEF_SPEED 2.0
@@ -69,7 +70,7 @@
 #define RASH_STEP3_TIME 240.0
 #define RASH_Z_SPEED 5.0
 #define RASH_SPEED 18.0
-#define RASH_JIMP_POWER 50
+#define RASH_JIMP_POWER 30
 #define RASH_ATTACK 3.0
 
 
@@ -110,6 +111,7 @@ private:
 		eEnemyBossStateAttack,
 		eEnemyBossStateRush,
 		eEnemyBossStateAway,
+		eEnemyBossStateDamage,
 	};
 
 	enum {
@@ -126,6 +128,7 @@ private:
 		double boss_run = 0.0;
 		double boss_attack = 0.0;
 		double boss_rush = 0.0;
+		double boss_damage = 0.0;
 		double boss_away = 0.0;
 	};
 
@@ -137,10 +140,11 @@ private:
 
 	int m_boss_state = eEnemyBossStateIdle;
 	int m_befor_state = m_boss_state;
-	int m_ex_state = eExStepStart;
-	int m_ex_attack = 0;
+	int m_ex_attack_state = eExStepStart;
+	int m_ex_state = 0;
 	int m_just_dist = DEF_JUST_DIST;
 	int m_ex_count = 0;
+	int m_hit_count = 0; //プレイヤーから攻撃が当たった回数
 
 	bool m_is_attack = true;
 	bool m_is_hit = false;
@@ -175,6 +179,8 @@ public:
 	void Attack2();
 	void SpecialAttack1();
 	void AttackHub();
+	//ダメージ系
+	void Damage();
 	//移動の限界値
 	void MoveLimit();
 	//距離の精査

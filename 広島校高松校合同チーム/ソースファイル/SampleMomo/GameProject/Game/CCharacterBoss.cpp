@@ -1,5 +1,6 @@
 #include "CCharacterBoss.h"
 #include "CCharacterPlayer.h"
+#include "CStageCrear.h"
 #include "CAnimation.h"
 
 
@@ -14,6 +15,8 @@ CCharacterBoss::CCharacterBoss():CCharacter(eTaskIdEnemy,0)
 
 CCharacterBoss::~CCharacterBoss()
 {
+	CStageCrear* Crear_p = new CStageCrear();
+	TaskManager::GetInstance()->AddTask(Crear_p);
 }
 
 void CCharacterBoss::CharacterUpdate()
@@ -26,6 +29,7 @@ void CCharacterBoss::CharacterUpdate()
 	Walk();
 	Run();
 	Away();
+	Damage();
 	AttackHub();
 	MoveLimit();
 	printf("State:%d\n", m_boss_state);
@@ -47,7 +51,7 @@ void CCharacterBoss::ChangeFlip()
 	if (m_player_pos.x > m_pos.x + RANGE)
 		m_is_flip = false;
 	//必殺技発動時は通り過ぎても振り向かない
-	if (m_player_pos.x < m_pos.x - RANGE && m_ex_state != eExRashStep3)
+	if (m_player_pos.x < m_pos.x - RANGE && m_ex_attack_state != eExRashStep3)
 		m_is_flip = true;
 }
 
@@ -70,8 +74,12 @@ void CCharacterBoss::ModeCount()
 		s_boss_mode.boss_away += CFPS::GetDeltaTime() * GAME_BASE_FPS;
 	}
 
-	if (m_ex_attack == eEnemyBossStateRush) {
+	if (m_ex_state == eEnemyBossStateRush) {
 		s_boss_mode.boss_rush += CFPS::GetDeltaTime() * GAME_BASE_FPS;
+	}
+
+	if (m_ex_state == eEnemyBossStateDamage) {
+		s_boss_mode.boss_damage += CFPS::GetDeltaTime() * GAME_BASE_FPS;
 	}
 }
 
@@ -112,10 +120,21 @@ void CCharacterBoss::ChangeState()
 		s_boss_mode.boss_away = 0;
 	}
 
-	/*if (m_ex_count == 10) {
-		m_ex_attack = eEnemyBossStateRush;
+	if (s_boss_mode.boss_damage >= DAMAGE_LIMIT) {
+		m_ex_state = 0;
+		SetIsBlindDraw(false);
+		s_boss_mode.boss_damage = 0;
+	}
+
+	if (m_ex_count == 5) {
+		m_ex_state = eEnemyBossStateRush;
 		m_ex_count = 0;
-	}*/
+	}
+
+	if (m_hit_count == 5) {
+		m_boss_state = eEnemyBossStateAttack;
+		m_hit_count = 0;
+	}
 
 }
 
@@ -179,7 +198,7 @@ void CCharacterBoss::Away()
 	m_anim_p->SetWillPlayAnim(eEnemyAnimBossIdJump);
 
 	if (m_away_flg == false) {
-		m_vec.y -= JUMP_POWER;
+	/*	m_vec.y -= JUMP_POWER;*/
 		m_away_flg = true;
 	}
 
@@ -212,11 +231,8 @@ void CCharacterBoss::Attack1()
 {
 	//直前の状態が歩行状態なら、ひっかき攻撃
 	if (m_befor_state != eEnemyBossStateWalk)return;
-	if (m_ex_attack == eEnemyBossStateRush)return;
+	if (m_ex_state == eEnemyBossStateRush)return;
 	if (m_is_attack == false)return;
-
-	//必殺技カウント増加
-	m_ex_count++;
 
 	ChangeAttackState(eEnemyAnimBossIdBite, BITE_TIME);
 	
@@ -226,7 +242,7 @@ void CCharacterBoss::Attack1()
 		m_player_p->ReceiveAttack();
 		m_player_p->HitPointGainValue(-ATTACK);
 		//攻撃が当たると、カウント減少
-		m_ex_count--;
+		m_ex_count++;
 		m_is_hit = true;
 	}
 
@@ -236,43 +252,41 @@ void CCharacterBoss::Attack2()
 {
 	//直前の状態が走り状態なら咆哮
 	if (m_befor_state != eEnemyBossStateRun)return;
-	if (m_ex_attack == eEnemyBossStateRush)return;
+	if (m_ex_state == eEnemyBossStateRush)return;
 	if (m_is_attack == false)return;
 
 	ChangeAttackState(eEnemyAnimBossIdBark, BARK_TIME);
 
-	//必殺技カウント増加
-	m_ex_count++;
 
 	//プレイヤーが範囲内にいると、ひるませる
 	if (float length= CheckAttackRange() <= ATTACK1_RANGE_BARK) {
 		m_is_attack = false;
 		m_player_p->ReceiveAttack();
 		//攻撃が当たると、カウント減少
-		m_ex_count--;
+		m_ex_count++;
 		m_is_hit = true;
 	}
 }
 
 void CCharacterBoss::SpecialAttack1()
 {
-	if (m_ex_attack != eEnemyBossStateRush)return;
+	if (m_ex_state != eEnemyBossStateRush)return;
 
 
 	//ステップごとに処理が違う
-	switch (m_ex_state)
+	switch (m_ex_attack_state)
 	{
 	//第一段階：上に向かって跳躍する
 	case eExStepStart:
 		ChangeAttackState(eEnemyAnimBossIdJump, RASH_TIME);
 		m_vec.y -= RASH_JIMP_POWER;
-		m_ex_state = eExRashStep1;
+		m_ex_attack_state = eExRashStep1;
 		break;
 	//第二段階：画面左端に移動する
 	case eExRashStep1:
 		if (s_boss_mode.boss_rush <= RASH_STEP1_TIME) {
-			m_pos.x = 0.0;
-			m_ex_state = eExRashStep2;
+			m_pos.x = -10.0;
+			m_ex_attack_state = eExRashStep2;
 		}
 		break;
 	//第三段階：ｚ座標を決定する
@@ -284,7 +298,7 @@ void CCharacterBoss::SpecialAttack1()
 			printf("attack:%f ex:%f\n", s_boss_mode.boss_attack, s_boss_mode.boss_rush);
 		}
 		else if (s_boss_mode.boss_rush > RASH_STEP2_TIME) {
-			m_ex_state = eExRashStep3;
+			m_ex_attack_state = eExRashStep3;
 		}
 		break;
 	//第四段階：プレイヤーに向かって突進する
@@ -298,15 +312,15 @@ void CCharacterBoss::SpecialAttack1()
 			}
 		}
 		else if (s_boss_mode.boss_rush > RASH_STEP3_TIME) {
-			m_ex_state = eExRashStep4;
+			m_ex_attack_state = eExRashStep4;
 		}
 		break;
 	//第五段階；突進終了後、初期値に戻す
 	case eExRashStep4:
 		s_boss_mode.boss_rush = 0;
 		m_is_hit = true;
-		m_ex_attack = 0;
-		m_ex_state = eExStepStart;
+		m_ex_state = 0;
+		m_ex_attack_state = eExStepStart;
 		break;
 	default:
 		break;
@@ -333,6 +347,13 @@ void CCharacterBoss::AttackHub()
 	}
 }
 
+void CCharacterBoss::Damage()
+{
+	if (m_ex_state != eEnemyBossStateDamage)return;
+
+	if ((int)m_hit_point % 6 == 0)m_boss_state = eEnemyBossStateAway;
+}
+
 
 
 void CCharacterBoss::MoveLimit()
@@ -344,16 +365,18 @@ void CCharacterBoss::MoveLimit()
 	m_vec.z = min(max(m_vec.z, -MAX_SPEED), MAX_SPEED);
 
 	//とりあえずテスト用なので
-	/*if (m_pos.x <= 0) m_pos.x = 0;
-	if (m_pos.z <= 430.0f) m_pos.z = 430.0f;
-	if (m_pos.x >= 1020.0f) m_pos.x = 1020.0f;*/
+	if (m_ex_state != eEnemyBossStateRush) {
+		if (m_player_pos.x<m_pos.x - 1000) m_pos.x = m_player_pos.x + 900;
+		if (m_player_pos.x>m_pos.x + 1000) m_pos.x == m_player_pos.x - 100;
+	}
+
 }
 
 void CCharacterBoss::CheckDist()
 {
 	if (m_boss_state == eEnemyBossStateAway)return;
 	
-	if (m_ex_attack == eEnemyBossStateRush) {
+	if (m_ex_state == eEnemyBossStateRush) {
 		m_boss_state = eEnemyBossStateAttack;
 		return;
 	}
@@ -380,7 +403,11 @@ float CCharacterBoss::CheckAttackRange()
 
 void CCharacterBoss::ReceiveAttack()
 {
-	m_hit_point -= 1.5;
+	//無敵ならなにもしない
+	if (GetInvincible() == true) return;
+	m_ex_state = eEnemyBossStateDamage;
+	SetIsBlindDraw(true);
+	m_hit_count++;
 	if (m_hit_point < 0)SetIsDelete();
 }
 

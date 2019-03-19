@@ -115,7 +115,6 @@ static TexAnim EnemyIdle04[] = {
 };
 
 static TexAnim EnemyMove04[] = {
-	{ 0,50 },
 { 1,50 },
 };
 
