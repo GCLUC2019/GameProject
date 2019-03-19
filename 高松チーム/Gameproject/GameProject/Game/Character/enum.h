@@ -34,14 +34,8 @@ const enum CharacterData{
 	ePEffectShortAttack03,
 	ePEffectSpecialAttack,
 	ePEffectGetDamage,
+	eE2AttackEffect,
 
-	eEnemy01,
-	eEnemy02,
-    eE2AttackEffect,
-	eEnemy03,
-	eEnemy04,
-	eEnemy05,
-	eTutorialEnemy,
 
 	eBossManager,
 	eBossHead,
@@ -53,4 +47,11 @@ const enum CharacterData{
 	eBossLazerEffectc,
 
 	eSound,
+
+	eEnemy01 = 101,
+	eEnemy02,
+	eEnemy03,
+	eEnemy04,
+	eEnemy05,
+	eTutorialEnemy,
 };

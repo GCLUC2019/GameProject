@@ -23,8 +23,8 @@ Tutorial::~Tutorial()
 
 void Tutorial::Update()
 {
-	/*if (CInput::GetState(0, CInput::ePush, CInput::eButton5))
-		SetKill();*/
+	if (CInput::GetState(0, CInput::ePush, CInput::eButton5))
+		SetKill();
 }
 
 void Tutorial::Draw()

@@ -55,7 +55,7 @@ void Title::Update()
     }
     if (m_choice < 0)m_choice = 1;
     if (m_choice > 1)m_choice = 0;
-    printf("%d", m_choice);
+    //printf("%d", m_choice);
     if (CInput::GetState(0, CInput::ePush, CInput::eButton2)) {
         switch (m_choice) {
         case 0:

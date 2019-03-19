@@ -174,50 +174,50 @@ void EnemyManager::WaveLoad1()
 		}
 
 
-		if (g_game_data.m_dead_cnt >= 3) {
-			char wave2_key[64];
-			//‡A’PŒêiˆê‚Â‚Ì•¶Žš—ñj‚ð“Ç‚Ýž‚Þ
-			fscanf_s(fp, "%s", wave2_key, 64);
-			//‡B“Ç‚Ýž‚ñ‚¾’PŒê‚ªEnemyData‚È‚ç
-			if (strcmp(wave2_key, "WaveData1_2") == 0) {
-				while (!feof(fp)) {
-					//‡DEnd‚ªo‚Å‚½‚çA“Ç‚Ýž‚ÝI—¹
-					if (strcmp(wave2_key, "END1_2") == 0) break;
-					char key[64];
-					//‡A’PŒêiˆê‚Â‚Ì•¶Žš—ñj‚ð“Ç‚Ýž‚Þ
-					fscanf_s(fp, "%s", key, 64);
-					//‡B“Ç‚Ýž‚ñ‚¾’PŒê‚ªEnemyData‚È‚ç
-					if (strcmp(key, "EnemyData1_2") == 0) {
-						while (!feof(fp)) {
-							//‡C’PŒêiˆê‚Â‚Ì•¶Žš—ñj‚ð“Ç‚Ýž‚Þ
-							fscanf_s(fp, "%s", key, 64);
-							//‡DEnd‚ªo‚Å‚½‚çA“Ç‚Ýž‚ÝI—¹
-							if (strcmp(key, "END_Enemy1_2") == 0) break;
-							//‡E‚»‚¤‚¶‚á‚È‚©‚Á‚½‚ç“G‚Ìƒf[ƒ^‚ð“Ç‚Ý‚±‚Þ
-							//@“G‚ð¶¬‚·‚é
-							int x, y;
-							int enemy_type2 = atoi(key);
-							fscanf_s(fp, "%d %d", &x, &y);
+		//if (g_game_data.m_dead_cnt >= 3) {
+		//	char wave2_key[64];
+		//	//‡A’PŒêiˆê‚Â‚Ì•¶Žš—ñj‚ð“Ç‚Ýž‚Þ
+		//	fscanf_s(fp, "%s", wave2_key, 64);
+		//	//‡B“Ç‚Ýž‚ñ‚¾’PŒê‚ªEnemyData‚È‚ç
+		//	if (strcmp(wave2_key, "WaveData1_2") == 0) {
+		//		while (!feof(fp)) {
+		//			//‡DEnd‚ªo‚Å‚½‚çA“Ç‚Ýž‚ÝI—¹
+		//			if (strcmp(wave2_key, "END1_2") == 0) break;
+		//			char key[64];
+		//			//‡A’PŒêiˆê‚Â‚Ì•¶Žš—ñj‚ð“Ç‚Ýž‚Þ
+		//			fscanf_s(fp, "%s", key, 64);
+		//			//‡B“Ç‚Ýž‚ñ‚¾’PŒê‚ªEnemyData‚È‚ç
+		//			if (strcmp(key, "EnemyData1_2") == 0) {
+		//				while (!feof(fp)) {
+		//					//‡C’PŒêiˆê‚Â‚Ì•¶Žš—ñj‚ð“Ç‚Ýž‚Þ
+		//					fscanf_s(fp, "%s", key, 64);
+		//					//‡DEnd‚ªo‚Å‚½‚çA“Ç‚Ýž‚ÝI—¹
+		//					if (strcmp(key, "END_Enemy1_2") == 0) break;
+		//					//‡E‚»‚¤‚¶‚á‚È‚©‚Á‚½‚ç“G‚Ìƒf[ƒ^‚ð“Ç‚Ý‚±‚Þ
+		//					//@“G‚ð¶¬‚·‚é
+		//					int x, y;
+		//					int enemy_type2 = atoi(key);
+		//					fscanf_s(fp, "%d %d", &x, &y);
 
-							switch (enemy_type2)
-							{
-							case eEnemy01:
-								TaskManager::GetInstance()->AddTask(new Enemy01(CVector2D(x, y)));
-								break;
-							case eEnemy02:
-								TaskManager::GetInstance()->AddTask(new Enemy02(CVector2D(x, y)));
-								break;
-							case eEnemy05:
-								TaskManager::GetInstance()->AddTask(new Enemy05(CVector2D(x, y)));
-								break;
-							default:
-								break;
-							}
-						}
-					}
-				}
-			}
-		}
+		//					switch (enemy_type2)
+		//					{
+		//					case eEnemy01:
+		//						TaskManager::GetInstance()->AddTask(new Enemy01(CVector2D(x, y)));
+		//						break;
+		//					case eEnemy02:
+		//						TaskManager::GetInstance()->AddTask(new Enemy02(CVector2D(x, y)));
+		//						break;
+		//					case eEnemy05:
+		//						TaskManager::GetInstance()->AddTask(new Enemy05(CVector2D(x, y)));
+		//						break;
+		//					default:
+		//						break;
+		//					}
+		//				}
+		//			}
+		//		}
+		//	}
+		//}
 	}
 
 	fclose(fp);

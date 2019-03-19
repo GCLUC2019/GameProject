@@ -27,7 +27,7 @@ public:
 	virtual void Update();
 	virtual void Draw();
 	virtual void HitCheck(Task* _t);
-	static bool CollisionCheckRect(EnemyBase* b1, EnemyBase* b2);
+	/*static bool CollisionCheckRect(EnemyBase* b1, EnemyBase* b2);*/
 	static bool CollitionCheckflip(int fliptype, EnemyBase* b1, EnemyBase*b2);
 	/*
 	@drief オブジェクトの画面移動を制限する
