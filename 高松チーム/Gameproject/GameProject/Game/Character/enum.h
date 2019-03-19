@@ -46,4 +46,6 @@ const enum CharacterData{
 	eBossHund,
 	eBossFireEffectc,
 	eBossLazerEffectc,
+
+	eSound,
 };

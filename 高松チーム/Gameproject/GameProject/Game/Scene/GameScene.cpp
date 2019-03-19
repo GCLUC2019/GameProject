@@ -14,6 +14,7 @@
 GameScene::GameScene() : Task(eGameScene)
 {
 	new Resource();
+	SOUND("ikusa_japan2")->Play();
 	TaskManager::GetInstance()->AddTask(new Stage01());
 	TaskManager::GetInstance()->AddTask(new EnemyManager());
 	TaskManager::GetInstance()->AddTask(new BossManager());

@@ -22,6 +22,37 @@ EnemyManager::EnemyManager(): Task(CharacterData::eEnemyBaseManager),
 
 void EnemyManager::Update()
 {
+
+	FILE *fp;
+	fopen_s(&fp, "StageData/Stage1.txt", "r");
+	if (fp == NULL) {
+		printf("ファイルが開けません");
+		return;
+	}
+	//①ファイルの終わりまで繰り返す
+	while (!feof(fp)) {
+		char key[64];
+		//②単語（一つの文字列）を読み込む
+		fscanf_s(fp, "%s", key, 64);
+		//③読み込んだ単語がEnemyDataなら
+		if (strcmp(key, "EnemyData") == 0) {
+			while (!feof(fp)) {
+				//④単語（一つの文字列）を読み込む
+				fscanf_s(fp, "%s", key, 64);
+				//⑤Endが出でたら、読み込み終了
+				if (strcmp(key, "END") == 0) break;
+				//⑥そうじゃなかったら敵のデータを読みこむ
+				//　敵を生成する
+				int x, y;
+				int enemy_type = atoi(key);
+				fscanf_s(fp, "%d %d %f", &x, &y);
+				//Base::Add(new Enemy(CVector2D(x, y)));
+			}
+		}
+	}
+
+	fclose(fp);
+
 	++m_cnt;
 	if (m_cnt >= 300)	m_appear_type = EnemyManagerWave::eWave1_2;
 	if (m_cnt >= 1000)	m_appear_type = EnemyManagerWave::eWave2_1;

@@ -27,11 +27,13 @@ m_time(0.0f)
     m_img_rogoclear = COPY_RESOURCE("RogoClear", CImage*);
     m_img_ohuda = COPY_RESOURCE("RogoHuda", CImage*);
     m_img_pushstart = COPY_RESOURCE("PushStart", CImage*);
+
+	SOUND("Enishi")->Play(true);
 }
 
 Title::~Title()
 {
-    
+	SOUND("Enishi")->Stop();
 }
 
 void Title::Update()
@@ -46,6 +48,8 @@ void Title::Update()
         SetKill();
     }
         //printf("%f,%f\n",m_ohuda_pos.x, m_ohuda_pos.y);
+
+
 }
 
 void Title::Draw()

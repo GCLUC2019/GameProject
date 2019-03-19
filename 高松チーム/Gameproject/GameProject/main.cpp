@@ -12,6 +12,7 @@
 #include "Base\Task.h"
 #include "Base\TaskManager.h"
 #include "Game/Scene/Title.h"
+#include "../GameProject/Game/Resource/Sound/Sound.h"
 #include "../GameProject/Game/Tutorial/Tutorial.h"
 //--------------------------------------------
 //グローバル変数領域
@@ -124,6 +125,7 @@ void Init(void)
 	//初期化の命令を書く
 	//ゲーム起動時に一度だけ呼ばれる
 	//-----------------------------------------------------
+	new Sound();
     TaskManager::GetInstance()->AddTask(new Title());
 	//TaskManager::GetInstance()->AddTask(new Tutorial());
 }
