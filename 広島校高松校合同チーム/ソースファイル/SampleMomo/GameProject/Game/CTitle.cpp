@@ -2,17 +2,16 @@
 #include "CObjectImage.h"
 #include "CStorySceneOpening.h"
 #include "CBar.h"
+#include "CGameScene.h"
+
 CTitle::CTitle() : CObject(0, 0)
 {
-	//ADD_RESOURCE("Back", CImage::LoadImage("Back.png"));
-	
 	m_background_image_p= GET_RESOURCE("Back", CImage*);
+
+	m_blind_text_p = GET_RESOURCE("Start_By_Space", CImage*);
 	
-	//ADD_RESOURCE("Back_txt", CImage::LoadImage("Back_txt.png"));
-	
-	m_backtxt_p = GET_RESOURCE("Back_txt", CImage*);
-	
-	m_backtxt_p->SetPos(1050, -50);
+	m_blind_text_p->SetPos(140, 550);
+	m_background_image_p->SetSize(1280, 720);
 }
 
 CTitle::~CTitle()
@@ -22,12 +21,18 @@ CTitle::~CTitle()
 
 void CTitle::Update()
 {
+	//シフト&スペースでタイトルスキップ
+	if (CInput::GetState(0, CInput::ePush, CInput::eButton1) && CInput::GetState(0, CInput::eHold, CInput::eButton3)) {
+		SetIsDelete();
+		CGameScene::GetInstance()->Setup();
+	}
 	//スペースキーでタイトル画面を破棄
-	if (CInput::GetState(0,CInput::ePush, CInput::eButton1)) {
+	else if (CInput::GetState(0,CInput::ePush, CInput::eButton1)) {
 		SetIsDelete();
 		//Delete();
 		NextScene();
 	}
+	
 	//2秒間タイトルの文字を表示させる
 	if (m_flash_txt == true) {
 		if (m_count_txt >= 120) {
@@ -55,11 +60,8 @@ void CTitle::Draw()
 {
 	m_background_image_p->Draw();
 	if (m_draw_txt == true) {
-		m_backtxt_p->Draw();
+		m_blind_text_p->Draw();
 	}
-	
-	//m_backtxt_p->Draw();
-	//printf("Drawしました");
 }
 
 void CTitle::NextScene()

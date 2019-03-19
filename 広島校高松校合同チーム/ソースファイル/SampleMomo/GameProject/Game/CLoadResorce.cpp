@@ -171,7 +171,7 @@ void CLoadResorce::ReadResorceFile(char * _file_path)
 	fclose(fp);
 
 
-	printf("%s", file_data);
+	//printf("%s", file_data);
 
 	char* str_ad = file_data;
 
@@ -184,7 +184,7 @@ void CLoadResorce::ReadResorceFile(char * _file_path)
 		int base_pass_len = base_pass_last_ad - file_base_path_ad;
 		strncpy_s(file_base_path, file_base_path_ad + strlen("BASE_FILE_PATH: "), base_pass_len - strlen("BASE_FILE_PATH: "));
 		is_read_file_base_path = true;
-		printf("%s\n", file_base_path);
+		//printf("%s\n", file_base_path);
 	}
 
 
@@ -214,12 +214,12 @@ void CLoadResorce::ReadResorceFile(char * _file_path)
 				memset(load_image_file_path, 0, sizeof(load_image_file_path));
 				strcat_s(load_image_file_path,file_base_path);
 				strcat_s(load_image_file_path,image_file_path);
-				printf("image_name Åy%sÅzimage_path Åy%sÅz\n", image_name, load_image_file_path);
+				//printf("image_name Åy%sÅzimage_path Åy%sÅz\n", image_name, load_image_file_path);
 				ADD_RESOURCE(image_name, CImage::LoadImage((char*)load_image_file_path));
 
 			}
 			else {
-				printf("image_name Åy%sÅzimage_path Åy%sÅz\n", image_name, image_file_path);
+				//printf("image_name Åy%sÅzimage_path Åy%sÅz\n", image_name, image_file_path);
 				ADD_RESOURCE(image_name, CImage::LoadImage((char*)image_file_path));
 			}
 			str_ad += strlen("LOAD_RESORCE_IMAGE:");

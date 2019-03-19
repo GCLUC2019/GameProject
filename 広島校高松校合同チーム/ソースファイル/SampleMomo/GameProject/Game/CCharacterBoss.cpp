@@ -1,8 +1,7 @@
 #include "CCharacterBoss.h"
 #include "CCharacterPlayer.h"
-#include "CStageCrear.h"
 #include "CAnimation.h"
-
+#include "CGameScene.h"
 
 
 CCharacterBoss::CCharacterBoss():CCharacter(eTaskIdEnemy,0)
@@ -15,8 +14,6 @@ CCharacterBoss::CCharacterBoss():CCharacter(eTaskIdEnemy,0)
 
 CCharacterBoss::~CCharacterBoss()
 {
-	CStageCrear* Crear_p = new CStageCrear();
-	TaskManager::GetInstance()->AddTask(Crear_p);
 }
 
 void CCharacterBoss::CharacterUpdate()
@@ -32,12 +29,13 @@ void CCharacterBoss::CharacterUpdate()
 	Damage();
 	AttackHub();
 	MoveLimit();
-	printf("State:%d\n", m_boss_state);
+	AdjAnim();
+	//printf("State:%d\n", m_boss_state);
 }
 
 void CCharacterBoss::CharacterDraw()
 {
-	printf("x:%f y:%f", m_pos.x, m_pos.y);
+	//printf("x:%f y:%f", m_pos.x, m_pos.y);
 }
 
 void CCharacterBoss::LoadAnimImage()
@@ -408,7 +406,6 @@ void CCharacterBoss::ReceiveAttack()
 	m_ex_state = eEnemyBossStateDamage;
 	SetIsBlindDraw(true);
 	m_hit_count++;
-	if (m_hit_point < 0)SetIsDelete();
 }
 
 void CCharacterBoss::DefalutSet()
@@ -416,9 +413,10 @@ void CCharacterBoss::DefalutSet()
 	m_vec = DEF_BOSS_VEC;
 	//‰Šú’l‚ÌyŽ²‚Í’n–Ê‚É–„‚Ü‚ç‚È‚¢‚æ‚¤‚É­‚µ•‚‚©‚¹‚é
 	m_pos = DEF_BOSS_POS;
+	m_pos_old = m_pos;
 
-	m_rads = CVector3D(75, 120, 10);
-	SetSize(BOSS_SIZE);
+	m_rads = CVector3D(75, 200, 10);
+	
 	m_is_flip = false;
 
 	m_hit_point = BOSS_HP;
@@ -428,11 +426,36 @@ void CCharacterBoss::DefalutSet()
 
 	m_anim_p->SetAnim(eEnemyAnimBossIdIdle);
 	SetIsShowShadow(true);
+
+	/*
+	SetSize(BOSS_SIZE);
 	SetShadowSize(BOSS_SHADOW_SIZE);
 	SetDrawAdjPos(CVector2D(-30.0, -90.0));
+	*/
+}
+
+void CCharacterBoss::AdjAnim()
+{
+	switch (m_anim_p->GetWillPlayAnim()) {
+	case eEnemyAnimBossIdJump:
+		SetSize(500,750);
+		SetShadowSize(BOSS_SHADOW_SIZE);
+		SetDrawAdjPos(CVector2D(-20.0, -15.0 - 125));
+		break;
+	default:
+		SetSize(BOSS_SIZE);
+		SetShadowSize(BOSS_SHADOW_SIZE);
+		SetDrawAdjPos(CVector2D(-20.0, -15.0));
+		break;
+	}
 }
 
 void CCharacterBoss::CharacterBeforeCollisionCheck()
 {
 	
+}
+
+void CCharacterBoss::CharacterOutHitPoint()
+{
+	CGameScene::GetInstance()->StageClear();
 }

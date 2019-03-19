@@ -27,6 +27,7 @@
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 
 #define DP_UI (5000)
+#define DP_MAX (20000)
 
 #ifdef _DEBUG
 	#define DEBUG_PRINT(s) printf(s);

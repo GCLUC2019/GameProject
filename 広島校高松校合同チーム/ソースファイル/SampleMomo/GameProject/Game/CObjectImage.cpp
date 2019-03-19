@@ -6,12 +6,12 @@ CObjectImage::CObjectImage(CImage * _image, int _draw_priority) : CObject(0,_dra
 	m_image_p = _image;
 }
 
-CObjectImage::CObjectImage(CImage * _image, CVector3D _pos, CVector2D _size, int _draw_priority) : CObject(0, _draw_priority)
+CObjectImage::CObjectImage(CImage * _image, CVector3D _pos, CVector2D _size, int _draw_priority, bool _flip) : CObject(0, _draw_priority)
 {
 	m_image_p = _image;
 	SetPos(_pos);
 	SetSize(_size);
-
+	m_is_flip = _flip;
 }
 
 CObjectImage::~CObjectImage()

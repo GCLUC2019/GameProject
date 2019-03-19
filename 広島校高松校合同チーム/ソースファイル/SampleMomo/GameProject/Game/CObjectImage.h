@@ -7,7 +7,7 @@ private:
 	CImage * m_image_p = nullptr;
 public:
 	CObjectImage(CImage* _image,int _draw_priority = 0);
-	CObjectImage(CImage* _image,CVector3D _pos,CVector2D _size, int _draw_priority = 0);
+	CObjectImage(CImage* _image,CVector3D _pos,CVector2D _size, int _draw_priority = 0,bool _flip = false);
 	virtual ~CObjectImage();
 	void Update();
 	void Draw();

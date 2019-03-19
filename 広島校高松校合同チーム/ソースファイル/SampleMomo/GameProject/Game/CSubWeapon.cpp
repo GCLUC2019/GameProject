@@ -7,18 +7,19 @@ CSubWeaponItem::CSubWeaponItem(CVector3D pos, int weapon_num) :CGameSceneObject(
 {
 	
 	//m_equip_flag = false;
-	m_weapon_num = weapon_num;
+	m_weapon_id = weapon_num;
 
 	SetPos(pos);
+	SetPosOld(pos);
 	SetSize(CVector2D(150,150));
 
 	m_speed = 1.0f;
-	m_energy = 100.0f;
+	m_endurance = ENDURANCE_MAX;
 
 	LoadAnimImage();
 
 	SetIsShowShadow(true);
-	SetRads(0, 0, 0);
+	SetRads(75, 15, 10);
 
 	SetShadowSize(CVector2D(60, 15));
 	SetDrawAdjPos(CVector2D(0, -68.0f));
@@ -28,7 +29,9 @@ CSubWeaponItem::CSubWeaponItem(CVector3D pos, int weapon_num) :CGameSceneObject(
 
 	m_anim_p->SetWillPlayAnim(eItemAnimIdIdle);
 
-	m_target_p = CCharacterPlayer::GetInstance();
+
+	//他のオブジェクトの壁にはならない
+	SetIsCollisionOthers(false);
 }
 
 CSubWeaponItem::~CSubWeaponItem()
@@ -39,7 +42,7 @@ CSubWeaponItem::~CSubWeaponItem()
 
 void CSubWeaponItem::LoadAnimImage()
 {
-	switch (m_weapon_num) {
+	switch (m_weapon_id) {
 	case eWeaponSpear:
 		m_anim_p->SetAnimImage(eItemAnimIdle1, GET_RESOURCE("IconSpear", CImage*));
 		break;
@@ -61,10 +64,14 @@ void CSubWeaponItem::LoadAnimImage()
 
 void CSubWeaponItem::GameSceneObjectUpdate()
 {
-	//m_anim_p->SetWillPlayAnim(eItemAnimIdIdle);
+	CCharacterPlayer * player_p = CCharacterPlayer::GetInstance();
+	if (player_p == nullptr) {
+		printf("プレイヤーいません！ SubWeapon\n");
+		return;
+	}
 
 	if (CInput::GetState(0, CInput::ePush, CInput::eButton4) ){
-		CVector3D player_pos = m_target_p->GetPos();
+		CVector3D player_pos = player_p->GetPos();
 		float x = m_pos.x - player_pos.x;
 		float z = m_pos.z - player_pos.z;
 		
@@ -80,5 +87,5 @@ void CSubWeaponItem::GameSceneObjectUpdate()
 void CSubWeaponItem::PlayerGetItem()
 {
 	m_get_flag = false;
-	CCharacterPlayer::GetInstance()->PlayerGainEquip(m_weapon_num,m_energy);
+	CCharacterPlayer::GetInstance()->PlayerGainEquip(m_weapon_id,m_endurance);
 }

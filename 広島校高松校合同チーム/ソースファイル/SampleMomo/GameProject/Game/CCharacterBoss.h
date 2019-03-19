@@ -193,7 +193,10 @@ public:
 	//‰Šú‰»
 	void DefalutSet();
 
+	void AdjAnim();
+
 	void CharacterBeforeCollisionCheck();
+	void CharacterOutHitPoint();
 };
 
 

@@ -90,11 +90,13 @@
 
 //回避の移動部分が終わった後はモーションキャンセル可能とする。
 
-#define PLAYER_DOWN_FRAME (60 * 5)
+#define PLAYER_DOWN_FRAME (60 * 2)
 
 #define PLAYER_DOWN_ANIM_DELAY (14)
 #define PLAYER_DOWN_ANIM_FRAME (PLAYER_DOWN_ANIM_DELAY*2)
 
+
+#define WEAPON_USE_ENDURANCE_DAMAGE (2.0f)
 
 //着地モーションから回避に派生した場合冒頭モーションをカット可能にする。
 
@@ -102,6 +104,12 @@
 着地モーションはジャンプ以外ではキャンセル不可にする。
 */
 
+enum {
+	eEvasionFlipRight,
+	eEvasionFlipLeft,
+	eEvasionFlipUp,
+	eEvasionFlipDown,
+};
 
 enum {
 	ePlayerAnimIdIdle,
@@ -212,16 +220,24 @@ private:
 	int m_attack_combo_count = 0;
 
 
+	//攻撃中の武器の情報
+	int m_attack_weapon_id = -1;
+
 	//武器の情報
 	int m_equip_weapon_id = -1;
 
 	//武器耐久値
-	float m_equip_endurance = 0;
+	float m_equip_endurance = 0.0f;
 
 	//武器攻撃しているかのステート
 	bool m_is_weapon_attacking = false;
 
+	//遠距離攻撃か
+	bool m_is_range_attack = false;
 	
+	//遠距離攻撃を既にいずれかの敵に当てているか(今の場合は一発につき1体の敵なので、貫通なし)
+	bool m_is_hit_range_attack = false;
+
 	bool m_is_dashing = false;
 
 	double m_damage_anim_count = 0;
@@ -235,8 +251,11 @@ private:
 	Task* m_memory_hit_attacked_enemy_p[MEMORY_HIT_ATTACKED_ENEMY_MAX];
 
 
-	bool m_is_input_evasion_flip = false;
+	bool m_is_input_evasion_flip = 0;
+	
+	
 	bool m_is_input_evasion = false;
+
 	bool m_is_evasion = false;
 
 	bool m_is_early_input_attack = false;
@@ -245,9 +264,14 @@ private:
 	double m_evasion_reserve_count = 0;
 	bool m_is_fast_evasion = false;
 
+	int m_evasion_dir_type = 0;
+	int m_will_evasion_dir_type = 0;
 
 	double m_receive_input_evasion_time_count_l = 0;
 	double m_receive_input_evasion_time_count_r = 0;
+
+	double m_receive_input_evasion_time_count_u = 0;
+	double m_receive_input_evasion_time_count_d = 0;
 
 	double m_after_damage_invincible_count = 0;
 
@@ -255,9 +279,10 @@ private:
 
 	bool m_is_down = false;
 	double m_down_count = 0;
+	
 
 public:
-	CCharacterPlayer();
+	CCharacterPlayer(CVector3D _pos);
 	~CCharacterPlayer();
 	void LoadAnimImage();
 
@@ -277,7 +302,10 @@ public:
 	void DoingLandingAction();
 	void Landing();
 	void ReserveAttacking();
+	
 	void Attacking();
+	void AttackingHitFrame();
+
 	void Jumping();
 	void Falling();
 	void Move();
@@ -298,19 +326,30 @@ public:
 
 
 	void AdjAnim();
-	//void CalcScroll();
 
 	void ReceiveAttack();
+
+
+	void CheckEquipEndurance();
 
 	void PlayerGainEquip(int _equip_id, float _equip_endurance) {
 		m_equip_weapon_id = _equip_id;
 		m_equip_endurance = _equip_endurance;
 	};
 
+
+	
+
 	void PlayerDestroyEquip() {
 		m_equip_weapon_id = -1;
+		m_equip_endurance = 0.0f;
 	}
-		
+
+	int GetPlayerEquipWeaponId() { return m_equip_weapon_id; };
+	int* GetPlayerEquipWeaponIdPointer() { return &m_equip_weapon_id; };
+	float* GetPlayerEquipWeaponEndurancePointer() { return &m_equip_endurance; };
+
+
 	static CCharacterPlayer* GetInstance();
 };
 
