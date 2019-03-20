@@ -26,6 +26,19 @@ void CHpBar::Update(){
 	}
 }
 
+void CHpBar::PUpdate(){
+	CRectangle::Update();
+	mBar.mScale.x = mHp / mMax;
+	mBar.Update();
+	CMatrix33 matrix;
+	//matrix.SetTranslate(mpTask->mPosition.x, mpTask->mPosition.y);
+	mMatrix = matrix*mMatrix;
+	mBar.mMatrix = mMatrix*mBar.mMatrix;
+	if (mHp <= 0.0f){
+		mEnabled = false;
+	}
+}
+
 void CHpBar::Render(){
 	CRectangle:: Render();
 	mBar.Render();

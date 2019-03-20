@@ -12,6 +12,7 @@ public:
 	CRectangle*mpTask;
 	void SetHpBar(CRectangle*task, const CVector2 &pos, const CVector2 &size, float*color, float max, float hp);
 	void Update();
+	void PUpdate();
 	void Render();
 };
 
