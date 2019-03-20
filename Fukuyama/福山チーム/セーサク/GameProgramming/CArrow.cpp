@@ -3,6 +3,7 @@
 #include "CArrow.h"
 #include <stdio.h>
 
+
 void CArrow::Init(){
 	SetVertex(-10.0f, 50.0f, -5.0f, 5.0f);
 	mBoxCollider = new CBoxCollider();
