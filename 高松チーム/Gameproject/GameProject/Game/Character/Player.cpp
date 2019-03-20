@@ -42,15 +42,6 @@ m_special(0)
 
 void Player::HitCheck()
 {
-	/*if (CollitionBase::CollisionCheckRect(this, eEnemy01) ||
-		CollitionBase::CollisionCheckRect(this, eEnemy02) ||
-		CollitionBase::CollisionCheckRect(this, eEnemy04) ||
-		CollitionBase::CollisionCheckRect(this, eEnemy05)) {
-		if (m_HP <= 0)	m_state = PlayerState::eDeath;
-		if (m_img.CheckAnimationEnd()) SetKill();
-
-		m_state = PlayerState::eDamage;
-   }*/
 }
 
 void Player::Move()

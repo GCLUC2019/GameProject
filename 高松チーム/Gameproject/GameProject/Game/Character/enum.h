@@ -11,6 +11,7 @@ const enum CharacterData{
     eBalloon,
 
 	eStage01,
+    eBossStage,
 	eGround,
 	eBamboo,
 	eSkyBlue,
