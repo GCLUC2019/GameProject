@@ -138,6 +138,7 @@
     <ClInclude Include="Game\Character\Anim\AnimBoss.h" />
     <ClInclude Include="Game\Character\Anim\AnimData.h" />
     <ClInclude Include="Game\Character\Anim\AnimDataPlayer.h" />
+    <ClInclude Include="Game\Character\Anim\AnimEnemyEffect.h" />
     <ClInclude Include="Game\Character\Anim\AnimUI.h" />
     <ClInclude Include="Game\Character\CharacterBase.h" />
     <ClInclude Include="Game\Character\Effect\BossEffect.h" />
@@ -148,6 +149,7 @@
     <ClInclude Include="Game\Character\EnemyBase\EnemyManager.h" />
     <ClInclude Include="Game\Character\EnemyBase\Enemy\Enemy01.h" />
     <ClInclude Include="Game\Character\EnemyBase\Enemy\Enemy02.h" />
+    <ClInclude Include="Game\Character\EnemyBase\Enemy\Enemy03.h" />
     <ClInclude Include="Game\Character\EnemyBase\Enemy\Enemy04.h" />
     <ClInclude Include="Game\Character\EnemyBase\Enemy\Enemy05.h" />
     <ClInclude Include="Game\Character\EnemyBase\Enemy\TutorialEnemy.h" />
@@ -161,8 +163,10 @@
     <ClInclude Include="Game\Resource\Resource.h" />
     <ClInclude Include="Game\Resource\Sound\Sound.h" />
     <ClInclude Include="Game\Scene\GameScene.h" />
+    <ClInclude Include="Game\Scene\GameScene2.h" />
     <ClInclude Include="Game\Scene\Result.h" />
     <ClInclude Include="Game\Scene\Title.h" />
+    <ClInclude Include="Game\Stage\BossStage.h" />
     <ClInclude Include="Game\Stage\CollisionBox.h" />
     <ClInclude Include="Game\Stage\ground.h" />
     <ClInclude Include="Game\Tutorial\Tutorial.h" />
@@ -178,6 +182,7 @@
     <ClCompile Include="Game\Character\Anim\AnimBoss.cpp" />
     <ClCompile Include="Game\Character\Anim\AnimData.cpp" />
     <ClCompile Include="Game\Character\Anim\AnimDataPlayer.cpp" />
+    <ClCompile Include="Game\Character\Anim\AnimEnemyEffect.cpp" />
     <ClCompile Include="Game\Character\Anim\AnimUI.cpp" />
     <ClCompile Include="Game\Character\CharacterBase.cpp" />
     <ClCompile Include="Game\Character\Effect\BossEffect.cpp" />
@@ -200,8 +205,10 @@
     <ClCompile Include="Game\Resource\Resource .cpp" />
     <ClCompile Include="Game\Resource\Sound\Sound.cpp" />
     <ClCompile Include="Game\Scene\GameScene.cpp" />
+    <ClCompile Include="Game\Scene\GameScene2.cpp" />
     <ClCompile Include="Game\Scene\Result.cpp" />
     <ClCompile Include="Game\Scene\Title.cpp" />
+    <ClCompile Include="Game\Stage\BossStage.cpp" />
     <ClCompile Include="Game\Stage\CollisionBox.cpp" />
     <ClCompile Include="Game\Stage\ground.cpp" />
     <ClCompile Include="Game\Tutorial\Tutorial.cpp" />

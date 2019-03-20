@@ -1,11 +1,11 @@
-#ifndef CSCENEGAME_H
-#define CSCENEGAME_H
+//#ifndef CSCENEGAME_H
+//#define CSCENEGAME_H
 
 #include "CScene.h"
 #include "CCollider.h"
 #include "CRectangle.h"
 
-class CSceneGame :public CScene{
+class CSceneGame :public CScene,Task{
 public:
 	CSceneGame(){
 		mSceneTag = EGAME;
@@ -16,6 +16,9 @@ public:
 	}
 	void Init();
 	void Update();
+
+	int mEnemyIntervar;
+	int mEnemyLimit;
 };
 
 class CSceneWin :public CScene{
@@ -40,4 +43,16 @@ public:
 	void Update();
 };
 
-#endif
+class CSceneTitle :public CScene{
+public:
+	CSceneTitle(){
+		mSceneTag = ETITLE;
+	}
+	
+	CTexture mTexture;
+	CRectangle mTitle;
+	void Init();
+	void Update();
+};
+
+//#endif

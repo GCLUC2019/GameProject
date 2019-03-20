@@ -4,7 +4,10 @@
 
 extern CTexture Texture;
 
+CTexture CBossBullet::mTextImage5;
+
 void CBossBullet::Init(){
+	mTextImage5.Load("Fire.tga");
 	mCollider = new CCircleCollider();
 	SetVertex(-10.0f, 10.0f, -10.0f, 10.0f);
 	mCollider->mRadius = 3.0f;
@@ -15,6 +18,7 @@ void CBossBullet::Update(){
 	if (mLife > 0){
 		mPosition = mPosition + mForward*mVelocity;
 		mLife--;
+		CRectangle::SetTexture(&mTextImage5, 107, 139, -109, -77);
 		CRectangle::Update();
 	}
 	else{

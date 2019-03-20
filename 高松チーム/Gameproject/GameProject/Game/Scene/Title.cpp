@@ -1,5 +1,6 @@
 #include "Title.h"
 #include"../GameData/GameData.h"
+#include "../Tutorial/Tutorial.h"
 
 #define BACKXSIZE 1280
 #define BACKYSIZE 720
@@ -14,21 +15,25 @@ m_start_pos(CVector2D(BACKXSIZE * 3 / 4, BACKYSIZE * 5 / 6)),
 m_ohuda_pos(CVector2D(BACKXSIZE * 3 / 4, BACKYSIZE * 1 / 2)),
 m_cnt(0),
 m_size(0.0f),
-m_time(0.0f)
+m_time(0.0f),
+m_choice(0)
 {
 	g_game_data.m_score = 0;
 	g_game_data.m_dead_cnt = 0;
     ADD_RESOURCE("Title", CImage::LoadImage("../data/Image/title.png"));
-    ADD_RESOURCE("PushStart", CImage::LoadImage("../data/Image/push start.png"));
+    ADD_RESOURCE("Choice", CImage::LoadImage("../data/Image/choice.png"));
     ADD_RESOURCE("RogoBase", CImage::LoadImage("../data/Image/rogo_base.png"));
     ADD_RESOURCE("RogoClear", CImage::LoadImage("../data/Image/rogo_cl.png"));
     ADD_RESOURCE("RogoHuda", CImage::LoadImage("../data/Image/rogo_huda.png"));
+    ADD_RESOURCE("RogoUI", CImage::LoadImage("../data/Image/chara_gauge_face.png"));
+    ADD_RESOURCE("Window", CImage::LoadImage("../data/Image/balloon.png"));
     m_img_back = COPY_RESOURCE("Title", CImage*);
     m_img_rogobase = COPY_RESOURCE("RogoBase", CImage*);
     m_img_rogoclear = COPY_RESOURCE("RogoClear", CImage*);
     m_img_ohuda = COPY_RESOURCE("RogoHuda", CImage*);
-    m_img_pushstart = COPY_RESOURCE("PushStart", CImage*);
-
+    m_img_choice = COPY_RESOURCE("Choice", CImage*);
+    m_img_icon = COPY_RESOURCE("RogoUI", CImage*);
+    m_img_window = COPY_RESOURCE("Window", CImage*);
 	SOUND("Enishi")->Play(true);
 }
 
@@ -44,8 +49,24 @@ void Title::Update()
         m_cnt = 0;
         m_size = 0;
     }
+    if (CInput::GetState(0, CInput::ePush, CInput::eUp)) {
+        m_choice++;
+    }
+    if (CInput::GetState(0, CInput::ePush, CInput::eDown)) {
+        m_choice--;
+    }
+    if (m_choice < 0)m_choice = 1;
+    if (m_choice > 1)m_choice = 0;
+    //printf("%d", m_choice);
     if (CInput::GetState(0, CInput::ePush, CInput::eButton2)) {
-        TaskManager::GetInstance()->AddTask(new GameScene());
+        switch (m_choice) {
+        case 0:
+            TaskManager::AddTask(new Tutorial());
+            break;
+        case 1:
+            TaskManager::AddTask(new GameScene());
+            break;
+        }
         SetKill();
     }
         //printf("%f,%f\n",m_ohuda_pos.x, m_ohuda_pos.y);
@@ -87,8 +108,19 @@ void Title::Draw()
 	m_img_rogobase.SetCenter(ROGOXSIZE / 2, ROGOYSIZE / 2);
 	m_img_rogobase.SetPos(m_rogo_pos);
 	m_img_rogobase.Draw();
-    //pushstart
-    m_img_pushstart.SetCenter(350 / 2, 100 / 2);
-    m_img_pushstart.SetPos(m_start_pos);
-    m_img_pushstart.Draw();
+    //Window
+    m_img_window.SetCenter((1280 / 3+150) / 2, 200 / 2);
+    m_img_window.SetPos(m_start_pos);
+    m_img_window.SetSize(1280 / 3+150, 200);
+    m_img_window.Draw();
+    //choice
+    m_img_choice.SetCenter(1280/3/2, 150/2);
+    m_img_choice.SetPos(m_start_pos);
+    m_img_choice.SetSize(1280 / 3+50, 150);
+    m_img_choice.Draw();
+    //iocn
+    m_img_icon.SetCenter(38, 38);
+    m_img_icon.SetSize(75, 75);
+    m_img_icon.SetPos(CVector2D(m_start_pos.x-250, m_start_pos.y -38+75* m_choice));
+    m_img_icon.Draw();
 }

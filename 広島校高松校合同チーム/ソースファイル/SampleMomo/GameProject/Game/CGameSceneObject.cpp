@@ -16,6 +16,7 @@ CGameSceneObject::~CGameSceneObject()
 
 void CGameSceneObject::BeforeUpdate()
 {
+	CheckInScreen();
 	SetPosOld(m_pos);
 	GameSceneObjectBeforeUpdate();
 }
@@ -182,12 +183,33 @@ void CGameSceneObject::GameSceneObjectDraw()
 void CGameSceneObject::CollisionCheck(Task * _collision_task)
 {
 	register CObject* ob = dynamic_cast<CObject*>(_collision_task);
+	if (ob == nullptr || ob->GetIsCollisionOthers() == false) return;
 	register const CVector3D& ob_pos = ob->GetPos();
 	register const CVector3D& ob_pos_old = ob->GetPosOld();
 	register const CVector3D& ob_rads = ob->GetRads();
 
+	
+
 	if (CollisionCheck3D(CVector3D(m_pos.x, m_pos_old.y, m_pos_old.z), m_rads, ob_pos, ob_rads)) {
 		m_pos.x = m_pos_old.x;
+
+		/*
+		//試験的 横にも適用してみる
+		register float ob_right_pos = ob_pos.x + ob_rads.x + m_rads.y;
+		register float ob_left_pos = ob_pos.x - ob_rads.x - m_rads.y;
+		if (m_pos.x > ob_pos.x) {
+			if (m_pos.x <= ob_right_pos) {
+				m_pos.x = ob_right_pos;
+			}
+		}
+		
+		else if (m_pos.x < ob_pos.x) {
+			if (m_pos.x >= ob_left_pos) {
+				m_pos.x = ob_left_pos;
+			}
+		}
+		*/
+		
 	};
 
 
@@ -209,6 +231,7 @@ void CGameSceneObject::CollisionCheck(Task * _collision_task)
 
 	GameSceneObjectCollisionCheck(_collision_task);
 
+	
 
 	//軽量化前
 	/*
@@ -321,6 +344,19 @@ void CGameSceneObject::CalcScroll()
 	//printf("m_pos.x %f m_pos.y %f m_pos.z %f\n", m_pos.x, m_pos.y,m_pos.z);
 	//printf("calc_scroll_pos.x %f calc_scroll_pos.y %f\n", calc_scroll_pos.x, calc_scroll_pos.y);
 	SetScroll(calc_scroll_pos);
+}
+
+void CGameSceneObject::CheckInScreen()
+{
+	m_is_in_screen = false;
+
+	const CVector2D& scroll_pos = GetScroll();
+	
+	if (m_pos.x >= scroll_pos.x && m_pos.x <= scroll_pos.x + 1280) {
+		if (m_pos.y + m_pos.z >= scroll_pos.y && m_pos.y + m_pos.z <= scroll_pos.y + 720) {
+			m_is_in_screen = true;
+		}
+	}
 }
 
 /*

@@ -21,8 +21,15 @@ protected:
 	CVector3D m_vec = CVector3D(0, 0, 0);
 	float m_speed = 1.0f;
 	CVector2D m_size;
-	CVector3D m_rads;
+	CVector3D m_rads = CVector3D(0,0,0);
 	bool m_is_flip = false;
+
+
+	//他のオブジェクトに対してアクティブな判定かどうか（他のオブジェクトからして壁になるかどうか)
+	bool m_is_collision_others = true;//基本的にはtrue
+
+
+
 public:
 	CObject(int _task_id = 0, int _draw_priority = 0);
 	virtual ~CObject();
@@ -66,7 +73,16 @@ public:
 
 	bool CollisionCheck3D(CObject * _ob) { return CollisionCheck3D(m_pos, m_rads, _ob->GetPos(), _ob->GetRads()); };
 
+	void SetIsCollisionOthers(bool _is) { m_is_collision_others = _is; }
+	bool GetIsCollisionOthers() { return m_is_collision_others; }
+
+
 	static bool CollisionCheck3D(const CVector3D& _pos_1, const CVector3D& _rads_1, const CVector3D& _pos_2, const CVector3D& _rads_2) {
+		
+		//なくてもよさげ
+		if (_rads_1.x == 0 && _rads_1.y == 0 && _rads_1.z == 0
+			|| _rads_2.x == 0 && _rads_2.y == 0 && _rads_2.z == 0) return false;
+
 		//軽量化
 		if (abs(_pos_1.x - _pos_2.x) < _rads_1.x + _rads_2.x &&
 			abs(_pos_1.y - _pos_2.y) < _rads_1.y + _rads_2.y &&

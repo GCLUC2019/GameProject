@@ -4,16 +4,33 @@
 
 #define GAME_SCENE_OBJECT_MAX (3000)
 
+#define RESERVE_MAX (6)
+class CCharacterPlayer;
+
+enum {
+	eStage1,
+	eStage1Boss,
+};
 class CGameScene : public CObject {
 private:
 	int m_game_scene_object_num = 0;
 	Task * m_game_scene_object_p[GAME_SCENE_OBJECT_MAX];
 	CVector3D m_game_scene_limit_pos_max;
 	CVector3D m_game_scene_limit_pos_min;
+	int m_now_scene = -1;
+
+	int m_next_scene = -1;
+	float m_next_scene_pos = 0;//この地点まで到達するとシーン遷移
+	CCharacterPlayer* m_player_object_p = nullptr;
+
+	//残機の数
+	int m_reserve_num = 0;
+
 public:
 	CGameScene();
 	~CGameScene();
 	void Init();
+
 	void Setup();
 
 	void SetGameSceneLimitPosMax(const CVector3D& _limit_pos) { m_game_scene_limit_pos_max = _limit_pos; };
@@ -23,12 +40,30 @@ public:
 	const CVector3D& GetGameSceneLimitPosMin() { return m_game_scene_limit_pos_min; };
 
 	void AddGameSceneObject(Task* _object);
+
 	void ClearGameSceneObject();
 
 	//ウェーブが完了したら呼ばれる
-	void WaveDone();
+	void WaveDone(int _next_wave);
 
-	void GameOver();
+	void Update();
+
+	void CheckSceneChange();
+
+	void Miss();
+
+	void StageClear();
+
+	void PopPlayer();
+	void DeletePlayer();
+	void SetupScene();
+
+	void ReturnTitle();
+	void Continue();
+
+	void ChangeScene(int _scene_id);
+
+	int* GetReserveNumPointer() { return &m_reserve_num; };
 
 	static CGameScene* GetInstance();
 };

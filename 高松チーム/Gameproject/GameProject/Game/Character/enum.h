@@ -1,7 +1,9 @@
 #pragma once
 
 const enum CharacterData{
+    eResource,
 	eGameScene,
+	eGameScene2,
 	eGameClear,
 	eGameTutorial,
     eGameTitle,
@@ -10,6 +12,7 @@ const enum CharacterData{
     eBalloon,
 
 	eStage01,
+    eBossStage,
 	eGround,
 	eBamboo,
 	eSkyBlue,
@@ -33,19 +36,24 @@ const enum CharacterData{
 	ePEffectShortAttack03,
 	ePEffectSpecialAttack,
 	ePEffectGetDamage,
+	eE2AttackEffect,
 
-	eEnemy01,
+
+	eBossManager,
+	eBossHead,
+    eBossHund,
+	eBossRightHand,
+    eBossLeftHand,
+    eBossTail,
+	eBossFireEffectc,
+	eBossLazerEffectc,
+
+	eSound,
+
+	eEnemy01 = 101,
 	eEnemy02,
 	eEnemy03,
 	eEnemy04,
 	eEnemy05,
 	eTutorialEnemy,
-
-	eBossManager,
-	eBossHead,
-	eBossHund,
-	eBossFireEffectc,
-	eBossLazerEffectc,
-
-	eSound,
 };

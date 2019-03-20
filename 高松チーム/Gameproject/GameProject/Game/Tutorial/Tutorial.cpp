@@ -4,15 +4,17 @@
 #include "../Stage/ground.h"
 #include "../Resource/Resource.h"
 #include "../GameProject/Game/Scene/Title.h"
+#include "../GameProject/Game/UI/UI.h"
 
 Tutorial::Tutorial() : Task(eGameTutorial)
 {
-	new Resource();
+    TaskManager::GetInstance()->AddTask(new Resource());
 	TaskManager::GetInstance()->AddTask(new Stage01());
 	TaskManager::GetInstance()->AddTask(new Player());
-	TaskManager::GetInstance()->AddTask(new TutorialEnemy(CVector2D(800, 450)));
+	TaskManager::GetInstance()->AddTask(new TutorialEnemy(CVector2D(800, 550)));
 	TaskManager::GetInstance()->AddTask(new Balloon());
 	TaskManager::GetInstance()->AddTask(new DescriptionUI());
+	TaskManager::GetInstance()->AddTask(new UI());
 }
 
 Tutorial::~Tutorial()
@@ -23,8 +25,8 @@ Tutorial::~Tutorial()
 
 void Tutorial::Update()
 {
-	/*if (CInput::GetState(0, CInput::ePush, CInput::eButton5))
-		SetKill();*/
+	if (CInput::GetState(0, CInput::ePush, CInput::eButton5))
+		SetKill();
 }
 
 void Tutorial::Draw()

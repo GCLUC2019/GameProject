@@ -92,14 +92,17 @@ void Init(void)
 	CInput::SetPadButton(0, CInput::eButton4, PadButton::e2);
 	CInput::SetButton(0, CInput::eButton4, 'X');
 	//ïKéEçUåÇ
-	CInput::SetPadButton(0, CInput::eButton5, PadButton::e8);
-	CInput::SetButton(0, CInput::eButton5, 'Q');
+	CInput::SetPadButton(0, CInput::eButton5, PadButton::e5);
+	CInput::SetButton(0, CInput::eButton5, 'E');
 
 	CInput::SetPadButton(0, CInput::eButton6, PadButton::e7);
 	CInput::SetButton(0, CInput::eButton6, 'B');
 
 	CInput::SetPadButton(0, CInput::eButton7, PadButton::e6);
 	CInput::SetButton(0, CInput::eButton7, 'N');
+
+	CInput::SetPadButton(0, CInput::eButton8, PadButton::e8);
+	CInput::SetButton(0, CInput::eButton8, 'Q');
 
 	CInput::SetButton(0, CInput::eButton10, VK_RETURN);
 	CInput::SetButton(0, CInput::eUp, VK_UP);

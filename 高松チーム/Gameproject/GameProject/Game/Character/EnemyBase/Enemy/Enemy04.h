@@ -22,24 +22,31 @@ private:
 	float m_hight;//‚‚³
 		
 	int m_cnt;
+	int m_damage_cnt;
 	int m_attack_cnt;
 	int m_state_old;
 
 	bool m_interval_flg;
-	bool m_exattack_flg;
-	bool m_sattack_flg;
+	bool m_attack_flg;
 	bool m_lattack_flg;
+	bool m_sattack_flg;
+	bool m_exattack_flg;
+	bool m_movetyp_flg;
+	bool m_movexy_flg;
+	bool m_damage_flg;
 		
 	void Update();
 	void Draw();
 	void EXAttack();//“ÁêUŒ‚
 	void LAttack();//‰“‹——£UŒ‚
 	void SAttack();//‹ßÚUŒ‚
-	void Damage();//ƒ_ƒ[ƒW
 	void Move();
+	void AttackControl();//UŒ‚ŠÇ—
 	void Alignment_y();//y²‡‚í‚¹
+	void DamageState();
 public:
 	Enemy04();
 	Enemy04(CVector2D _pos);
+	void Damage(const float& _damage);
 
 };

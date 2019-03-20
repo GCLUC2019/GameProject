@@ -4,19 +4,23 @@
 #include"CCollider.h"
 #include"CHpBar.h"
 #include"CBullet.h"
-//êªçÏé“Å@åGìc
+
+
 class CBoss :public CTank{
 public:
+
 	CCircleCollider*mCollider;
 	CTexture*mTexture;
 	static CTexture mTextImage;
-
+	static CTexture mTextImage3;
+	
 	void Init();
 	void Update();
 	CTank*mpTarget;
 	void OnCollision(CCollider*p);
 	void OnCollision(CBoxCollider*p);
 	int mFireInterval;
+
 
 	CHpBar mHpBar;
 	void Render();

@@ -80,9 +80,10 @@ void Enemy05::Damage()
 	m_vec.x = 0;
 	if (m_hp <= 0){
 		m_img.ChangeAnimation(Enemy05Anim ::eEDeath05, false);
-		if (m_img.CheckAnimationEnd())
+		if (m_img.CheckAnimationEnd()) {
 			SetKill();
-		g_game_data.m_dead_cnt++;
+			g_game_data.m_dead_cnt++;
+		}
 	}
 	else {
 		m_img.ChangeAnimation(Enemy05Anim::eEDamage05, false);
@@ -110,6 +111,7 @@ void Enemy05::Update()
 		break;
 	}
 
+
     m_depth = (m_pos.y - DEP_N) / 3.5;
     m_pos += m_vec;
 	MoveControl();
@@ -120,7 +122,7 @@ void Enemy05::Draw()
 {
 	//サイズ指定と描画
 	m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
-	m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
+	m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE/* - IMAGE_SIZE / 2*/);
 	m_img.SetPos(CVector2D(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3));
 	m_img.SetRect(-IMAGE_SIZE / 2.7f, -IMAGE_SIZE / 4.0f - g_game_data.m_scroll.y / 3,
 					IMAGE_SIZE / 3.0f, IMAGE_SIZE / 2.3f - g_game_data.m_scroll.y / 3);
@@ -128,7 +130,7 @@ void Enemy05::Draw()
 
 	m_shadow.SetSize(SAIZE_SD + m_depth / 5, 50);
 	m_shadow.SetCenter((SAIZE_SD + m_depth / 5) / 2, 50 / 2);
-	m_shadow.SetPos(CVector2D(m_pos.x,m_pos.y + 90 - g_game_data.m_scroll.y / 3));
+	m_shadow.SetPos(CVector2D(m_pos.x,m_pos.y - g_game_data.m_scroll.y / 3));
 	m_rect = CRect(-IMAGE_SIZE / 3.0f, -IMAGE_SIZE / 5.0f - g_game_data.m_scroll.y / 3, 
 					IMAGE_SIZE / 3.5f, IMAGE_SIZE / 2.5f - g_game_data.m_scroll.y / 3);
 
@@ -144,6 +146,7 @@ void Enemy05::HitCheck()
 		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack03) ||
 		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectLongAttack))
 	{
+		SOUND("punch-middle2")->Play();
 		m_hp -= 1;
 		m_state = Enemy05State::eDamage;
 	}

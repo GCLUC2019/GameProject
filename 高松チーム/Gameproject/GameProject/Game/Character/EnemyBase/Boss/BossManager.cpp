@@ -33,7 +33,7 @@ BossManager::BossManager() : Task(eBossManager)
 
 	m_img3.SetCenter(BOSS_Y_SIZE / 4, BOSS_Y_SIZE / 4);
 
-	m_state = Manager::eIdle;
+	//m_state = Manager::eIdle;
 
 	m_player_pos = CVector2D(0, 0);
 
@@ -58,19 +58,20 @@ void BossManager::Nothing()
 
 void BossManager::Idle()
 {
-	if (m_idle_cnt <= 0 && m_idle_flag == true) {
-		//TaskManager::GetInstance()->AddTask(new CollisionBox(CVector2D(m_rect_pos.x, m_rect_pos.y), CRect(-300, -100, 250, 300)));
-		TaskManager::GetInstance()->AddTask(new BossHand(m_player_pos, Manager::eIdle));
-		TaskManager::GetInstance()->AddTask(new BossHead(m_player_pos, Manager::eIdle));
-		TaskManager::GetInstance()->AddTask(new BossTail(m_player_pos, Manager::eIdle));
-	}
+	//if (m_idle_cnt <= 0 && m_idle_flag == true) {
+	//	//TaskManager::GetInstance()->AddTask(new CollisionBox(CVector2D(m_rect_pos.x, m_rect_pos.y), CRect(-300, -100, 250, 300)));
+	//	TaskManager::GetInstance()->AddTask(new BossLeftHand(m_player_pos, Manager::eIdle));
+	//	TaskManager::GetInstance()->AddTask(new BossRightHand(m_player_pos, Manager::eIdle));
+	//	TaskManager::GetInstance()->AddTask(new BossHead(m_player_pos, Manager::eIdle));
+	//	TaskManager::GetInstance()->AddTask(new BossTail(m_player_pos, Manager::eIdle));
+	//}
 
-	m_idle_cnt++;
+	//m_idle_cnt++;
 
-	if (m_idle_cnt >= 600) {
-		m_idle_flag = false;
-		m_state = Manager::eAttackDown;
-	}
+	///*if (m_idle_cnt >= 600) {
+	//	m_idle_flag = false;
+	//	m_state = Manager::eAttackDown;
+	//}*/
 }
 
 void BossManager::Attack()
@@ -83,11 +84,11 @@ void BossManager::Attack()
 
 		m_boss_attack_type = rand() % 100;
 	}
-	if (m_boss_attack_type > 80) m_boss_attack_type = 5;
-	else if (m_boss_attack_type <= 80 && m_boss_attack_type > 60) m_boss_attack_type = 5;
-	else if (m_boss_attack_type <= 60 && m_boss_attack_type > 40) m_boss_attack_type = 5;
-	else if (m_boss_attack_type <= 40 && m_boss_attack_type > 20) m_boss_attack_type = 5;
-	else if (m_boss_attack_type <= 20 && m_boss_attack_type > 0) m_boss_attack_type = 5;
+	if (m_boss_attack_type > 80) m_boss_attack_type = 2;
+	else if (m_boss_attack_type <= 80 && m_boss_attack_type > 60) m_boss_attack_type = 2;
+	else if (m_boss_attack_type <= 60 && m_boss_attack_type > 40) m_boss_attack_type = 2;
+	else if (m_boss_attack_type <= 40 && m_boss_attack_type > 20) m_boss_attack_type = 2;
+	else if (m_boss_attack_type <= 20 && m_boss_attack_type > 0) m_boss_attack_type = 2;
 
 
 	switch (m_boss_attack_type) {
@@ -96,7 +97,7 @@ void BossManager::Attack()
 		m_state = Manager::eNothing;
 		break;
 	case 2:
-		TaskManager::GetInstance()->AddTask(new BossHand(m_player_pos, Manager::eAttackDown));
+		TaskManager::GetInstance()->AddTask(new BossRightHand(m_player_pos, Manager::eAttackDown));
 		m_state = Manager::eNothing;
 		break;
 	case 3:
@@ -108,7 +109,7 @@ void BossManager::Attack()
 		m_state = Manager::eNothing;
 		break;
 	case 5:
-		TaskManager::GetInstance()->AddTask(new BossHand(m_player_pos, Manager::eAttackDown2));
+		TaskManager::GetInstance()->AddTask(new BossLeftHand(m_player_pos, Manager::eAttackDown));
 		m_state = Manager::eNothing;
 		break;
 	default:

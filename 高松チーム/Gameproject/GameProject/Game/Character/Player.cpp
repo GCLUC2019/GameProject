@@ -42,15 +42,6 @@ m_special(0)
 
 void Player::HitCheck()
 {
-	/*if (CollitionBase::CollisionCheckRect(this, eEnemy01) ||
-		CollitionBase::CollisionCheckRect(this, eEnemy02) ||
-		CollitionBase::CollisionCheckRect(this, eEnemy04) ||
-		CollitionBase::CollisionCheckRect(this, eEnemy05)) {
-		if (m_HP <= 0)	m_state = PlayerState::eDeath;
-		if (m_img.CheckAnimationEnd()) SetKill();
-
-		m_state = PlayerState::eDamage;
-   }*/
 }
 
 void Player::Move()
@@ -122,16 +113,17 @@ void Player::Move()
 		else {
 			m_pos.x += m_speed;
 			m_state = eMove;
+			SOUND("dash1")->Play();
 		}
 	}
 	if (CInput::GetState(0, CInput::eHold, CInput::eLeft)) {
-		
 		m_flip = false;
 		if (m_jump_flg)
 			m_pos_old.x -= m_speed;
 		else {
 			m_pos.x -= m_speed;
 			m_state = eMove;
+			SOUND("dash1")->Play();
 		}
 	}
 
@@ -376,7 +368,7 @@ void Player::Update()
 	}
 		
 	m_img.SetColor(1, 1, 1, 1);
-	if (m_special >= 100 && CInput::GetState(0, CInput::eHold, CInput::eButton5) && m_attack_flg == false)
+	if (m_special >= 100 && CInput::GetState(0, CInput::eHold, CInput::eButton8) && m_attack_flg == false)
 		m_special_flg = true;
 	m_state_old = m_state;
 	if (m_jump_flg == false)
@@ -385,7 +377,7 @@ void Player::Update()
 		Special();
 		return;
 	}
-		
+	
 	if (m_damage_flg)
 		DamageState();
 	else

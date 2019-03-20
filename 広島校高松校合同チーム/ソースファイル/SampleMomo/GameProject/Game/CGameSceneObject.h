@@ -75,8 +75,10 @@ protected:
 	
 	//double m_calc_one_sec = 0.0;
 
-	
+	//画面内にいるかどうかの判定
+	bool m_is_in_screen = false;
 
+	
 public:
 	CGameSceneObject(int _task_id = 0, int _draw_priority = 0);
 	virtual ~CGameSceneObject();
@@ -135,6 +137,9 @@ public:
 
 	void SetIsCalcScrollBaseObject(bool _is) { m_is_calc_scroll_base_object = _is; }
 	bool GetIsCalcScrollBaseObject() { return  m_is_calc_scroll_base_object; }
+
+	
+	void CheckInScreen();
 
 	/*
 	//アニメーション再生関連

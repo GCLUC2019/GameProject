@@ -27,7 +27,10 @@ void CLoadResorce::LoadResorce()
 	ADD_RESOURCE("HP_Bar_Frame", CImage::LoadImage("hp_bar_frame.png"));
 	*/
 
+	
 	ReadResorceFile("General/GENERAL_IMAGE.resorce");
+
+
 	ReadResorceFile("PlayerAnim/PLAYER_ANIM_IMAGE.resorce");
 	ReadResorceFile("EnemyAnim/Spear/ENEMY_SPEAR_ANIM_IMAGE.resorce");
 	ReadResorceFile("EnemyAnim/Axe/ENEMY_AXE_ANIM_IMAGE.resorce");
@@ -35,6 +38,24 @@ void CLoadResorce::LoadResorce()
 
 	ReadResorceFile("Story/STORY_IMAGE.resorce");
 	ReadResorceFile("BossDog/DOG_ANIM_IMAGE.resorce");
+
+	CSound::GetInstance()->GetSound("BGM_Boss")->Load("Sound/boss_bgm.wav", 1);
+	CSound::GetInstance()->GetSound("BGM_Stage_Clear")->Load("Sound/stage_clear_bgm.wav", 1);
+	CSound::GetInstance()->GetSound("BGM_Intro_Story")->Load("Sound/intro_story.wav", 1);
+	//CSound::GetInstance()->GetSound("BGM_Stage")->Load("Sound/stage_bgm.wav", 1);
+	CSound::GetInstance()->GetSound("BGM_Title")->Load("Sound/title_bgm.wav", 1);
+
+	CSound::GetInstance()->GetSound("SE_Slash1")->Load("Sound/slash1.wav", 10);
+	CSound::GetInstance()->GetSound("SE_Shot1")->Load("Sound/shot1.wav", 10);
+	CSound::GetInstance()->GetSound("SE_Cursor")->Load("Sound/cursor.wav", 10);
+	CSound::GetInstance()->GetSound("SE_Decision")->Load("Sound/decision.wav", 10);
+	CSound::GetInstance()->GetSound("SE_Jump")->Load("Sound/jump.wav", 10);
+	CSound::GetInstance()->GetSound("SE_Landing")->Load("Sound/landing.wav", 10);
+	CSound::GetInstance()->GetSound("SE_Down")->Load("Sound/down.wav", 10);
+	CSound::GetInstance()->GetSound("SE_Take")->Load("Sound/take.wav", 10);
+
+	//m_bgm[e_BGM_Party_Menu] = CSound::GetInstance()->GetSound("BGM_Party_Menu");
+
 
 	/*
 	ADD_RESOURCE("Player_Idle_Anim_0", CImage::LoadImage("momotaro_idle_anim_0.png"));
@@ -171,7 +192,7 @@ void CLoadResorce::ReadResorceFile(char * _file_path)
 	fclose(fp);
 
 
-	printf("%s", file_data);
+	//printf("%s", file_data);
 
 	char* str_ad = file_data;
 
@@ -184,7 +205,7 @@ void CLoadResorce::ReadResorceFile(char * _file_path)
 		int base_pass_len = base_pass_last_ad - file_base_path_ad;
 		strncpy_s(file_base_path, file_base_path_ad + strlen("BASE_FILE_PATH: "), base_pass_len - strlen("BASE_FILE_PATH: "));
 		is_read_file_base_path = true;
-		printf("%s\n", file_base_path);
+		//printf("%s\n", file_base_path);
 	}
 
 
@@ -214,12 +235,12 @@ void CLoadResorce::ReadResorceFile(char * _file_path)
 				memset(load_image_file_path, 0, sizeof(load_image_file_path));
 				strcat_s(load_image_file_path,file_base_path);
 				strcat_s(load_image_file_path,image_file_path);
-				printf("image_name Åy%sÅzimage_path Åy%sÅz\n", image_name, load_image_file_path);
+				//printf("image_name Åy%sÅzimage_path Åy%sÅz\n", image_name, load_image_file_path);
 				ADD_RESOURCE(image_name, CImage::LoadImage((char*)load_image_file_path));
 
 			}
 			else {
-				printf("image_name Åy%sÅzimage_path Åy%sÅz\n", image_name, image_file_path);
+				//printf("image_name Åy%sÅzimage_path Åy%sÅz\n", image_name, image_file_path);
 				ADD_RESOURCE(image_name, CImage::LoadImage((char*)image_file_path));
 			}
 			str_ad += strlen("LOAD_RESORCE_IMAGE:");

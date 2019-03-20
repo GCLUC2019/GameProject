@@ -3,7 +3,10 @@
 #include "CItem.h"
 #include "CPlayerTank.h"
 
-int type;
+CTexture CItem::mTexImage;
+CTexture CItem::mTexImage2;
+CTexture CItem::mTexImage3;
+
 
 void CItem::Init(){
 	SetVertex(-10.0f, 10.0f, -10.0f, 10.0f);
@@ -11,20 +14,18 @@ void CItem::Init(){
 	mCollider->mRadius = 10.0f;
 	mCollider->mpTask = this;
 	CCollisionManager::Get()->Add(mCollider);
+	if (mType == 1){
+		mTexImage.Load("heal");
+	}
+	if (mType == 2){
+		mTexImage.Load("strengthen");
+	}
+	if (mType == 3){
+		mTexImage.Load("Invincible");
+	}
 }
 
 void CItem::Update(){
-	/*
-	if (mType == 1){
-	SetUv(heal);
-	}
-	if (mType == 2){
-	SetUv(strengthen);
-	}
-	if (mType == 3){
-	SetUv(Invincible);
-	}
-	*/
 	CCollisionManager::Get()->Collision(mCollider);
 }
 

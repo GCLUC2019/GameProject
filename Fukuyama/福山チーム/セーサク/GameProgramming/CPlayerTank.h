@@ -12,6 +12,10 @@ private:
 	CSound mSound;
 	//CRectangle mPlayer;
 public:
+	//CPlayerTank()
+	//	:mPlayer()
+	//	,mGravityV(0)
+	//{}
 	float p_max_hp;	//ステータス類追加	宮原
 	float p_max_sp;
 	float p_min_sp;
@@ -20,12 +24,21 @@ public:
 	void Init();
 	void Update();
 	void OnCollision(CCollider*p);
+	void OnCollision(CBoxCollider*p);
+
 	CBoxCollider*mpBoxCollider;
 	CRectangle mPlayer;
 	CTexture mTexture;
 	static CTexture mTexImage;
+	static CTexture mTexImage2;
 	int mFireInterval;
+	int p_Jump;
+	int JumpCount;
+	int EffectCount;
+	int EffectCount2;
+	int AttackSide;
 	CHpBar mHpBar;
+
 
 	void Render();
 

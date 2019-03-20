@@ -37,7 +37,16 @@ void CBullet::OnCollision(CCircleCollider*p){
 
 
 void CBullet::OnCollision(CCollider*p){
-	if (mTaskTag == EPLAYERBULLET&&p->mpTask->mTaskTag == EENEMYTANK){
+	if (mTaskTag == EPLAYERBULLET&&p->mpTask->mTaskTag == EENEMY1){
+		mEnabled = false;
+	}
+	if (mTaskTag == EPLAYERBULLET&&p->mpTask->mTaskTag == EENEMY2){
+		mEnabled = false;
+	}
+	if (mTaskTag == EPLAYERBULLET2&&p->mpTask->mTaskTag == EENEMY1){
+		mEnabled = false;
+	}
+	if (mTaskTag == EPLAYERBULLET2&&p->mpTask->mTaskTag == EENEMY2){
 		mEnabled = false;
 	}
 	if (mTaskTag == EENEMYBULLET&&p->mpTask->mTaskTag == EPLAYERTANK){

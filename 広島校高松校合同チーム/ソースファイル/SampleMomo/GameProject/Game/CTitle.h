@@ -5,7 +5,7 @@
 class CTitle : public CObject {
 private:
 	CImage* m_background_image_p = nullptr;
-	CImage* m_backtxt_p = nullptr;
+	CImage* m_blind_text_p = nullptr;
 	double m_count_txt;
 	double m_count_txt2;
 	bool m_draw_txt = true;
