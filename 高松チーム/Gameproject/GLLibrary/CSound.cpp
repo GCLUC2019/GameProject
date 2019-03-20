@@ -5,7 +5,7 @@
 #pragma comment(lib, "OpenAL32.lib")
 #pragma comment(lib, "winmm.lib")
 #pragma comment(lib, "alut.lib")
-CSoundBase::CSoundBase(): m_source(nullptr),m_layer_max(0){
+CSoundBase::CSoundBase(): m_source(nullptr),m_layer_max(0), m_current(0) {
 
 }
 CSoundBase::~CSoundBase() {

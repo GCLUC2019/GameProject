@@ -26,12 +26,14 @@ m_choice(0)
     ADD_RESOURCE("RogoClear", CImage::LoadImage("../data/Image/rogo_cl.png"));
     ADD_RESOURCE("RogoHuda", CImage::LoadImage("../data/Image/rogo_huda.png"));
     ADD_RESOURCE("RogoUI", CImage::LoadImage("../data/Image/chara_gauge_face.png"));
+    ADD_RESOURCE("Window", CImage::LoadImage("../data/Image/balloon.png"));
     m_img_back = COPY_RESOURCE("Title", CImage*);
     m_img_rogobase = COPY_RESOURCE("RogoBase", CImage*);
     m_img_rogoclear = COPY_RESOURCE("RogoClear", CImage*);
     m_img_ohuda = COPY_RESOURCE("RogoHuda", CImage*);
     m_img_choice = COPY_RESOURCE("Choice", CImage*);
     m_img_icon = COPY_RESOURCE("RogoUI", CImage*);
+    m_img_window = COPY_RESOURCE("Window", CImage*);
 	SOUND("Enishi")->Play(true);
 }
 
@@ -106,14 +108,19 @@ void Title::Draw()
 	m_img_rogobase.SetCenter(ROGOXSIZE / 2, ROGOYSIZE / 2);
 	m_img_rogobase.SetPos(m_rogo_pos);
 	m_img_rogobase.Draw();
+    //Window
+    m_img_window.SetCenter((1280 / 3+150) / 2, 200 / 2);
+    m_img_window.SetPos(m_start_pos);
+    m_img_window.SetSize(1280 / 3+150, 200);
+    m_img_window.Draw();
     //choice
-    m_img_choice.SetCenter(350 / 2, 100 / 2);
+    m_img_choice.SetCenter(1280/3/2, 150/2);
     m_img_choice.SetPos(m_start_pos);
-    m_img_choice.SetSize(1280 / 3, 150);
-    m_img_choice.SetColor(0, 0, 0, 1);
+    m_img_choice.SetSize(1280 / 3+50, 150);
     m_img_choice.Draw();
     //iocn
-    m_img_icon.SetCenter(100, 100);
-    m_img_icon.SetPos(CVector2D(m_start_pos.x-213, m_start_pos.y + 100 * m_choice));
+    m_img_icon.SetCenter(38, 38);
+    m_img_icon.SetSize(75, 75);
+    m_img_icon.SetPos(CVector2D(m_start_pos.x-250, m_start_pos.y -38+75* m_choice));
     m_img_icon.Draw();
 }

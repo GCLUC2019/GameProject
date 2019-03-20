@@ -164,3 +164,28 @@ void PlayerGageUI::Draw()
 	m_img.SetPos(m_pos);
 	m_img.Draw();
 }
+
+
+GuidanceUI::GuidanceUI() : UI(UIData::eGuidanceUI)
+{
+	m_img = COPY_RESOURCE("GuidanceUI", CImage*);
+	m_pos = CVector2D(1260, 500);
+}
+
+void GuidanceUI::Update()
+{
+	int cnt = 0;
+	cnt++;
+	if (cnt >= 0 && cnt < 45)m_pos.y += 1; 
+	else if (cnt >= 45) m_pos.y -= 1;
+	else if (cnt >= 90) cnt = 0;
+
+
+}
+
+void GuidanceUI::Draw()
+{
+	m_img.SetSize(CVector2D(200, 50));
+	m_img.SetPos(m_pos);
+	m_img.Draw();
+}

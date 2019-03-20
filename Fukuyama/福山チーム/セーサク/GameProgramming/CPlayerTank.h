@@ -24,10 +24,13 @@ public:
 	void Init();
 	void Update();
 	void OnCollision(CCollider*p);
+	void OnCollision(CBoxCollider*p);
+
 	CBoxCollider*mpBoxCollider;
 	CRectangle mPlayer;
 	CTexture mTexture;
 	static CTexture mTexImage;
+	static CTexture mTexImage2;
 	int mFireInterval;
 	int p_Jump;
 	int JumpCount;

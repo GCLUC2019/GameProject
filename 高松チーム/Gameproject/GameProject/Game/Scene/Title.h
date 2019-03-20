@@ -15,6 +15,7 @@ private:
     CImage m_img_ohuda;
     CImage m_img_choice;
     CImage m_img_icon;
+    CImage m_img_window;
     //ŠeˆÊ’u
     CVector2D m_title_pos;
     CVector2D m_rogo_pos;

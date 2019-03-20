@@ -44,12 +44,14 @@
 
 //extern CTexture mTexture;	//Texture‚©‚çmTexture‚É•ÏX
 CTexture CPlayerTank::mTexImage;
+CTexture CPlayerTank::mTexImage2;
 
 void CPlayerTank::Init(){
 	mGravityV = 0;
 	AttackSide = 1;
 	mTexImage.Load("Player-1.tga");
-	CRectangle::SetTexture(&mTexture, 0, 84, -517, -592);
+	mTexImage2.Load("P-ya.tga");
+	CRectangle::SetTexture(&mTexture, 602, 688, -420, -358);
 
 	p_Jump = 0;
 	JumpCount = 0;
@@ -146,8 +148,10 @@ void CPlayerTank::Update(){
 			CRectangle::SetTexture(&mTexImage, 427, 531, -451, -362);
 			EffectCount2--;
 		}
-		if (EffectCount2 == 0){
-			CRectangle::SetTexture(&mTexImage, 0, 84, -592, -517);
+		if (EffectCount == 0){
+			if (EffectCount2 == 0){
+				CRectangle::SetTexture(&mTexImage, 0, 84, -592, -517);
+			}
 		}
 	}
 
@@ -163,8 +167,10 @@ void CPlayerTank::Update(){
 			CRectangle::SetTexture(&mTexImage, 427, 531, -362, -451);
 			EffectCount2--;
 		}
-		if (EffectCount2 == 0){
-			CRectangle::SetTexture(&mTexImage, 0, 84, -517, -592);
+		if (EffectCount == 0){
+			if (EffectCount2 == 0){
+				CRectangle::SetTexture(&mTexImage, 0, 84, -517, -592);
+			}
 		}
 	}
 
@@ -219,8 +225,8 @@ void CPlayerTank::Update(){
 						EffectCount = EFFECT_COUNT;
 					}
 					CBullet*bullet = new CBullet();
-					//bullet->mTaskTag = EPLAYERBULLET;
-					bullet->mLife = 3;
+					bullet->mTaskTag = EPLAYERBULLET;
+					bullet->mLife = 4;
 					if (AttackSide == 1){
 						bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, 30.0f);
 						bullet->mForward = bullet->mPosition - mCanon.mMatrix*CVector2(0.0f, 24.0f);
@@ -240,14 +246,17 @@ void CPlayerTank::Update(){
 						EffectCount2 = EFFECT_COUNT2;
 					}
 					CBullet*bullet = new CBullet();
-					//bullet->mTaskTag = EPLAYERBULLET;
+					bullet->SetVertex(-30.0f, 30.0f, -8.0f, 8.0f);
+					bullet->mTaskTag = EPLAYERBULLET2;
 					bullet->mLife = CBULLET_LIFE;
 					if (AttackSide == 1){
-						bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, 30.0f);
+						bullet->CRectangle::SetTexture(&mTexImage2, 0, 551, 0, 46);
+						bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, 28.0f);
 						bullet->mForward = bullet->mPosition - mCanon.mMatrix*CVector2(0.0f, 24.0f);
 					}
 					if (AttackSide == 0){
-						bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, -30.0f);
+						bullet->CRectangle::SetTexture(&mTexImage2, 551, 0, 0, 46);
+						bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, -28.0f);
 						bullet->mForward = bullet->mPosition - mCanon.mMatrix*CVector2(0.0f, -24.0f);
 					}
 					bullet->SetColor(mColor[0], mColor[1], mColor[2], mColor[3]);
@@ -260,7 +269,46 @@ void CPlayerTank::Update(){
 	}
 }
 void CPlayerTank::OnCollision(CCollider*p){
+
 	if (p->mpTask->mTaskTag == EENEMYBULLET){
+		CExplosion*p = new CExplosion();
+		//HeadRightTurn();
+		//HeadRightTurn();
+		//HeadRightTurn();
+		//HeadRightTurn();
+		//HeadRightTurn();
+		//HeadRightTurn();
+		//HeadRightTurn();
+		//HeadRightTurn();
+		p->SetTexture(&Texture, 0, 64, 64, 0);
+		p->mPosition = mPosition;
+		CTaskManager::Get()->Add(p);
+		mHpBar.mHp -= 5.0f;
+		if (mHpBar.mHp <= 0.0f){
+			mEnabled = false;
+			CMain::mSceneTag = CScene::ELOSE;
+		}
+	}
+	//if (p->mpTask->mTaskTag == EBOSSBULLET){
+	//	CExplosion*p = new CExplosion();
+	//	HeadRightTurn();
+	//	HeadRightTurn();
+	//	HeadRightTurn();
+	//	HeadRightTurn();
+	//	HeadRightTurn();
+	//	HeadRightTurn();
+	//	HeadRightTurn();
+	//	HeadRightTurn();
+	//	p->SetTexture(&Texture, 0, 64, 64, 0);
+	//	p->mPosition = mPosition;
+	//	CTaskManager::Get()->Add(p);
+	//	mHpBar.mHp -= 5.0f;
+	//	if (mHpBar.mHp <= 0.0f){
+	//		mEnabled = false;
+	//		CMain::mSceneTag = CScene::ELOSE;
+	//	}
+	//}
+	if (p->mpTask->mTaskTag == ESPEEDENEMY){
 		CExplosion*p = new CExplosion();
 		//HeadRightTurn();
 		//HeadRightTurn();
@@ -279,46 +327,33 @@ void CPlayerTank::OnCollision(CCollider*p){
 			CMain::mSceneTag = CScene::ELOSE;
 		}
 	}
-	if (p->mpTask->mTaskTag == EBOSSBULLET){
+	if (p->mpTask->mTaskTag == EENEMY1){
 		CExplosion*p = new CExplosion();
-		//HeadRightTurn();
-		//HeadRightTurn();
-		//HeadRightTurn();
-		//HeadRightTurn();
-		//HeadRightTurn();
-		//HeadRightTurn();
-		//HeadRightTurn();
-		//HeadRightTurn();
-		p->SetTexture(&Texture, 0, 64, 64, 0);
+		//mPosition = mPosition + mpBoxCollider->mAdjust;
 		p->mPosition = mPosition;
-		CTaskManager::Get()->Add(p);
-		mHpBar.mHp -= 5.0f;
-		if (mHpBar.mHp <= 0.0f){
-			mEnabled = false;
-			CMain::mSceneTag = CScene::ELOSE;
-		}
-	}
-	if (p->mpTask->mTaskTag == ESPEEDENEMY){
-		CExplosion*p = new CExplosion();
-		//HeadRightTurn();
-		//HeadRightTurn();
-		//HeadRightTurn();
-		//HeadRightTurn();
-		//HeadRightTurn();
-		//HeadRightTurn();
-		//HeadRightTurn();
-		//HeadRightTurn();
-		p->SetTexture(&Texture, 0, 64, 64, 0);
-		p->mPosition = mPosition;
-		CTaskManager::Get()->Add(p);
-		mHpBar.mHp -= 5.0f;
-		if (mHpBar.mHp <= 0.0f){
-			mEnabled = false;
-			CMain::mSceneTag = CScene::ELOSE;
-		}
 	}
 
+	if (p->mpTask->mTaskTag == EENEMY2){
+		CExplosion*p = new CExplosion();
+		//mPosition = mPosition + mpBoxCollider->mAdjust;
+		p->mPosition = mPosition;
+	}
 }
+
+
+void CPlayerTank::OnCollision(CBoxCollider*p){
+	if (p->mpTask->mTaskTag == EENEMY1){
+		//mPosition = mPosition + mpBoxCollider->mAdjust;
+		printf("CBullet::OnCollision\n");
+		p->mPosition = mPosition;
+	}
+	if (p->mpTask->mTaskTag == EENEMY2){
+		//mPosition = mPosition + mpBoxCollider->mAdjust;
+		printf("CBullet::OnCollision\n");
+		p->mPosition = mPosition;
+	}
+}
+
 void CPlayerTank::Render(){
 	//CTank::Render();
 	CRectangle::Render();

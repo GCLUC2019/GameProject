@@ -16,6 +16,8 @@ public:
 	static CTexture mTexImage;
 
 	int mFireIntervar;
+	int EffectCount;
+
 	void Init();
 	void Update();
 	void Render();

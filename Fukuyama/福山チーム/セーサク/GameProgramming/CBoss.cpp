@@ -115,7 +115,7 @@ void CBoss::OnCollision(CCollider*p){
 			
 		}
 	}
-	if (p->mpTask->mTaskTag == EBOSS){
+	if (p->mpTask->mTaskTag == EPLAYERTANK){
 		CRectangle::SetTexture(&mTextImage3, 200, 338, -520, -416);
 		CExplosion*p = new CExplosion();
 		p->SetTexture(&Texture, 0, 64, 64, 0);

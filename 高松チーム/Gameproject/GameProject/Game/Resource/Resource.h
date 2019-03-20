@@ -28,8 +28,8 @@ public:
 		ADD_RESOURCE("PESpecialAttack", CAnimImage::LoadImage("../data/Image/pipo-mapeffect013a-1.png", PlayerEffectAnimData, 400, 400));
 		ADD_RESOURCE("PEGetDamage", CAnimImage::LoadImage("../data/Image/Effect_p020.png", PlayerEffectAnimData, 200, 200));
 
-		//ADD_RESOURCE("Boss", CAnimImage::LoadImage("../data/Image/moton_jaryu2.png", BossAnimData, 768, 768));
-		//ADD_RESOURCE("Boss2", CAnimImage::LoadImage("../data/Image/moton_jaryu3.png", BossAnimData2, 768, 768));
+		ADD_RESOURCE("Boss", CAnimImage::LoadImage("../data/Image/moton_jaryu2.png", BossAnimData, 768, 768));
+		ADD_RESOURCE("Boss2", CAnimImage::LoadImage("../data/Image/moton_jaryu3.png", BossAnimData2, 768, 768));
 		ADD_RESOURCE("GameClear", CImage::LoadImage("../data/Image/push start.png"));
 		ADD_RESOURCE("Enemy01", CAnimImage::LoadImage("../data/Image/zako_chochin_motion.png", Enemy01AnimData,512,512));
 		ADD_RESOURCE("Enemy02", CAnimImage::LoadImage("../data/Image/zako_daruma_motion.png", Enemy02AnimData, 512, 512));
@@ -45,23 +45,26 @@ public:
 		ADD_RESOURCE("SkyRed", CImage::LoadImage("../data/Image/bg_sky_02.png"));
 		ADD_RESOURCE("Kakera", CImage::LoadImage("../data/Image/item_kakera.png"));
 		ADD_RESOURCE("MagicCircle", CImage::LoadImage("../data/Image/mahoujin_image.png"));
-		//ADD_RESOURCE("BossLazer", CAnimImage::LoadImage("../data/Image/pipo-btleffect141.png", BossLazerEffectAnimData, 640,480));
+		ADD_RESOURCE("BossLazer", CAnimImage::LoadImage("../data/Image/pipo-btleffect141.png", BossLazerEffectAnimData, 640,480));
 		ADD_RESOURCE("Title", CImage::LoadImage("../data/Image/title.png"));
         ADD_RESOURCE("PushStart", CImage::LoadImage("../data/Image/push start.png"));
         ADD_RESOURCE("RogoBase", CImage::LoadImage("../data/Image/rogo_base.png"));
         ADD_RESOURCE("RogoClear", CImage::LoadImage("../data/Image/rogo_cl.png"));
         ADD_RESOURCE("RogoHuda", CImage::LoadImage("../data/Image/rogo_huda.png"));
 		ADD_RESOURCE("ItemBox", CAnimImage::LoadImage("../data/Image/itembox_motion_object.png", ItemBoxAnimData, 512, 512));
+        ADD_RESOURCE("BossStage", CImage::LoadImage("../data/Image/bg_boss.png"));
 
 		ADD_RESOURCE("RogoUI", CImage::LoadImage("../data/Image/chara_gauge_face.png"));
 		ADD_RESOURCE("GageBaseUI", CImage::LoadImage("../data/Image/chara_gauge_base.png"));
 		ADD_RESOURCE("PlayerGageUI", CImage::LoadImage("../data/Image/chara_gauge.png"));
 		ADD_RESOURCE("BalloonUI", CImage::LoadImage("../data/Image/balloon.png"));
+        ADD_RESOURCE("GuidanceUI", CImage::LoadImage("../data/Image/go_sign.png"));
 		ADD_RESOURCE("SpecialGageUI", CAnimImage::LoadImage("../data/Image/item_matome_1.png", SpecialGageUIAnimData, 128, 128));
 		ADD_RESOURCE("SpecialGageEffect", CAnimImage::LoadImage("../data/Image/pipo-gate01b480.png", SpecialGageEffectAnimData, 480, 480));
-		//ADD_RESOURCE("BossSlash", CAnimImage::LoadImage("../data/Image/Effect_p036.png", BossSlashEffectAnimData, 200, 200));
-		//ADD_RESOURCE("BossDeathEffect1", CAnimImage::LoadImage("../data/Image/pipo-mapeffect013c-1.png", BossDeathEffectAnimData, 192, 192));
-		//ADD_RESOURCE("BossDeathEffect2", CAnimImage::LoadImage("../data/Image/pipo-mapeffect013c-2.png", BossDeathEffectAnimData, 192, 192));
+		ADD_RESOURCE("BossSlash", CAnimImage::LoadImage("../data/Image/Effect_p036.png", BossSlashEffectAnimData, 200, 200));
+		ADD_RESOURCE("BossDeathEffect1", CAnimImage::LoadImage("../data/Image/pipo-mapeffect013c-1.png", BossDeathEffectAnimData, 192, 192));
+		ADD_RESOURCE("BossDeathEffect2", CAnimImage::LoadImage("../data/Image/pipo-mapeffect013c-2.png", BossDeathEffectAnimData, 192, 192));
+
 	}
 };
 

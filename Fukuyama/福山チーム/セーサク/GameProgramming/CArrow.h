@@ -23,14 +23,14 @@ public:
 		Init();
 	}
 
+	static CTexture mTexImage;
+
 	void Init();
 	void Update();
 	void Render();
 
 	CBoxCollider*mBoxCollider;
-
 	void OnCollision(CCircleCollider*p);
-
 	void OnCollision(CCollider*p);
 };
 
