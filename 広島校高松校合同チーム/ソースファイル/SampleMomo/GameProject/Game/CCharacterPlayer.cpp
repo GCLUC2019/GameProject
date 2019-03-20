@@ -47,7 +47,6 @@ CCharacterPlayer::~CCharacterPlayer()
 	if (s_instance_p == this) {
 		s_instance_p = nullptr;
 	}
-	
 }
 
 void CCharacterPlayer::LoadAnimImage()
@@ -235,6 +234,8 @@ void CCharacterPlayer::InputAttack()
 		m_is_early_input_attack = false;
 		m_is_range_attack = false;
 		m_is_hit_range_attack = false;
+		m_keep_final_attack_timeout = KEEP_FINAL_ATTACK_TIMEOUT;
+
 
 		//攻撃した敵のデータを初期化
 		for (int i = 0; i < MEMORY_HIT_ATTACKED_ENEMY_MAX; i++) {
@@ -814,7 +815,17 @@ void CCharacterPlayer::Attacking()
 
 	bool is_keep_finish_attack = false;
 	//空中にいてなおかつフィニッシュ攻撃なら着地するまでは攻撃判定を継続させる
-	if (m_is_landing == false && m_attack_combo_count == 2) is_keep_finish_attack = true;
+	if (m_is_landing == false && m_attack_combo_count == 2) {
+		m_keep_final_attack_timeout -= CFPS::GetDeltaTime() * GAME_BASE_FPS;
+		printf("time_out %lf\n", m_keep_final_attack_timeout);
+		
+		if (m_keep_final_attack_timeout <= 0.0) {
+			SetPos(CGameScene::GetInstance()->GetCheckPoint() - CVector3D(0,50,0));
+			m_is_attacking = false;
+		}
+
+		is_keep_finish_attack = true;
+	}
 
 	if (m_attacking_count < 0 && is_keep_finish_attack == false) {
 

@@ -39,6 +39,7 @@ void CGameScene::Setup()
 	m_reserve_num = RESERVE_MAX;
 	m_now_scene = eStage1;
 	PopPlayer();
+	SetCheckPoint(CVector3D(300, -220, 550));
 	SetupScene();
 }
 
@@ -51,15 +52,28 @@ void CGameScene::AddGameSceneObject(Task * _object)
 
 void CGameScene::ClearGameSceneObject()
 {
+	//ポインタの中身がそもそも破棄されてる場合があるよね、今回。
 	for (int i = 0; i < m_game_scene_object_num; i++) {
+		if (m_game_scene_object_p[i] == nullptr) continue;
 		m_game_scene_object_p[i]->SetIsDelete();
 		m_game_scene_object_p[i] = nullptr;
 	}
 	m_game_scene_object_num = 0;
 }
 
+void CGameScene::EraseGameSceneObject(Task * _object)
+{
+	for (int i = 0; i < m_game_scene_object_num; i++) {
+		if (m_game_scene_object_p[i] == _object) {
+			m_game_scene_object_p[i] = nullptr;
+		}
+	}
+}
+
 void CGameScene::WaveDone(int _next_wave)
 {
+	m_last_wave = _next_wave;
+
 	switch (m_now_scene) {
 	case eStage1:
 		SetGameSceneLimitPosMin(CVector3D(100.0f, 0.0f, 340.0f));
@@ -137,12 +151,21 @@ void CGameScene::SetupScene()
 	CFade::GetInstance()->SetFadeOut(0);
 	CFade::GetInstance()->SetFadeIn(30);
 
-	m_player_object_p->SetPos(CVector3D(300, -401, 550));
+	m_player_object_p->SetPos(m_check_point);
+	m_player_object_p->SetPosOld(m_check_point);
+
+	/*
+	m_player_object_p->SetPos(CVector3D(300, -201, 550));
 	m_player_object_p->SetPosOld(m_player_object_p->GetPos());
+	*/
+	
+
 	AddGameSceneObject(new CGameSceneUI());
 
 	switch (m_now_scene) {
 	case eStage1:
+		CSound::GetInstance()->StopAll();
+		CSound::GetInstance()->GetSound("BGM_Title")->Play(true);
 		//CSound::GetInstance()->StopAll();
 		//CSound::GetInstance()->GetSound("BGM_Stage")->Play(true);
 		for (int i = 0; i < 4; i++) {
@@ -154,7 +177,9 @@ void CGameScene::SetupScene()
 		SetGameSceneLimitPosMin(CVector3D(100.0f, 0.0f, 340.0f));
 		SetGameSceneLimitPosMax(CVector3D(1280.0f * 4, 720.0f, 720.0f));
 		
-		AddGameSceneObject(new CGameSceneWave(eWave1));
+
+		if(m_last_wave != -1) AddGameSceneObject(new CGameSceneWave(m_last_wave));
+		else AddGameSceneObject(new CGameSceneWave(eWave1));
 
 		/*
 		AddGameSceneObject(new CCharacterEnemy(eEnemyIdGun, CVector3D(2000, -151, 450 + 100)));
@@ -218,6 +243,7 @@ void CGameScene::ChangeScene(int _scene_id)
 {
 	m_now_scene = _scene_id;
 	ClearGameSceneObject();
+	SetCheckPoint(CVector3D(300, -220, 550));
 	SetupScene();
 }
 

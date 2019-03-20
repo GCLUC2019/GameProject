@@ -45,8 +45,6 @@ void CStageClear::Draw()
 void CStageClear::NextScene()
 {
 	TaskManager::GetInstance()->AddTask(new CStorySceneClear(m_clear_stage_id));
-	CSound::GetInstance()->StopAll();
-	CSound::GetInstance()->GetSound("BGM_Stage_Clear")->Play();
 	CGameScene::GetInstance()->ClearGameSceneObject();
 	SetIsDelete();
 }
