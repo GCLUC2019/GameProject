@@ -38,7 +38,7 @@ public:
 		ADD_RESOURCE("Enemy04", CAnimImage::LoadImage("../data/Image/zako_kamaitachi_motion.png", Enemy04AnimData, 512, 512));
 		ADD_RESOURCE("Enemy05", CAnimImage::LoadImage("../data/Image/zako_niku_motion.png", Enemy05AnimData, 512, 512));
 		//ADD_RESOURCE("BossFire", CAnimImage::LoadImage("../data/Image/pipo-btleffect162.png",BossFireEffectAnimData,1280,960));
-		ADD_RESOURCE("Shadow", CImage::LoadImage("../data/Image/shadow.png"));
+		ADD_RESOURCE("Shadow", CImage::LoadImage("../data/Image/shadow.png")); 
 		ADD_RESOURCE("Ground", CImage::LoadImage("../data/Image/bg_ground.png"));
 		ADD_RESOURCE("Bamboo", CImage::LoadImage("../data/Image/bg_bamboo.png"));
 		ADD_RESOURCE("SkyBlue", CImage::LoadImage("../data/Image/bg_sky_01.png"));
@@ -64,6 +64,8 @@ public:
 		ADD_RESOURCE("BossSlash", CAnimImage::LoadImage("../data/Image/Effect_p036.png", BossSlashEffectAnimData, 200, 200));
 		ADD_RESOURCE("BossDeathEffect1", CAnimImage::LoadImage("../data/Image/pipo-mapeffect013c-1.png", BossDeathEffectAnimData, 192, 192));
 		ADD_RESOURCE("BossDeathEffect2", CAnimImage::LoadImage("../data/Image/pipo-mapeffect013c-2.png", BossDeathEffectAnimData, 192, 192));
+
+		ADD_RESOURCE("Slash_EX", CAnimImage::LoadImage("../data/Image/slash_ex.png", E4AttackEffectAnimData, 500, 50));
 
 	}
 };
