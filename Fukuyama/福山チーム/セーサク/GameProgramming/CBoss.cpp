@@ -23,8 +23,8 @@ void CBoss::Init(){
 
 
 	CRectangle::SetTexture(&mTextImage, 0, 1299, 992, 0);
+
 	mFireInterval = FIREINTERVAL_E;
-	
 	CTank::Init();
 	SetVertex(-100.0f, 100.0f, -100.0f, 100.0f);
 	SetColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -50,6 +50,7 @@ void CBoss::Init(){
 
 
 void CBoss::Update(){
+
 	if (mFireInterval > 0){
 		mFireInterval--;
 	}
@@ -102,29 +103,42 @@ void CBoss::Update(){
 	mHpBar.Update();
 }
 
-void CBoss::OnCollision(CCollider*p){
-	if (p->mpTask->mTaskTag == EPLAYERBULLET){
-		CRectangle::SetTexture(&mTextImage3, 200, 338, -520, -416);
-		CExplosion*p = new CExplosion();
-		p->SetTexture(&Texture, 0, 64, 64, 0);
-		p->mPosition = mPosition;
-		CTaskManager::Get()->Add(p);
-		mHpBar.mHp -= 1.0f;
-		if (mHpBar.mHp <= 0.0f){
-			CRectangle::SetTexture(&mTextImage3, -17, 160, -380, -191);
-			
-		}
-	}
-	if (p->mpTask->mTaskTag == EPLAYERTANK){
-		CRectangle::SetTexture(&mTextImage3, 200, 338, -520, -416);
-		CExplosion*p = new CExplosion();
-		p->SetTexture(&Texture, 0, 64, 64, 0);
-		p->mPosition = mPosition;
-		CTaskManager::Get()->Add(p);
-		mHpBar.mHp -= 1.0f;
-		if (mHpBar.mHp <= 0.0f){
-			CRectangle::SetTexture(&mTextImage3, -17, 160, -380, -191);
 
+
+void CBoss::OnCollision(CCollider*p){
+	if (mHpBar.mHp >= 1){
+		if (p->mpTask->mTaskTag == EPLAYERBULLET){
+			CRectangle::SetTexture(&mTextImage3, 200, 338, -520, -416);
+			CExplosion*p = new CExplosion();
+			p->SetTexture(&Texture, 0, 64, 64, 0);
+			p->mPosition = mPosition;
+			CTaskManager::Get()->Add(p);
+			mHpBar.mHp -= 1.0f;
+
+			if (mHpBar.mHp <= 0.0f){
+
+				CExplosion*p = new CExplosion();
+				p->SetTexture(&Texture, 0, 64, 64, 0);
+				p->mPosition = mPosition;
+				CTaskManager::Get()->Add(p);
+				mEnabled = false;
+				//CRectangle::SetTexture(&mTextImage3, -17, 160, -380, -191);
+			}
+
+		}
+
+		if (p->mpTask->mTaskTag == EPLAYERTANK){
+			CRectangle::SetTexture(&mTextImage3, 394, 552, -521, -426);
+			CExplosion*p = new CExplosion();
+			p->SetTexture(&Texture, 0, 64, 64, 0);
+			p->mPosition = mPosition;
+			CTaskManager::Get()->Add(p);
+			mHpBar.mHp -= 1.0f;
+
+			if (mHpBar.mHp <= 0.0f){
+				CRectangle::SetTexture(&mTextImage3, -17, 160, -380, -191);
+
+			}
 		}
 	}
 }

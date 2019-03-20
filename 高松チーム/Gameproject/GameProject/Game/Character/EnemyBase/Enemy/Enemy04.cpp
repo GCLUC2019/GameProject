@@ -2,6 +2,8 @@
 #include "../../Anim/AnimData.h"
 #include "../GameProject/Global.h"
 #include "../GameProject/Game/GameData/GameData.h"
+#include "../../Effect/EnemyEffect.h"
+#include "../../../CollitionBase.h"
 #define DEP_N 1200
 Enemy04::Enemy04() : EnemyBase(CharacterData::eEnemy04),
 m_hight(0.0f)
@@ -44,7 +46,7 @@ void Enemy04::Update()
 	/*if (CInput::GetState(0, CInput::ePush, CInput::eMouseL))
 	Damage(50);*/
 	if (CInput::GetState(0, CInput::ePush, CInput::eMouseR))
-		Damage(10);
+		TaskManager::GetInstance()->AddTask(new E4EffectEXAttack(m_pos));
 #endif // _DEBUG
 
 	m_pos_old = m_pos;
@@ -126,6 +128,7 @@ void Enemy04::EXAttack()
 			else if (m_pos.x < 150)
 				m_pos.x = 1150;
 			m_img.ChangeAnimation(Enemy04Anim::eAttackCat02);
+			TaskManager::GetInstance()->AddTask(new E4EffectEXAttack(m_pos));
 			m_hight = 0;
 			m_flip = !m_flip;
 			m_attack_cnt = 0;	
@@ -348,6 +351,17 @@ void Enemy04::DamageState()
 	if (m_hp <= 0&& m_damage_cnt <= 30)
 		m_img.ChangeAnimation(Enemy04Anim::eEDeath04);
 	m_damage_cnt--;
+}
+
+void Enemy04::HitCheck()
+{
+	if (CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack01) ||
+		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack02) ||
+		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack03) ||
+		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectLongAttack))
+	{
+		Damage(10);
+	}
 }
 
 

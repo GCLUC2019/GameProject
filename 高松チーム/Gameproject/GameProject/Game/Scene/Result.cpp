@@ -1,4 +1,5 @@
 #include "Result.h"
+#include "../GameProject/Game/Scene/Title.h"
 
 GameClear::GameClear() : Task(eGameClear)
 {
@@ -7,9 +8,17 @@ GameClear::GameClear() : Task(eGameClear)
 	
 }
 
+GameClear::~GameClear()
+{
+	TaskManager::KillAll();
+	TaskManager::GetInstance()->AddTask(new Title());
+}
+
 void GameClear::Update()
 {
-	
+	if (CInput::GetState(0, CInput::ePush, CInput::eButton2)) {
+		SetKill();
+	}
 }
 
 void GameClear::Draw()

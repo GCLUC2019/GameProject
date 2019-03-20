@@ -17,7 +17,6 @@
 GameScene::GameScene() : Task(eGameScene)
 {
 	new Resource();
-	SOUND("ikusa_japan2")->Play();
 	TaskManager::GetInstance()->AddTask(new Stage01());
 	TaskManager::GetInstance()->AddTask(new EnemyManager());
 	TaskManager::GetInstance()->AddTask(new Item(ItemList::eHyoutan,CVector2D(256,360)));
@@ -29,20 +28,23 @@ GameScene::GameScene() : Task(eGameScene)
 	TaskManager::GetInstance()->AddTask(new Player());
 	TaskManager::GetInstance()->AddTask(new UI());
     TaskManager::GetInstance()->AddTask(new CollisionBox(CVector2D(500, 300), CRect(-200, -1, 200, 1)));
-	
+	SOUND("ikusa_japan2")->Play(true);
 
 }
 
 GameScene::~GameScene()
 {
+	SOUND("ikusa_japan2")->Stop();
 	TaskManager::KillAll();
 	TaskManager::GetInstance()->AddTask(new GameScene2());
 }
 
 void GameScene::Update()
 {
-	if (g_game_data.m_dead_cnt >= 10)
+	if (g_game_data.m_dead_cnt >= 10 && m_go_flg == false) {
+		m_go_flg = true;
 		TaskManager::GetInstance()->AddTask(new GuidanceUI());
+	}
 
 	Task* p = TaskManager::FindObject(ePlayer);
 	Player* n = dynamic_cast<Player*>(p);

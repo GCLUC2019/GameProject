@@ -1,5 +1,6 @@
 #include "BossStage.h"
 #include "../../Game/GameData/GameData.h"
+#include "../GameProject/Game/Resource/Resource.h"
 BossStage::BossStage():Task(eBossStage)
 {
     m_img = COPY_RESOURCE("BossStage", CImage*);

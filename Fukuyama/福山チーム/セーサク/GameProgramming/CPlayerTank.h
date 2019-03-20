@@ -12,6 +12,8 @@ private:
 	CSound mSound;
 	//CRectangle mPlayer;
 public:
+	static CPlayerTank *spInstance;
+
 	//CPlayerTank()
 	//	:mPlayer()
 	//	,mGravityV(0)
