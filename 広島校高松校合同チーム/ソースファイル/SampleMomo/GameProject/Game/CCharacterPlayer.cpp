@@ -8,9 +8,10 @@
 
 static CCharacterPlayer* s_instance_p = nullptr;
 
-CCharacterPlayer::CCharacterPlayer() :CCharacter(eTaskIdPlayer, 0)
+CCharacterPlayer::CCharacterPlayer(CVector3D _pos) :CCharacter(eTaskIdPlayer, 0)
 {
 	s_instance_p = this;
+	
 	m_speed = PLAYER_SPEED;
 	//m_anim_p->SetAnim(ePlayerAnimIdIdle);
 	LoadAnimImage();
@@ -21,6 +22,10 @@ CCharacterPlayer::CCharacterPlayer() :CCharacter(eTaskIdPlayer, 0)
 	SetDrawAdjPos(CVector2D(-15, 20.0f));
 	SetRads(75,200,10);
 
+
+	//初期位置設定
+	SetPos(_pos);
+	SetPosOld(_pos);
 
 	//体力の設定
 	m_hit_point = 10.0f;
@@ -33,13 +38,16 @@ CCharacterPlayer::CCharacterPlayer() :CCharacter(eTaskIdPlayer, 0)
 	SetIsCalcScrollBaseObject(true);
 
 	//テスト用
-	m_equip_weapon_id = eWeaponGun;
-
+	//m_equip_weapon_id = eWeaponAxe;
+	//m_equip_endurance = ENDURANCE_MAX;
 }
 
 CCharacterPlayer::~CCharacterPlayer()
 {
-	s_instance_p = nullptr;
+	if (s_instance_p == this) {
+		s_instance_p = nullptr;
+	}
+	
 }
 
 void CCharacterPlayer::LoadAnimImage()
@@ -190,13 +198,13 @@ void CCharacterPlayer::LoadAnimImage()
 	anim_delay_array[0] = PLAYER_DOWN_ANIM_DELAY;
 	m_anim_p->SetAnimInfo(ePlayerAnimIdDowned, ePlayerAnimDown1, 1, anim_delay_array);
 	*/
-
 }
 
 void CCharacterPlayer::InputDestroyWeapon()
 {
+	if (m_is_freeze == true) return;
 	if (CInput::GetState(0, CInput::ePush, CInput::eButton10) && m_equip_weapon_id != -1) {
-		m_equip_weapon_id = -1;
+		PlayerDestroyEquip();
 	}
 }
 
@@ -205,11 +213,11 @@ void CCharacterPlayer::InputDash()
 	if (m_is_landing_action_now == true) return;
 	if (m_is_evasion == true) return;
 	if (m_is_down == true) return;
-
+	if (m_is_freeze == true) return;
 
 	if (CInput::GetState(0, CInput::eHold, CInput::eButton3)) {
 		m_is_dashing = true;
-		m_speed = 6.0f;
+		m_speed = 7.0f;
 	}
 }
 
@@ -222,10 +230,11 @@ void CCharacterPlayer::InputAttack()
 		if (m_is_evasion == true) return;
 		if (m_is_down == true) return;
 		if (m_is_attacking == true) return;
+		if (m_is_freeze == true) return;
 
 		m_is_early_input_attack = false;
-
-
+		m_is_range_attack = false;
+		m_is_hit_range_attack = false;
 
 		//攻撃した敵のデータを初期化
 		for (int i = 0; i < MEMORY_HIT_ATTACKED_ENEMY_MAX; i++) {
@@ -250,26 +259,27 @@ void CCharacterPlayer::InputAttack()
 		//もし移動キーを入力してるなら任意の攻撃を出す
 		if (CInput::GetState(0, CInput::eHold, CInput::eLeft) || (CInput::GetState(0, CInput::eHold, CInput::eRight))) {
 			m_attack_combo_count = 0;
-			printf("単発攻撃 (移動キー押しながらで任意の攻撃が出せる)\n");
+			//printf("単発攻撃 (移動キー押しながらで任意の攻撃が出せる)\n");
 		}
 		if (CInput::GetState(0, CInput::eHold, CInput::eUp) || (CInput::GetState(0, CInput::eHold, CInput::eDown))) {
 			m_attack_combo_count = 1;
-			printf("単発攻撃 (移動キー押しながらで任意の攻撃が出せる)\n");
+			//printf("単発攻撃 (移動キー押しながらで任意の攻撃が出せる)\n");
 		}
 
 		//もし空中にいるならフィニッシュモーションにする(ジャンプ攻撃)
 		if (m_is_landing == false) m_attack_combo_count = 2;
 
-		printf("m_attack_combo_count %d\n", m_attack_combo_count);
+		//printf("m_attack_combo_count %d\n", m_attack_combo_count);
 
 
 
 		//武器攻撃の場合の処理
 		m_is_weapon_attacking = false;
 
+		m_attack_weapon_id = m_equip_weapon_id;
 		//もし地上にいて武器をもっているなら武器攻撃を行う
 		if (m_is_landing == true) {
-			switch (m_equip_weapon_id) {
+			switch (m_attack_weapon_id) {
 			case eWeaponSpear:
 				m_attack_hit_frame_start = PLAYER_SPEAR_ATTACK_HIT_FRAME_START;
 				m_attack_hit_frame_end = PLAYER_SPEAR_ATTACK_HIT_FRAME_END;
@@ -278,6 +288,7 @@ void CCharacterPlayer::InputAttack()
 				m_attack_length = PLAYER_SPEAR_ATTACK_LENGTH;
 				m_anim_p->SetWillPlayAnim(ePlayerAnimIdSpearAttack);
 				m_is_weapon_attacking = true;
+				m_equip_endurance -= WEAPON_USE_ENDURANCE_DAMAGE;
 				break;
 			case eWeaponAxe:
 				m_attack_hit_frame_start = PLAYER_AXE_ATTACK_HIT_FRAME_START;
@@ -287,6 +298,7 @@ void CCharacterPlayer::InputAttack()
 				m_attack_length = PLAYER_AXE_ATTACK_LENGTH;
 				m_anim_p->SetWillPlayAnim(ePlayerAnimIdAxeAttack);
 				m_is_weapon_attacking = true;
+				m_equip_endurance -= WEAPON_USE_ENDURANCE_DAMAGE;
 				break;
 			case eWeaponGun:
 				m_attack_hit_frame_start = PLAYER_GUN_ATTACK_HIT_FRAME_START;
@@ -296,8 +308,12 @@ void CCharacterPlayer::InputAttack()
 				m_attack_length = PLAYER_GUN_ATTACK_LENGTH;
 				m_anim_p->SetWillPlayAnim(ePlayerAnimIdGunAttack);
 				m_is_weapon_attacking = true;
+				m_is_range_attack = true;
+				m_equip_endurance -= WEAPON_USE_ENDURANCE_DAMAGE;
 				break;
 			}
+
+			
 		}
 
 		//武器攻撃しない場合
@@ -379,6 +395,12 @@ void CCharacterPlayer::CharacterUpdate()
 	else m_anim_p->SetWillPlayAnim(ePlayerAnimIdIdle);
 
 
+	/*
+	if (m_is_in_screen == true) {
+		//printf("スクリーンの中にいる\n");
+	}
+	*/
+
 	ReserveAttacking();
 	
 	m_is_dashing = false;
@@ -402,6 +424,7 @@ void CCharacterPlayer::CharacterUpdate()
 	Landing();
 	Jumping();
 	Falling();
+	Freezing();
 
 	//Gravity();
 	
@@ -411,6 +434,9 @@ void CCharacterPlayer::CharacterUpdate()
 	
 	AfterDamageInvincible();
 	Attacking();
+
+
+	CheckEquipEndurance();
 
 	//CalcScroll();
 	AdjAnim();
@@ -428,6 +454,7 @@ void CCharacterPlayer::InputMove()
 	if (m_is_evasion == true) return;
 	if (m_is_down == true) return;
 	if (m_is_landing_action_now == true) return;
+	if (m_is_freeze == true) return;
 	
 	bool is_move = false;
 	if (CInput::GetState(0,CInput::eHold, CInput::eRight)) {
@@ -441,7 +468,7 @@ void CCharacterPlayer::InputMove()
 		m_is_flip = true;
 		is_move = true;
 		m_vec.x = -1 * m_speed;
-	}
+	} 
 
 	if (CInput::GetState(0, CInput::eHold, CInput::eUp)) {
 		ClearEarlyInput();
@@ -467,9 +494,9 @@ void CCharacterPlayer::InputJump()
 	if (m_is_attacking == true) return;
 	if (m_is_evasion == true) return;
 	if (m_is_down == true) return;
+	if (m_is_freeze == true) return;
 
-
-	if (CInput::GetState(0, CInput::eHold, CInput::eButton1) && m_is_jumping == false && m_is_landing == true) {
+	if (CInput::GetState(0, CInput::ePush, CInput::eButton1) && m_is_jumping == false && m_is_landing == true) {
 		ClearEarlyInput();
 		m_anim_p->SetWillPlayAnim(ePlayerAnimIdJump);
 		m_is_jumping = true;
@@ -519,7 +546,7 @@ void CCharacterPlayer::Landing()
 		m_landing_action_count = PLAYER_LANDING_ACTION_FRAME;
 		m_landing_anim_count = PLAYER_LANDING_ANIM_FRAME;
 		m_is_landing_action_now = true;
-		printf("着地\n");
+		//printf("着地\n");
 
 		//もし硬直時間が0ならfalseに
 		if (m_landing_action_count == 0.0) m_is_landing_action_now = false;
@@ -545,7 +572,7 @@ void CCharacterPlayer::ReserveAttacking()
 
 		//武器の場合の予備動作
 		if (m_is_weapon_attacking == true) {
-			switch (m_equip_weapon_id) {
+			switch (m_attack_weapon_id) {
 			case eWeaponSpear:
 				m_anim_p->SetWillPlayAnim(ePlayerAnimIdSpearAttackReserve);
 				break;
@@ -564,6 +591,7 @@ void CCharacterPlayer::ReserveAttacking()
 
 void CCharacterPlayer::InputEvasion()
 {
+	if (m_is_freeze == true) return;
 
 	int receive_input_time = PLAYER_RECEIVE_INPUT_EVASION_TIME;
 	
@@ -573,26 +601,56 @@ void CCharacterPlayer::InputEvasion()
 
 	if (m_receive_input_evasion_time_count_r > 0) m_receive_input_evasion_time_count_r -= CFPS::GetDeltaTime()  * GAME_BASE_FPS;
 	if (m_receive_input_evasion_time_count_l > 0) m_receive_input_evasion_time_count_l -= CFPS::GetDeltaTime()  * GAME_BASE_FPS;
+	if (m_receive_input_evasion_time_count_u > 0) m_receive_input_evasion_time_count_u -= CFPS::GetDeltaTime()  * GAME_BASE_FPS;
+	if (m_receive_input_evasion_time_count_d > 0) m_receive_input_evasion_time_count_d -= CFPS::GetDeltaTime()  * GAME_BASE_FPS;
+
+	if (CInput::GetState(0, CInput::ePush, CInput::eUp) && m_receive_input_evasion_time_count_u <= 0) {
+		m_receive_input_evasion_time_count_r = 0;
+		m_receive_input_evasion_time_count_l = 0;
+		m_receive_input_evasion_time_count_d = 0;
+		m_receive_input_evasion_time_count_u = receive_input_time;
+	}
+	else if (CInput::GetState(0, CInput::ePush, CInput::eUp) && m_receive_input_evasion_time_count_u > 0) {
+		m_will_evasion_dir_type = eEvasionFlipUp;
+		BeginEvasion();
+	}
+
+	if (CInput::GetState(0, CInput::ePush, CInput::eDown) && m_receive_input_evasion_time_count_d <= 0) {
+		m_receive_input_evasion_time_count_r = 0;
+		m_receive_input_evasion_time_count_l = 0;
+		m_receive_input_evasion_time_count_u = 0;
+		m_receive_input_evasion_time_count_d = receive_input_time;
+	}
+	else if (CInput::GetState(0, CInput::ePush, CInput::eDown) && m_receive_input_evasion_time_count_d > 0) {
+		m_will_evasion_dir_type = eEvasionFlipDown;
+		BeginEvasion();
+	}
 
 
 
 	if (CInput::GetState(0, CInput::ePush, CInput::eRight) && m_receive_input_evasion_time_count_r <= 0) {
+		m_receive_input_evasion_time_count_u = 0;
+		m_receive_input_evasion_time_count_d = 0;
 		m_receive_input_evasion_time_count_l = 0;
 		m_receive_input_evasion_time_count_r = receive_input_time;
 	}
 	else if (CInput::GetState(0, CInput::ePush, CInput::eRight) && m_receive_input_evasion_time_count_r > 0) {
 		m_is_input_evasion_flip = false;
+		m_will_evasion_dir_type = eEvasionFlipRight;
 		BeginEvasion();
 	}
 
 
 
 	if (CInput::GetState(0, CInput::ePush, CInput::eLeft) && m_receive_input_evasion_time_count_l <= 0) {
+		m_receive_input_evasion_time_count_u = 0;
+		m_receive_input_evasion_time_count_d = 0;
 		m_receive_input_evasion_time_count_r = 0;
 		m_receive_input_evasion_time_count_l = receive_input_time;
 	}
 	else if (CInput::GetState(0, CInput::ePush, CInput::eLeft) && m_receive_input_evasion_time_count_l > 0) {
 		m_is_input_evasion_flip = true;
+		m_will_evasion_dir_type = eEvasionFlipLeft;
 		BeginEvasion();
 	}
 
@@ -620,6 +678,8 @@ void CCharacterPlayer::BeginEvasion()
 	//回避予備動作中だが入力した方角が違う場合なにもしない
 	if (m_is_evasion == true && m_evasion_reserve_count > 0 && m_is_flip != m_is_input_evasion_flip) return;
 
+	if (m_is_freeze == true) return;
+
 	//空中にいるなら回避しない
 	if (m_is_landing == false) return;
 	//攻撃をやめる
@@ -628,15 +688,23 @@ void CCharacterPlayer::BeginEvasion()
 
 
 	//DEBUG_PRINT("回避開始\n");
+	m_evasion_dir_type = m_will_evasion_dir_type;
 	m_receive_input_evasion_time_count_l = 0;
 	m_receive_input_evasion_time_count_r = 0;
+	m_receive_input_evasion_time_count_u = 0;
+	m_receive_input_evasion_time_count_d = 0;
 	m_is_evasion = true;
 	m_evasion_count = PLAYER_EVASION_FRAME;
 	m_is_input_evasion = false;
 	m_evasion_reserve_count = 0;
 	m_is_landing_action_now = false;
 
-	m_is_flip = m_is_input_evasion_flip;
+
+	
+	if(m_evasion_dir_type == eEvasionFlipLeft || m_evasion_dir_type == eEvasionFlipRight) m_is_flip = m_is_input_evasion_flip;
+	
+
+
 
 	//もし着地モーションから派生した場合冒頭モーションの短縮を行う
 	if (m_anim_p->GetWillPlayAnim() == ePlayerAnimIdLand) {
@@ -666,19 +734,19 @@ void CCharacterPlayer::DoingEvasion()
 	if (m_evasion_reserve_count > 0.0) {
 		m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionReserve);
 		m_evasion_reserve_count -= CFPS::GetDeltaTime() * GAME_BASE_FPS;
-		printf("m_evasion_reserve_count %lf\n", CFPS::GetDeltaTime() * GAME_BASE_FPS);
+		//printf("m_evasion_reserve_count %lf\n", CFPS::GetDeltaTime() * GAME_BASE_FPS);
 		if (m_evasion_reserve_count <= 0) {
 			m_evasion_reserve_count = 0;
 			m_is_evasion = false;
-			SetInvincible(false);
-			printf("回避予備動作終了\n");
+			//SetInvincible(false);
+			//printf("回避予備動作終了\n");
 		}
 	}
 	else if (m_evasion_count <= 0.0) {
 		m_is_fast_evasion = false;
 		m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionReserve);
 		m_evasion_reserve_count = PLAYER_EVASION_RESERVE_FRAME;
-		printf("回避予備動作開始\n");
+		//printf("回避予備動作開始\n");
 	}
 	else {
 		
@@ -687,16 +755,25 @@ void CCharacterPlayer::DoingEvasion()
 		if (m_evasion_count <= PLAYER_EVASION_FRAME - PLAYER_EVASION_MOVE_START_FRAME) {
 			const double moving_vec = PLAYER_EVASION_MOVE_VEC;
 			//向きに応じて移動
-			if (m_is_flip == false) {
+
+			switch (m_evasion_dir_type) {
+			case eEvasionFlipRight:
 				m_vec.x = moving_vec;
-			}
-			else if (m_is_flip == true) {
+				break;
+			case eEvasionFlipLeft:
 				m_vec.x = -moving_vec;
+				break;
+			case eEvasionFlipUp:
+				m_vec.z = -moving_vec / 2.0;
+				break;
+			case eEvasionFlipDown:
+				m_vec.z = moving_vec / 2.0;
+				break;
 			}
 		}
 
 		//DEBUG_PRINT("回避 %d\n", m_evasion_count);
-		SetInvincible(true);
+		//SetInvincible(true);
 
 		if(m_is_fast_evasion == true) m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionFast);
 		else m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasion);
@@ -717,12 +794,10 @@ void CCharacterPlayer::DoingDown()
 	else m_anim_p->SetWillPlayAnim(ePlayerAnimIdDowned);
 
 
-	if (m_down_count <= 0.0) {
-		m_is_down  = false;
-		
-		//ゲームオーバー呼び出しとゲームシーンオブジェクトの削除
-		//SetIsDelete();
-		CGameScene::GetInstance()->GameOver();
+	if (m_down_count <= 0.0 && m_is_sended_miss == false) {
+		//m_is_down  = false;
+		m_is_sended_miss = true;
+		CGameScene::GetInstance()->Miss();
 
 	}
 }
@@ -737,12 +812,7 @@ void CCharacterPlayer::Attacking()
 
 	bool is_keep_finish_attack = false;
 	//空中にいてなおかつフィニッシュ攻撃なら着地するまでは攻撃判定を継続させる
-	if (m_is_landing == false && m_attack_combo_count == 2) {
-		is_keep_finish_attack = true;
-		//printf("is_keeep!\n");
-	}
-
-
+	if (m_is_landing == false && m_attack_combo_count == 2) is_keep_finish_attack = true;
 
 	if (m_attacking_count < 0 && is_keep_finish_attack == false) {
 
@@ -750,13 +820,10 @@ void CCharacterPlayer::Attacking()
 			m_memory_hit_attacked_enemy_p[i] = nullptr;
 		}
 		m_memory_hit_attacked_enemy_num = 0;
-		printf("メモリーリセット\n");
-
+		
 		m_is_attacking = false;
 
 		m_attack_reserve_count = PLAYER_ATTACK_RESERVE_ANIM_FRAME;
-		printf("予備動作再生\n");
-		//予備動作を再生
 		switch (m_attack_combo_count) {
 		case 0:
 			m_anim_p->SetWillPlayAnim(ePlayerAnimIdAttackReserve);
@@ -770,7 +837,7 @@ void CCharacterPlayer::Attacking()
 		}
 
 		if (m_is_weapon_attacking == true) {
-			switch (m_equip_weapon_id) {
+			switch (m_attack_weapon_id) {
 			case eWeaponSpear:
 				m_anim_p->SetWillPlayAnim(ePlayerAnimIdSpearAttackReserve);
 				break;
@@ -782,94 +849,18 @@ void CCharacterPlayer::Attacking()
 				break;
 			}
 		}
-
 		return;
 	}
-	else if (m_attacking_count <= m_attack_total_frame - m_attack_hit_frame_start && m_attacking_count > m_attack_total_frame - m_attack_hit_frame_end 
+
+	//攻撃判定が出現するフレームの場合の処理
+	if (m_attacking_count <= m_attack_total_frame - m_attack_hit_frame_start && m_attacking_count > m_attack_total_frame - m_attack_hit_frame_end
 		|| is_keep_finish_attack == true && m_attacking_count <= m_attack_total_frame - m_attack_hit_frame_start) {
-		//攻撃判定を発生させる。
-		//printf("攻撃判定中\n");
-
-		//ローカル変数定義
-		register const CVector3D& player_pos = GetPos();//プレイヤーの位置
-		
-		register CVector3D length;//距離ベクトル(位置の差)を計算
-		register CVector3D length_abs;//絶対距離
-		register const CVector3D& attack_length = m_attack_length; //攻撃範囲
-
-		//生成されている全てのエネミーのポインタを取得
-		Task** enemy_array = TaskManager::GetInstance()->FindTaskArray(eTaskIdEnemy);
-
-		//カウンタ
-		register int i = 0;
-
-		//敵のポインタ取得用
-		register CCharacter* enemy_p;
-
-		while (true) {
-			if (enemy_array[i] == nullptr) {
-				break;
-			}
-
-			enemy_p = dynamic_cast<CCharacter*>(enemy_array[i]);
-			if (enemy_p == nullptr) {
-				i++;
-				continue;
-			}
-
-			//位置関係を取得
-
-			//敵のポジションを取得
-			register const CVector3D& enemy_pos = enemy_p->GetPos();//敵の位置
-			
-
-
-			//距離ベクトル(位置の差)を計算
-			length = enemy_pos - player_pos;
-
-			//絶対距離を計算
-			length_abs.x = abs(length.x);
-			length_abs.y = abs(length.y);
-			length_abs.z = abs(length.z);
-			
-			//敵が左側にいて自分が左向き
-			//もしくは敵が右側にいて、自分が右向きなら
-			if (length.x <= 0.0f && m_is_flip == true
-				|| length.x >= 0.0f && m_is_flip == false) {
-				//DEBUG_PRINT("length.x %lf length.y %lf length.z %lf \n", length.x, length.y, length.z);
-
-
-
-				printf("attack.x %lf attack.y %lf attack.z %lf\n", attack_length.x, attack_length.y, attack_length.z);
-				//攻撃範囲内に敵がいるなら
-				if (length_abs.x <= attack_length.x&& length_abs.y <= attack_length.y&&length_abs.z <= attack_length.z) {
-					
-					
-					register bool is_aready_hit = false;
-					//当たっているので攻撃判定が既にされているオブジェクトかどうかチェック
-					for (int i = 0; i < m_memory_hit_attacked_enemy_num; i++) {
-						if (m_memory_hit_attacked_enemy_p[i] == enemy_p) {
-							is_aready_hit = true;
-							break;
-						}
-					}
-
-
-					//まだ攻撃を当たった扱いになってないなら攻撃判定を行う
-					if (is_aready_hit == false) {
-						enemy_p->ReceiveAttack();
-						*enemy_p->GetHitPointPointer() -= PLAYER_ATTACK_POWER;
-						m_memory_hit_attacked_enemy_p[m_memory_hit_attacked_enemy_num++] = enemy_p;
-					}
-				}
-
-			}
-
-			i++;
-		}
-		free(enemy_array);
-		
+		AttackingHitFrame();
 	}
+	
+	
+		
+
 
 	switch (m_attack_combo_count) {
 	case 0:
@@ -884,9 +875,9 @@ void CCharacterPlayer::Attacking()
 	}
 
 
-	
+
 	if (m_is_weapon_attacking == true) {
-		switch (m_equip_weapon_id) {
+		switch (m_attack_weapon_id) {
 		case eWeaponSpear:
 			m_anim_p->SetWillPlayAnim(ePlayerAnimIdSpearAttack);
 			break;
@@ -899,6 +890,121 @@ void CCharacterPlayer::Attacking()
 		}
 	}
 
+}
+
+
+//攻撃判定が発生するフレームの場合呼ばれる
+void CCharacterPlayer::AttackingHitFrame()
+{
+	//ローカル変数定義
+	register const CVector3D& player_pos = GetPos();//プレイヤーの位置
+
+	register CVector3D length;//距離ベクトル(位置の差)を計算
+	register CVector3D length_abs;//絶対距離
+	register const CVector3D& attack_length = m_attack_length; //攻撃範囲
+
+															   //生成されている全てのエネミーのポインタを取得
+	register Task** enemy_array = TaskManager::GetInstance()->FindTaskArray(eTaskIdEnemy);
+
+	if (enemy_array != nullptr) {
+
+		register CCharacter* range_attack_enemy_p = nullptr;
+		register double range_target_enemy_length;
+
+		//カウンタ
+		register int i = 0;
+
+		//敵のポインタ取得用
+		CCharacter* enemy_p = nullptr;
+
+		while (true) {
+			//printf("攻撃用ループ\n");
+			if (enemy_array[i] == nullptr) {
+				break;
+			}
+
+			enemy_p = dynamic_cast<CCharacter*>(enemy_array[i]);
+			if (enemy_p == nullptr) {
+				i++;
+				continue;
+			}
+
+			//位置関係を取得
+
+			//敵のポジションを取得
+			register const CVector3D& enemy_pos = enemy_p->GetPos();//敵の位置
+
+
+
+																	//距離ベクトル(位置の差)を計算
+			length = enemy_pos - player_pos;
+
+			//絶対距離を計算
+			length_abs.x = abs(length.x);
+			length_abs.y = abs(length.y);
+			length_abs.z = abs(length.z);
+
+			//敵が左側にいて自分が左向き
+			//もしくは敵が右側にいて、自分が右向きなら
+			if (length.x <= 0.0f && m_is_flip == true
+				|| length.x >= 0.0f && m_is_flip == false) {
+				//DEBUG_PRINT("length.x %lf length.y %lf length.z %lf \n", length.x, length.y, length.z);
+
+
+
+				//printf("attack.x %lf attack.y %lf attack.z %lf\n", attack_length.x, attack_length.y, attack_length.z);
+				//攻撃範囲内に敵がいるなら
+				if (length_abs.x <= attack_length.x&& length_abs.y <= attack_length.y&&length_abs.z <= attack_length.z) {
+
+
+					register bool is_aready_hit = false;
+					//当たっているので攻撃判定が既にされているオブジェクトかどうかチェック
+					for (int i = 0; i < m_memory_hit_attacked_enemy_num; i++) {
+						if (m_memory_hit_attacked_enemy_p[i] == enemy_p) {
+							is_aready_hit = true;
+							break;
+						}
+					}
+
+
+					//まだ攻撃を当たった扱いになってないなら攻撃判定を行う
+					if (is_aready_hit == false && m_is_range_attack == false) {
+						enemy_p->ReceiveAttack();
+						*enemy_p->GetHitPointPointer() -= m_attack_power;
+						m_memory_hit_attacked_enemy_p[m_memory_hit_attacked_enemy_num++] = enemy_p;
+					}
+					else if (is_aready_hit == false && m_is_range_attack == true) {
+
+						double length_enemy = length_abs.x + length_abs.y + length_abs.z;
+						if (range_attack_enemy_p == nullptr) {
+							range_attack_enemy_p = enemy_p;
+							range_target_enemy_length = length_enemy;
+						}
+						else if (range_attack_enemy_p != nullptr && range_target_enemy_length > length_enemy) {
+							range_attack_enemy_p = enemy_p;
+							range_target_enemy_length = length_enemy;
+						}
+					}
+				}
+			}
+
+			//インクリメント
+			i++;
+		}
+
+		//ループ終了後(ブロックがわかりにくいのでリファクタリングの余地あり)
+		if (m_is_range_attack == true && m_is_hit_range_attack == false) {
+			if (range_attack_enemy_p != nullptr) {
+				range_attack_enemy_p->ReceiveAttack();
+				*range_attack_enemy_p->GetHitPointPointer() -= m_attack_power;
+				m_memory_hit_attacked_enemy_p[m_memory_hit_attacked_enemy_num++] = range_attack_enemy_p;
+				m_is_hit_range_attack = true;
+			}
+		}
+
+		free(enemy_array);
+	}
+	
 }
 
 void CCharacterPlayer::Jumping()
@@ -1099,6 +1205,25 @@ void CCharacterPlayer::ReceiveAttack()
 	//無敵時間点灯
 	SetIsBlindDraw(true);
 	m_after_damage_invincible_count = PLAYER_AFTER_DAMAGE_INVINCIBLE;
+}
+
+void CCharacterPlayer::CheckEquipEndurance()
+{
+	if (m_equip_weapon_id == -1) return;
+	//printf("m_equip_endurance %lf\n", m_equip_endurance);
+	if (m_equip_endurance <= 0.0) {
+		PlayerDestroyEquip();
+	}
+}
+
+void CCharacterPlayer::Freezing()
+{
+	if (m_is_freeze == false) return;
+	m_freeze_count -= CFPS::GetDeltaTime() * GAME_BASE_FPS;
+	if (m_freeze_count <= 0) {
+		m_is_freeze = false;
+	}
+	m_anim_p->SetWillPlayAnim(ePlayerAnimIdDown);
 }
 
 CCharacterPlayer * CCharacterPlayer::GetInstance()

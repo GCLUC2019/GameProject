@@ -51,7 +51,7 @@ void CAnimation::ReadAnimDataFile(char * _file_path)
 	fclose(fp);
 
 
-	printf("%s", file_data);
+	//printf("%s", file_data);
 
 
 

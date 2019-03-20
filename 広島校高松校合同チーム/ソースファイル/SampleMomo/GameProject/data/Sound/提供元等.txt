@@ -1,0 +1,4 @@
+//表記不要なもの
+ファイル名:boss_bgm 曲名:～ペンギンの長～ 用途:ボス戦BGM  URL: https://dova-s.jp/bgm/play10064.html 作者:Sparrow Tune
+ファイル名:stage_clear_bgm 曲名:Like A Dog 用途:ステージクリアイベントBGM  URL: https://dova-s.jp/bgm/play10678.html 作者:thaiK
+

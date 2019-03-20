@@ -3,7 +3,7 @@
 #include "../Global.h"
 
 //ボスの初期表示位置
-#define DEF_BOSS_POS CVector3D(1000, -2060, 500);
+#define DEF_BOSS_POS CVector3D(1100, -1300, 500);
 #define DEF_BOSS_VEC CVector3D(0, 0, 0);
 #define DEF_SAHDOW_POS CVector2D(-30.0, -90.0);
 
@@ -12,7 +12,7 @@
 #define BOSS_SHADOW_SIZE CVector2D(300, 50)
 
 //ボスのHP
-#define BOSS_HP 10.0f
+#define BOSS_HP 20.0f
 
 //起動誤差
 #define RANGE (150)
@@ -31,10 +31,10 @@
 #define AWAY_DIST 500
 
 //各状態の限界時間
-#define IDLE_LIMIT 120
-#define WALK_LIMIT 180
-#define RUN_LIMIT  75
-#define AWAY_LIMIT  75
+#define IDLE_LIMIT 60
+#define WALK_LIMIT 60
+#define RUN_LIMIT  60
+#define AWAY_LIMIT  60
 #define DAMAGE_LIMIT 60
 
 //速度
@@ -44,12 +44,15 @@
 //攻撃範囲
 #define ATTACK1_RANGE_BITE 400
 #define ATTACK1_RANGE_BARK 500
-#define EX1_RANGE_RASH 100
+#define EX1_RANGE_RASH 300
 
 //攻撃時間
 #define BITE_TIME 30.0
 #define BARK_TIME 50.0
 #define RASH_TIME 250.0
+
+//吠える攻撃の硬直時間
+#define BARK_FREEZE_TIME 180.0
 
 //跳躍力
 #define JUMP_POWER 40
@@ -193,7 +196,10 @@ public:
 	//初期化
 	void DefalutSet();
 
+	void AdjAnim();
+
 	void CharacterBeforeCollisionCheck();
+	void CharacterOutHitPoint();
 };
 
 

@@ -147,6 +147,7 @@ void CCharacter::CheckHitPoint()
 	}
 }
 
+
 void CCharacter::GameSceneObjectDraw()
 {
 	/*
