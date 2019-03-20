@@ -128,7 +128,7 @@ void CEnemy2::OnCollision(CCollider*p){
 			if (mHpBar.mHp <= 0.0f){
 				CItem*Item = new CItem();   //¬ì
 				Item->mTaskTag = EITEM;
-				Item->mPosition = mCanon.mMatrix*CVector2(0.0f, 0.0f);
+				Item->mPosition = mCanon.mMatrix*CVector2(-200.0f, 0.0f);
 				CTaskManager::Get()->Add(Item);
 			//	mEnabled = false;
 			//	CMain::mSceneTag = CScene::EWIN;
