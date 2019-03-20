@@ -3,7 +3,6 @@
 #ifndef CITEM_H
 #define CITEM_H
 
-#include "CRectangle.h"
 #include "Task.h"
 #include "CCollider.h"
 #include "CStdafx.h"

@@ -49,9 +49,9 @@ CTexture CPlayerTank::mTexImage2;
 void CPlayerTank::Init(){
 	mGravityV = 0;
 	AttackSide = 1;
-	mTexImage.Load("Player-1.tga");
+	mTexImage.Load("Player-2.tga");
 	mTexImage2.Load("P-ya.tga");
-	CRectangle::SetTexture(&mTexture, 602, 688, -420, -358);
+	CRectangle::SetTexture(&mTexImage, 4, 95, -238, -152);
 
 	p_Jump = 0;
 	JumpCount = 0;
@@ -87,7 +87,7 @@ void CPlayerTank::Init(){
 
 	mpBoxCollider->mSize.x = 40.0f;
 	mpBoxCollider->mSize.y = 44.0f;
-	SetVertex(-83.0f, 83.0f, -60.0f, 60.0f);
+	SetVertex(-70.0f, 70.0f, -60.0f, 60.0f);
 	mRotation = -90.0f;
 	mpBoxCollider->mpTask = this;
 
@@ -96,7 +96,7 @@ void CPlayerTank::Init(){
 
 	CCollisionManager::Get()->Add(mpBoxCollider);
 	mTaskTag = EPLAYERTANK;
-	mHpBar.SetHpBar(this, CVector2(0.0f, -35.0f), CVector2(50.0f, 8.0f), mColor, 100, 100);
+	mHpBar.SetHpBar(this, CVector2(0.0f, -50.0f), CVector2(50.0f, 8.0f), mColor, 100, 100);
 }
 
 void CPlayerTank::Update(){
@@ -136,40 +136,39 @@ void CPlayerTank::Update(){
 	}
 
 	if (AttackSide == 0){
-
 		if (EffectCount > 0){
-			CRectangle::SetTexture(&mTexImage, 129, 212, -575, -517);
+			CRectangle::SetTexture(&mTexImage, 312, 413, -391, -303);
 			EffectCount--;
 		}
 		if (EffectCount == 0){
-			CRectangle::SetTexture(&mTexImage, 0, 84, -592, -517);
+			CRectangle::SetTexture(&mTexImage, 4, 95, -238, -152);
 		}
 		if (EffectCount2 > 0){
-			CRectangle::SetTexture(&mTexImage, 427, 531, -451, -362);
+			CRectangle::SetTexture(&mTexImage, 454, 549, -231, -150);
 			EffectCount2--;
 		}
 		if (EffectCount == 0){
 			if (EffectCount2 == 0){
-				CRectangle::SetTexture(&mTexImage, 0, 84, -592, -517);
+				CRectangle::SetTexture(&mTexImage, 4, 95, -238, -152);
 			}
 		}
 	}
 
 	if (AttackSide == 1){
 		if (EffectCount > 0){
-			CRectangle::SetTexture(&mTexImage, 129, 212, -517, -575);
+			CRectangle::SetTexture(&mTexImage, 312, 413, -303, -391);
 			EffectCount--;
 		}
 		if (EffectCount == 0){
-			CRectangle::SetTexture(&mTexImage, 0, 84, -517, -592);
+			CRectangle::SetTexture(&mTexImage, 4, 95, -152, -238);
 		}
 		if (EffectCount2 > 0){
-			CRectangle::SetTexture(&mTexImage, 427, 531, -362, -451);
+			CRectangle::SetTexture(&mTexImage, 454, 549, -150, -231);
 			EffectCount2--;
 		}
 		if (EffectCount == 0){
 			if (EffectCount2 == 0){
-				CRectangle::SetTexture(&mTexImage, 0, 84, -517, -592);
+				CRectangle::SetTexture(&mTexImage, 4, 95, -152, -238);
 			}
 		}
 	}
@@ -193,7 +192,7 @@ void CPlayerTank::Update(){
 				AttackSide = 0;
 				//if (x % 30 < 15) {
 				//¶‰æ‘œ1
-				CRectangle::SetTexture(&mTexImage, 0, 84, -592, -517);
+				CRectangle::SetTexture(&mTexImage, 4, 95, -238, -152);
 				//}
 			}
 			if (GetKeyState('D') & 0x8000){
@@ -201,7 +200,7 @@ void CPlayerTank::Update(){
 				AttackSide = 1;
 				//if (x % 30 < 15) {
 				//¶‰æ‘œ1
-				CRectangle::SetTexture(&mTexImage, 0, 84, -517, -592);
+				CRectangle::SetTexture(&mTexImage, 4, 95, -152, -238);
 				//}
 			}
 			if (p_Jump == 0){

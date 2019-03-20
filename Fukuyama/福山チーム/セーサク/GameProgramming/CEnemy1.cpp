@@ -10,11 +10,12 @@
 #include "CSceneGame.h"
 #include "CMain.h"
 
-#define FIREINTERVER_E 20
-#define ATTACKINTERVAR_E 28
-#define CBULLET_LIFE 25
+#define FIREINTERVER_E 40
+#define ATTACKINTERVAR_E 10
+#define CBULLET_LIFE 10
 
-#define EFFECT_COUNT 28
+#define EFFECT_COUNT 40
+#define DELETE_COUNT 210
 
 extern CPlayerTank*Tank;
 
@@ -28,6 +29,8 @@ void CEnemy1::Init(){
 
 	EffectCount = 0;
 	AttackSide = 1;
+	DeleteCount = DELETE_COUNT;
+
 
 	mFireIntervar = FIREINTERVER_E;
 	mAttackIntervar = ATTACKINTERVAR_E;
@@ -70,45 +73,44 @@ void CEnemy1::Update(){
 	if (AttackSide == 0){
 
 		if (EffectCount > 0){
-			CRectangle::SetTexture(&mTexImage, 147, 218, -73, -1);
+			SetVertex(-48.0f, 48.0f, -55.0f, 55.0f);
+			CRectangle::SetTexture(&mTexImage, 147, 207, -69, -1);
 			EffectCount--;
 		}
 		if (EffectCount == 0){
-			CRectangle::SetTexture(&mTexImage, 132, 209, -291, -231);
+			SetVertex(-53.0f, 53.0f, -40.0f, 40.0f);
+			CRectangle::SetTexture(&mTexImage, 139, 207, -175, -120);
 		}
 	}
 
 	if (AttackSide == 1){
 		if (EffectCount > 0){
-			CRectangle::SetTexture(&mTexImage, 147, 218, -1, -73);
+			SetVertex(-48.0f, 48.0f, -55.0f, 55.0f);
+			CRectangle::SetTexture(&mTexImage, 147, 207, -1, -69);
 			EffectCount--;
 		}
 		if (EffectCount == 0){
-			CRectangle::SetTexture(&mTexImage, 132, 209, -231, -291);
+			SetVertex(-53.0f, 53.0f, -40.0f, 40.0f);
+			CRectangle::SetTexture(&mTexImage, 139, 207, -120, -175);
 		}
 	}
 
 	if (EffectCount == 0){
-		if (mAttackIntervar == 28){
-			if (mHpBar.mHp >= 1){
-				if (dot > 0.0f){
-					EnemyDown2();
-					CRectangle::SetTexture(&mTexImage, 132, 209, -231, -291);
-				}
-				if (dot < 0.0f){
-					EnemyUp2();
-					CRectangle::SetTexture(&mTexImage, 132, 209, -291, -231);
-				}
-				if (dot2<0.0f){
-					EnemyLeft();
-					CRectangle::SetTexture(&mTexImage, 132, 209, -291, -231);
-					AttackSide = 0;
-				}
-				if (dot2>0.0f){
-					EnemyRight();
-					CRectangle::SetTexture(&mTexImage, 132, 209, -231, -291);
-					AttackSide = 1;
-				}
+		//if (mAttackIntervar == ATTACKINTERVAR_E){
+		if (mHpBar.mHp >= 1){
+			if (dot > 0.0f){
+				EnemyDown2();
+			}
+			if (dot < 0.0f){
+				EnemyUp2();
+			}
+			if (dot2<0.0f){
+				EnemyLeft();
+				AttackSide = 0;
+			}
+			if (dot2>0.0f){
+				EnemyRight();
+				AttackSide = 1;
 			}
 		}
 	}
@@ -117,30 +119,33 @@ void CEnemy1::Update(){
 	if (mFireIntervar>0){
 		mFireIntervar--;
 	}
-	if (mAttackIntervar < 28){
+	if (mAttackIntervar < ATTACKINTERVAR_E){
 		mAttackIntervar--;
 	}
-	if (mHpBar.mHp >= 1){
-		if (mAttackIntervar <= 0){
-			if (mFireIntervar <= 0){
-				mAttackIntervar = ATTACKINTERVAR_E;
-				mFireIntervar = FIREINTERVER_E;
-				CBullet*bullet = new CBullet();
-				bullet->mTaskTag = EENEMYBULLET;
-				bullet->mLife = CBULLET_LIFE;
-				if (dot2 < 0.0f){
-					bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, -25.0f);
-					bullet->mForward = bullet->mPosition - mCanon.mMatrix*CVector2(0.0f, -24.0f);
+	if (EffectCount>20){
+		if (mHpBar.mHp >= 1){
+			if (mAttackIntervar <= 0){
+				if (mFireIntervar <= 0){
+					mAttackIntervar = ATTACKINTERVAR_E;
+					mFireIntervar = FIREINTERVER_E;
+					CBullet*bullet = new CBullet();
+					bullet->mTaskTag = EENEMYBULLET;
+					bullet->mLife = CBULLET_LIFE;
+					if (dot2 < 0.0f){
+						bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, -24.0f);
+						bullet->mForward = bullet->mPosition - mCanon.mMatrix*CVector2(0.0f, -24.0f);
+					}
+					if (dot2 > 0.0f){
+						bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, 24.0f);
+						bullet->mForward = bullet->mPosition - mCanon.mMatrix*CVector2(0.0f, 24.0f);
+					}
+					bullet->SetColor(mColor[0], mColor[0], mColor[0], mColor[0]);
+					CTaskManager::Get()->Add(bullet);
 				}
-				if (dot2 > 0.0f){
-					bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, 25.0f);
-					bullet->mForward = bullet->mPosition - mCanon.mMatrix*CVector2(0.0f, 24.0f);
-				}
-				bullet->SetColor(mColor[0], mColor[0], mColor[0], mColor[0]);
-				CTaskManager::Get()->Add(bullet);
 			}
 		}
 	}
+
 
 	if (Enemy1->mPosition.y >= -20.0f){
 		Enemy1->mPosition.y = -21.0f;
@@ -154,9 +159,13 @@ void CEnemy1::Update(){
 	if (Enemy1->mPosition.x <= -370.0f){
 		Enemy1->mPosition.x = -369.0f;
 	}
-	if (mHpBar.mHp == 0){
+	if (mHpBar.mHp <= 0){
 		SetVertex(-45.0f, 45.0f, -70.0f, 70.0f);
 		CRectangle::SetTexture(&mTexImage, 300, 359, -200, -100);
+		DeleteCount--;
+	}
+	if (DeleteCount <= 0){
+		mEnabled = false;
 	}
 }
 
@@ -193,7 +202,7 @@ void CEnemy1::OnCollision(CCollider*p){
 			//p->mPosition = mPosition;
 			//mPosition = mPosition + mCollider->mAdjust;
 			p->mPosition = mPosition;
-			if (mAttackIntervar == 28){
+			if (mAttackIntervar == ATTACKINTERVAR_E){
 				mAttackIntervar -= 1;
 			}
 			if (EffectCount == 0){
