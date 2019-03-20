@@ -9,12 +9,12 @@
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////お頭クラス/////////////////////////////////////////
+/////////////////////////////////////////頭クラス/////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 class BossHead :public EnemyBase {
 private:
-	enum Head{
+	enum Head {
 		eIdle,
 		eUp,
 		eFireAttackDown,
@@ -23,9 +23,8 @@ private:
 		eHeadAttack,
 	};
 	CImage m_shadow;//影
-	
+
 	CVector2D m_player_pos; //プレイヤーの座標を格納する
-	CVector2D m_shadow_pos;//影の座標
 
 	CRect m_rect2;//待機時の矩形
 
@@ -39,12 +38,15 @@ private:
 	int m_idle_cnt;//待機状態でいる時間
 	int m_shadow_size;
 
+	float m_shadow_y;//影のy座標
+	float m_shadow_x;
+
 
 protected:
 
 
 public:
-	BossHead(const CVector2D &player_pos,const int state);
+	BossHead(const CVector2D &player_pos, const int state);
 
 	~BossHead();
 
@@ -81,6 +83,7 @@ private:
 		eLazerAttack,
 
 	};
+	CImage m_shadow;//影
 
 	CVector2D m_player_pos; //プレイヤーの座標を格納する
 
@@ -95,6 +98,10 @@ private:
 	float m_rot;//円周率
 	float m_rot2;//円周率
 	float m_r;  //半径
+
+	int m_shadow_size;
+	float m_shadow_y;//影のy座標
+	float m_shadow_x;
 
 	bool m_anim_flag;//アニメーションフラグ
 	bool m_move_flag;//移動フラグ
@@ -132,6 +139,8 @@ private:
 		eHandAttack,
 
 	};
+	CImage m_shadow;//影
+
 	CVector2D m_center;
 	CVector2D m_player_pos; //プレイヤーの座標を格納する
 
@@ -144,6 +153,9 @@ private:
 	float m_rot;//円周率
 	float m_rot2;//円周率
 	float m_r;  //半径
+	int m_shadow_size;
+	float m_shadow_y;//影のy座標
+	float m_shadow_x;
 
 	bool m_slash_flag;//攻撃時
 
@@ -171,19 +183,23 @@ public:
 /////////////////////////////////////////尻尾クラス/////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
-class BossTail :public EnemyBase{
+class BossTail :public EnemyBase {
 private:
-	enum  Tail{
+	enum  Tail {
 		eIdle,
 		eUp,
 		eDown,
 		eTailAttack,
 	};
 	CVector2D m_player_pos; //攻撃するときに使うプレイヤーの座標を格納する
+	CImage m_shadow;//影
 
 	int m_state;
 	int m_anim_cnt;
 
+	int m_shadow_size;
+	float m_shadow_y;//影のy座標
+	float m_shadow_x;
 
 public:
 
