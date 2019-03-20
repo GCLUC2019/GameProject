@@ -6,7 +6,7 @@
 
 CGameSceneUI::CGameSceneUI() :CObject(0, DP_UI)
 {
-	m_ui_pos = CVector2D(0, 450);
+	m_ui_pos = CVector2D(0,-20);
 	m_ui_size = CVector2D(518,332);
 
 	m_hp_frame_image_p = GET_RESOURCE("HP_Bar_Frame", CImage*);

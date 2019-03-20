@@ -359,8 +359,8 @@ void CCharacterPlayer::InputAttack()
 		}
 
 		
-
-		
+		if (m_is_range_attack == false) CSound::GetInstance()->GetSound("SE_Slash1")->Play();
+		else if (m_is_range_attack == true) CSound::GetInstance()->GetSound("SE_Shot1")->Play();
 
 		//合計フレーム記録
 		m_attack_total_frame = m_attacking_count;
@@ -503,6 +503,7 @@ void CCharacterPlayer::InputJump()
 		m_jumping_count = 30;
 		m_vec.y = -30.0f;
 		m_is_landing = false;
+		CSound::GetInstance()->GetSound("SE_Jump")->Play();
 	}
 }
 
@@ -548,6 +549,7 @@ void CCharacterPlayer::Landing()
 		m_is_landing_action_now = true;
 		//printf("着地\n");
 
+		CSound::GetInstance()->GetSound("SE_Landing")->Play();
 		//もし硬直時間が0ならfalseに
 		if (m_landing_action_count == 0.0) m_is_landing_action_now = false;
 	}
@@ -1050,6 +1052,7 @@ void CCharacterPlayer::CharacterOutHitPoint()
 	m_is_down = true;
 	m_down_count = PLAYER_DOWN_FRAME;
 	m_anim_p->SetWillPlayAnim(ePlayerAnimIdDown);
+	CSound::GetInstance()->GetSound("SE_Down")->Play();
 }
 
 void CCharacterPlayer::CharacterDraw()

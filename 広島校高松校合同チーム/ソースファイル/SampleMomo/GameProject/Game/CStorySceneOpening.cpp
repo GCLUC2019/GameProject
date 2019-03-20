@@ -55,6 +55,8 @@ CStorySceneOpening::CStorySceneOpening()
 	Setchar();
 	SetValue();
 	SetAll(OPENING_SENTENSE_NUM);
+	CSound::GetInstance()->StopAll();
+	CSound::GetInstance()->GetSound("BGM_Intro_Story")->Play(true);
 }
 
 CStorySceneOpening::~CStorySceneOpening()

@@ -14,6 +14,9 @@ CTitle::CTitle() : CObject(0, 0)
 	
 	m_blind_text_p->SetPos(140, 550);
 	m_background_image_p->SetSize(1280, 720);
+
+	CSound::GetInstance()->StopAll();
+	CSound::GetInstance()->GetSound("BGM_Title")->Play(true);
 }
 
 CTitle::~CTitle()
@@ -30,6 +33,7 @@ void CTitle::Update()
 	}
 	//スペースキーでタイトル画面を破棄
 	else if (CInput::GetState(0,CInput::ePush, CInput::eButton1)) {
+		CSound::GetInstance()->GetSound("SE_Decision")->Play();
 		SetIsDelete();
 		//Delete();
 		NextScene();
