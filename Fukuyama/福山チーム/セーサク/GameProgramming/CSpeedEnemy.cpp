@@ -39,26 +39,17 @@ void CSpeedEnemy::Update(){
 	Forward();
 	Forward();
 	Forward();
-	Forward();
-	Forward();
-	Forward();
-	Forward();
-	Forward();
-	Forward();
-	Forward();
-	Forward();
-
-
+	
 
 	CTank::Update();
 	mHpBar.Update();
 
-	if (mPosition.x > 400){
+	/*if (mPosition.x > 400){
 		mPosition = CVector2(400.0f, 150.0f);
 		mRotation = 90.0f;
-	}
+	}*/
 	if (mPosition.x <-400){
-		mPosition = CVector2(400.0f, 0.0f);
+		mPosition = CVector2(400.0f, -200.0f);
 		mRotation = 90.0f;
 	}
 
