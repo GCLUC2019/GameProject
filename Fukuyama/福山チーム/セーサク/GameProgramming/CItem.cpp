@@ -35,15 +35,15 @@ void CItem::Render(){
 void CItem::OnCollision(CCollider*p){
 	if (mTaskTag == EITEM&&p->mpTask->mTaskTag == EPLAYERTANK){
 		if (mType == 1){  //‰ñ•œ
-			//CPlayerTank::spInstance->mHpBar.mHp += 40.0f;
+			CPlayerTank::spInstance->mHpBar.mHp += 40.0f;
 			printf("CItem1::OnCollision\n");
 		}
 		if (mType == 2){  //‹­‰»
-
+			CPlayerTank::spInstance->strengthen += 600;
 			printf("CItem2::OnCollision\n");
 		}
 		if (mType == 3){  //–³“G
-
+			CPlayerTank::spInstance->Invincible += 1;
 			printf("CItem3::OnCollision\n");
 		}
 		mEnabled = false;

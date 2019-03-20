@@ -9,6 +9,7 @@
 #include "CExplosion.h"
 #include "CSceneGame.h"
 #include "CMain.h"
+#include "CItem.h"
 
 #define FIREINTERVER_E 40
 #define ATTACKINTERVAR_E 10
@@ -177,10 +178,14 @@ void CEnemy1::OnCollision(CCollider*p){
 			p->mPosition = mPosition;
 			CTaskManager::Get()->Add(p);
 			mHpBar.mHp -= 20.0f;
-			//if (mHpBar.mHp <= 0.0f){
+			if (mHpBar.mHp <= 0.0f){
+				CItem*Item = new CItem();   //¬ì
+				Item->mTaskTag = EITEM;
+				Item->mPosition = mCanon.mMatrix*CVector2(0.0f, 0.0f);
+				CTaskManager::Get()->Add(Item);
 			//	mEnabled = false;
 			//	CMain::mSceneTag = CScene::EWIN;
-			//}
+			}
 		}
 		if (p->mpTask->mTaskTag == EPLAYERBULLET2){
 			CExplosion*p = new CExplosion();
@@ -188,10 +193,14 @@ void CEnemy1::OnCollision(CCollider*p){
 			p->mPosition = mPosition;
 			CTaskManager::Get()->Add(p);
 			mHpBar.mHp -= 10.0f;
-			//if (mHpBar.mHp <= 0.0f){
+			if (mHpBar.mHp <= 0.0f){
+				CItem*Item = new CItem();   //¬ì
+				Item->mTaskTag = EITEM;
+				Item->mPosition = mCanon.mMatrix*CVector2(0.0f, 0.0f);
+				CTaskManager::Get()->Add(Item);
 			//	mEnabled = false;
 			//	CMain::mSceneTag = CScene::EWIN;
-			//}
+			}
 		}
 		if (p->mpTask->mTaskTag == EPLAYERTANK){
 			//CExplosion*p = new CExplosion();

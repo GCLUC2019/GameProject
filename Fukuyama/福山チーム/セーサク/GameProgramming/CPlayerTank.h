@@ -11,8 +11,8 @@ private:
 	int mStartX; //スタートX座標
 	CSound mSound;
 	//CRectangle mPlayer;
-	static CPlayerTank *spInstance;
 public:
+	static CPlayerTank *spInstance;
 	//CPlayerTank()
 	//	:mPlayer()
 	//	,mGravityV(0)
@@ -42,6 +42,8 @@ public:
 	int AttackSide;
 	CHpBar mHpBar;
 	CHpBar mSpBar;
+	int strengthen;
+	int Invincible;
 
 	void Render();
 

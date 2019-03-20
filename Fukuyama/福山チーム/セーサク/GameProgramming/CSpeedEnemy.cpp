@@ -6,6 +6,7 @@
 #include"CMain.h"
 #include"CScene.h"
 #include"CHpBar.h"
+#include "CItem.h"
 #define FIREINTERVAL_E 60
 #define SPEED_E 60
 
@@ -90,6 +91,10 @@ void CSpeedEnemy::OnCollision(CCollider*p){
 		CTaskManager::Get()->Add(p);
 		mHpBar.mHp -= 500.0f;
 		if (mHpBar.mHp <= 0.0f){
+			CItem*Item = new CItem();   //¬ì
+			Item->mTaskTag = EITEM;
+			Item->mPosition = mCanon.mMatrix*CVector2(0.0f, 0.0f);
+			CTaskManager::Get()->Add(Item);
 			mEnabled = false;
 			/*CMain::mSceneTag = CScene::EWIN;*/
 		}
