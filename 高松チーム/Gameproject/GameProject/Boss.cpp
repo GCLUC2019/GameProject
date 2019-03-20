@@ -29,6 +29,7 @@ BossHead::BossHead(const CVector2D &player_pos, const int state) :EnemyBase(eBos
 	if (m_state == eIdle) {
 		m_img = COPY_RESOURCE("Boss2", CAnimImage*);
 		m_pos = CVector2D(WIGHT_SIZE - BOSS_X_SIZE / 2.5f, HEIGHT_SIZE - BOSS_Y_SIZE / 5);
+		m_shadow.SetPos(m_pos.x - 100 + m_shadow_x, m_shadow_y - g_game_data.m_scroll.y / 3);
 		m_shadow_y = m_pos.y;
 		m_shadow_x = 0;
 	}
@@ -40,6 +41,8 @@ BossHead::BossHead(const CVector2D &player_pos, const int state) :EnemyBase(eBos
 	}
 
 	m_shadow = COPY_RESOURCE("Shadow", CImage*);
+
+	m_shadow_pos = CVector2D(0, 0);
 
 	m_img.SetSize(BOSS_X_SIZE / 2, BOSS_Y_SIZE / 2);
 
@@ -63,6 +66,8 @@ BossHead::BossHead(const CVector2D &player_pos, const int state) :EnemyBase(eBos
 	m_state = state;
 
 	m_shadow_size = 0;
+
+	m_shadow.SetColor(0.3f, 0.3f, 0.3f, 0.4f);
 
 }
 
@@ -148,7 +153,7 @@ void BossHead::FireDownMove()
 void BossHead::HeadDownMove()
 {
 	m_rect = CRect(-100, -100, 100, 100);//攻撃時の矩形
-	m_shadow_y = m_player_pos.y + 180;
+	m_shadow_y = m_player_pos.y + 50;
 	//プレイヤーの座標 m_player_pos.y
 	if (m_pos.y <= m_player_pos.y) {
 		m_pos.y += 5;
@@ -211,21 +216,28 @@ void BossHead::Draw()
 	//m_shadow.SetSize((SHADOW_X_SIZE * 1.5 - m_shadow_size), SHADOW_Y_SIZE);
 
 	//150はソート順番調整のための数
-	m_img.SetPos(m_pos.x, m_pos.y - 150 - g_game_data.m_scroll.y / 3);
+
 
 	switch (m_state) {
 	case Head::eIdle:
+		m_img.SetPos(m_pos.x, m_pos.y - 150 - g_game_data.m_scroll.y / 3);
+		m_shadow.SetSize((SHADOW_X_SIZE * 1.5 - m_shadow_size), SHADOW_Y_SIZE);
+		m_shadow.SetPos(m_pos.x - 100 + m_shadow_x, m_shadow_y - g_game_data.m_scroll.y / 3);
+		break;
 	case Head::eUp:
+		m_img.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
 		m_shadow.SetSize((SHADOW_X_SIZE * 1.5 - m_shadow_size), SHADOW_Y_SIZE);
 		m_shadow.SetPos(m_pos.x - 100 + m_shadow_x, m_shadow_y - g_game_data.m_scroll.y / 3);
 		break;
 	case Head::eFireAttackDown:
 	case Head::eHeadAttackDown:
+		m_img.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
 		m_shadow.SetSize((SHADOW_X_SIZE / 1.5 + m_shadow_size), SHADOW_Y_SIZE);
 		m_shadow.SetPos(m_pos.x - 50 - m_shadow_x, m_shadow_y - g_game_data.m_scroll.y / 3);
 		break;
 	case Head::eFireAttack:
 	case Head::eHeadAttack:
+		m_img.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
 		m_shadow.SetSize((SHADOW_X_SIZE * 1.5 - m_shadow_size), SHADOW_Y_SIZE);
 		m_shadow.SetPos(m_pos.x - 100, m_shadow_y - g_game_data.m_scroll.y / 3);
 		break;
@@ -287,6 +299,8 @@ BossRightHand::BossRightHand(const CVector2D &player_pos, const int state) :Enem
 	m_idle_cnt = 0;
 
 	m_shadow_size = 0;
+
+	m_shadow.SetColor(0.3f, 0.3f, 0.3f, 0.4f);
 }
 
 BossRightHand::~BossRightHand()
@@ -453,6 +467,8 @@ BossLeftHand::BossLeftHand(const CVector2D & player_pos, const int state) :Enemy
 	m_ang = 90;
 
 	m_shadow_size = 0;
+
+	m_shadow.SetColor(0.3f, 0.3f, 0.3f, 0.4f);
 }
 
 BossLeftHand::~BossLeftHand()
@@ -481,7 +497,7 @@ void BossLeftHand::Attack()
 	if (m_cnt <= 30 && m_cnt > 0) {
 		m_ang -= DtoR(5);
 		if (m_slash_flag == false) {
-			TaskManager::GetInstance()->AddTask(new BossSlashEffect(m_pos));
+			TaskManager::GetInstance()->AddTask(new BossSlashEffect());
 			m_slash_flag = true;
 		}
 	}
@@ -563,20 +579,23 @@ void BossLeftHand::Draw()
 	case LeftHand::eUp:
 		m_shadow.SetSize((SHADOW_X_SIZE * 1.5 - m_shadow_size), SHADOW_Y_SIZE);
 		m_shadow.SetPos(m_pos.x - 100 + m_shadow_x, m_shadow_y - g_game_data.m_scroll.y / 3);
+		m_shadow.Draw();
 		break;
 	case LeftHand::eDownAttack:
 		m_shadow.SetSize((SHADOW_X_SIZE / 1.5 + m_shadow_size), SHADOW_Y_SIZE);
 		m_shadow.SetPos(m_pos.x - 50 - m_shadow_x, m_shadow_y - g_game_data.m_scroll.y / 3);
+		m_shadow.Draw();
 		break;
 	case LeftHand::eHandAttack:
 		m_shadow.SetSize((SHADOW_X_SIZE * 1.5 - m_shadow_size), SHADOW_Y_SIZE);
 		m_shadow.SetPos(m_pos.x - 100, m_shadow_y - g_game_data.m_scroll.y / 3);
+		m_shadow.Draw();
 		break;
 	default:
 		break;
 	}
 
-	m_shadow.Draw();
+
 	m_img.Draw();
 
 #ifdef _DEBUG
@@ -627,6 +646,8 @@ BossTail::BossTail(const CVector2D & player_pos, const int state) :EnemyBase(eBo
 
 	m_shadow_size = 0;
 
+	m_shadow.SetColor(0.3f, 0.3f, 0.3f, 0.4f);
+
 }
 
 BossTail::~BossTail()
@@ -669,7 +690,7 @@ void BossTail::Update()
 
 void BossTail::Idle()
 {
-	if (m_pos.x >= WIGHT_SIZE / 2.3) {
+	if (m_pos.x >= WIGHT_SIZE / 2.26f) {
 		m_pos.x -= 0.5;
 	}
 	else m_pos.y -= 5;
@@ -741,7 +762,7 @@ void BossTail::Draw()
 	default:
 		break;
 	}
-	m_shadow.Draw();
+
 	m_img.Draw();
 
 }

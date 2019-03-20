@@ -18,7 +18,7 @@ BossFireEffect::BossFireEffect(const CVector2D& pos) : Task(eBossFireEffectc)
 {
 	m_img = COPY_RESOURCE("BossFire", CAnimImage*);
 
-	m_img.SetCenter((FIRE_X_SIZE - BOSS_X_SIZE / 3)/2, FIRE_Y_SIZE / 8);
+	m_img.SetCenter((FIRE_X_SIZE - BOSS_X_SIZE / 3) / 2, FIRE_Y_SIZE / 8);
 
 	m_rect = CRect(-450, -120, 500, 120);
 
@@ -71,7 +71,7 @@ BossLazerEffect::BossLazerEffect(const CVector2D& pos) : Task(eBossLazerEffectc)
 
 	m_rect = CRect(-50, -200, 50, 75);
 
-	
+
 }
 
 
@@ -94,26 +94,32 @@ void BossLazerEffect::Draw()
 #endif
 	m_img2.SetRect(0, 0, LAZER_X_SIZE, LAZER_Y_SIZE);
 	m_img.SetSize(LAZER_X_SIZE + 640, LAZER_Y_SIZE + 528);
-	m_img2.SetSize(LAZER_X_SIZE/2, LAZER_Y_SIZE/2);
+	m_img2.SetSize(LAZER_X_SIZE / 2, LAZER_Y_SIZE / 2);
 	m_img.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
 	m_img2.SetPos(m_pos2.x, m_pos2.y - g_game_data.m_scroll.y / 3);
 	m_img.Draw();
 	//m_img2.Draw();
 }
 
-BossSlashEffect::BossSlashEffect(const CVector2D & pos) : Task(eBossLazerEffectc)
+BossSlashEffect::BossSlashEffect() : Task(eBossLazerEffectc)
 {
 	m_img = COPY_RESOURCE("BossSlash", CAnimImage*);
 
 	m_img.SetCenter(SLASH_SIZE * 2 / 2, SLASH_SIZE * 2 / 2);
 
-	m_pos.x = pos.x - 50;
+	Task * p = TaskManager::GetInstance()->FindObject(ePlayer);
+	if (p == nullptr)return;
+	m_player_pos = p->GetPos();
 
-	m_pos.y = pos.y + 50;
+	m_pos.x = m_player_pos.x;
+
+	m_pos.y = m_player_pos.y + 2;
 
 	m_flip = false;
 
 	m_rect = CRect(-150, -100, 50, 100);
+
+
 }
 
 void BossSlashEffect::Update()
@@ -132,11 +138,11 @@ void BossSlashEffect::Draw()
 	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
 	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
 #endif
-	
+
 	m_img.SetFlipH(m_flip);
 	m_img.SetSize(SLASH_SIZE * 2, SLASH_SIZE * 2);
 	m_img.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
 	m_img.SetFlipH(false);
 	m_img.Draw();
-	
+
 }
