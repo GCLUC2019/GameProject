@@ -107,6 +107,9 @@
     <ClCompile Include="Game\Character\Anim\AnimEnemyEffect.cpp">
       <Filter>Game\Character\Anim</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Stage\BossStage.cpp">
+      <Filter>Game\Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GID.h" />
@@ -219,6 +222,12 @@
     </ClInclude>
     <ClInclude Include="Game\Character\Anim\AnimEnemyEffect.h">
       <Filter>Game\Character\Anim</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Character\EnemyBase\Enemy\Enemy03.h">
+      <Filter>Game\Character\EnemyBase\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Stage\BossStage.h">
+      <Filter>Game\Stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
