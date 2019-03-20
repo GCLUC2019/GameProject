@@ -45,12 +45,21 @@
 //extern CTexture mTexture;	//TextureからmTextureに変更
 CTexture CPlayerTank::mTexImage;
 CTexture CPlayerTank::mTexImage2;
+CTexture CPlayerTank::mPlayerface;		//HP
+CTexture CPlayerTank::mPlayerfaceD;		//HP ダメージ
+
+CRectangle Rect;
+CRectangle Rect2;
+
+CPlayerTank *CPlayerTank::spInstance = 0;
 
 void CPlayerTank::Init(){
 	mGravityV = 0;
 	AttackSide = 1;
 	mTexImage.Load("Player-2.tga");
 	mTexImage2.Load("P-ya.tga");
+	mPlayerface.Load("playerface1.tga");	//HPバープレイヤー画像		追加　宮原
+	mPlayerfaceD.Load("playerfaceD.tga");	//HPバープレイヤーダメージ画像
 	CRectangle::SetTexture(&mTexImage, 4, 95, -238, -152);
 
 	p_Jump = 0;
@@ -69,6 +78,17 @@ void CPlayerTank::Init(){
 	p_max_hp = 100.0f;
 	p_max_sp = 100.0f;
 	p_min_sp = 0.0f;
+
+	//プレイヤーHPバー横画像用四角形	追加宮原
+	Rect.x = 115;
+	Rect.y = 250;
+	Rect.w = 30;
+	Rect.h = 30;
+	//プレイヤーHPバー横画像用四角形　ダメージ用　追加宮原
+	Rect2.x = 115;
+	Rect2.y = 250;
+	Rect2.w = 30;
+	Rect2.h = 30;
 
 	SetColor(1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -96,10 +116,19 @@ void CPlayerTank::Init(){
 
 	CCollisionManager::Get()->Add(mpBoxCollider);
 	mTaskTag = EPLAYERTANK;
-	mHpBar.SetHpBar(this, CVector2(0.0f, -50.0f), CVector2(50.0f, 8.0f), mColor, 100, 100);
+
+	//SPバー追加カラー変更　宮原
+	mHpBar.SetHpBar(this, CVector2(270.0f, 250.0f), CVector2(250.0f, 30.0f), mColor, 100, 100);
+	mSpBar.SetHpBar(this, CVector2(270.0f, 220.0f), CVector2(250.0f, 30.0f), mColor, 100, 0);
+	mHpBar.mBar.SetColor(0.0f, 2.0f, 0.0f, 0.0f);
+	mSpBar.mBar.SetColor(0.0f, 0.0f, 2.0f, 2.0f);
+
+	spInstance = this;
 }
 
 void CPlayerTank::Update(){
+	Rect.Draw(mPlayerface, 0, 144, 0, 144);			//HPバー横プレイヤー画像追加　宮原
+
 	mItem.Update();
 	if (mPosition.x > 380){
 		mPosition.x = 380;
@@ -236,6 +265,7 @@ void CPlayerTank::Update(){
 					}
 					bullet->SetColor(mColor[0], mColor[1], mColor[2], mColor[3]);
 					CTaskManager::Get()->Add(bullet);
+					mSpBar.mHp +=10;
 				}
 			}
 			if (GetKeyState('K') & 0x8000){
@@ -260,9 +290,11 @@ void CPlayerTank::Update(){
 					}
 					bullet->SetColor(mColor[0], mColor[1], mColor[2], mColor[3]);
 					CTaskManager::Get()->Add(bullet);
+					mSpBar.mHp += 5;
 				}
 			}
-			mHpBar.Update();
+			mHpBar.PUpdate();
+			mSpBar.PUpdate();		//SP追加　宮原
 			mItem.mMatrix = mHead.mMatrix*mItem.mMatrix;
 		}
 	}
@@ -280,6 +312,8 @@ void CPlayerTank::OnCollision(CCollider*p){
 		//HeadRightTurn();
 		//HeadRightTurn();
 		p->SetTexture(&Texture, 0, 64, 64, 0);
+		Rect2.Draw(mPlayerfaceD, 0, 144, 0, 144);	//ダメージ画像追加　宮原
+
 		p->mPosition = mPosition;
 		CTaskManager::Get()->Add(p);
 		mHpBar.mHp -= 5.0f;
@@ -299,6 +333,7 @@ void CPlayerTank::OnCollision(CCollider*p){
 		HeadRightTurn();
 		HeadRightTurn();*/
 		p->SetTexture(&Texture, 0, 64, 64, 0);
+		Rect2.Draw(mPlayerfaceD, 0, 144, 0, 144);	//ダメージ画像追加　宮原
 		p->mPosition = mPosition;
 		CTaskManager::Get()->Add(p);
 		mHpBar.mHp -= 5.0f;
@@ -318,6 +353,8 @@ void CPlayerTank::OnCollision(CCollider*p){
 		//HeadRightTurn();
 		//HeadRightTurn();
 		p->SetTexture(&Texture, 0, 64, 64, 0);
+		Rect2.Draw(mPlayerfaceD, 0, 144, 0, 144);	//ダメージ画像追加　宮原
+
 		p->mPosition = mPosition;
 		CTaskManager::Get()->Add(p);
 		mHpBar.mHp -= 1.0f;
@@ -329,6 +366,8 @@ void CPlayerTank::OnCollision(CCollider*p){
 	if (p->mpTask->mTaskTag == EBOSS){
 		CExplosion*p = new CExplosion();
 		p->SetTexture(&Texture, 0, 64, 64, 0);
+		Rect2.Draw(mPlayerfaceD, 0, 144, 0, 144);	//ダメージ画像追加　宮原
+
 		p->mPosition = mPosition;
 		CTaskManager::Get()->Add(p);
 		mHpBar.mHp -= 1.0f;
@@ -369,5 +408,6 @@ void CPlayerTank::Render(){
 	//CTank::Render();
 	CRectangle::Render();
 	mHpBar.Render();
+	mSpBar.Render();	//SP追加　宮原
 	//mItem.Render();
 }

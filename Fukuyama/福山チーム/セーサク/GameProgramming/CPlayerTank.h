@@ -31,6 +31,8 @@ public:
 	CTexture mTexture;
 	static CTexture mTexImage;
 	static CTexture mTexImage2;
+	static CTexture mPlayerface;
+	static CTexture mPlayerfaceD;
 	int mFireInterval;
 	int p_Jump;
 	int JumpCount;
@@ -38,7 +40,7 @@ public:
 	int EffectCount2;
 	int AttackSide;
 	CHpBar mHpBar;
-
+	CHpBar mSpBar;
 
 	void Render();
 
