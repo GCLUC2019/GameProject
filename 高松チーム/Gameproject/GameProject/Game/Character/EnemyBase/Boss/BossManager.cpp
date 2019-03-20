@@ -68,7 +68,7 @@ void BossManager::Idle()
 
 	m_idle_cnt++;
 
-	if (m_idle_cnt >= 540) {
+	if (m_idle_cnt >= 600) {
 		m_idle_flag = false;
 		m_state = Manager::eAttackDown;
 	}
