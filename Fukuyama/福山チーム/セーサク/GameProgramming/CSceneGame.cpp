@@ -55,7 +55,7 @@ void CSceneGame::Update(){
 	CCollisionManager::Get()->Remove();
 	CTaskManager::Get()->Remove();
 
-	if (mEnemyIntervar <= 0 && mEnemyLimit < 1){          //¬ì
+	if (mEnemyIntervar <= 0 && mEnemyLimit < 0){          //¬ì
 		mEnemyIntervar = ENEMYINTERVER;
 		mEnemyLimit += 1;
 
