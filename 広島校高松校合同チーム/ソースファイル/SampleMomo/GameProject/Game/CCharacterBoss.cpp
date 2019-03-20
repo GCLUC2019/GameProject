@@ -1,13 +1,13 @@
 #include "CCharacterBoss.h"
 #include "CCharacterPlayer.h"
-#include "CStageCrear.h"
 #include "CAnimation.h"
-
+#include "CGameScene.h"
 
 
 CCharacterBoss::CCharacterBoss():CCharacter(eTaskIdEnemy,0)
 {
-	m_player_p  = dynamic_cast<CCharacterPlayer*>(TaskManager::GetInstance()->FindTask(eTaskIdPlayer));
+	//m_player_p  = dynamic_cast<CCharacterPlayer*>(TaskManager::GetInstance()->FindTask(eTaskIdPlayer));
+	m_player_p = CCharacterPlayer::GetInstance();
 
 	//各パラメータを初期化
 	DefalutSet();
@@ -15,8 +15,6 @@ CCharacterBoss::CCharacterBoss():CCharacter(eTaskIdEnemy,0)
 
 CCharacterBoss::~CCharacterBoss()
 {
-	CStageCrear* Crear_p = new CStageCrear();
-	TaskManager::GetInstance()->AddTask(Crear_p);
 }
 
 void CCharacterBoss::CharacterUpdate()
@@ -32,12 +30,13 @@ void CCharacterBoss::CharacterUpdate()
 	Damage();
 	AttackHub();
 	MoveLimit();
-	printf("State:%d\n", m_boss_state);
+	AdjAnim();
+	//printf("State:%d\n", m_boss_state);
 }
 
 void CCharacterBoss::CharacterDraw()
 {
-	printf("x:%f y:%f", m_pos.x, m_pos.y);
+	//printf("x:%f y:%f", m_pos.x, m_pos.y);
 }
 
 void CCharacterBoss::LoadAnimImage()
@@ -239,8 +238,8 @@ void CCharacterBoss::Attack1()
 	//プレイヤーが範囲内にいるとダメージを与える
 	if (float length = CheckAttackRange() <= ATTACK1_RANGE_BITE) {
 		m_is_attack = false;
-		m_player_p->ReceiveAttack();
 		m_player_p->HitPointGainValue(-ATTACK);
+		m_player_p->ReceiveAttack();
 		//攻撃が当たると、カウント減少
 		m_ex_count++;
 		m_is_hit = true;
@@ -261,7 +260,8 @@ void CCharacterBoss::Attack2()
 	//プレイヤーが範囲内にいると、ひるませる
 	if (float length= CheckAttackRange() <= ATTACK1_RANGE_BARK) {
 		m_is_attack = false;
-		m_player_p->ReceiveAttack();
+		m_player_p->SetFreeze(BARK_FREEZE_TIME);
+
 		//攻撃が当たると、カウント減少
 		m_ex_count++;
 		m_is_hit = true;
@@ -306,9 +306,11 @@ void CCharacterBoss::SpecialAttack1()
 		if (s_boss_mode.boss_rush < RASH_STEP3_TIME) {
 			m_anim_p->SetWillPlayAnim(eEnemyAnimBossIdRush);
 			m_pos.x += RASH_SPEED;
-			if (float length = CheckAttackRange() <= EX1_RANGE_RASH && m_is_attack == true  ) {
+			//if (float length = CheckAttackRange() <= EX1_RANGE_RASH && m_is_attack == true  ) {
+			if (float length = CheckAttackRange() <= EX1_RANGE_RASH) {
 				m_is_attack = false;
 				m_player_p->HitPointGainValue(-RASH_ATTACK);
+				m_player_p->ReceiveAttack();
 			}
 		}
 		else if (s_boss_mode.boss_rush > RASH_STEP3_TIME) {
@@ -408,7 +410,6 @@ void CCharacterBoss::ReceiveAttack()
 	m_ex_state = eEnemyBossStateDamage;
 	SetIsBlindDraw(true);
 	m_hit_count++;
-	if (m_hit_point < 0)SetIsDelete();
 }
 
 void CCharacterBoss::DefalutSet()
@@ -416,9 +417,11 @@ void CCharacterBoss::DefalutSet()
 	m_vec = DEF_BOSS_VEC;
 	//初期値のy軸は地面に埋まらないように少し浮かせる
 	m_pos = DEF_BOSS_POS;
+	m_pos_old = m_pos;
 
-	m_rads = CVector3D(75, 120, 10);
-	SetSize(BOSS_SIZE);
+	//飛び越えれないくらいの高さにはしておく
+	m_rads = CVector3D(75, 300, 10);
+	
 	m_is_flip = false;
 
 	m_hit_point = BOSS_HP;
@@ -428,11 +431,36 @@ void CCharacterBoss::DefalutSet()
 
 	m_anim_p->SetAnim(eEnemyAnimBossIdIdle);
 	SetIsShowShadow(true);
+
+	/*
+	SetSize(BOSS_SIZE);
 	SetShadowSize(BOSS_SHADOW_SIZE);
 	SetDrawAdjPos(CVector2D(-30.0, -90.0));
+	*/
+}
+
+void CCharacterBoss::AdjAnim()
+{
+	switch (m_anim_p->GetWillPlayAnim()) {
+	case eEnemyAnimBossIdJump:
+		SetSize(500,750);
+		SetShadowSize(BOSS_SHADOW_SIZE);
+		SetDrawAdjPos(CVector2D(-20.0, -15.0 - 125 + 100));
+		break;
+	default:
+		SetSize(BOSS_SIZE);
+		SetShadowSize(BOSS_SHADOW_SIZE);
+		SetDrawAdjPos(CVector2D(-20.0, -15.0 + 100));
+		break;
+	}
 }
 
 void CCharacterBoss::CharacterBeforeCollisionCheck()
 {
 	
+}
+
+void CCharacterBoss::CharacterOutHitPoint()
+{
+	CGameScene::GetInstance()->StageClear();
 }

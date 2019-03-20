@@ -16,13 +16,15 @@ CBar::~CBar()
 
 void CBar::Update()
 {
-	printf("hp %lf\n", *now_hp);
+	//printf("hp %lf\n", *now_hp);
+
 	const float value_change_speed = 0.01f;
 	float value_change = (*now_hp - m_bar_value_now) * value_change_speed;
 	const float change_limit = 0.01 * value_change_speed;
 	if(abs(value_change) > change_limit) m_bar_value_now += value_change;
 	if (m_bar_value_now <= 0.0f) m_bar_value_now = 0.0f;
 	m_mult_hp = m_bar_value_now / hp;
+
 	//now_bar_size = max_bar_size * m_mult_hp;
 	/*m_mult_hp = (*now_hp / hp) * max_bar_size;
 	if (now_bar_size != m_mult_hp) {

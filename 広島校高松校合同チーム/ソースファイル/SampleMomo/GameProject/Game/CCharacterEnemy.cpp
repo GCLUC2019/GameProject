@@ -4,10 +4,11 @@
 #include "CGameScene.h"
 #include "CSubWeapon.h"
 
-CCharacterEnemy::CCharacterEnemy(int _enemy_id, CVector3D _enemy_pos) :CCharacter(eTaskIdEnemy, 0)
+CCharacterEnemy::CCharacterEnemy(int _enemy_id, CVector3D _enemy_pos, CGameSceneWave* _from_wave) :CCharacter(eTaskIdEnemy, 0)
 {
 	m_enemy_id = _enemy_id;
 	SetPos(_enemy_pos);
+	SetPosOld(_enemy_pos);
 
 	m_speed = 1.0f;
 
@@ -26,26 +27,12 @@ CCharacterEnemy::CCharacterEnemy(int _enemy_id, CVector3D _enemy_pos) :CCharacte
 	//敵はプレイヤーを設定（ここを変えれば味方のトランプ兵も作れるかも）
 	m_target_p = CCharacterPlayer::GetInstance();
 	
+	m_from_wave_p = _from_wave;
 }
 
 CCharacterEnemy::~CCharacterEnemy()
 {
-	//アイテムドロップ
-	int drop_weapon_id = 0;
-
-	switch (m_enemy_id) {
-	case eEnemyIdSpear:
-		drop_weapon_id = eWeaponSpear;
-		break;
-	case eEnemyIdAxe:
-		drop_weapon_id = eWeaponAxe;
-		break;
-	case eEnemyIdGun:
-		drop_weapon_id = eWeaponGun;
-		break;
-	}
-
-	CGameScene::GetInstance()->AddGameSceneObject(new CSubWeaponItem(m_pos,drop_weapon_id));
+	
 }
 
 void CCharacterEnemy::LoadAnimImage()
@@ -131,6 +118,7 @@ void CCharacterEnemy::CharacterDraw()
 
 void CCharacterEnemy::CharacterOutHitPoint()
 {
+	DropItem();
 	SetIsDelete();
 }
 
@@ -211,11 +199,15 @@ void CCharacterEnemy::EnemyAttack()
 	if (m_is_moving == true) return;//もし移動中なら攻撃しない
 	if (m_is_receive_damage_now == true) return;
 
+	//もし画面外なら攻撃しない
+	if (m_is_in_screen == false) return;
+
+
 	const CVector3D& target_pos = m_target_p->GetPos();
 	CVector3D target_vec = target_pos - m_pos;
 	//float target_length = sqrt(target_vec.x * target_vec.x + target_vec.y * target_vec.y + target_vec.z * target_vec.z);
 
-	printf("abs(target_vec.x) %lf abs(target_vec.y) %lf abs(target_vec.z) %lf \n", abs(target_vec.x), abs(target_vec.y), abs(target_vec.z));
+	//printf("abs(target_vec.x) %lf abs(target_vec.y) %lf abs(target_vec.z) %lf \n", abs(target_vec.x), abs(target_vec.y), abs(target_vec.z));
 	if (abs(target_vec.x) <= m_attack_length.x && abs(target_vec.y) <= m_attack_length.y && abs(target_vec.z) <= m_attack_length.z) {
 		m_is_attacking = true;
 		m_is_hit_attack = false;
@@ -237,8 +229,15 @@ void CCharacterEnemy::Attacking()
 		return;
 	}
 
+
+	//ターゲットが無敵か取得
+	bool enemy_invincible = m_target_p->GetInvincible();
+	//printf("enemy_invincible %d\n", enemy_invincible);
+
 	//もし攻撃判定フレームなら
 	if (m_attacking_count <= m_attack_frame - m_attacking_hit_start_frame && m_attacking_count >= m_attack_frame - m_attacking_hit_end_frame) {
+
+
 
 		//距離計算
 		const CVector3D& target_pos = m_target_p->GetPos();
@@ -264,11 +263,31 @@ void CCharacterEnemy::Attacking()
 
 	m_anim_p->SetWillPlayAnim(eEnemyAnimIdAttack);
 
-	//もし遠距離かつ攻撃完了しているなら発射モーション再生
+	//相手が無敵でなく、もし遠距離かつ攻撃完了しているなら発射モーション再生
 	if (m_is_range == true && m_is_hit_attack == true) {
 		m_anim_p->SetWillPlayAnim(eEnemyAnimIdShot);
 	}
 	
+}
+
+void CCharacterEnemy::DropItem()
+{
+	//アイテムドロップ
+	int drop_weapon_id = 0;
+
+	switch (m_enemy_id) {
+	case eEnemyIdSpear:
+		drop_weapon_id = eWeaponSpear;
+		break;
+	case eEnemyIdAxe:
+		drop_weapon_id = eWeaponAxe;
+		break;
+	case eEnemyIdGun:
+		drop_weapon_id = eWeaponGun;
+		break;
+	}
+
+	CGameScene::GetInstance()->AddGameSceneObject(new CSubWeaponItem(m_pos + CVector3D(0,140,0), drop_weapon_id));
 }
 
 void CCharacterEnemy::AdjAnim()

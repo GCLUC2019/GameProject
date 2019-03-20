@@ -28,7 +28,7 @@ BossHead::BossHead(const CVector2D &player_pos, const int state) :EnemyBase(eBos
 
 	if (m_state == eIdle) {
 		m_img = COPY_RESOURCE("Boss2", CAnimImage*);
-		m_pos = CVector2D(WIGHT_SIZE - BOSS_X_SIZE / 2.5f, HEIGHT_SIZE - BOSS_Y_SIZE / 2.5f);
+		m_pos = CVector2D(WIGHT_SIZE - BOSS_X_SIZE / 2.5f, HEIGHT_SIZE - BOSS_Y_SIZE / 3);
 	} 
 	else if (m_state == eFireAttackDown || m_state == eHeadAttackDown) {
 		m_img = COPY_RESOURCE("Boss", CAnimImage*);
@@ -554,14 +554,13 @@ void BossTail::Update()
 
 
 
-	if (m_state == Tail::eIdle) {
-		m_img.ChangeAnimation(Motion2::eBossTailAnim);
-		m_img.UpdateAnimation();
-	}
-
-
-	m_img.ChangeAnimation(Motion1::eBossTailAttackMotion, false);
+	
+	m_img.ChangeAnimation(Motion2::eBossTailAnim);
 	m_img.UpdateAnimation();
+
+
+	/*m_img.ChangeAnimation(Motion1::eBossTailAttackMotion, false);
+	m_img.UpdateAnimation();*/
 
 	
 }
@@ -615,7 +614,7 @@ void BossTail::Draw()
 #endif
 #endif
 	m_img.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
-	m_img.SetSize(BOSS_X_SIZE / 2, BOSS_Y_SIZE / 2);
+	m_img.SetSize(BOSS_X_SIZE / 2.5, BOSS_Y_SIZE / 2.5);
 	m_img.Draw();
 
 }

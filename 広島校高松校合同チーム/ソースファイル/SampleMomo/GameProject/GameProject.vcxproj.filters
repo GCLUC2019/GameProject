@@ -41,12 +41,6 @@
     <ClCompile Include="Game\CCharacterPlayer.cpp">
       <Filter>Game\Object\GameSceneObject\Character\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Game\CStorySceneCrear1.cpp">
-      <Filter>Game\Object\StoryScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\CStageCrear.cpp">
-      <Filter>Game\Object\Interface</Filter>
-    </ClCompile>
     <ClCompile Include="Task\TaskManager.cpp">
       <Filter>Task</Filter>
     </ClCompile>
@@ -73,6 +67,15 @@
     </ClCompile>
     <ClCompile Include="Game\CGameOver.cpp">
       <Filter>Game\Object\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CStageClear.cpp">
+      <Filter>Game\Object\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CStorySceneClear.cpp">
+      <Filter>Game\Object\StoryScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CFade.cpp">
+      <Filter>Game\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,12 +122,6 @@
     <ClInclude Include="Game\CStoryScene.h">
       <Filter>Game\Object\StoryScene</Filter>
     </ClInclude>
-    <ClInclude Include="Game\CStorySceneCrear1.h">
-      <Filter>Game\Object\StoryScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\CStageCrear.h">
-      <Filter>Game\Object\Interface</Filter>
-    </ClInclude>
     <ClInclude Include="Game\CAnimation.h">
       <Filter>Game\Animation</Filter>
     </ClInclude>
@@ -151,6 +148,15 @@
     </ClInclude>
     <ClInclude Include="Game\CGameOver.h">
       <Filter>Game\Object\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CStageClear.h">
+      <Filter>Game\Object\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CStorySceneClear.h">
+      <Filter>Game\Object\StoryScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CFade.h">
+      <Filter>Game\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
