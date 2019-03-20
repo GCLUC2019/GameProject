@@ -66,9 +66,6 @@
 
 CStorySceneClear::CStorySceneClear(int _clear_stage)
 {
-	CSound::GetInstance()->StopAll();
-	CSound::GetInstance()->GetSound("BGM_Stage_Clear")->Play();
-
 	Setchar(_clear_stage);
 	SetValue(_clear_stage);
 	SetAll(CREAR_SENTENSE_NUM);

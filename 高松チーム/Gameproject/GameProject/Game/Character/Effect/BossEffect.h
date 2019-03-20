@@ -39,11 +39,12 @@ class BossSlashEffect : public Task {
 private:
 	CAnimImage m_img;
 	CVector2D m_pos;
+	CVector2D m_player_pos;
 	CRect m_rect;
 
 	bool m_flip;
 public:
-	BossSlashEffect(const CVector2D& pos);
+	BossSlashEffect();
 
 	void Update();
 

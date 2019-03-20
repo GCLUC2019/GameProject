@@ -22,14 +22,14 @@ Tutorial::Tutorial() : Task(eGameTutorial)
 Tutorial::~Tutorial()
 {
 	SOUND("n82")->Stop();
-	TaskManager::KillAll();
 	TaskManager::GetInstance()->AddTask(new Title());
+
 }
 
 void Tutorial::Update()
 {
 	if (CInput::GetState(0, CInput::ePush, CInput::eButton5))
-		SetKill();
+		TaskManager::KillAll();
 }
 
 void Tutorial::Draw()

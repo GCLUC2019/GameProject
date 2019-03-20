@@ -27,8 +27,8 @@ struct SSoundParam {
 };
 class CSoundBase {
 	ALuint *m_source;
-	ALuint m_buffer = 0;
-	ALuint m_current = 0;
+	ALuint m_buffer;
+	ALuint m_current;
 	int m_layer_max;
 	int m_channels;
 	int m_sample_rate;

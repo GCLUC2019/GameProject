@@ -65,6 +65,9 @@ protected:
 
 	CGameSceneWave* m_from_wave_p = nullptr;
 	int m_wave_character_id = 0;
+
+
+	
 	
 public:
 	CCharacter(int _task_id, int _draw_priority);

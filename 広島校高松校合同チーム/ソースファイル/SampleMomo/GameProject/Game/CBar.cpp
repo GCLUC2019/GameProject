@@ -3,7 +3,6 @@
 CBar::CBar(CImage* _img, float* _hp, float _max_hp, CVector2D _pos, CVector2D _size) :CObject(0, DP_UI + 1)
 {
 	m_HPbar_img = _img;
-	m_HPbar_img->SetFilter(GL_NEAREST);
 	m_size = _size;
 	m_bar_pos = _pos;
 	hp = _max_hp;

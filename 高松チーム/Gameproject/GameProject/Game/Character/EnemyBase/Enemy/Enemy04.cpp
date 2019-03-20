@@ -158,6 +158,7 @@ void Enemy04::LAttack()
 		if (m_attack_cnt > 30) {
 			m_img.ChangeAnimation(Enemy04Anim::eAttackCat01);
 			m_pos.x += m_vec.x * -20;
+			TaskManager::GetInstance()->AddTask(new E4EffectLAttack(m_pos, m_flip));
 			m_attack_cnt = 0;
 			m_interval_flg = true;
 			m_hight = 0;
@@ -191,6 +192,7 @@ void Enemy04::SAttack()
 		m_img.ChangeAnimation(Enemy04Anim::eAttackCat01);
 		m_pos.x += m_vec.x * 15;
 		if (m_attack_cnt > 40 || m_distance.x < 30 && m_distance.x > -30) {
+			TaskManager::GetInstance()->AddTask(new E4EffectSAttack(m_pos));
 			m_img.ChangeAnimation(Enemy04Anim::eAttackCat02);
 			m_attack_cnt = 0;
 			m_interval_flg = true;
