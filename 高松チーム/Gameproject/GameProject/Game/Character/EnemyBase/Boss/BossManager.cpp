@@ -33,7 +33,7 @@ BossManager::BossManager() : Task(eBossManager)
 
 	m_img3.SetCenter(BOSS_Y_SIZE / 4, BOSS_Y_SIZE / 4);
 
-	m_state = Manager::eIdle;
+	//m_state = Manager::eIdle;
 
 	m_player_pos = CVector2D(0, 0);
 
@@ -68,10 +68,10 @@ void BossManager::Idle()
 
 	//m_idle_cnt++;
 
-	//if (m_idle_cnt >= 600) {
+	///*if (m_idle_cnt >= 600) {
 	//	m_idle_flag = false;
 	//	m_state = Manager::eAttackDown;
-	//}
+	//}*/
 }
 
 void BossManager::Attack()
