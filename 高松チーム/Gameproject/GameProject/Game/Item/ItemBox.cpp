@@ -3,7 +3,7 @@
 #include "../Resource/Resource.h"
 #include "Item.h"
 #include"../GameData/GameData.h"
-
+#include"../CollitionBase.h"
 ItemBox::ItemBox(int _m_box_typ, CVector2D _m_pos) :Task(CharacterData::eItemBox),
 m_pos(_m_pos),
 m_box_typ(_m_box_typ),
@@ -64,6 +64,14 @@ void ItemBox::Update()
 }
 void ItemBox::HitCheck()
 {
+	if (CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack01) ||
+		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack02) ||
+		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack03) ||
+		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectLongAttack))
+	{
+		m_open_flg = true;
+	}
+
 }
 void ItemBox::Draw()
 {
