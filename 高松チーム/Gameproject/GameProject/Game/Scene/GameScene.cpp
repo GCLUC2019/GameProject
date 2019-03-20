@@ -34,14 +34,17 @@ GameScene::GameScene() : Task(eGameScene)
 
 GameScene::~GameScene()
 {
+	SOUND("ikusa_japan2")->Stop();
 	TaskManager::KillAll();
 	TaskManager::GetInstance()->AddTask(new GameScene2());
 }
 
 void GameScene::Update()
 {
-	if (g_game_data.m_dead_cnt >= 10)
+	if (g_game_data.m_dead_cnt >= 10 && m_go_flg == false) {
+		m_go_flg = true;
 		TaskManager::GetInstance()->AddTask(new GuidanceUI());
+	}
 
 	Task* p = TaskManager::FindObject(ePlayer);
 	Player* n = dynamic_cast<Player*>(p);

@@ -146,8 +146,10 @@ void Enemy02::Damage()
 	m_vec.x = 0;
 	if (m_hp <= 0) {
 		m_img.ChangeAnimation(Enemy02Anim::eEDeath02, false);
-		if (m_img.CheckAnimationEnd())
+		if (m_img.CheckAnimationEnd()) {
 			SetKill();
+			g_game_data.m_dead_cnt++;
+		}
 	}
 	else {
 		m_img.ChangeAnimation(Enemy02Anim::eEDamage02, false);
