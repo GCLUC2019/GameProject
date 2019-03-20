@@ -61,6 +61,8 @@ BossHead::BossHead(const CVector2D &player_pos, const int state) :EnemyBase(eBos
 
 	m_shadow_size = 0;
 
+	m_shadow.SetColor(0.3f, 0.3f, 0.3f, 0.4f);
+
 }
 
 BossHead::~BossHead()
@@ -233,6 +235,13 @@ BossRightHand::BossRightHand(const CVector2D &player_pos, const int state) :Enem
 	if(m_state== eDownAttack)m_pos = CVector2D(1280 - BOSS_X_SIZE + 150, 0);
 
 	m_idle_cnt = 0;
+<<<<<<< HEAD
+=======
+
+	m_shadow_size = 0;
+
+	m_shadow.SetColor(0.3f, 0.3f, 0.3f, 0.4f);
+>>>>>>> 2031a647a46d984b3d00de2dd3b56f00d24ecdef
 }
 
 BossRightHand::~BossRightHand()
@@ -387,6 +396,13 @@ BossLeftHand::BossLeftHand(const CVector2D & player_pos, const int state) :Enemy
 	m_idle_cnt = 0;
 
 	m_ang = 90;
+<<<<<<< HEAD
+=======
+
+	m_shadow_size = 0;
+
+	m_shadow.SetColor(0.3f, 0.3f, 0.3f, 0.4f);
+>>>>>>> 2031a647a46d984b3d00de2dd3b56f00d24ecdef
 }
 
 BossLeftHand::~BossLeftHand()
@@ -525,6 +541,13 @@ BossTail::BossTail(const CVector2D & player_pos, const int state):EnemyBase(eBos
 
 	m_anim_cnt = 0;
 
+<<<<<<< HEAD
+=======
+	m_shadow_size = 0;
+
+	m_shadow.SetColor(0.3f, 0.3f, 0.3f, 0.4f);
+
+>>>>>>> 2031a647a46d984b3d00de2dd3b56f00d24ecdef
 }
 
 BossTail::~BossTail()

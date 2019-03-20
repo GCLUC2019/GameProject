@@ -190,6 +190,7 @@
     <ClCompile Include="Game\Character\EnemyBase\EnemyManager.cpp" />
     <ClCompile Include="Game\Character\EnemyBase\Enemy\Enemy01.cpp" />
     <ClCompile Include="Game\Character\EnemyBase\Enemy\Enemy02.cpp" />
+    <ClCompile Include="Game\Character\EnemyBase\Enemy\Enemy03.cpp" />
     <ClCompile Include="Game\Character\EnemyBase\Enemy\Enemy04.cpp" />
     <ClCompile Include="Game\Character\EnemyBase\Enemy\Enemy05.cpp" />
     <ClCompile Include="Game\Character\EnemyBase\Enemy\TutorialEnemy.cpp" />
