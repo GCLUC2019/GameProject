@@ -327,6 +327,17 @@ void CPlayerTank::OnCollision(CCollider*p){
 			CMain::mSceneTag = CScene::ELOSE;
 		}
 	}
+	if (p->mpTask->mTaskTag == EBOSS){
+		CExplosion*p = new CExplosion();
+		p->SetTexture(&Texture, 0, 64, 64, 0);
+		p->mPosition = mPosition;
+		CTaskManager::Get()->Add(p);
+		mHpBar.mHp -= 1.0f;
+		if (mHpBar.mHp <= 0.0f){
+			mEnabled = false;
+			CMain::mSceneTag = CScene::ELOSE;
+		}
+	}
 	if (p->mpTask->mTaskTag == EENEMY1){
 		CExplosion*p = new CExplosion();
 		//mPosition = mPosition + mpBoxCollider->mAdjust;
@@ -352,6 +363,7 @@ void CPlayerTank::OnCollision(CBoxCollider*p){
 		printf("CBullet::OnCollision\n");
 		p->mPosition = mPosition;
 	}
+	
 }
 
 void CPlayerTank::Render(){

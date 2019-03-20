@@ -58,7 +58,7 @@ void CSpeedEnemy::Update(){
 		mRotation = 90.0f;
 	}
 	if (mPosition.x <-400){
-		mPosition = CVector2(400.0f, -200.0f);
+		mPosition = CVector2(400.0f, 0.0f);
 		mRotation = 90.0f;
 	}
 
@@ -97,8 +97,7 @@ void CSpeedEnemy::OnCollision(CCollider*p){
 		p->SetTexture(&Texture, 0, 64, 64, 0);
 		p->mPosition = mPosition;
 		CTaskManager::Get()->Add(p);
-		mHpBar.mHp -= 40.0f;
-
+		mHpBar.mHp -= 500.0f;
 		if (mHpBar.mHp <= 0.0f){
 			mEnabled = false;
 			/*CMain::mSceneTag = CScene::EWIN;*/
