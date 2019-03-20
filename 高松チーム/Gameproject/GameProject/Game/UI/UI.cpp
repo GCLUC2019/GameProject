@@ -209,6 +209,6 @@ void FadeOut::Draw()
 	m_fadeout += 0.1f;
 	m_img.SetSize(CVector2D(1280,720));
 	m_img.SetPos(m_pos);
-	m_img.SetColor(1, 1, 1, m_fadeout);
+	m_img.SetColor(0, 0, 0, m_fadeout);
 	m_img.Draw();
 }

@@ -45,8 +45,7 @@ m_jump_flg(false)
     m_state = eSearch;
     m_depth = (m_pos.y - DEP_N) / 3.5;
 	m_hp = 100;
-	m_rect = CRect(-IMAGE_SIZE / 3.5f, -IMAGE_SIZE / 6.0f - g_game_data.m_scroll.y / 3, 
-					IMAGE_SIZE / 3.5f, IMAGE_SIZE / 2.0f - g_game_data.m_scroll.y / 3);
+	m_rect = CRect( - 47.0f, -120.0f - g_game_data.m_scroll.y/3, 54.0f, -20.0f - g_game_data.m_scroll.y / 3);
     cnt = 0;
 }
 
