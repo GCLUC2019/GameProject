@@ -44,6 +44,7 @@ private:
 	void AttackControl();//UŒ‚ŠÇ—
 	void Alignment_y();//y²‡‚í‚¹
 	void DamageState();
+	void HitCheck(/*Task* _t*/);
 public:
 	Enemy04();
 	Enemy04(CVector2D _pos);
