@@ -3,6 +3,7 @@
 #include "../GameProject/Global.h"
 #include "../GameProject/Game/GameData/GameData.h"
 #include "../../Effect/EnemyEffect.h"
+#include "../../../CollitionBase.h"
 #define DEP_N 1200
 Enemy04::Enemy04() : EnemyBase(CharacterData::eEnemy04),
 m_hight(0.0f)
@@ -350,6 +351,17 @@ void Enemy04::DamageState()
 	if (m_hp <= 0&& m_damage_cnt <= 30)
 		m_img.ChangeAnimation(Enemy04Anim::eEDeath04);
 	m_damage_cnt--;
+}
+
+void Enemy04::HitCheck()
+{
+	if (CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack01) ||
+		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack02) ||
+		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack03) ||
+		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectLongAttack))
+	{
+		Damage(10);
+	}
 }
 
 
