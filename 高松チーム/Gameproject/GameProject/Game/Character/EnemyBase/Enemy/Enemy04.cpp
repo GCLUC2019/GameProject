@@ -344,8 +344,10 @@ void Enemy04::Alignment_y()
 void Enemy04::DamageState()
 {
 	if (m_damage_cnt <= 0) {
-		if (m_hp <= 0)
+		if (m_hp <= 0) {
+			g_game_data.m_dead_cnt++;
 			SetKill();
+		}
 		m_damage_flg = false;
 	}
 	
