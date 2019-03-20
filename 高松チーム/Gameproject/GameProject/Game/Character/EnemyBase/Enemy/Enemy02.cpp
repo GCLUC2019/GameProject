@@ -15,6 +15,7 @@ m_search_flg(false),
 m_jump_flg(false)
 {
     m_img = COPY_RESOURCE("Enemy02", CAnimImage*);
+    m_shadow = COPY_RESOURCE("Shadow", CImage*);
     m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
     m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
     m_img.ChangeAnimation(eEMove02);
@@ -35,6 +36,7 @@ m_search_flg(false),
 m_jump_flg(false)
 {
     m_img = COPY_RESOURCE("Enemy02", CAnimImage*);
+    m_shadow = COPY_RESOURCE("Shadow", CImage*);
     m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
     m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
     m_img.ChangeAnimation(eEMove02);
@@ -45,7 +47,8 @@ m_jump_flg(false)
     m_state = eSearch;
     m_depth = (m_pos.y - DEP_N) / 3.5;
 	m_hp = 100;
-	m_rect = CRect( - 47.0f, -120.0f - g_game_data.m_scroll.y/3, 54.0f, -20.0f - g_game_data.m_scroll.y / 3);
+	m_rect = CRect(-IMAGE_SIZE / 3.5f, -IMAGE_SIZE / 6.0f - g_game_data.m_scroll.y / 3, 
+					IMAGE_SIZE / 3.5f, IMAGE_SIZE / 2.0f - g_game_data.m_scroll.y / 3);
     cnt = 0;
 }
 
@@ -84,6 +87,10 @@ void Enemy02::Update()
 
 void Enemy02::Draw()
 {
+    m_shadow.SetSize(SAIZE_SD + m_depth / 5, 50);
+    m_shadow.SetCenter((SAIZE_SD + m_depth / 5) / 2, 50 / 2);
+    m_shadow.SetPos(CVector2D(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3));
+    m_shadow.Draw();
     m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
     m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE);
     m_img.SetPos(CVector2D(m_pos.x , m_pos.y + m_hight - g_game_data.m_scroll.y/3));
@@ -146,10 +153,8 @@ void Enemy02::Damage()
 	m_vec.x = 0;
 	if (m_hp <= 0) {
 		m_img.ChangeAnimation(Enemy02Anim::eEDeath02, false);
-		if (m_img.CheckAnimationEnd()) {
+		if (m_img.CheckAnimationEnd())
 			SetKill();
-			g_game_data.m_dead_cnt++;
-		}
 	}
 	else {
 		m_img.ChangeAnimation(Enemy02Anim::eEDamage02, false);
@@ -168,7 +173,6 @@ void Enemy02::HitCheck()
 		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack02) ||
 		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack03))
 	{
-		SOUND("punch-middle2")->Play();
 		m_hp -= 1;
 		m_state = Enemy02State::eDamage;
 	}

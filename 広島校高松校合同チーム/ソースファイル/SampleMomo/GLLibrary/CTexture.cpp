@@ -191,7 +191,7 @@ bool CTexture::loadBmp(const char *path){
 
 bool CTexture::loadPng(const char *path){
 	pngInfo info;
-	//m_bufID = pngBind (path, PNG_NOMIPMAP, PNG_ALPHA, &info, GL_REPEAT, GL_NEAREST, GL_NEAREST);
+//	m_bufID = pngBind (path, PNG_NOMIPMAP, PNG_ALPHA, &info, GL_REPEAT, GL_NEAREST, GL_NEAREST);
 	m_bufID = pngBind (path, PNG_NOMIPMAP, PNG_ALPHA, &info, GL_REPEAT, GL_LINEAR, GL_LINEAR);
 	if (m_bufID == 0) {
 		printf("%s‚ª‚ ‚è‚Ü‚¹‚ñ", path);
@@ -252,15 +252,11 @@ void CTexture::Release() {
 }
 
 void CTexture::SetWrapST(int wrapst) {
-	glBindTexture(GL_TEXTURE_2D, m_bufID);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapst);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapst);
-	glBindTexture(GL_TEXTURE_2D, 0);
 
 }
 void CTexture::SetFilter(int filter) {
-	glBindTexture(GL_TEXTURE_2D, m_bufID);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter);
-	glBindTexture(GL_TEXTURE_2D, 0);
 }

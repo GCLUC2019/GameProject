@@ -150,7 +150,6 @@ void PlayerGageUI::Update()
 {
 	Task* p = TaskManager::FindObject(ePlayer);
 	Player* n = dynamic_cast<Player*>(p);
-	if(n != nullptr)
 	m_player_hp_now = n->GetHP();
 
 	m_player_hp_now = m_player_hp_now / m_player_hp_max;
@@ -163,52 +162,5 @@ void PlayerGageUI::Draw()
 
 	m_img.SetSize(CVector2D(m_player_hp_now * hp_width , 10));
 	m_img.SetPos(m_pos);
-	m_img.Draw();
-}
-
-
-GuidanceUI::GuidanceUI() : UI(UIData::eGuidanceUI)
-{
-	m_img = COPY_RESOURCE("GuidanceUI", CImage*);
-	m_pos = CVector2D(1050, 450);
-}
-
-void GuidanceUI::Update()
-{
-	/*int cnt = 0;
-	cnt++;
-	if (cnt >= 0 && cnt < 45)m_pos.y += 0.1f; 
-	if (cnt >= 45 && cnt < 89) m_pos.y -= 0.1f;
-	if (cnt >= 90) cnt = 0;*/
-
-
-}
-
-void GuidanceUI::Draw()
-{
-	m_img.SetSize(CVector2D(250, 150));
-	m_img.SetPos(m_pos);
-	m_img.Draw();
-}
-
-FadeOut::FadeOut() : Task(CharacterData::eFadeOut),
-m_fadeout(0)
-{
-	ADD_RESOURCE("FadeOut", CImage::LoadImage("../data/Image/Fadeout.png"));
-	m_img = COPY_RESOURCE("FadeOut", CImage*);
-	m_pos = CVector2D(0, 0);
-}
-
-void FadeOut::Update()
-{
-	
-}
-
-void FadeOut::Draw()
-{
-	m_fadeout += 0.1f;
-	m_img.SetSize(CVector2D(1280,720));
-	m_img.SetPos(m_pos);
-	m_img.SetColor(0, 0, 0, m_fadeout);
 	m_img.Draw();
 }

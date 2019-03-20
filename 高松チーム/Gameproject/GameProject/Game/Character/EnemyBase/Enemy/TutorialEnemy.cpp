@@ -71,7 +71,6 @@ void TutorialEnemy::HitCheck()
 		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack02)|| 
 		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack03)) 
 	{
-		SOUND("punch-middle2")->Play();
 		m_state = TutorialEnemyState::eDamage;
 	}
 }

@@ -32,7 +32,7 @@ CCharacterEnemy::CCharacterEnemy(int _enemy_id, CVector3D _enemy_pos, CGameScene
 
 CCharacterEnemy::~CCharacterEnemy()
 {
-
+	
 }
 
 void CCharacterEnemy::LoadAnimImage()
@@ -93,13 +93,12 @@ void CCharacterEnemy::CharacterUpdate()
 	m_anim_p->SetWillPlayAnim(eEnemyAnimIdIdle);
 	
 	Attacking();
-	
 	ReceiveDamageNow();
 
-	
-	EnemyMoving();
 	EnemyAttack();
+	EnemyMoving();
 	
+
 	
 
 	AdjAnim();
@@ -120,7 +119,6 @@ void CCharacterEnemy::CharacterDraw()
 void CCharacterEnemy::CharacterOutHitPoint()
 {
 	DropItem();
-	CGameScene::GetInstance()->EraseGameSceneObject(this);
 	SetIsDelete();
 }
 
@@ -165,25 +163,15 @@ void CCharacterEnemy::EnemyMoving()
 	if (target_vec.x > 0.0f) m_is_flip = true;
 	else if (target_vec.x < 0.0f) m_is_flip = false;
 
-
-	//攻撃中でも距離をとるのが必要な場合距離を取る
-
-	
-	//もし距離が十分とれていて攻撃中なら移動しない
-	if (m_is_attacking == true &&
-		abs(target_vec.x) > m_space_length.x &&
-		abs(target_vec.y) > m_space_length.y &&
-		abs(target_vec.z) > m_space_length.z) return;
-	
+	//もし攻撃中なら移動しない
+	if (m_is_attacking == true) return;
 
 	//既定の距離より離れてるなら、視認できないとして移動しない
 	if (target_length > m_find_length) return;
 
 	//もし既定の距離まで近づいていてなおかつ攻撃可能な範囲なら移動を完了する
-	//ただし距離が近すぎる場合は逆に離れる
 	if (target_vec.x <= m_move_end_length.x && target_vec.y <= m_move_end_length.y && target_vec.z <= m_move_end_length.z
-		&& abs(target_vec.x) <= m_attack_length.x && abs(target_vec.y) <= m_attack_length.y && abs(target_vec.z) <= m_attack_length.z
-		&& abs(target_vec.x) > m_space_length.x && abs(target_vec.y) > m_space_length.y && abs(target_vec.z) > m_space_length.z){
+		&& abs(target_vec.x) <= m_attack_length.x && abs(target_vec.y) <= m_attack_length.y && abs(target_vec.z) <= m_attack_length.z) {
 		m_is_moving = false;
 		return;
 	}
@@ -193,11 +181,7 @@ void CCharacterEnemy::EnemyMoving()
 	CVector3D target_dir = target_vec / target_length;
 	CVector3D move_vec = target_dir * m_speed;
 	
-	//もし既定の距離よりも近づいていた場合離れる
-	if (abs(target_vec.x) <= m_space_length.x && abs(target_vec.z) <= m_space_length.z) {
-		move_vec.x *= -1.0;
-		move_vec.z *= -1.0;
-	}
+
 	
 	m_is_moving = true;
 
@@ -205,33 +189,24 @@ void CCharacterEnemy::EnemyMoving()
 	m_vec.x = move_vec.x;
 	m_vec.z = move_vec.z;
 
-
-
-	//もし攻撃中でないならアニメーションを再生する
-	if(m_is_attacking == false ) m_anim_p->SetWillPlayAnim(eEnemyAnimIdMove);
+	m_anim_p->SetWillPlayAnim(eEnemyAnimIdMove);
 }
 
 void CCharacterEnemy::EnemyAttack()
 {
 	if (m_target_p == nullptr) return;
 	if (m_is_attacking == true) return;
-
-	const CVector3D& target_pos = m_target_p->GetPos();
-	CVector3D target_vec = target_pos - m_pos;
-	float target_length = sqrt(target_vec.x * target_vec.x + target_vec.y * target_vec.y + target_vec.z * target_vec.z);
-
-	//もし移動中でなおかつ距離をとっていないなら攻撃できない
-	//(近づきながら攻撃はできないが、離れながら攻撃は可能）
-	if (m_is_moving == true 
-		&& abs(target_vec.x) > m_space_length.x && abs(target_vec.y) > m_space_length.y && abs(target_vec.z) > m_space_length.z) return;
-	
+	if (m_is_moving == true) return;//もし移動中なら攻撃しない
 	if (m_is_receive_damage_now == true) return;
 
 	//もし画面外なら攻撃しない
 	if (m_is_in_screen == false) return;
 
 
-	//
+	const CVector3D& target_pos = m_target_p->GetPos();
+	CVector3D target_vec = target_pos - m_pos;
+	//float target_length = sqrt(target_vec.x * target_vec.x + target_vec.y * target_vec.y + target_vec.z * target_vec.z);
+
 	//printf("abs(target_vec.x) %lf abs(target_vec.y) %lf abs(target_vec.z) %lf \n", abs(target_vec.x), abs(target_vec.y), abs(target_vec.z));
 	if (abs(target_vec.x) <= m_attack_length.x && abs(target_vec.y) <= m_attack_length.y && abs(target_vec.z) <= m_attack_length.z) {
 		m_is_attacking = true;
@@ -239,16 +214,7 @@ void CCharacterEnemy::EnemyAttack()
 		m_attacking_count = m_attack_frame;
 		m_anim_p->SetWillPlayAnim(eEnemyAnimIdAttack);
 	}
-
-
-	switch (m_enemy_id) {
-	case eEnemyIdAxe:
-		CSound::GetInstance()->GetSound("SE_Slash1")->Play();
-		break;
-	case eEnemyIdSpear:
-		CSound::GetInstance()->GetSound("SE_Slash1")->Play();
-		break;
-	}
+	
 }
 
 void CCharacterEnemy::Attacking()
@@ -290,8 +256,6 @@ void CCharacterEnemy::Attacking()
 
 			//攻撃が当たったことを伝える
 			m_target_p->ReceiveAttack();
-
-			if(m_is_range == true) CSound::GetInstance()->GetSound("SE_Shot1")->Play();
 		}
 	}
 
@@ -302,17 +266,12 @@ void CCharacterEnemy::Attacking()
 	//相手が無敵でなく、もし遠距離かつ攻撃完了しているなら発射モーション再生
 	if (m_is_range == true && m_is_hit_attack == true) {
 		m_anim_p->SetWillPlayAnim(eEnemyAnimIdShot);
-		
 	}
 	
 }
 
 void CCharacterEnemy::DropItem()
 {
-	//出現率3分の1
-	int rand = Utility::Rand(0,2);
-	if (rand != 0) return;
-
 	//アイテムドロップ
 	int drop_weapon_id = 0;
 

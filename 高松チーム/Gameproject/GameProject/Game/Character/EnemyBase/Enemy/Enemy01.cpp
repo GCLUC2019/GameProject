@@ -13,6 +13,7 @@ m_hover(0.0f),
 m_search_flg (false)
 {
     m_img = COPY_RESOURCE("Enemy01", CAnimImage*);
+    m_shadow = COPY_RESOURCE("Shadow", CImage*);
     m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
     m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
     m_img.SetFlipH(m_flip);
@@ -29,6 +30,7 @@ m_hover(0.0f),
 m_search_flg(false)
 {
     m_img = COPY_RESOURCE("Enemy01", CAnimImage*);
+    m_shadow = COPY_RESOURCE("Shadow", CImage*);
     m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
     m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
     m_img.SetFlipH(m_flip);
@@ -84,11 +86,16 @@ void Enemy01::Draw()
 //    Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
 //
 //#endif//DEBUG
+    m_shadow.SetSize(SAIZE_SD + m_depth / 5, 50);
+    m_shadow.SetCenter((SAIZE_SD + m_depth / 5) / 2, 50 / 2);
+    m_shadow.SetPos(CVector2D(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3));
+    m_shadow.Draw();
+
     m_hover += 0.1f;//リセットしたほうがいい？
 	m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
     m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
 	m_img.SetRect(-IMAGE_SIZE, -IMAGE_SIZE - g_game_data.m_scroll.y / 3,IMAGE_SIZE, IMAGE_SIZE - g_game_data.m_scroll.y / 3);
-    m_img.SetPos(CVector2D(m_pos.x, m_pos.y + sin(m_hover)*10.0f - g_game_data.m_scroll.y / 3));
+    m_img.SetPos(CVector2D(m_pos.x, m_pos.y -IMAGE_SIZE/3+ sin(m_hover)*10.0f - g_game_data.m_scroll.y / 3));
     m_img.SetFlipH(m_flip);
 	m_rect = CRect(-IMAGE_SIZE / 3.5f, -IMAGE_SIZE / 5.0f - g_game_data.m_scroll.y / 3, 
 					IMAGE_SIZE / 3.5f, IMAGE_SIZE / 5.0f - g_game_data.m_scroll.y / 3);
@@ -139,12 +146,10 @@ void Enemy01::Damage()
 {
 	m_vec.x = 0;
 	if (m_hp <= 0) {
+		g_game_data.m_dead_cnt++;
 		m_img.ChangeAnimation(Enemy01Anim::eEDeath01, false);
-		if (m_img.CheckAnimationEnd()) {
-			g_game_data.m_dead_cnt++;
+		if (m_img.CheckAnimationEnd())
 			SetKill();
-			
-		}
 	}
 	else {
 		m_img.ChangeAnimation(Enemy01Anim::eEDamage01, false);
@@ -165,7 +170,6 @@ void Enemy01::HitCheck()
     }
 */
 	if (CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectLongAttack)) {
-		SOUND("punch-middle2")->Play();
 		m_hp -= 1;
 		m_state = Enemy01State::eDamage;
 	}

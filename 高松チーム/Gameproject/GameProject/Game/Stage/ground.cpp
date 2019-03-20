@@ -24,7 +24,7 @@ void Ground::Update()
 
 void Ground::Draw()
 {
-	m_img.SetSize(4000, 1400);
+	m_img.SetSize(4000, 1420);
     m_img.SetPos(0 - g_game_data.m_scroll.x, -680 - g_game_data.m_scroll.y/3);
 	m_img.Draw();
 }
@@ -43,7 +43,7 @@ void Bamboo::Update()
 void Bamboo::Draw()
 {
 	m_img.SetSize(2000, 700);
-	m_img.SetPos(0 - g_game_data.m_scroll.x,  - g_game_data.m_scroll.y/10);
+	m_img.SetPos(0 - g_game_data.m_scroll.x,  + g_game_data.m_scroll.y/10);
 	m_img.Draw();
 }
 
