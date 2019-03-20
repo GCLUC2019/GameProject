@@ -10,7 +10,7 @@ public:
     BossStage();
     void Update();
     void Draw();
-    CVector2D GetPos() const {
+    /*CVector2D GetPos() const {
         return m_pos;
-    }
+    }*/
 };

@@ -113,16 +113,17 @@ void Player::Move()
 		else {
 			m_pos.x += m_speed;
 			m_state = eMove;
+			SOUND("dash1")->Play();
 		}
 	}
 	if (CInput::GetState(0, CInput::eHold, CInput::eLeft)) {
-		
 		m_flip = false;
 		if (m_jump_flg)
 			m_pos_old.x -= m_speed;
 		else {
 			m_pos.x -= m_speed;
 			m_state = eMove;
+			SOUND("dash1")->Play();
 		}
 	}
 
@@ -376,7 +377,7 @@ void Player::Update()
 		Special();
 		return;
 	}
-		
+	
 	if (m_damage_flg)
 		DamageState();
 	else

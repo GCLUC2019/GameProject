@@ -1,11 +1,11 @@
 #pragma once
 #include "../GameProject/Base/Task.h"
 
-class GameScene : public Task {
+class GameScene2 : public Task {
 private:
-	CVector2D m_player_pos_x;
 public:
-	GameScene();
-	~GameScene();
+	GameScene2();
+	~GameScene2();
 	void Update();
+
 };

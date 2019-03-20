@@ -8,6 +8,7 @@ public:
 		eSpecialGageUI,
 		eGageBaseUI,
 		ePlayerGageUI,
+		eGuidanceUI,
 	};
 private:
 protected:
@@ -57,6 +58,14 @@ private:
 	float hp_width;
 public:
 	PlayerGageUI();
+	void Update();
+	void Draw();
+};
+
+class GuidanceUI : public UI {
+private:
+public:
+	GuidanceUI();
 	void Update();
 	void Draw();
 };
