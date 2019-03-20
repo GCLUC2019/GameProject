@@ -11,6 +11,7 @@ private:
 	int mStartX; //スタートX座標
 	CSound mSound;
 	//CRectangle mPlayer;
+	static CPlayerTank *spInstance;
 public:
 	//CPlayerTank()
 	//	:mPlayer()
