@@ -162,7 +162,7 @@ void CEnemy1::Update(){
 }
 
 void CEnemy1::OnCollision(CCollider*p){
-	if (mHpBar.mHp >= 1){
+	if (mHpBar.mHp > 0){
 		if (p->mpTask->mTaskTag == EPLAYERBULLET){
 			CExplosion*p = new CExplosion();
 			p->SetTexture(&Texture, 0, 64, 64, 0);

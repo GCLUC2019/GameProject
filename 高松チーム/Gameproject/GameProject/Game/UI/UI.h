@@ -69,3 +69,17 @@ public:
 	void Update();
 	void Draw();
 };
+
+class FadeOut : public Task {
+private:
+	float m_fadeout;
+	CVector2D m_pos;
+	CImage m_img;
+public:
+	FadeOut();
+	void Update();
+	void Draw();
+	float GetFadeOut() {
+		return m_fadeout;
+	}
+};

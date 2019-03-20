@@ -42,7 +42,16 @@ void CArrow::OnCollision(CCircleCollider*p){
 }
 
 void CArrow::OnCollision(CCollider*p){
-	if (mTaskTag == EARROW&&p->mpTask->mTaskTag == EENEMYTANK){
+	if (mTaskTag == EARROW&&p->mpTask->mTaskTag == EENEMY1){
+		mEnabled = false;
+	}
+	if (mTaskTag == EARROW&&p->mpTask->mTaskTag == EENEMY2){
+		mEnabled = false;
+	}
+	if (mTaskTag == EARROW&&p->mpTask->mTaskTag == ESPEEDENEMY){
+		mEnabled = false;
+	}
+	if (mTaskTag == EARROW&&p->mpTask->mTaskTag == EBOSS){
 		mEnabled = false;
 	}
 }

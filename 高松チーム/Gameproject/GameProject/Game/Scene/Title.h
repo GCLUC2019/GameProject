@@ -8,6 +8,7 @@
 */
 class Title : public Task {
 private:
+	float mp_fadeout;
     //‰æ‘œƒf[ƒ^
     CImage m_img_back;
     CImage m_img_rogobase;
