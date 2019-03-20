@@ -14,9 +14,11 @@ class CEnemy2 :public CTank{
 public:
 
 	static CTexture mTexImage;
+	static CTexture mTexImage2;
 
 	int mFireIntervar;
 	int EffectCount;
+	int DeleteCount;
 
 	void Init();
 	void Update();

@@ -23,6 +23,9 @@ private:
 	float m_next_scene_pos = 0;//この地点まで到達するとシーン遷移
 	CCharacterPlayer* m_player_object_p = nullptr;
 
+	int m_last_wave = -1;
+	CVector3D m_check_point;
+
 	//残機の数
 	int m_reserve_num = 0;
 
@@ -42,6 +45,8 @@ public:
 	void AddGameSceneObject(Task* _object);
 
 	void ClearGameSceneObject();
+
+	void EraseGameSceneObject(Task* _object);
 
 	//ウェーブが完了したら呼ばれる
 	void WaveDone(int _next_wave);
@@ -64,6 +69,10 @@ public:
 	void ChangeScene(int _scene_id);
 
 	int* GetReserveNumPointer() { return &m_reserve_num; };
+
+	void SetCheckPoint(CVector3D _pos) { m_check_point = _pos; };
+
+	CVector3D GetCheckPoint() { return m_check_point; };
 
 	static CGameScene* GetInstance();
 };

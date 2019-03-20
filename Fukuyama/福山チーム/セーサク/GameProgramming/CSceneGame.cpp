@@ -106,11 +106,12 @@ void CSceneLose::Update(){
 }
 
 void CSceneTitle::Init(){
-	mTexture.Load("title.tga");
+	mTexture.Load("title.tga");//タイトル画像
 	mTitle.SetVertex(-300, 300, -100, 100);
 	mTitle.SetColor(1.0f, 1.0f, 1.0f, 1.0f);
 	mTitle.SetTexture(&mTexture,0, 766, 0, 151);
 
+	mEnterTex.Load("Enter.tga");//タイトル追加
 }
 
 void CSceneTitle::Update(){
@@ -120,8 +121,18 @@ void CSceneTitle::Update(){
 	BackImage.y = 0;
 	BackImage.h = 300;
 	BackImage.w = 400;
+
+	mEnter.SetColor(1.0f, 1.0f, 1.0f, 1.0f);
+	mEnter.Draw(mEnterTex, 0, 355, 0, 21);
+	mEnter.x = 0;
+	mEnter.y = -300;
+	mEnter.h = 10;
+	mEnter.w =150;
 	mTitle.Update();
 	mTitle.Render();
+	mEnter.Update();
+	mEnter.Render();
+	mEnter.y -= -150;
 	if (GetKeyState(VK_RETURN) & 0x8000){
 		CMain::mSceneTag = CScene::EGAME;
 	}

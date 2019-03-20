@@ -207,8 +207,8 @@ void CGameSceneObject::CollisionCheck(Task * _collision_task)
 			if (m_pos.x >= ob_left_pos) {
 				m_pos.x = ob_left_pos;
 			}
-		}
-		*/
+		}*/
+		
 		
 	};
 

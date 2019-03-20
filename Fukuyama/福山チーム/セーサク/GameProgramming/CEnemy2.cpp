@@ -9,25 +9,30 @@
 #include "CExplosion.h"
 #include "CSceneGame.h"
 #include "CMain.h"
-#include "CItem.h"
 
 #define FIREINTERVER_E 200
 #define CBULLET_LIFE 400
 
 #define EFFECT_COUNT 58
 
+#define DELETE_COUNT 210
+
 extern CPlayerTank*Tank;
 
 extern int NotAttack;
 
 CTexture CEnemy2::mTexImage;
+CTexture CEnemy2::mTexImage2;
+
 
 void CEnemy2::Init(){
 	mTexImage.Load("EE.tga");
+	mTexImage2.Load("EE-ya.tga");
 	CRectangle::SetTexture(&mTexImage, 0, 65, -296, -250);
 
 	mFireIntervar = FIREINTERVER_E;
 	EffectCount = 0;
+	DeleteCount = DELETE_COUNT;
 
 	//CTank::Init();
 	SetVertex(-53.0f, 53.0f, -40.0f, 40.0f);
@@ -44,7 +49,7 @@ void CEnemy2::Init(){
 	mpTarget = Tank;
 	CCollisionManager::Get()->Add(mCollider);
 	mTaskTag = EENEMY2;
-	mHpBar.SetHpBar(this, CVector2(0.0f, -65.0f), CVector2(50.0f, 8.0f), mColor, 100, 100);
+	mHpBar.SetHpBar(this, CVector2(0.0f, -50.0f), CVector2(50.0f, 8.0f), mColor, 100, 100);
 }
 
 void CEnemy2::Update(){
@@ -75,7 +80,7 @@ void CEnemy2::Update(){
 	}
 
 	if (EffectCount > 0){
-		CRectangle::SetTexture(&mTexImage, 114, 183, -289, -248);
+		CRectangle::SetTexture(&mTexImage, 116, 178, -294, -247);
 		EffectCount--;
 	}
 	if (EffectCount == 0){
@@ -91,6 +96,8 @@ void CEnemy2::Update(){
 			if (EffectCount == 0){
 				EffectCount = EFFECT_COUNT;
 			}
+			bullet->SetVertex(-30.0f, 30.0f, -8.0f, 8.0f);
+			bullet->CRectangle::SetTexture(&mTexImage2, 0, 191, 0, 23);
 			bullet->mTaskTag = EENEMYBULLET;
 			bullet->mLife = CBULLET_LIFE;
 			bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, -29.0f);
@@ -111,28 +118,28 @@ void CEnemy2::Update(){
 	if (Enemy2->mPosition.x <= -370.0f){
 		Enemy2->mPosition.x = -369.0f;
 	}
-	if (mHpBar.mHp == 0){
-		SetVertex(-45.0f, 45.0f, -70.0f, 70.0f);
-		CRectangle::SetTexture(&mTexImage, 300, 359, -200, -100);
+	if (mHpBar.mHp <= 0){
+		SetVertex(-30.0f, 30.0f, -60.0f, 60.0f);
+		CRectangle::SetTexture(&mTexImage, 262, 302, -178, -102);
+		DeleteCount--;
+	}
+	if (DeleteCount <= 0){
+		mEnabled = false;
 	}
 }
 
 void CEnemy2::OnCollision(CCollider*p){
-	if (mHpBar.mHp > 0){
+	if (mHpBar.mHp >= 1){
 		if (p->mpTask->mTaskTag == EPLAYERBULLET){
 			CExplosion*p = new CExplosion();
 			p->SetTexture(&Texture, 0, 64, 64, 0);
 			p->mPosition = mPosition;
 			CTaskManager::Get()->Add(p);
 			mHpBar.mHp -= 20.0f;
-			if (mHpBar.mHp <= 0.0f){
-				CItem*Item = new CItem();   //¬ì
-				Item->mTaskTag = EITEM;
-				Item->mPosition = mCanon.mMatrix*CVector2(0.0f, 0.0f);
-				CTaskManager::Get()->Add(Item);
+			//if (mHpBar.mHp <= 0.0f){
 			//	mEnabled = false;
 			//	CMain::mSceneTag = CScene::EWIN;
-			}
+			//}
 		}
 		if (p->mpTask->mTaskTag == EPLAYERBULLET2){
 			CExplosion*p = new CExplosion();
@@ -140,14 +147,10 @@ void CEnemy2::OnCollision(CCollider*p){
 			p->mPosition = mPosition;
 			CTaskManager::Get()->Add(p);
 			mHpBar.mHp -= 10.0f;
-			if (mHpBar.mHp <= 0.0f){
-				CItem*Item = new CItem();   //¬ì
-				Item->mTaskTag = EITEM;
-				Item->mPosition = mCanon.mMatrix*CVector2(0.0f, 0.0f);
-				CTaskManager::Get()->Add(Item);
+			//if (mHpBar.mHp <= 0.0f){
 			//	mEnabled = false;
 			//	CMain::mSceneTag = CScene::EWIN;
-			}
+			//}
 		}
 
 		if (p->mpTask->mTaskTag == EPLAYERTANK){

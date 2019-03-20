@@ -50,7 +50,9 @@ public:
 	}
 	
 	CTexture mTexture;
+	CTexture mEnterTex;
 	CRectangle mTitle;
+	CRectangle mEnter;
 	void Init();
 	void Update();
 };

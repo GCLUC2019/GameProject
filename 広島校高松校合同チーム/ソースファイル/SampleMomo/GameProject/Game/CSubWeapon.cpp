@@ -1,5 +1,6 @@
 #include "../Game/CSubWeapon.h"
 #include "CCharacterPlayer.h"
+#include "CGameScene.h"
 
 bool CSubWeaponItem::m_get_flag = true;
 
@@ -37,7 +38,6 @@ CSubWeaponItem::CSubWeaponItem(CVector3D pos, int weapon_num) :CGameSceneObject(
 CSubWeaponItem::~CSubWeaponItem()
 {
 	m_get_flag = true;
-
 }
 
 void CSubWeaponItem::LoadAnimImage()
@@ -79,6 +79,7 @@ void CSubWeaponItem::GameSceneObjectUpdate()
 			m_get_flag = false;
 			PlayerGetItem();
 			SetIsDelete();
+			CGameScene::GetInstance()->EraseGameSceneObject(this);
 		}
 	}
 }

@@ -2,6 +2,7 @@
 #include "CCharacterBoss.h"
 
 #include "CBar.h"
+#include "CGameScene.h"
 
 CGameSceneBossUI::CGameSceneBossUI() :CObject(0, DP_UI)
 {

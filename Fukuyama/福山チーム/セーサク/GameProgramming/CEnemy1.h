@@ -17,6 +17,7 @@ public:
 	int mAttackIntervar;
 	int AttackSide;
 	int EffectCount;
+	int DeleteCount;
 
 	static CTexture mTexImage;
 	static CTexture mTexImage2;

@@ -32,7 +32,7 @@ CCharacterEnemy::CCharacterEnemy(int _enemy_id, CVector3D _enemy_pos, CGameScene
 
 CCharacterEnemy::~CCharacterEnemy()
 {
-	
+
 }
 
 void CCharacterEnemy::LoadAnimImage()
@@ -120,6 +120,7 @@ void CCharacterEnemy::CharacterDraw()
 void CCharacterEnemy::CharacterOutHitPoint()
 {
 	DropItem();
+	CGameScene::GetInstance()->EraseGameSceneObject(this);
 	SetIsDelete();
 }
 
@@ -169,7 +170,10 @@ void CCharacterEnemy::EnemyMoving()
 
 	
 	//もし距離が十分とれていて攻撃中なら移動しない
-	if (m_is_attacking == true && target_length > m_space_length) return;
+	if (m_is_attacking == true &&
+		abs(target_vec.x) > m_space_length.x &&
+		abs(target_vec.y) > m_space_length.y &&
+		abs(target_vec.z) > m_space_length.z) return;
 	
 
 	//既定の距離より離れてるなら、視認できないとして移動しない
@@ -179,7 +183,7 @@ void CCharacterEnemy::EnemyMoving()
 	//ただし距離が近すぎる場合は逆に離れる
 	if (target_vec.x <= m_move_end_length.x && target_vec.y <= m_move_end_length.y && target_vec.z <= m_move_end_length.z
 		&& abs(target_vec.x) <= m_attack_length.x && abs(target_vec.y) <= m_attack_length.y && abs(target_vec.z) <= m_attack_length.z
-		&& target_length > m_space_length) {
+		&& abs(target_vec.x) > m_space_length.x && abs(target_vec.y) > m_space_length.y && abs(target_vec.z) > m_space_length.z){
 		m_is_moving = false;
 		return;
 	}
@@ -190,7 +194,7 @@ void CCharacterEnemy::EnemyMoving()
 	CVector3D move_vec = target_dir * m_speed;
 	
 	//もし既定の距離よりも近づいていた場合離れる
-	if (target_length <= m_space_length) {
+	if (abs(target_vec.x) <= m_space_length.x && abs(target_vec.z) <= m_space_length.z) {
 		move_vec.x *= -1.0;
 		move_vec.z *= -1.0;
 	}
@@ -218,7 +222,8 @@ void CCharacterEnemy::EnemyAttack()
 
 	//もし移動中でなおかつ距離をとっていないなら攻撃できない
 	//(近づきながら攻撃はできないが、離れながら攻撃は可能）
-	if (m_is_moving == true && target_length > m_space_length) return;
+	if (m_is_moving == true 
+		&& abs(target_vec.x) > m_space_length.x && abs(target_vec.y) > m_space_length.y && abs(target_vec.z) > m_space_length.z) return;
 	
 	if (m_is_receive_damage_now == true) return;
 
