@@ -10,9 +10,11 @@
 #include "CSceneGame.h"
 #include "CMain.h"
 
-#define FIREINTERVER_E 60
-#define ATTACKINTERVAR_E 58
+#define FIREINTERVER_E 20
+#define ATTACKINTERVAR_E 28
 #define CBULLET_LIFE 25
+
+#define EFFECT_COUNT 28
 
 extern CPlayerTank*Tank;
 
@@ -21,8 +23,11 @@ CTexture CEnemy1::mTexImage2;
 
 
 void CEnemy1::Init(){
-	mTexImage.Load("enemy1.tga");
+	mTexImage.Load("EK.tga");
 	mTexImage2.Load("enemy1-2.tga");
+
+	EffectCount = 0;
+	AttackSide = 1;
 
 	mFireIntervar = FIREINTERVER_E;
 	mAttackIntervar = ATTACKINTERVAR_E;
@@ -61,23 +66,49 @@ void CEnemy1::Update(){
 
 	float dot = rightSide.dot(dirPlayer);
 	float dot2 = UpSide.dot2(dirPlayer);
-	if (mAttackIntervar == 58){
-		if (mHpBar.mHp >= 1){
-			if (dot > 0.0f){
-				EnemyDown2();
-				CRectangle::SetTexture(&mTexImage2, 0, 500, 500, 0);
-			}
-			else if (dot < 0.0f){
-				EnemyUp2();
-				CRectangle::SetTexture(&mTexImage, 0, 500, 500, 0);
-			}
-			if (dot2<0.0f){
-				EnemyLeft();
-				CRectangle::SetTexture(&mTexImage, 0, 500, 500, 0);
-			}
-			else if (dot2>0.0f){
-				EnemyRight();
-				CRectangle::SetTexture(&mTexImage2, 0, 500, 500, 0);
+
+	if (AttackSide == 0){
+
+		if (EffectCount > 0){
+			CRectangle::SetTexture(&mTexImage, 147, 218, -73, -1);
+			EffectCount--;
+		}
+		if (EffectCount == 0){
+			CRectangle::SetTexture(&mTexImage, 132, 209, -291, -231);
+		}
+	}
+
+	if (AttackSide == 1){
+		if (EffectCount > 0){
+			CRectangle::SetTexture(&mTexImage, 147, 218, -1, -73);
+			EffectCount--;
+		}
+		if (EffectCount == 0){
+			CRectangle::SetTexture(&mTexImage, 132, 209, -231, -291);
+		}
+	}
+
+	if (EffectCount == 0){
+		if (mAttackIntervar == 28){
+			if (mHpBar.mHp >= 1){
+				if (dot > 0.0f){
+					EnemyDown2();
+					CRectangle::SetTexture(&mTexImage, 132, 209, -231, -291);
+				}
+				if (dot < 0.0f){
+					EnemyUp2();
+					CRectangle::SetTexture(&mTexImage, 132, 209, -291, -231);
+				}
+				if (dot2<0.0f){
+					EnemyLeft();
+					CRectangle::SetTexture(&mTexImage, 132, 209, -291, -231);
+					AttackSide = 0;
+				}
+				if (dot2>0.0f){
+					EnemyRight();
+					CRectangle::SetTexture(&mTexImage, 132, 209, -231, -291);
+					AttackSide = 1;
+				}
 			}
 		}
 	}
@@ -86,30 +117,30 @@ void CEnemy1::Update(){
 	if (mFireIntervar>0){
 		mFireIntervar--;
 	}
-	if (mAttackIntervar < 58){
+	if (mAttackIntervar < 28){
 		mAttackIntervar--;
 	}
-	//if (-0.1 < dot&&dot < 0.1){
-	if (mAttackIntervar <= 0){
-		if (mFireIntervar <= 0){
-			mAttackIntervar = ATTACKINTERVAR_E;
-			mFireIntervar = FIREINTERVER_E;
-			CBullet*bullet = new CBullet();
-			bullet->mTaskTag = EENEMYBULLET;
-			bullet->mLife = CBULLET_LIFE;
-			if (dot2 < 0.0f){
-				bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, -25.0f);
-				bullet->mForward = bullet->mPosition - mCanon.mMatrix*CVector2(0.0f, -24.0f);
+	if (mHpBar.mHp >= 1){
+		if (mAttackIntervar <= 0){
+			if (mFireIntervar <= 0){
+				mAttackIntervar = ATTACKINTERVAR_E;
+				mFireIntervar = FIREINTERVER_E;
+				CBullet*bullet = new CBullet();
+				bullet->mTaskTag = EENEMYBULLET;
+				bullet->mLife = CBULLET_LIFE;
+				if (dot2 < 0.0f){
+					bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, -25.0f);
+					bullet->mForward = bullet->mPosition - mCanon.mMatrix*CVector2(0.0f, -24.0f);
+				}
+				if (dot2 > 0.0f){
+					bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, 25.0f);
+					bullet->mForward = bullet->mPosition - mCanon.mMatrix*CVector2(0.0f, 24.0f);
+				}
+				bullet->SetColor(mColor[0], mColor[0], mColor[0], mColor[0]);
+				CTaskManager::Get()->Add(bullet);
 			}
-			if (dot2 > 0.0f){
-				bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, 25.0f);
-				bullet->mForward = bullet->mPosition - mCanon.mMatrix*CVector2(0.0f, 24.0f);
-			}
-			bullet->SetColor(mColor[0], mColor[0], mColor[0], mColor[0]);
-			CTaskManager::Get()->Add(bullet);
 		}
 	}
-
 
 	if (Enemy1->mPosition.y >= -20.0f){
 		Enemy1->mPosition.y = -21.0f;
@@ -123,37 +154,63 @@ void CEnemy1::Update(){
 	if (Enemy1->mPosition.x <= -370.0f){
 		Enemy1->mPosition.x = -369.0f;
 	}
+	if (mHpBar.mHp == 0){
+		SetVertex(-45.0f, 45.0f, -70.0f, 70.0f);
+		CRectangle::SetTexture(&mTexImage, 300, 359, -200, -100);
+	}
 }
 
 void CEnemy1::OnCollision(CCollider*p){
-	if (p->mpTask->mTaskTag == EPLAYERBULLET){
-		CExplosion*p = new CExplosion();
-		p->SetTexture(&Texture, 0, 64, 64, 0);
-		p->mPosition = mPosition;
-		CTaskManager::Get()->Add(p);
-		mHpBar.mHp -= 20.0f;
-		if (mHpBar.mHp <= 0.0f){
-			mEnabled = false;
-			CMain::mSceneTag = CScene::EWIN;
+	if (mHpBar.mHp >= 1){
+		if (p->mpTask->mTaskTag == EPLAYERBULLET){
+			CExplosion*p = new CExplosion();
+			p->SetTexture(&Texture, 0, 64, 64, 0);
+			p->mPosition = mPosition;
+			CTaskManager::Get()->Add(p);
+			mHpBar.mHp -= 20.0f;
+			//if (mHpBar.mHp <= 0.0f){
+			//	mEnabled = false;
+			//	CMain::mSceneTag = CScene::EWIN;
+			//}
 		}
-	}
-	if (p->mpTask->mTaskTag == EPLAYERTANK){
-		//CExplosion*p = new CExplosion();
-		//p->SetTexture(&Texture, 0, 64, 64, 0);
-		//p->mPosition = mPosition;
-		//CTaskManager::Get()->Add(p);
-		if (mAttackIntervar == 58){
-			mAttackIntervar -= 1;
+		if (p->mpTask->mTaskTag == EPLAYERBULLET2){
+			CExplosion*p = new CExplosion();
+			p->SetTexture(&Texture, 0, 64, 64, 0);
+			p->mPosition = mPosition;
+			CTaskManager::Get()->Add(p);
+			mHpBar.mHp -= 10.0f;
+			//if (mHpBar.mHp <= 0.0f){
+			//	mEnabled = false;
+			//	CMain::mSceneTag = CScene::EWIN;
+			//}
 		}
-		mPosition = mPosition + mCollider->mAdjust;
+		if (p->mpTask->mTaskTag == EPLAYERTANK){
+			//CExplosion*p = new CExplosion();
+			//p->SetTexture(&Texture, 0, 64, 64, 0);
+			//p->mPosition = mPosition;
+			//CTaskManager::Get()->Add(p);
+
+			//p->mPosition = mPosition;
+			//mPosition = mPosition + mCollider->mAdjust;
+			p->mPosition = mPosition;
+			if (mAttackIntervar == 28){
+				mAttackIntervar -= 1;
+			}
+			if (EffectCount == 0){
+				EffectCount = EFFECT_COUNT;
+			}
+		}
+		printf("CEnemyTank::OnCollision\n");
 	}
-	printf("CEnemyTank::OnCollision\n");
 }
 
 void CEnemy1::OnCollision(CBoxCollider*p){
-	if (p->mpTask->mTaskTag == EPLAYERTANK){
-		mPosition = mPosition + mCollider->mAdjust;
-		printf("CBullet::OnCollision\n");
+	if (mHpBar.mHp >= 1){
+		if (p->mpTask->mTaskTag == EPLAYERTANK){
+			//mPosition = mPosition + mCollider->mAdjust;
+			printf("CBullet::OnCollision\n");
+			p->mPosition = mPosition;
+		}
 	}
 }
 
