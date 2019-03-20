@@ -150,6 +150,7 @@ void PlayerGageUI::Update()
 {
 	Task* p = TaskManager::FindObject(ePlayer);
 	Player* n = dynamic_cast<Player*>(p);
+	if(n != nullptr)
 	m_player_hp_now = n->GetHP();
 
 	m_player_hp_now = m_player_hp_now / m_player_hp_max;
@@ -187,5 +188,27 @@ void GuidanceUI::Draw()
 {
 	m_img.SetSize(CVector2D(200, 50));
 	m_img.SetPos(m_pos);
+	m_img.Draw();
+}
+
+FadeOut::FadeOut() : Task(CharacterData::eFadeOut),
+m_fadeout(0)
+{
+	ADD_RESOURCE("FadeOut", CImage::LoadImage("../data/Image/Fadeout.png"));
+	m_img = COPY_RESOURCE("FadeOut", CImage*);
+	m_pos = CVector2D(0, 0);
+}
+
+void FadeOut::Update()
+{
+	
+}
+
+void FadeOut::Draw()
+{
+	m_fadeout += 0.1f;
+	m_img.SetSize(CVector2D(1280,720));
+	m_img.SetPos(m_pos);
+	m_img.SetColor(1, 1, 1, m_fadeout);
 	m_img.Draw();
 }
