@@ -77,9 +77,6 @@
     <ClCompile Include="Game\CFade.cpp">
       <Filter>Game\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Game\CGameSceneBossUI.cpp">
-      <Filter>Game\Object\UI</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -160,9 +157,6 @@
     </ClInclude>
     <ClInclude Include="Game\CFade.h">
       <Filter>Game\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\CGameSceneBossUI.h">
-      <Filter>Game\Object\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

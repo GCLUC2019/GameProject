@@ -146,12 +146,10 @@ void Enemy01::Damage()
 {
 	m_vec.x = 0;
 	if (m_hp <= 0) {
+		g_game_data.m_dead_cnt++;
 		m_img.ChangeAnimation(Enemy01Anim::eEDeath01, false);
-		if (m_img.CheckAnimationEnd()) {
-			g_game_data.m_dead_cnt++;
+		if (m_img.CheckAnimationEnd())
 			SetKill();
-			
-		}
 	}
 	else {
 		m_img.ChangeAnimation(Enemy01Anim::eEDamage01, false);
@@ -172,7 +170,6 @@ void Enemy01::HitCheck()
     }
 */
 	if (CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectLongAttack)) {
-		SOUND("punch-middle2")->Play();
 		m_hp -= 1;
 		m_state = Enemy01State::eDamage;
 	}

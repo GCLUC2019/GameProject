@@ -162,9 +162,6 @@ void EnemyManager::WaveLoad1()
 						case eEnemy02:
 							TaskManager::GetInstance()->AddTask(new Enemy02(CVector2D(x, y)));
 							break;
-						case eEnemy04:
-							TaskManager::GetInstance()->AddTask(new Enemy04(CVector2D(x,y)));
-							break;
 						case eEnemy05:
 							TaskManager::GetInstance()->AddTask(new Enemy05(CVector2D(x, y)));
 							break;
@@ -177,7 +174,7 @@ void EnemyManager::WaveLoad1()
 		}
 
 
-		if (g_game_data.m_dead_cnt >= 4) {
+		if (g_game_data.m_dead_cnt >= 3) {
 			char wave2_key[64];
 			//‡A’PŒêiˆê‚Â‚Ì•¶Žš—ñj‚ð“Ç‚Ýž‚Þ
 			fscanf_s(fp, "%s", wave2_key, 64);
@@ -209,9 +206,6 @@ void EnemyManager::WaveLoad1()
 								break;
 							case eEnemy02:
 								TaskManager::GetInstance()->AddTask(new Enemy02(CVector2D(x, y)));
-								break;
-							case eEnemy04:
-								TaskManager::GetInstance()->AddTask(new Enemy04(CVector2D(x, y)));
 								break;
 							case eEnemy05:
 								TaskManager::GetInstance()->AddTask(new Enemy05(CVector2D(x, y)));

@@ -79,11 +79,11 @@ void Enemy05::Damage()
 {
 	m_vec.x = 0;
 	if (m_hp <= 0){
+		g_game_data.m_dead_cnt++;
 		m_img.ChangeAnimation(Enemy05Anim ::eEDeath05, false);
-		if (m_img.CheckAnimationEnd()) {
+		if (m_img.CheckAnimationEnd())
 			SetKill();
-			g_game_data.m_dead_cnt++;
-		}
+	
 	}
 	else {
 		m_img.ChangeAnimation(Enemy05Anim::eEDamage05, false);
@@ -141,12 +141,12 @@ void Enemy05::Draw()
 
 void Enemy05::HitCheck()
 {	
+
 	if (CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack01) ||
 		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack02) ||
 		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack03) ||
 		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectLongAttack))
 	{
-		SOUND("punch-middle2")->Play();
 		m_hp -= 1;
 		m_state = Enemy05State::eDamage;
 	}

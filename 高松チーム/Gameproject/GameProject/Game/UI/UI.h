@@ -8,7 +8,6 @@ public:
 		eSpecialGageUI,
 		eGageBaseUI,
 		ePlayerGageUI,
-		eGuidanceUI,
 	};
 private:
 protected:
@@ -60,26 +59,4 @@ public:
 	PlayerGageUI();
 	void Update();
 	void Draw();
-};
-
-class GuidanceUI : public UI {
-private:
-public:
-	GuidanceUI();
-	void Update();
-	void Draw();
-};
-
-class FadeOut : public Task {
-private:
-	float m_fadeout;
-	CVector2D m_pos;
-	CImage m_img;
-public:
-	FadeOut();
-	void Update();
-	void Draw();
-	float GetFadeOut() {
-		return m_fadeout;
-	}
 };

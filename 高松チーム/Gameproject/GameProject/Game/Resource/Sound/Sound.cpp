@@ -34,7 +34,7 @@ Sound::Sound() : Task (eSound)
 	SOUND("punch-swing1")->Load("../data/Sound/SE/punch-swing1.wav");
 	SOUND("se_011")->Load("../data/Sound/SE/se_011.wav");
 	SOUND("se_027")->Load("../data/Sound/SE/se_027.wav");
-	SOUND("se_030_")->Load("../data/Sound/SE/se_030_.wav");
+	SOUND("se_030")->Load("../data/Sound/SE/se_030.wav");
 	SOUND("se_033")->Load("../data/Sound/SE/se_033.wav");
 
 

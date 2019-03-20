@@ -12,7 +12,6 @@ private:
 
 public:
 	GameClear();
-	~GameClear();
 	void Update();
 	void Draw();
 

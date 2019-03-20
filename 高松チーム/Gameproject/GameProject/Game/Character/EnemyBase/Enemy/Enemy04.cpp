@@ -2,8 +2,6 @@
 #include "../../Anim/AnimData.h"
 #include "../GameProject/Global.h"
 #include "../GameProject/Game/GameData/GameData.h"
-#include "../../Effect/EnemyEffect.h"
-#include "../../../CollitionBase.h"
 #define DEP_N 1200
 Enemy04::Enemy04() : EnemyBase(CharacterData::eEnemy04),
 m_hight(0.0f)
@@ -42,13 +40,6 @@ m_damage_cnt(0)
 
 void Enemy04::Update()
 {
-#ifdef _DEBUG
-	/*if (CInput::GetState(0, CInput::ePush, CInput::eMouseL))
-	Damage(50);*/
-	if (CInput::GetState(0, CInput::ePush, CInput::eMouseR))
-		TaskManager::GetInstance()->AddTask(new E4EffectEXAttack(m_pos));
-#endif // _DEBUG
-
 	m_pos_old = m_pos;
 	m_state_old = m_state;
 	m_distance = TaskManager::GetInstance()->FindObject(ePlayer)->GetPos() - m_pos;
@@ -57,9 +48,53 @@ void Enemy04::Update()
 		m_flip = true;
 	else
 		m_flip = false;
-	m_img.ChangeAnimation(Enemy04Anim::eEIdile04);	
+	m_img.ChangeAnimation(Enemy04Anim::eEIdile04);
+	
+	
 
-	Move();
+	
+
+	if (m_attack_flg == false) {
+		if (m_damage_flg) {
+			DamageState();
+			return;
+		}
+			
+		if (m_cnt >= 0) {
+			m_cnt--;
+			if (m_cnt == 0) {
+				m_cnt = -60;
+				m_movetyp_flg = !m_movetyp_flg;
+				m_movexy_flg = Utility::Rand(0, 5000) % 2;
+			}
+				
+		}
+
+		if (m_cnt <= 0) {
+			m_cnt++;
+			Move();
+			if (m_cnt == 0)
+				m_cnt = 60;
+		}
+	}
+	else {
+		if (m_interval_flg)
+			DamageState();
+
+		if (m_sattack_flg)
+			SAttack();
+		if (m_lattack_flg)
+			LAttack();
+		if (m_exattack_flg)
+			EXAttack();
+	}
+	
+#ifdef _DEBUG
+	/*if (CInput::GetState(0, CInput::ePush, CInput::eMouseL))
+		Damage(50);*/
+	if (CInput::GetState(0, CInput::ePush, CInput::eMouseR))
+		Damage(10);
+#endif // _DEBUG
 
 	//SetAnim();
 	if (m_pos.x <0 || m_pos.x > 1280)
@@ -105,7 +140,7 @@ void Enemy04::EXAttack()
 			m_flip = !m_flip;
 		}
 		if (m_attack_cnt > 60) {
-			m_cnt = 90;
+			m_cnt = 60;
 			m_attack_cnt = 0;
 			m_interval_flg = false;
 			m_attack_flg = false;
@@ -128,7 +163,6 @@ void Enemy04::EXAttack()
 			else if (m_pos.x < 150)
 				m_pos.x = 1150;
 			m_img.ChangeAnimation(Enemy04Anim::eAttackCat02);
-			TaskManager::GetInstance()->AddTask(new E4EffectEXAttack(m_pos));
 			m_hight = 0;
 			m_flip = !m_flip;
 			m_attack_cnt = 0;	
@@ -145,7 +179,7 @@ void Enemy04::LAttack()
 	if (m_interval_flg) {
 		m_img.ChangeAnimation(Enemy04Anim::eAttackCat01);
 		if (m_attack_cnt > 20) {
-			m_cnt = 30;
+			m_cnt = 10;
 			m_attack_cnt = 0;
 			m_interval_flg = false;
 			m_attack_flg = false;
@@ -178,7 +212,7 @@ void Enemy04::SAttack()
 			m_hight = -20;
 			if (m_attack_cnt > 90) {
 				m_hight = 0;
-				m_cnt = 60;
+				m_cnt = 30;
 				m_attack_cnt = 0;
 				m_interval_flg = false;
 				m_attack_flg = false;
@@ -214,56 +248,19 @@ void Enemy04::Damage(const float& _damage)
 
 void Enemy04::Move()
 {
+	if (m_movetyp_flg)
+		Alignment_y();
+	else
+		AttackControl();
 
-	if (m_attack_flg ) {
-		if (m_interval_flg)
-			DamageState();
-
-		if (m_sattack_flg)
-			SAttack();
-		if (m_lattack_flg)
-			LAttack();
-		if (m_exattack_flg)
-			EXAttack();
-	}
-	else {
-		if (m_damage_flg) {
-			DamageState();
-			return;
-		}
-
-		if (m_cnt >= 0) {
-			m_cnt--;
-			if (m_cnt == 0) {
-				m_cnt = -60;
-				m_movetyp_flg = !m_movetyp_flg;
-				m_movexy_flg = Utility::Rand(0, 5000) % 2;
-			}
-
-		}
-
-		if (m_cnt <= 0) {
-			m_cnt++;
-
-			if (m_movetyp_flg)
-				Alignment_y();
-			else
-				AttackControl();
-			if (m_cnt == 0)
-				m_cnt = 60;
-		}
-	}
-	
-
-
-
+			
 }
 
 void Enemy04::AttackControl()
 {
 	float py = m_distance.y;
 	float px = m_distance.x;
-	/*if (py < 40.0f && py > -40.0f) {//‚Ê‚é‚¯‚ê‚ÎŽg‚¤
+	if (py < 40.0f && py > -40.0f) {
 		if (m_pos.x > 1200 || m_pos.x < 150) {
 			m_attack_flg = true;
 			m_exattack_flg = true;
@@ -279,7 +276,7 @@ void Enemy04::AttackControl()
 			m_lattack_flg = true;
 			return;
 		}
-	}*/
+	}
 	
 	if (px < 200.0f && px > -200.0f)
 		m_movexy_flg = false;
@@ -306,29 +303,10 @@ void Enemy04::AttackControl()
 
 void Enemy04::Alignment_y()
 {
-	float py = m_distance.y;
-	float px = m_distance.x;
-	if (py < 40.0f && py > -40.0f) {
-		if (m_pos.x > 1200 || m_pos.x < 150) {
-			m_attack_flg = true;
-			m_exattack_flg = true;
-			return;
-		}
-		if (px < 400.0f && px > -400.0f) {
-			m_attack_flg = true;
-			m_sattack_flg = true;
-			return;
-		}
-		if (px > 400.0f || px < -400.0f) {
-			m_attack_flg = true;
-			m_lattack_flg = true;
-			return;
-		}
-	}
-
-	if (py<3.1f&&py>-3.1f)
+	float p = m_distance.y;
+	if (p<3.1f&&p>-3.1f)
 		return;
-	if (py > 0) {
+	if (p > 0) {
 		m_img.ChangeAnimation(Enemy04Anim::eEMove04);
 		m_pos.y += 3.0f;
 	}
@@ -351,17 +329,6 @@ void Enemy04::DamageState()
 	if (m_hp <= 0&& m_damage_cnt <= 30)
 		m_img.ChangeAnimation(Enemy04Anim::eEDeath04);
 	m_damage_cnt--;
-}
-
-void Enemy04::HitCheck()
-{
-	if (CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack01) ||
-		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack02) ||
-		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack03) ||
-		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectLongAttack))
-	{
-		Damage(10);
-	}
 }
 
 

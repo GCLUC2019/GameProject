@@ -3,8 +3,6 @@
 const enum CharacterData{
     eResource,
 	eGameScene,
-	eGameScene2,
-	eFadeOut,
 	eGameClear,
 	eGameTutorial,
     eGameTitle,
@@ -13,7 +11,6 @@ const enum CharacterData{
     eBalloon,
 
 	eStage01,
-    eBossStage,
 	eGround,
 	eBamboo,
 	eSkyBlue,
@@ -37,12 +34,7 @@ const enum CharacterData{
 	ePEffectShortAttack03,
 	ePEffectSpecialAttack,
 	ePEffectGetDamage,
-	
-	eE1AttackEffect,
 	eE2AttackEffect,
-	eE3AttackEffect,
-	eE4AttackEffect,
-	eE5AttackEffect,
 
 
 	eBossManager,

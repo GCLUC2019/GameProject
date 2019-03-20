@@ -3,11 +3,9 @@
 #include "CAnimation.h"
 #include "CGameScene.h"
 
-static CCharacterBoss* s_instance_p = nullptr;
 
 CCharacterBoss::CCharacterBoss():CCharacter(eTaskIdEnemy,0)
 {
-	s_instance_p = this;
 	//m_player_p  = dynamic_cast<CCharacterPlayer*>(TaskManager::GetInstance()->FindTask(eTaskIdPlayer));
 	m_player_p = CCharacterPlayer::GetInstance();
 
@@ -17,9 +15,6 @@ CCharacterBoss::CCharacterBoss():CCharacter(eTaskIdEnemy,0)
 
 CCharacterBoss::~CCharacterBoss()
 {
-	if (s_instance_p == this) {
-		s_instance_p = nullptr;
-	}
 }
 
 void CCharacterBoss::CharacterUpdate()
@@ -468,9 +463,4 @@ void CCharacterBoss::CharacterBeforeCollisionCheck()
 void CCharacterBoss::CharacterOutHitPoint()
 {
 	CGameScene::GetInstance()->StageClear();
-}
-
-CCharacterBoss * CCharacterBoss::GetInstance()
-{
-	return s_instance_p;
 }

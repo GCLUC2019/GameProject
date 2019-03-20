@@ -27,10 +27,7 @@ void CLoadResorce::LoadResorce()
 	ADD_RESOURCE("HP_Bar_Frame", CImage::LoadImage("hp_bar_frame.png"));
 	*/
 
-	
 	ReadResorceFile("General/GENERAL_IMAGE.resorce");
-
-
 	ReadResorceFile("PlayerAnim/PLAYER_ANIM_IMAGE.resorce");
 	ReadResorceFile("EnemyAnim/Spear/ENEMY_SPEAR_ANIM_IMAGE.resorce");
 	ReadResorceFile("EnemyAnim/Axe/ENEMY_AXE_ANIM_IMAGE.resorce");
@@ -39,20 +36,8 @@ void CLoadResorce::LoadResorce()
 	ReadResorceFile("Story/STORY_IMAGE.resorce");
 	ReadResorceFile("BossDog/DOG_ANIM_IMAGE.resorce");
 
-	CSound::GetInstance()->GetSound("BGM_Boss")->Load("Sound/boss_bgm.wav", 1);
-	CSound::GetInstance()->GetSound("BGM_Stage_Clear")->Load("Sound/stage_clear_bgm.wav", 1);
-	CSound::GetInstance()->GetSound("BGM_Intro_Story")->Load("Sound/intro_story.wav", 1);
-	//CSound::GetInstance()->GetSound("BGM_Stage")->Load("Sound/stage_bgm.wav", 1);
-	CSound::GetInstance()->GetSound("BGM_Title")->Load("Sound/title_bgm.wav", 1);
-
-	CSound::GetInstance()->GetSound("SE_Slash1")->Load("Sound/slash1.wav", 10);
-	CSound::GetInstance()->GetSound("SE_Shot1")->Load("Sound/shot1.wav", 10);
-	CSound::GetInstance()->GetSound("SE_Cursor")->Load("Sound/cursor.wav", 10);
-	CSound::GetInstance()->GetSound("SE_Decision")->Load("Sound/decision.wav", 10);
-	CSound::GetInstance()->GetSound("SE_Jump")->Load("Sound/jump.wav", 10);
-	CSound::GetInstance()->GetSound("SE_Landing")->Load("Sound/landing.wav", 10);
-	CSound::GetInstance()->GetSound("SE_Down")->Load("Sound/down.wav", 10);
-	CSound::GetInstance()->GetSound("SE_Take")->Load("Sound/take.wav", 10);
+	//CSound::GetInstance()->GetSound("BGM_Boss")->Load("Sound/boss_bgm.wav", 10);
+	//CSound::GetInstance()->GetSound("BGM_Stage_Clear")->Load("Sound/stage_clear_bgm.wav", 10);
 
 	//m_bgm[e_BGM_Party_Menu] = CSound::GetInstance()->GetSound("BGM_Party_Menu");
 

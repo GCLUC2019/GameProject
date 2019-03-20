@@ -46,8 +46,6 @@
 CTexture CPlayerTank::mTexImage;
 CTexture CPlayerTank::mTexImage2;
 
-CPlayerTank *CPlayerTank::spInstance = 0;
-
 void CPlayerTank::Init(){
 	mGravityV = 0;
 	AttackSide = 1;
@@ -99,8 +97,6 @@ void CPlayerTank::Init(){
 	CCollisionManager::Get()->Add(mpBoxCollider);
 	mTaskTag = EPLAYERTANK;
 	mHpBar.SetHpBar(this, CVector2(0.0f, -50.0f), CVector2(50.0f, 8.0f), mColor, 100, 100);
-
-	spInstance = this;
 }
 
 void CPlayerTank::Update(){

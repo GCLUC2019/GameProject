@@ -8,7 +8,6 @@
 
 Tutorial::Tutorial() : Task(eGameTutorial)
 {
-
     TaskManager::GetInstance()->AddTask(new Resource());
 	TaskManager::GetInstance()->AddTask(new Stage01());
 	TaskManager::GetInstance()->AddTask(new Player());
@@ -16,12 +15,10 @@ Tutorial::Tutorial() : Task(eGameTutorial)
 	TaskManager::GetInstance()->AddTask(new Balloon());
 	TaskManager::GetInstance()->AddTask(new DescriptionUI());
 	TaskManager::GetInstance()->AddTask(new UI());
-	SOUND("n82")->Play(true);
 }
 
 Tutorial::~Tutorial()
 {
-	SOUND("n82")->Stop();
 	TaskManager::KillAll();
 	TaskManager::GetInstance()->AddTask(new Title());
 }

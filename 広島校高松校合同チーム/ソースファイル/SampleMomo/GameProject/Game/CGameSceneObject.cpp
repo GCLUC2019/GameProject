@@ -192,24 +192,6 @@ void CGameSceneObject::CollisionCheck(Task * _collision_task)
 
 	if (CollisionCheck3D(CVector3D(m_pos.x, m_pos_old.y, m_pos_old.z), m_rads, ob_pos, ob_rads)) {
 		m_pos.x = m_pos_old.x;
-
-		/*
-		//試験的 横にも適用してみる
-		register float ob_right_pos = ob_pos.x + ob_rads.x + m_rads.y;
-		register float ob_left_pos = ob_pos.x - ob_rads.x - m_rads.y;
-		if (m_pos.x > ob_pos.x) {
-			if (m_pos.x <= ob_right_pos) {
-				m_pos.x = ob_right_pos;
-			}
-		}
-		
-		else if (m_pos.x < ob_pos.x) {
-			if (m_pos.x >= ob_left_pos) {
-				m_pos.x = ob_left_pos;
-			}
-		}*/
-		
-		
 	};
 
 
@@ -231,7 +213,6 @@ void CGameSceneObject::CollisionCheck(Task * _collision_task)
 
 	GameSceneObjectCollisionCheck(_collision_task);
 
-	
 
 	//軽量化前
 	/*

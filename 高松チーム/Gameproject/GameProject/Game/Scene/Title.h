@@ -8,7 +8,6 @@
 */
 class Title : public Task {
 private:
-	float mp_fadeout;
     //画像データ
     CImage m_img_back;
     CImage m_img_rogobase;
@@ -16,7 +15,6 @@ private:
     CImage m_img_ohuda;
     CImage m_img_choice;
     CImage m_img_icon;
-    CImage m_img_window;
     //各位置
     CVector2D m_title_pos;
     CVector2D m_rogo_pos;

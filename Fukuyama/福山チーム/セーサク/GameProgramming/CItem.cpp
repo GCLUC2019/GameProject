@@ -3,29 +3,28 @@
 #include "CItem.h"
 #include "CPlayerTank.h"
 
-CTexture CItem::mTexImage;
-CTexture CItem::mTexImage2;
-CTexture CItem::mTexImage3;
-
+int type;
 
 void CItem::Init(){
-	SetVertex(-20.0f, 20.0f, -20.0f, 20.0f);
+	SetVertex(-10.0f, 10.0f, -10.0f, 10.0f);
 	mCollider = new CCircleCollider();
 	mCollider->mRadius = 10.0f;
 	mCollider->mpTask = this;
 	CCollisionManager::Get()->Add(mCollider);
-	if (mType == 1){
-		mTexImage.Load("heal");
-	}
-	if (mType == 2){
-		mTexImage.Load("strengthen");
-	}
-	if (mType == 3){
-		mTexImage.Load("Invincible");
-	}
 }
 
 void CItem::Update(){
+	/*
+	if (mType == 1){
+	SetUv(heal);
+	}
+	if (mType == 2){
+	SetUv(strengthen);
+	}
+	if (mType == 3){
+	SetUv(Invincible);
+	}
+	*/
 	CCollisionManager::Get()->Collision(mCollider);
 }
 
@@ -36,7 +35,7 @@ void CItem::Render(){
 void CItem::OnCollision(CCollider*p){
 	if (mTaskTag == EITEM&&p->mpTask->mTaskTag == EPLAYERTANK){
 		if (mType == 1){  //‰ñ•œ
-			CPlayerTank::spInstance->mHpBar.mHp += 40.0f;
+			//CPlayerTank::spInstance->mHpBar.mHp += 40.0f;
 			printf("CItem1::OnCollision\n");
 		}
 		if (mType == 2){  //‹­‰»

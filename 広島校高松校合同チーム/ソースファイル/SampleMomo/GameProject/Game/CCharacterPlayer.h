@@ -98,9 +98,6 @@
 
 #define WEAPON_USE_ENDURANCE_DAMAGE (2.0f)
 
-
-#define KEEP_FINAL_ATTACK_TIMEOUT (54)
-
 //着地モーションから回避に派生した場合冒頭モーションをカット可能にする。
 
 /*
@@ -253,8 +250,6 @@ private:
 	int m_memory_hit_attacked_enemy_num = 0;
 	Task* m_memory_hit_attacked_enemy_p[MEMORY_HIT_ATTACKED_ENEMY_MAX];
 
-	//ジャンプ攻撃中は何も行動ができないので、このときに敵にはさまると詰みになるので
-	double m_keep_final_attack_timeout = 0;
 
 	bool m_is_input_evasion_flip = 0;
 	
