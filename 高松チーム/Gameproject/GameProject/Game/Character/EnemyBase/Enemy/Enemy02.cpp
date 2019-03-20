@@ -167,6 +167,7 @@ void Enemy02::HitCheck()
 		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack02) ||
 		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack03))
 	{
+		SOUND("punch-middle2")->Play();
 		m_hp -= 1;
 		m_state = Enemy02State::eDamage;
 	}
