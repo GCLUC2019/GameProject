@@ -1,6 +1,7 @@
 #include "EnemyEffect.h"
 #include "../Anim/AnimEnemyEffect.h"
-
+#include "../../CollitionBase.h"
+#include "../GameProject/Game/Character/Player.h"
 #define EFFECT_SIZE 200
 E2Effect::E2Effect(const CVector2D&pos) :Task(eE2AttackEffect)
 {
@@ -24,4 +25,14 @@ void E2Effect::Draw()
     m_img.SetCenter(EFFECT_SIZE , EFFECT_SIZE / 2);
     m_img.SetSize(EFFECT_SIZE*2, EFFECT_SIZE);
     m_img.Draw();
+}
+
+void E2Effect::HitCheck()
+{
+    Task*t = CollitionBase::GetCollisionCheckRect(this, CharacterData::ePlayer);
+    Player*p = dynamic_cast<Player*>(t);
+
+    if (p != nullptr) {
+        p->Damage(10);
+    }
 }
