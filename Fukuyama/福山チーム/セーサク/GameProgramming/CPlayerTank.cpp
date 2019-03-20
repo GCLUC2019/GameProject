@@ -46,8 +46,6 @@
 CTexture CPlayerTank::mTexImage;
 CTexture CPlayerTank::mTexImage2;
 
-CPlayerTank *CPlayerTank::spInstance = 0;
-
 void CPlayerTank::Init(){
 	mGravityV = 0;
 	AttackSide = 1;
@@ -99,8 +97,6 @@ void CPlayerTank::Init(){
 	CCollisionManager::Get()->Add(mpBoxCollider);
 	mTaskTag = EPLAYERTANK;
 	mHpBar.SetHpBar(this, CVector2(0.0f, -35.0f), CVector2(50.0f, 8.0f), mColor, 100, 100);
-
-	spInstance = this;
 }
 
 void CPlayerTank::Update(){
@@ -293,25 +289,25 @@ void CPlayerTank::OnCollision(CCollider*p){
 			CMain::mSceneTag = CScene::ELOSE;
 		}
 	}
-	//if (p->mpTask->mTaskTag == EBOSSBULLET){
-	//	CExplosion*p = new CExplosion();
-	//	HeadRightTurn();
-	//	HeadRightTurn();
-	//	HeadRightTurn();
-	//	HeadRightTurn();
-	//	HeadRightTurn();
-	//	HeadRightTurn();
-	//	HeadRightTurn();
-	//	HeadRightTurn();
-	//	p->SetTexture(&Texture, 0, 64, 64, 0);
-	//	p->mPosition = mPosition;
-	//	CTaskManager::Get()->Add(p);
-	//	mHpBar.mHp -= 5.0f;
-	//	if (mHpBar.mHp <= 0.0f){
-	//		mEnabled = false;
-	//		CMain::mSceneTag = CScene::ELOSE;
-	//	}
-	//}
+	if (p->mpTask->mTaskTag == EBOSSBULLET){
+		CExplosion*p = new CExplosion();
+		/*HeadRightTurn();
+		HeadRightTurn();
+		HeadRightTurn();
+		HeadRightTurn();
+		HeadRightTurn();
+		HeadRightTurn();
+		HeadRightTurn();
+		HeadRightTurn();*/
+		p->SetTexture(&Texture, 0, 64, 64, 0);
+		p->mPosition = mPosition;
+		CTaskManager::Get()->Add(p);
+		mHpBar.mHp -= 5.0f;
+		if (mHpBar.mHp <= 0.0f){
+			mEnabled = false;
+			CMain::mSceneTag = CScene::ELOSE;
+		}
+	}
 	if (p->mpTask->mTaskTag == ESPEEDENEMY){
 		CExplosion*p = new CExplosion();
 		//HeadRightTurn();
@@ -322,6 +318,17 @@ void CPlayerTank::OnCollision(CCollider*p){
 		//HeadRightTurn();
 		//HeadRightTurn();
 		//HeadRightTurn();
+		p->SetTexture(&Texture, 0, 64, 64, 0);
+		p->mPosition = mPosition;
+		CTaskManager::Get()->Add(p);
+		mHpBar.mHp -= 1.0f;
+		if (mHpBar.mHp <= 0.0f){
+			mEnabled = false;
+			CMain::mSceneTag = CScene::ELOSE;
+		}
+	}
+	if (p->mpTask->mTaskTag == EBOSS){
+		CExplosion*p = new CExplosion();
 		p->SetTexture(&Texture, 0, 64, 64, 0);
 		p->mPosition = mPosition;
 		CTaskManager::Get()->Add(p);
@@ -356,6 +363,7 @@ void CPlayerTank::OnCollision(CBoxCollider*p){
 		printf("CBullet::OnCollision\n");
 		p->mPosition = mPosition;
 	}
+	
 }
 
 void CPlayerTank::Render(){
