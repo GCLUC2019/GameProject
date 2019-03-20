@@ -376,7 +376,7 @@ void Player::Update()
 	}
 		
 	m_img.SetColor(1, 1, 1, 1);
-	if (m_special >= 100 && CInput::GetState(0, CInput::eHold, CInput::eButton5) && m_attack_flg == false)
+	if (m_special >= 100 && CInput::GetState(0, CInput::eHold, CInput::eButton8) && m_attack_flg == false)
 		m_special_flg = true;
 	m_state_old = m_state;
 	if (m_jump_flg == false)

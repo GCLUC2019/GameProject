@@ -102,7 +102,7 @@ void Init(void)
 	CInput::SetButton(0, CInput::eButton7, 'N');
 
 	CInput::SetPadButton(0, CInput::eButton8, PadButton::e8);
-	CInput::SetButton(0, CInput::eButton5, 'Q');
+	CInput::SetButton(0, CInput::eButton8, 'Q');
 
 	CInput::SetButton(0, CInput::eButton10, VK_RETURN);
 	CInput::SetButton(0, CInput::eUp, VK_UP);
