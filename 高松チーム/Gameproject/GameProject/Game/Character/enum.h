@@ -3,6 +3,7 @@
 const enum CharacterData{
     eResource,
 	eGameScene,
+	eGameScene2,
 	eGameClear,
 	eGameTutorial,
     eGameTitle,
