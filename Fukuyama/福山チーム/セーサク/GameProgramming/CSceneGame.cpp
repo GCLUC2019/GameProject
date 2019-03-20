@@ -112,11 +112,6 @@ void CSceneTitle::Init(){
 	mTitle.SetTexture(&mTexture,0, 766, 0, 151);
 
 	mEnterTex.Load("Enter.tga");//ƒ^ƒCƒgƒ‹’Ç‰Á
-	mEnter.SetVertex(-150, 150, -10, 10);
-	mEnter.SetColor(1.0f, 1.0f, 1.0f, 1.0f);
-	mEnter.SetTexture(&mEnterTex, 0, 376, 0, 21);
-	
-
 }
 
 void CSceneTitle::Update(){
@@ -126,6 +121,13 @@ void CSceneTitle::Update(){
 	BackImage.y = 0;
 	BackImage.h = 300;
 	BackImage.w = 400;
+
+	mEnter.SetColor(1.0f, 1.0f, 1.0f, 1.0f);
+	mEnter.Draw(mEnterTex, 0, 355, 0, 21);
+	mEnter.x = 0;
+	mEnter.y = -300;
+	mEnter.h = 10;
+	mEnter.w =150;
 	mTitle.Update();
 	mTitle.Render();
 	mEnter.Update();
