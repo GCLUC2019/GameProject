@@ -18,6 +18,11 @@ public:
 	{
 		Init();
 	}
+
+	static CTexture mTexImage;
+	static CTexture mTexImage2;
+	static CTexture mTexImage3;
+
 	void Init();
 	void Update();
 	void Render();

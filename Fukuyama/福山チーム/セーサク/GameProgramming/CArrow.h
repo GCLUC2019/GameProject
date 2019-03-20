@@ -23,6 +23,8 @@ public:
 		Init();
 	}
 
+	static CTexture mTexImage;
+
 	void Init();
 	void Update();
 	void Render();
