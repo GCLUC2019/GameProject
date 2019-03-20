@@ -1,6 +1,7 @@
 #include "Title.h"
 #include"../GameData/GameData.h"
 #include "../Tutorial/Tutorial.h"
+#include "../GameProject/Game/UI/UI.h"
 
 #define BACKXSIZE 1280
 #define BACKYSIZE 720
@@ -44,30 +45,42 @@ Title::~Title()
 
 void Title::Update()
 {
+	Task* p = TaskManager::FindObject(CharacterData::eFadeOut);
+	FadeOut* n = dynamic_cast<FadeOut*>(p);
+	if (n != nullptr)
+		mp_fadeout= n->GetFadeOut();
+
     m_cnt += 1;
     if (m_cnt >= 540) {
         m_cnt = 0;
         m_size = 0;
     }
     if (CInput::GetState(0, CInput::ePush, CInput::eUp)) {
+		SOUND("highspeed-movement1")->Play();
         m_choice++;
     }
     if (CInput::GetState(0, CInput::ePush, CInput::eDown)) {
+		SOUND("highspeed-movement1")->Play();
         m_choice--;
     }
     if (m_choice < 0)m_choice = 1;
     if (m_choice > 1)m_choice = 0;
     //printf("%d", m_choice);
     if (CInput::GetState(0, CInput::ePush, CInput::eButton2)) {
-        switch (m_choice) {
-        case 0:
-            TaskManager::AddTask(new Tutorial());
-            break;
-        case 1:
-            TaskManager::AddTask(new GameScene());
-            break;
-        }
-        SetKill();
+		SOUND("se_027")->Play();
+		TaskManager::GetInstance()->AddTask(new FadeOut());
+		if (mp_fadeout <= 1)
+		{
+			switch (m_choice) {
+			case 0:
+				TaskManager::AddTask(new Tutorial());
+				break;
+			case 1:
+				TaskManager::AddTask(new GameScene());
+				break;
+			}
+			SetKill();
+		}
     }
         //printf("%f,%f\n",m_ohuda_pos.x, m_ohuda_pos.y);
 
