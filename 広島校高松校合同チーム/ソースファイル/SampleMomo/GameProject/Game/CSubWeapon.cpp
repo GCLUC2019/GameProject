@@ -86,6 +86,7 @@ void CSubWeaponItem::GameSceneObjectUpdate()
 //ここでプレイヤーに武器の種類と残り使用回数を与えてやると良いと思います
 void CSubWeaponItem::PlayerGetItem()
 {
+	CSound::GetInstance()->GetSound("SE_Take")->Play();
 	m_get_flag = false;
 	CCharacterPlayer::GetInstance()->PlayerGainEquip(m_weapon_id,m_endurance);
 }

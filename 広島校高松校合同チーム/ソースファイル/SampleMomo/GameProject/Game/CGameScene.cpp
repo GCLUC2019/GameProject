@@ -143,6 +143,8 @@ void CGameScene::SetupScene()
 
 	switch (m_now_scene) {
 	case eStage1:
+		//CSound::GetInstance()->StopAll();
+		//CSound::GetInstance()->GetSound("BGM_Stage")->Play(true);
 		for (int i = 0; i < 4; i++) {
 			//床張り(役割は単純なので処理の軽い汎用オブジェクトで代用)
 			AddGameSceneObject(new CCommonObject(nullptr, CVector3D(1280.0f * i, 10000.0f, 0.0f), CVector2D(0, 0), CVector3D(1280.0f, 1.0f + 10000.0f, 720.0f)));
@@ -169,6 +171,8 @@ void CGameScene::SetupScene()
 		m_next_scene_pos = 1280 * 4 - 100;
 		break;
 	case eStage1Boss:
+		CSound::GetInstance()->StopAll();
+		CSound::GetInstance()->GetSound("BGM_Boss")->Play(true);
 		for (int i = 0; i < 2; i++) {
 			//床張り(役割は単純なので処理の軽い汎用オブジェクトで代用)
 			AddGameSceneObject(new CCommonObject(nullptr, CVector3D(1280.0f * i, 10000.0f, 0.0f), CVector2D(0, 0), CVector3D(1280.0f, 1.0f + 10000.0f, 720.0f)));

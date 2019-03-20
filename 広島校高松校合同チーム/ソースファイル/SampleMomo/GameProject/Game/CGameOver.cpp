@@ -60,14 +60,17 @@ void CGameOver::Update()
 {
 	//m_draw_cnt += CFPS::GetDeltaTime() * GAME_BASE_FPS;
 	if (CInput::GetState(0, CInput::ePush, CInput::eUp)) {
+		CSound::GetInstance()->GetSound("SE_Cursor")->Play();
 		m_serect_num--;
 		if (m_serect_num < MIN)m_serect_num = MAX;
 	}
 	if (CInput::GetState(0, CInput::ePush, CInput::eDown)) {
+		CSound::GetInstance()->GetSound("SE_Cursor")->Play();
 		m_serect_num++;
 		if (m_serect_num > MAX)m_serect_num = MIN;
 	}
 	if (CInput::GetState(0, CInput::ePush, CInput::eButton1)) {
+		CSound::GetInstance()->GetSound("SE_Decision")->Play();
 		SetIsDelete();
 	}
 }
