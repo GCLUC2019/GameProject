@@ -40,7 +40,7 @@ void CSceneGame::Init(){
 }
 
 void CSceneGame::Update(){
-	if (mEnemyIntervar>0){
+	if (mEnemyIntervar>0&&mEnemyLimit<1){
 		mEnemyIntervar--;
 	}
 

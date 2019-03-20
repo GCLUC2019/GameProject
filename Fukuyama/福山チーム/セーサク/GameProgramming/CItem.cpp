@@ -9,7 +9,7 @@ CTexture CItem::mTexImage3;
 
 
 void CItem::Init(){
-	SetVertex(-10.0f, 10.0f, -10.0f, 10.0f);
+	SetVertex(-20.0f, 20.0f, -20.0f, 20.0f);
 	mCollider = new CCircleCollider();
 	mCollider->mRadius = 10.0f;
 	mCollider->mpTask = this;
@@ -36,7 +36,7 @@ void CItem::Render(){
 void CItem::OnCollision(CCollider*p){
 	if (mTaskTag == EITEM&&p->mpTask->mTaskTag == EPLAYERTANK){
 		if (mType == 1){  //‰ñ•œ
-			//CPlayerTank::spInstance->mHpBar.mHp += 40.0f;
+			CPlayerTank::spInstance->mHpBar.mHp += 40.0f;
 			printf("CItem1::OnCollision\n");
 		}
 		if (mType == 2){  //‹­‰»
