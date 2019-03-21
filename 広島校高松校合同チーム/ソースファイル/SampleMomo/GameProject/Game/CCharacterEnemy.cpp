@@ -3,6 +3,7 @@
 #include "CCharacterPlayer.h"
 #include "CGameScene.h"
 #include "CSubWeapon.h"
+#include "CBar.h"
 
 CCharacterEnemy::CCharacterEnemy(int _enemy_id, CVector3D _enemy_pos, CGameSceneWave* _from_wave) :CCharacter(eTaskIdEnemy, 0)
 {
@@ -11,6 +12,8 @@ CCharacterEnemy::CCharacterEnemy(int _enemy_id, CVector3D _enemy_pos, CGameScene
 	SetPosOld(_enemy_pos);
 
 	m_speed = 1.0f;
+
+	m_knock_back_frame = ENEMY_KNOCK_BACK_FRAME;
 
 	SetIsShowShadow(true);
 	SetRads(75, 150, 10);
@@ -28,11 +31,14 @@ CCharacterEnemy::CCharacterEnemy(int _enemy_id, CVector3D _enemy_pos, CGameScene
 	m_target_p = CCharacterPlayer::GetInstance();
 	
 	m_from_wave_p = _from_wave;
+
+	m_hit_point_bar_p = new CBar(GET_RESOURCE("HP_Bar", CImage*),&m_hit_point,m_hit_point_max,m_pos,CVector2D(195,15),true);
+	m_hp_frame_image_p = GET_RESOURCE("Enemy_HP_Bar_Frame", CImage*);
 }
 
 CCharacterEnemy::~CCharacterEnemy()
 {
-
+	if (m_hit_point_bar_p != nullptr) delete m_hit_point_bar_p;
 }
 
 void CCharacterEnemy::LoadAnimImage()
@@ -83,7 +89,6 @@ void CCharacterEnemy::LoadAnimImage()
 	}
 	
 }
-
 void CCharacterEnemy::CharacterBeforeUpdate()
 {
 }
@@ -95,14 +100,15 @@ void CCharacterEnemy::CharacterUpdate()
 	Attacking();
 	
 	ReceiveDamageNow();
-
+	
+	DoingKnockBack();
 	
 	EnemyMoving();
 	EnemyAttack();
 	
-	
-
 	AdjAnim();
+
+	
 }
 
 void CCharacterEnemy::CharacterBeforeCollisionCheck()
@@ -115,6 +121,13 @@ void CCharacterEnemy::CollisionCheckCharacter(Task * _collision_task)
 
 void CCharacterEnemy::CharacterDraw()
 {
+	m_hp_frame_image_p->SetSize(CVector2D(200,20));
+	m_hp_frame_image_p->SetPos(CVector2D(m_pos.x,m_pos.y + m_pos.z) + CVector2D(-100,-170) - GetScroll());
+	m_hp_frame_image_p->Draw();
+
+	m_hit_point_bar_p->SetPos(m_pos + CVector3D(-100 + 2.5, 0, -170 + 2.5));
+	m_hit_point_bar_p->Update();
+	m_hit_point_bar_p->Draw();
 }
 
 void CCharacterEnemy::CharacterOutHitPoint()
@@ -145,10 +158,22 @@ void CCharacterEnemy::ReceiveDamageNow()
 	m_anim_p->SetWillPlayAnim(eEnemyAnimIdDamage);
 }
 
+void CCharacterEnemy::ReceiveKnockBack(CCharacter * _from, double _power)
+{
+	if (m_is_knock_back == true) return;
+	if (m_is_invincible == true) return;
+
+	SetKnockBack(_from,_power);
+
+	//“®ì’†’f
+	m_is_attacking = false;
+}
+
 
 void CCharacterEnemy::EnemyMoving()
 {
 	if (m_target_p == nullptr) return;
+	if (m_is_knock_back == true) return;
 	
 	const CVector3D& target_pos = m_target_p->GetPos();
 	CVector3D target_vec = target_pos - m_pos;
@@ -216,6 +241,7 @@ void CCharacterEnemy::EnemyAttack()
 {
 	if (m_target_p == nullptr) return;
 	if (m_is_attacking == true) return;
+	if (m_is_knock_back == true) return;
 
 	const CVector3D& target_pos = m_target_p->GetPos();
 	CVector3D target_vec = target_pos - m_pos;
@@ -288,6 +314,9 @@ void CCharacterEnemy::Attacking()
 
 			//ƒ_ƒ[ƒW‚ð—^‚¦‚é
 			m_target_p->HitPointGainValue(-m_attack_power);
+
+			//ƒmƒbƒNƒoƒbƒN‚ð—^‚¦‚é
+			m_target_p->ReceiveKnockBack(this, 5.0);
 
 			//UŒ‚‚ª“–‚½‚Á‚½‚±‚Æ‚ð“`‚¦‚é
 			m_target_p->ReceiveAttack();

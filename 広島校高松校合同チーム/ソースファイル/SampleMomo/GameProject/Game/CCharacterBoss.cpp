@@ -13,6 +13,8 @@ CCharacterBoss::CCharacterBoss():CCharacter(eTaskIdEnemy,0)
 
 	//各パラメータを初期化
 	DefalutSet();
+
+	m_knock_back_count = BOSS_KNOCK_BACK_FRAME;
 }
 
 CCharacterBoss::~CCharacterBoss()
@@ -24,7 +26,13 @@ CCharacterBoss::~CCharacterBoss()
 
 void CCharacterBoss::CharacterUpdate()
 {
+	if (m_is_knock_back == true) {
+		DoingKnockBack();
+		return;
+	}
+
 	m_player_pos = m_player_p->GetPos();
+	
 	ChangeFlip();
 	ModeCount();
 	ChangeState();
@@ -165,8 +173,10 @@ void CCharacterBoss::Idle()
 	}
 		
 	m_anim_p->SetWillPlayAnim(eEnemyAnimBossIdIdle);
+	
 	m_vec.x = 0;
 	m_vec.z = 0;
+
 	m_is_attack = true;
 	m_is_hit = false;
 }
@@ -244,7 +254,9 @@ void CCharacterBoss::Attack1()
 	if (float length = CheckAttackRange() <= ATTACK1_RANGE_BITE) {
 		m_is_attack = false;
 		m_player_p->HitPointGainValue(-ATTACK);
+		m_player_p->ReceiveKnockBack(this, 5.0);
 		m_player_p->ReceiveAttack();
+
 		//攻撃が当たると、カウント減少
 		m_ex_count++;
 		m_is_hit = true;
@@ -315,6 +327,7 @@ void CCharacterBoss::SpecialAttack1()
 			if (float length = CheckAttackRange() <= EX1_RANGE_RASH) {
 				m_is_attack = false;
 				m_player_p->HitPointGainValue(-RASH_ATTACK);
+				m_player_p->ReceiveKnockBack(this, 5.0);
 				m_player_p->ReceiveAttack();
 			}
 		}
@@ -415,6 +428,7 @@ void CCharacterBoss::ReceiveAttack()
 	m_ex_state = eEnemyBossStateDamage;
 	SetIsBlindDraw(true);
 	m_hit_count++;
+	CSound::GetInstance()->GetSound("SE_Damage")->Play();
 }
 
 void CCharacterBoss::DefalutSet()
@@ -442,6 +456,14 @@ void CCharacterBoss::DefalutSet()
 	SetShadowSize(BOSS_SHADOW_SIZE);
 	SetDrawAdjPos(CVector2D(-30.0, -90.0));
 	*/
+}
+
+void CCharacterBoss::ReceiveKnockBack(CCharacter * _from, double _power)
+{
+	if (m_is_knock_back == true) return;
+	if (m_is_invincible == true) return;
+
+	SetKnockBack(_from, _power);
 }
 
 void CCharacterBoss::AdjAnim()

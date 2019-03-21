@@ -56,9 +56,6 @@
     <ClCompile Include="Game\CCharacterEnemy.cpp">
       <Filter>Game\Object\GameSceneObject\Character\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Game\CGameSceneObject.cpp">
-      <Filter>Game\Object\GameSceneObject</Filter>
-    </ClCompile>
     <ClCompile Include="Game\CCharacterBoss.cpp">
       <Filter>Game\Object\GameSceneObject\Character\Boss</Filter>
     </ClCompile>
@@ -79,6 +76,9 @@
     </ClCompile>
     <ClCompile Include="Game\CGameSceneBossUI.cpp">
       <Filter>Game\Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CGameSceneObject.cpp">
+      <Filter>Game\Object\GameSceneObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

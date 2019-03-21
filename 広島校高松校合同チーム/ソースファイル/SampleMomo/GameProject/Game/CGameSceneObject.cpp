@@ -16,6 +16,9 @@ CGameSceneObject::~CGameSceneObject()
 
 void CGameSceneObject::BeforeUpdate()
 {
+	CheckSetStop();
+	CountStop();
+	if (m_is_stop == true) return;
 	CheckInScreen();
 	SetPosOld(m_pos);
 	GameSceneObjectBeforeUpdate();
@@ -23,6 +26,7 @@ void CGameSceneObject::BeforeUpdate()
 
 void CGameSceneObject::Update()
 {
+	if (m_is_stop == true) return;
 	GameSceneObjectUpdate();
 	Gravity();
 	MovePos();
@@ -32,6 +36,7 @@ void CGameSceneObject::Update()
 
 void CGameSceneObject::AfterUpdate()
 {
+	if (m_is_stop == true) return;
 	GameSceneObjectAfterUpdate();
 
 	//アニメーション制御用なのでここにあると都合が良い
@@ -72,6 +77,7 @@ void CGameSceneObject::Gravity()
 
 void CGameSceneObject::BeforeCollisionCheck()
 {
+	if (m_is_stop == true) return;
 	m_is_landing_old = m_is_landing;
 	m_is_landing = false;
 	GameSceneObjectBeforeCollisionCheck();
@@ -182,8 +188,16 @@ void CGameSceneObject::GameSceneObjectDraw()
 
 void CGameSceneObject::CollisionCheck(Task * _collision_task)
 {
+	if (m_is_stop == true) return;
+
 	register CObject* ob = dynamic_cast<CObject*>(_collision_task);
 	if (ob == nullptr || ob->GetIsCollisionOthers() == false) return;
+	
+	register CGameSceneObject* gob = dynamic_cast<CGameSceneObject*>(ob);
+	if (gob != nullptr) {
+		if (gob->GetStop() == true) return;
+	}
+
 	register const CVector3D& ob_pos = ob->GetPos();
 	register const CVector3D& ob_pos_old = ob->GetPosOld();
 	register const CVector3D& ob_rads = ob->GetRads();
@@ -304,7 +318,7 @@ void CGameSceneObject::CalcScroll()
 
 	CVector2D calc_scroll_pos = scroll_pos;
 
-	register const float offset_x = -350.0f;
+	register const float offset_x = -550.0f;
 	register const float offset_y = -200.0f;
 
 	//スクロール限界値を設定

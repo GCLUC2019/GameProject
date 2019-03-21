@@ -78,7 +78,7 @@ void CGameScene::WaveDone(int _next_wave)
 	switch (m_now_scene) {
 	case eStage1:
 		SetGameSceneLimitPosMin(CVector3D(100.0f, 0.0f, 340.0f));
-		SetGameSceneLimitPosMax(CVector3D(1280.0f * 4, 720.0f, 720.0f));
+		SetGameSceneLimitPosMax(CVector3D(1280.0f * 6, 720.0f, 720.0f));
 		break;
 	case eStage1Boss:
 		SetGameSceneLimitPosMin(CVector3D(100.0f, 0.0f, 340.0f));
@@ -169,14 +169,14 @@ void CGameScene::SetupScene()
 		CSound::GetInstance()->GetSound("BGM_Title")->Play(true);
 		//CSound::GetInstance()->StopAll();
 		//CSound::GetInstance()->GetSound("BGM_Stage")->Play(true);
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 6; i++) {
 			//床張り(役割は単純なので処理の軽い汎用オブジェクトで代用)
 			AddGameSceneObject(new CCommonObject(nullptr, CVector3D(1280.0f * i, 10000.0f, 0.0f), CVector2D(0, 0), CVector3D(1280.0f, 1.0f + 10000.0f, 720.0f)));
 			AddGameSceneObject(new CObjectImage(GET_RESOURCE("Stage_Background_0_Bot", CImage*), CVector3D(1280 * i, 0, 0), CVector2D(1280, 720), -1));
 			AddGameSceneObject(new CObjectImage(GET_RESOURCE("Stage_Background_0_Top", CImage*), CVector3D(1280 * i, -720, 0), CVector2D(1280, 720), -1));			
 		}
 		SetGameSceneLimitPosMin(CVector3D(100.0f, 0.0f, 340.0f));
-		SetGameSceneLimitPosMax(CVector3D(1280.0f * 4, 720.0f, 720.0f));
+		SetGameSceneLimitPosMax(CVector3D(1280.0f * 6, 720.0f, 720.0f));
 		
 
 		if(m_last_wave != -1) AddGameSceneObject(new CGameSceneWave(m_last_wave));
@@ -194,7 +194,7 @@ void CGameScene::SetupScene()
 		AddGameSceneObject(new CCharacterEnemy(eEnemyIdSpear, CVector3D(4600, -151, 450 + 100)));
 		*/
 		m_next_scene = eStage1Boss;
-		m_next_scene_pos = 1280 * 4 - 100;
+		m_next_scene_pos = 1280 * 6 - 100;
 		break;
 	case eStage1Boss:
 		CSound::GetInstance()->StopAll();

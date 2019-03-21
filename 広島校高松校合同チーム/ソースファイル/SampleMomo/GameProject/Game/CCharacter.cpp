@@ -131,6 +131,35 @@ void CCharacter::ReceiveAttack()
 {
 }
 
+void CCharacter::DoingKnockBack()
+{
+	if (m_is_knock_back == false) return;
+
+	m_knock_back_count -= CFPS::GetDeltaTime()  * GAME_BASE_FPS;
+	m_vec.x = m_knock_back_vec.x;
+	m_vec.z = m_knock_back_vec.z;
+
+	if (m_knock_back_count <= 0.0) {
+		m_is_knock_back = false;
+		m_vec.x = 0.0;
+		m_vec.z = 0.0;
+	}
+}
+
+void CCharacter::ReceiveKnockBack(CCharacter * _from, double _power)
+{
+}
+
+void CCharacter::SetKnockBack(CCharacter * _from, double _power)
+{
+	//ノックバック
+	m_is_knock_back = true;
+	m_knock_back_count = m_knock_back_frame;
+	const CVector3D& from_pos = _from->GetPos();
+	CVector3D vec = from_pos - m_pos;
+	m_knock_back_vec = vec.GetNormalize() * -1.0 * _power;
+}
+
 void CCharacter::SendDeadMeForFromWave()
 {
 	if (m_from_wave_p == nullptr) return;

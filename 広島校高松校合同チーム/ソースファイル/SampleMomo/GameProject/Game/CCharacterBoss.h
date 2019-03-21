@@ -53,7 +53,7 @@
 #define RASH_TIME 250.0
 
 //吠える攻撃の硬直時間
-#define BARK_FREEZE_TIME 180.0
+#define BARK_FREEZE_TIME 90.0
 
 //跳躍力
 #define JUMP_POWER 40
@@ -77,6 +77,8 @@
 #define RASH_JIMP_POWER 30
 #define RASH_ATTACK 3.0
 
+
+#define BOSS_KNOCK_BACK_FRAME (300.0)
 
 //ボスのアニメーションの種類番号
 enum {
@@ -196,6 +198,8 @@ public:
 
 	//初期化
 	void DefalutSet();
+
+	void ReceiveKnockBack(CCharacter *_from, double _power);
 
 	void AdjAnim();
 

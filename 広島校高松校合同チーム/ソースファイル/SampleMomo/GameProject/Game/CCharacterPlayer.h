@@ -9,11 +9,11 @@
 
 
 #define PLAYER_ATTACK_FRAME (20)
-#define PLAYER_ATTACK_HIT_FRAME_START (5)
+#define PLAYER_ATTACK_HIT_FRAME_START (11)
 #define PLAYER_ATTACK_HIT_FRAME_END (20)
 
 #define PLAYER_SIDE_ATTACK_FRAME (20)
-#define PLAYER_SIDE_ATTACK_HIT_FRAME_START (5)
+#define PLAYER_SIDE_ATTACK_HIT_FRAME_START (11)
 #define PLAYER_SIDE_ATTACK_HIT_FRAME_END (20)
 
 #define PLAYER_FINISH_ATTACK_FRAME (42)
@@ -22,12 +22,12 @@
 
 
 #define PLAYER_SPEAR_ATTACK_FRAME (20)
-#define PLAYER_SPEAR_ATTACK_HIT_FRAME_START (5)
+#define PLAYER_SPEAR_ATTACK_HIT_FRAME_START (11)
 #define PLAYER_SPEAR_ATTACK_HIT_FRAME_END (20)
 
 
 #define PLAYER_AXE_ATTACK_FRAME (20)
-#define PLAYER_AXE_ATTACK_HIT_FRAME_START (7)
+#define PLAYER_AXE_ATTACK_HIT_FRAME_START (8)
 #define PLAYER_AXE_ATTACK_HIT_FRAME_END (20)
 
 
@@ -62,7 +62,7 @@
 #define PLAYER_GUN_ATTACK_POWER (1.0)
 
 
-#define PLAYER_DAMAGE_ANIM_FRAME (20)
+
 
 
 //íÖínçdíºéûä‘
@@ -77,7 +77,10 @@
 
 #define PLAYER_EVASION_FRAME (36)
 #define PLAYER_EVASION_ANIM_DELAY (PLAYER_EVASION_FRAME / 4)
-#define PLAYER_AFTER_DAMAGE_INVINCIBLE (60)
+
+
+
+
 #define PLAYER_EVASION_MOVE_START_FRAME (PLAYER_EVASION_ANIM_DELAY * 2)
 #define PLAYER_RECEIVE_INPUT_EVASION_TIME (10 + 5)
 #define PLAYER_RECEIVE_INPUT__EVASION_TIME_AFTER_EVASION (30 + 20 + 10)
@@ -85,6 +88,10 @@
 
 //#define PLAYER_EVASION_MOVE_END_FRAME (PLAYER_EVASION_ANIM_DELAY * 5)
 
+
+#define PLAYER_AFTER_DAMAGE_INVINCIBLE (28)
+#define PLAYER_KNOCK_BACK_FRAME (30.0)
+#define PLAYER_DAMAGE_FRAME (30.0)
 
 #define PLAYER_EVASION_RESERVE_FRAME (PLAYER_EVASION_ANIM_DELAY * 2)
 
@@ -243,7 +250,8 @@ private:
 
 	bool m_is_dashing = false;
 
-	double m_damage_anim_count = 0;
+	bool m_is_damage = false;
+	double m_damage_count = 0;
 
 	bool m_is_landing_action_now = false;
 	double m_landing_anim_count = 0;
@@ -287,6 +295,7 @@ private:
 
 	bool m_is_sended_miss = false;
 	
+	
 
 	//É{ÉXÇÃì¡éÍçUåÇÇ»Ç«Ç…ÇÊÇÈçdíº
 	bool m_is_freeze = false;
@@ -306,8 +315,12 @@ public:
 	void InputEvasion();
 	void BeginEvasion();
 
+
 	void DoingEvasion();
 	void DoingDown();
+	void DoingDamage();
+
+
 
 	void AfterDamageInvincible();
 	void DoingLandingAction();
@@ -339,6 +352,7 @@ public:
 	void AdjAnim();
 
 	void ReceiveAttack();
+	void ReceiveKnockBack(CCharacter *_from, double _power);
 
 
 	void CheckEquipEndurance();

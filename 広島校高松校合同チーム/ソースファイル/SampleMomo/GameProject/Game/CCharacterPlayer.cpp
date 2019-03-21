@@ -12,6 +12,8 @@ CCharacterPlayer::CCharacterPlayer(CVector3D _pos) :CCharacter(eTaskIdPlayer, 0)
 {
 	s_instance_p = this;
 	
+	m_knock_back_frame = PLAYER_KNOCK_BACK_FRAME;
+
 	m_speed = PLAYER_SPEED;
 	//m_anim_p->SetAnim(ePlayerAnimIdIdle);
 	LoadAnimImage();
@@ -201,6 +203,7 @@ void CCharacterPlayer::LoadAnimImage()
 
 void CCharacterPlayer::InputDestroyWeapon()
 {
+	if (m_is_knock_back == true) return;
 	if (m_is_freeze == true) return;
 	if (CInput::GetState(0, CInput::ePush, CInput::eButton10) && m_equip_weapon_id != -1) {
 		PlayerDestroyEquip();
@@ -209,6 +212,7 @@ void CCharacterPlayer::InputDestroyWeapon()
 
 void CCharacterPlayer::InputDash()
 {
+	if (m_is_knock_back == true) return;
 	if (m_is_landing_action_now == true) return;
 	if (m_is_evasion == true) return;
 	if (m_is_down == true) return;
@@ -222,9 +226,12 @@ void CCharacterPlayer::InputDash()
 
 void CCharacterPlayer::InputAttack()
 {
+	
+
 	if (CInput::GetState(0, CInput::ePush, CInput::eButton2) || m_is_early_input_attack == true) {
 		ClearEarlyInput();
 		m_is_early_input_attack = true;
+		if (m_is_knock_back == true) return;
 		if (m_is_landing_action_now == true) return;
 		if (m_is_evasion == true) return;
 		if (m_is_down == true) return;
@@ -384,15 +391,17 @@ void CCharacterPlayer::CharacterUpdate()
 	
 	if (m_landing_anim_count > 0.0) m_landing_anim_count -= CFPS::GetDeltaTime()  * GAME_BASE_FPS;
 	
-	if (m_damage_anim_count > 0.0) m_damage_anim_count -= CFPS::GetDeltaTime()  * GAME_BASE_FPS;
+	//if (m_damage_anim_count > 0.0) m_damage_anim_count -= CFPS::GetDeltaTime()  * GAME_BASE_FPS;
 
 	if (m_is_landing_action_now == true) m_anim_p->SetWillPlayAnim(ePlayerAnimIdLand);
 	else if(m_anim_p->GetWillPlayAnim() == ePlayerAnimIdLand && m_landing_anim_count > 0)  m_anim_p->SetWillPlayAnim(ePlayerAnimIdLand);
 	else if (m_evasion_reserve_count > 0.0) m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionReserve);
+	/*
 	else if (m_anim_p->GetWillPlayAnim() == ePlayerAnimIdDamage && m_damage_anim_count > 0) {
 		m_anim_p->SetWillPlayAnim(ePlayerAnimIdDamage);
 		//DEBUG_PRINT("ダメージモーション中 %d\n", m_damage_anim_count);
 	}
+	*/
 	else m_anim_p->SetWillPlayAnim(ePlayerAnimIdIdle);
 
 
@@ -407,9 +416,13 @@ void CCharacterPlayer::CharacterUpdate()
 	m_is_dashing = false;
 	m_speed = PLAYER_SPEED;
 	SetInvincible(false);
-	m_vec.x = 0.0f;
-	m_vec.z = 0.0f;
+	
+	if (m_is_knock_back == false) {
+		m_vec.x = 0.0f;
+		m_vec.z = 0.0f;
+	}
 
+	
 
 	InputDestroyWeapon();
 	InputAttack();
@@ -418,7 +431,10 @@ void CCharacterPlayer::CharacterUpdate()
 	InputJump();
 	InputEvasion();
 
+
 	//座標移動
+	
+	DoingDamage();
 	DoingLandingAction();
 	DoingDown();
 	DoingEvasion();
@@ -426,6 +442,7 @@ void CCharacterPlayer::CharacterUpdate()
 	Jumping();
 	Falling();
 	Freezing();
+	DoingKnockBack();
 
 	//Gravity();
 	
@@ -491,6 +508,7 @@ void CCharacterPlayer::InputMove()
 
 void CCharacterPlayer::InputJump()
 {
+	if (m_is_knock_back == true) return;
 	if (m_attack_reserve_count > 0.0) return;
 	if (m_is_attacking == true) return;
 	if (m_is_evasion == true) return;
@@ -542,6 +560,8 @@ void CCharacterPlayer::DoingLandingAction()
 
 void CCharacterPlayer::Landing()
 {
+	if (m_is_knock_back == true) return;
+
 	if (m_is_landing == true & m_is_landing_old == false) {
 		//DEBUG_PRINT("着地\n");
 		if(m_anim_p->GetWillPlayAnim() ==  ePlayerAnimIdIdle) m_anim_p->SetWillPlayAnim(ePlayerAnimIdLand);
@@ -671,6 +691,8 @@ void CCharacterPlayer::BeginEvasion()
 	ClearEarlyInput();
 	m_is_input_evasion = true;
 
+	if (m_is_knock_back == true) return;
+
 	if (m_attack_reserve_count > 0.0) return;
 
 	if (m_is_down == true) return;
@@ -721,7 +743,11 @@ void CCharacterPlayer::BeginEvasion()
 	//アニメーションを設定
 	if (m_is_fast_evasion == true) m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionFast);
 	else m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasion);
+
+	//無敵判定
+	SetInvincible(true);
 }
+
 
 void CCharacterPlayer::DoingEvasion()
 {
@@ -737,6 +763,10 @@ void CCharacterPlayer::DoingEvasion()
 	if (m_evasion_reserve_count > 0.0) {
 		m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionReserve);
 		m_evasion_reserve_count -= CFPS::GetDeltaTime() * GAME_BASE_FPS;
+
+		//無敵判定
+		SetInvincible(true);
+
 		//printf("m_evasion_reserve_count %lf\n", CFPS::GetDeltaTime() * GAME_BASE_FPS);
 		if (m_evasion_reserve_count <= 0) {
 			m_evasion_reserve_count = 0;
@@ -776,7 +806,9 @@ void CCharacterPlayer::DoingEvasion()
 		}
 
 		//DEBUG_PRINT("回避 %d\n", m_evasion_count);
-		//SetInvincible(true);
+		
+		//無敵判定
+		SetInvincible(true);
 
 		if(m_is_fast_evasion == true) m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionFast);
 		else m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasion);
@@ -804,6 +836,18 @@ void CCharacterPlayer::DoingDown()
 
 	}
 }
+
+void CCharacterPlayer::DoingDamage()
+{
+	if (m_is_damage == false) return;
+	m_damage_count -= CFPS::GetDeltaTime()  * GAME_BASE_FPS;
+	m_anim_p->SetWillPlayAnim(ePlayerAnimIdDamage);
+	if (m_damage_count <= 0.0) {
+		m_is_damage = false;
+	}
+}
+
+
 
 
 void CCharacterPlayer::Attacking()
@@ -982,8 +1026,14 @@ void CCharacterPlayer::AttackingHitFrame()
 
 					//まだ攻撃を当たった扱いになってないなら攻撃判定を行う
 					if (is_aready_hit == false && m_is_range_attack == false) {
-						enemy_p->ReceiveAttack();
+						//ヒットストップ
+						SetStop(5);
+						enemy_p->SetStop(5);
+
+						//ノックバックを与える
+						enemy_p->ReceiveKnockBack(this, 5.0);
 						*enemy_p->GetHitPointPointer() -= m_attack_power;
+						enemy_p->ReceiveAttack();
 						m_memory_hit_attacked_enemy_p[m_memory_hit_attacked_enemy_num++] = enemy_p;
 					}
 					else if (is_aready_hit == false && m_is_range_attack == true) {
@@ -1042,7 +1092,7 @@ void CCharacterPlayer::Jumping()
 
 void CCharacterPlayer::Falling()
 {
-	if (m_is_landing == false && m_is_jumping == false) {
+	if (m_is_landing == false && m_is_jumping == false && m_is_damage == false) {
 		m_anim_p->SetWillPlayAnim(ePlayerAnimIdFall);
 	}
 }
@@ -1213,13 +1263,30 @@ void CCharacterPlayer::ReceiveAttack()
 	if (GetInvincible() == true) return;
 
 	m_anim_p->SetWillPlayAnim(ePlayerAnimIdDamage);
-	m_damage_anim_count = PLAYER_DAMAGE_ANIM_FRAME;
+	m_is_damage = true;
+	m_damage_count = PLAYER_DAMAGE_FRAME;
 	
-
+	
 	//無敵時間点灯
 	SetIsBlindDraw(true);
 	m_after_damage_invincible_count = PLAYER_AFTER_DAMAGE_INVINCIBLE;
 	CSound::GetInstance()->GetSound("SE_Damage")->Play();
+}
+
+void CCharacterPlayer::ReceiveKnockBack(CCharacter * _from, double _power)
+{
+	if (m_is_knock_back == true) return;
+	if (m_is_invincible == true) return;
+	if (m_is_down == true) return;
+
+	SetKnockBack(_from,_power);
+
+	//動作中断
+	m_is_evasion = false;
+	m_is_attacking = false;
+	m_is_jumping = false;
+
+	//Y軸の値は利用されない点に注意
 }
 
 void CCharacterPlayer::CheckEquipEndurance()
