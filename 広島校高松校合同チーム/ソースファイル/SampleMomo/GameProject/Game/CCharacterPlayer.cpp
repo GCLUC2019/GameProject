@@ -47,7 +47,6 @@ CCharacterPlayer::~CCharacterPlayer()
 	if (s_instance_p == this) {
 		s_instance_p = nullptr;
 	}
-	
 }
 
 void CCharacterPlayer::LoadAnimImage()
@@ -235,6 +234,8 @@ void CCharacterPlayer::InputAttack()
 		m_is_early_input_attack = false;
 		m_is_range_attack = false;
 		m_is_hit_range_attack = false;
+		m_keep_final_attack_timeout = KEEP_FINAL_ATTACK_TIMEOUT;
+
 
 		//攻撃した敵のデータを初期化
 		for (int i = 0; i < MEMORY_HIT_ATTACKED_ENEMY_MAX; i++) {
@@ -359,8 +360,8 @@ void CCharacterPlayer::InputAttack()
 		}
 
 		
-
-		
+		if (m_is_range_attack == false) CSound::GetInstance()->GetSound("SE_Slash1")->Play();
+		else if (m_is_range_attack == true) CSound::GetInstance()->GetSound("SE_Shot1")->Play();
 
 		//合計フレーム記録
 		m_attack_total_frame = m_attacking_count;
@@ -503,6 +504,7 @@ void CCharacterPlayer::InputJump()
 		m_jumping_count = 30;
 		m_vec.y = -30.0f;
 		m_is_landing = false;
+		CSound::GetInstance()->GetSound("SE_Jump")->Play();
 	}
 }
 
@@ -548,6 +550,7 @@ void CCharacterPlayer::Landing()
 		m_is_landing_action_now = true;
 		//printf("着地\n");
 
+		CSound::GetInstance()->GetSound("SE_Landing")->Play();
 		//もし硬直時間が0ならfalseに
 		if (m_landing_action_count == 0.0) m_is_landing_action_now = false;
 	}
@@ -812,7 +815,17 @@ void CCharacterPlayer::Attacking()
 
 	bool is_keep_finish_attack = false;
 	//空中にいてなおかつフィニッシュ攻撃なら着地するまでは攻撃判定を継続させる
-	if (m_is_landing == false && m_attack_combo_count == 2) is_keep_finish_attack = true;
+	if (m_is_landing == false && m_attack_combo_count == 2) {
+		m_keep_final_attack_timeout -= CFPS::GetDeltaTime() * GAME_BASE_FPS;
+		printf("time_out %lf\n", m_keep_final_attack_timeout);
+		
+		if (m_keep_final_attack_timeout <= 0.0) {
+			SetPos(CGameScene::GetInstance()->GetCheckPoint() - CVector3D(0,50,0));
+			m_is_attacking = false;
+		}
+
+		is_keep_finish_attack = true;
+	}
 
 	if (m_attacking_count < 0 && is_keep_finish_attack == false) {
 
@@ -1050,6 +1063,7 @@ void CCharacterPlayer::CharacterOutHitPoint()
 	m_is_down = true;
 	m_down_count = PLAYER_DOWN_FRAME;
 	m_anim_p->SetWillPlayAnim(ePlayerAnimIdDown);
+	CSound::GetInstance()->GetSound("SE_Down")->Play();
 }
 
 void CCharacterPlayer::CharacterDraw()
@@ -1205,6 +1219,7 @@ void CCharacterPlayer::ReceiveAttack()
 	//無敵時間点灯
 	SetIsBlindDraw(true);
 	m_after_damage_invincible_count = PLAYER_AFTER_DAMAGE_INVINCIBLE;
+	CSound::GetInstance()->GetSound("SE_Damage")->Play();
 }
 
 void CCharacterPlayer::CheckEquipEndurance()

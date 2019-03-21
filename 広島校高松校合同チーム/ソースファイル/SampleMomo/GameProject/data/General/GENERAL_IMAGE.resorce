@@ -6,12 +6,16 @@ LOAD_RESORCE_IMAGE: IMAGE_NAME: Stage_Background_0_Top LOAD_IMAGE_FILE_PATH: sta
 LOAD_RESORCE_IMAGE: IMAGE_NAME: Stage_Background_0_Boss_Bot LOAD_IMAGE_FILE_PATH: stage_background_0_boss_bot.png
 LOAD_RESORCE_IMAGE: IMAGE_NAME: Stage_Background_0_Boss_Top LOAD_IMAGE_FILE_PATH: stage_background_0_boss_top.png
 
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Boss_HP_Bar_Frame LOAD_IMAGE_FILE_PATH: boss_hp_bar_frame.png
+
 
 
 LOAD_RESORCE_IMAGE: IMAGE_NAME: Shadow LOAD_IMAGE_FILE_PATH: shadow.png
 
 LOAD_RESORCE_IMAGE: IMAGE_NAME: HP_Bar LOAD_IMAGE_FILE_PATH: hp_bar.png
 LOAD_RESORCE_IMAGE: IMAGE_NAME: HP_Bar_Frame LOAD_IMAGE_FILE_PATH: hp_bar_frame.png
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Boss_HP_Bar LOAD_IMAGE_FILE_PATH: boss_hp_bar.png
 
 
 LOAD_RESORCE_IMAGE: IMAGE_NAME: Weapon_Bar_Frame LOAD_IMAGE_FILE_PATH: weapon_bar_frame.png

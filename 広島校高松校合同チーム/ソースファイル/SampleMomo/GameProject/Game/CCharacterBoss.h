@@ -2,6 +2,7 @@
 #include "CCharacterPlayer.h"
 #include "../Global.h"
 
+
 //ボスの初期表示位置
 #define DEF_BOSS_POS CVector3D(1100, -1300, 500);
 #define DEF_BOSS_VEC CVector3D(0, 0, 0);
@@ -35,7 +36,7 @@
 #define WALK_LIMIT 60
 #define RUN_LIMIT  60
 #define AWAY_LIMIT  60
-#define DAMAGE_LIMIT 60
+#define DAMAGE_LIMIT 15
 
 //速度
 #define DEF_SPEED 2.0
@@ -200,6 +201,8 @@ public:
 
 	void CharacterBeforeCollisionCheck();
 	void CharacterOutHitPoint();
+
+	static CCharacterBoss* GetInstance();
 };
 
 
