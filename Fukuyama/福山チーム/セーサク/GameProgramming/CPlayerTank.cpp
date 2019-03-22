@@ -451,33 +451,30 @@ void CPlayerTank::OnCollision(CCollider*p){
 		//mPosition = mPosition + mpBoxCollider->mAdjust;
 		p->mPosition = mPosition;
 	}
-<<<<<<< HEAD
 	if (p->mpTask->mTaskTag == EITEM){
 		mHpBar.mHp += 10.0f;
 		printf("CItem1::OnCollision\n");
-=======
-	if (p->mpTask->mTaskTag == EENEMYBULLET || EENEMYBULLET2){
-		if (Invincible > 0){ //–³“G
-			Invincible -= 1;
+		if (p->mpTask->mTaskTag == EENEMYBULLET || EENEMYBULLET2){
+			if (Invincible > 0){ //–³“G
+				Invincible -= 1;
+			}
 		}
->>>>>>> 732e224df6889b848af53c88280d2fdff8efd54d
 	}
 }
-
 
 void CPlayerTank::OnCollision(CBoxCollider*p){
-	if (p->mpTask->mTaskTag == EENEMY1){
-		//mPosition = mPosition + mpBoxCollider->mAdjust;
-		printf("CBullet::OnCollision\n");
-		p->mPosition = mPosition;
-	}
-	if (p->mpTask->mTaskTag == EENEMY2){
-		//mPosition = mPosition + mpBoxCollider->mAdjust;
-		printf("CBullet::OnCollision\n");
-		p->mPosition = mPosition;
-	}
+		if (p->mpTask->mTaskTag == EENEMY1){
+			//mPosition = mPosition + mpBoxCollider->mAdjust;
+			printf("CBullet::OnCollision\n");
+			p->mPosition = mPosition;
+		}
+		if (p->mpTask->mTaskTag == EENEMY2){
+			//mPosition = mPosition + mpBoxCollider->mAdjust;
+			printf("CBullet::OnCollision\n");
+			p->mPosition = mPosition;
+		}
 
-}
+	}
 
 void CPlayerTank::Render(){
 	//CTank::Render();
