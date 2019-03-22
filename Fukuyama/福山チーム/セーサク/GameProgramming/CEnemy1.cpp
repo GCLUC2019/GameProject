@@ -162,7 +162,7 @@ void CEnemy1::Update(){
 	}
 	if (mHpBar.mHp <= 0){
 		SetVertex(-45.0f, 45.0f, -70.0f, 70.0f);
-		CRectangle::SetTexture(&mTexImage, 300, 359, -200, -100);
+		     
 		DeleteCount--;
 	}
 	if (DeleteCount <= 0){
@@ -173,7 +173,7 @@ void CEnemy1::Update(){
 void CEnemy1::OnCollision(CCollider*p){
 	if (mHpBar.mHp >= 1){
 		if (p->mpTask->mTaskTag == EPLAYERBULLET){
-			CExplosion*p = new CExplosion();
+			CItem*p = new CItem();
 			p->SetTexture(&Texture, 0, 64, 64, 0);
 			p->mPosition = mPosition;
 			CTaskManager::Get()->Add(p);
@@ -181,7 +181,7 @@ void CEnemy1::OnCollision(CCollider*p){
 			if (mHpBar.mHp <= 0.0f){
 				CItem*Item = new CItem();   //¬ì
 				Item->mTaskTag = EITEM;
-				Item->mPosition = mCanon.mMatrix*CVector2(0.0f, 0.0f);
+				Item->mPosition = mPosition;
 				CTaskManager::Get()->Add(Item);
 			//	mEnabled = false;
 			//	CMain::mSceneTag = CScene::EWIN;
@@ -196,10 +196,10 @@ void CEnemy1::OnCollision(CCollider*p){
 			if (mHpBar.mHp <= 0.0f){
 				CItem*Item = new CItem();   //¬ì
 				Item->mTaskTag = EITEM;
-				Item->mPosition = mCanon.mMatrix*CVector2(0.0f, 0.0f);
+				Item->mPosition = mPosition;
 				CTaskManager::Get()->Add(Item);
-			//	mEnabled = false;
-			//	CMain::mSceneTag = CScene::EWIN;
+				//	mEnabled = false;
+				//	CMain::mSceneTag = CScene::EWIN;
 			}
 		}
 		if (p->mpTask->mTaskTag == EPLAYERTANK){

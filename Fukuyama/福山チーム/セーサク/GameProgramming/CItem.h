@@ -21,6 +21,8 @@ public:
 	void Update();
 	void Render();
 
+	static CTexture mTexImage;
+
 	CCircleCollider*mCollider;
 
 	void OnCollision(CCircleCollider*p);
