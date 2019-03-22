@@ -14,6 +14,8 @@ public:
 
 	void Update();
 
+	void HitCheck();
+
 	void Draw();
 
 	CVector2D GetPos() {
@@ -39,6 +41,8 @@ public:
 
 	void Update();
 
+	void HitCheck();
+
 	void Draw();
 
 	CVector2D GetPos() {
@@ -58,9 +62,11 @@ private:
 
 	bool m_flip;
 public:
-	BossSlashEffect();
+	BossSlashEffect(const CVector2D &pos);
 
 	void Update();
+
+	void HitCheck();
 
 	void Draw();
 
