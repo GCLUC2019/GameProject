@@ -11,5 +11,6 @@ extern TexAnimData E2AttackEffectAnimData[];
 enum E4EffectAnim {
 	//Enemy04
 	eE4EXAttack,
+	eE4SAttack,
 };
 extern TexAnimData E4AttackEffectAnimData[];

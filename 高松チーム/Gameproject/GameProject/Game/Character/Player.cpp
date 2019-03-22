@@ -557,16 +557,18 @@ void Player::ItemGet(int _itemTyp)
 			m_HP = 100;
 		break;
 	case ItemList::eInari:
-		g_game_data.m_score += 10;
+		g_game_data.m_score += 50;
 
 		break;
 	case ItemList::eKakera:
-		
-
+		if (m_HP < 100)
+			m_HP += 50;
+		if (m_HP > 100)
+			m_HP = 100;
 		break;
 	case ItemList::eKoban:
 
-		g_game_data.m_score += 1;
+		g_game_data.m_score += 10;
 		break;
 
 	default:
