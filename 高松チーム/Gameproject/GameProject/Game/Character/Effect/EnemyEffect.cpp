@@ -34,7 +34,7 @@ void E2Effect::Draw()
 
 void E2Effect::HitCheck()
 {
-    Task*t = CollitionBase::GetCollisionCheckRect(this, CharacterData::ePlayer);
+	Task*t = CollitionBase::GetCollisionCheckRectANDY(this, CharacterData::ePlayer, 50.0f);
     Player*p = dynamic_cast<Player*>(t);
 
     if (p != nullptr) {
@@ -74,7 +74,7 @@ void E4EffectEXAttack::Draw()
 
 void E4EffectEXAttack::HitCheck()
 {
-	Task*t = CollitionBase::GetCollisionCheckRect(this, CharacterData::ePlayer);
+	Task*t = CollitionBase::GetCollisionCheckRectANDY(this, CharacterData::ePlayer,50.0f);
 	Player*p = dynamic_cast<Player*>(t);
 
 	if (p != nullptr) {
@@ -115,7 +115,7 @@ void E4EffectSAttack::Draw()
 
 void E4EffectSAttack::HitCheck()
 {
-	Task*t = CollitionBase::GetCollisionCheckRect(this, CharacterData::ePlayer);
+	Task*t = CollitionBase::GetCollisionCheckRectANDY(this, CharacterData::ePlayer,50.0f);
 	Player*p = dynamic_cast<Player*>(t);
 
 	if (p != nullptr) {
@@ -161,7 +161,7 @@ void E4EffectLAttack::Draw()
 
 void E4EffectLAttack::HitCheck()
 {
-	Task*t = CollitionBase::GetCollisionCheckRect(this, CharacterData::ePlayer);
+	Task*t = CollitionBase::GetCollisionCheckRectANDY(this, CharacterData::ePlayer, 50.0f);
 	Player*p = dynamic_cast<Player*>(t);
 
 	if (p != nullptr) {

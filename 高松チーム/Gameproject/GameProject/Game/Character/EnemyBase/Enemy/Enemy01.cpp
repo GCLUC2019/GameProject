@@ -164,7 +164,7 @@ void Enemy01::HitCheck()
         printf("Player”­Œ©\n");
     }
 */
-	if (CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectLongAttack)) {
+	if (CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectLongAttack, 50.0f)) {
 		SOUND("punch-middle2")->Play();
 		m_hp -= 1;
 		m_state = Enemy01State::eDamage;

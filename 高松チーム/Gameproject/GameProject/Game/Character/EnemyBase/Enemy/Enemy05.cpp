@@ -141,10 +141,10 @@ void Enemy05::Draw()
 
 void Enemy05::HitCheck()
 {	
-	if (CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack01) ||
-		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack02) ||
-		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack03) ||
-		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectLongAttack))
+	if (CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectShortAttack01, 50.0f) ||
+		CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectShortAttack02, 50.0f) ||
+		CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectShortAttack03, 50.0f) ||
+		CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectLongAttack, 50.0f))
 	{
 		SOUND("punch-middle2")->Play();
 		m_hp -= 1;
