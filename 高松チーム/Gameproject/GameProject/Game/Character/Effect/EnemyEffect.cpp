@@ -8,7 +8,7 @@
 #define EFFECT_SIZE_E4_EX_X 1000
 #define EFFECT_SIZE_E4_EX_Y 50
 #define EFFECT_SIZE_E4_S 70
-#define EFFECT_SIZE_E4_L 30
+#define EFFECT_SIZE_E4_L 50
 
 E2Effect::E2Effect(const CVector2D&pos) :Task(eE2AttackEffect)
 {
@@ -128,9 +128,9 @@ void E4EffectSAttack::HitCheck()
 E4EffectLAttack::E4EffectLAttack(const CVector2D & pos, const bool & _flip) :Task(eE4AttackEffect)
 {
 	m_flip = _flip;
-	m_img = COPY_RESOURCE("Enemy04EffectS", CAnimImage*);
+	m_img = COPY_RESOURCE("Enemy04EffectL", CAnimImage*);
 	m_pos = pos;
-	m_img.ChangeAnimation(E4EffectAnim::eE4EXAttack);
+	m_img.ChangeAnimation(E4EffectAnim::eE4LAttack);
 	m_rect = CRect(-EFFECT_SIZE_E4_L / 2, -EFFECT_SIZE_E4_L / 2, EFFECT_SIZE_E4_L / 2, EFFECT_SIZE_E4_L / 2);
 }
 
@@ -140,7 +140,7 @@ void E4EffectLAttack::Update()
 		m_pos.x += 5;
 	else
 		m_pos.x -= 5;
-
+	m_img.UpdateAnimation();
 	if (m_pos.x < SCREEN_MIN_SIZE_X || m_pos.x > SCREEN_MAX_SIZE_X)
 		SetKill();
 	if (m_pos.y < SCREEN_MIN_SIZE_Y || m_pos.y > SCREEN_MAX_SIZE_Y)
