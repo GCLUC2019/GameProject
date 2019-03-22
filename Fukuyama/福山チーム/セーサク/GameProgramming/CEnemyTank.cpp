@@ -91,7 +91,7 @@ void CEnemyTank::OnCollision(CCollider*p){
 			CMain::mSceneTag = CScene::EWIN;
 		}
 	}
-	printf("CEnemyTank::OnCollision\n");
+	//printf("CEnemyTank::OnCollision\n");
 	mPosition = mPosition + mCollider->mAdjust;	
 }
 
