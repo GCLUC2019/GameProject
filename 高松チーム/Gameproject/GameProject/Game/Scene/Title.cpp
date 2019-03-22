@@ -34,6 +34,7 @@ m_choice(0)
     m_img_icon = COPY_RESOURCE("RogoUI", CImage*);
     m_img_window = COPY_RESOURCE("Window", CImage*);
 	SOUND("Enishi")->Play(true);
+    m_enter = false;
 }
 
 Title::~Title()
@@ -53,19 +54,22 @@ void Title::Update()
         m_cnt = 0;
         m_size = 0;
     }
-    if (CInput::GetState(0, CInput::ePush, CInput::eUp)) {
-		SOUND("highspeed-movement1")->Play();
-        m_choice++;
-    }
-    if (CInput::GetState(0, CInput::ePush, CInput::eDown)) {
-		SOUND("highspeed-movement1")->Play();
-        m_choice--;
+    if (m_enter == false) {
+        if (CInput::GetState(0, CInput::ePush, CInput::eUp)) {
+            SOUND("highspeed-movement1")->Play();
+            m_choice++;
+        }
+        if (CInput::GetState(0, CInput::ePush, CInput::eDown)) {
+            SOUND("highspeed-movement1")->Play();
+            m_choice--;
+        }
     }
     if (m_choice < 0)m_choice = 1;
     if (m_choice > 1)m_choice = 0;
     //printf("%d", m_choice);
     if (CInput::GetState(0, CInput::ePush, CInput::eButton2)) {
 		SOUND("se_027")->Play();
+        m_enter = true;
 		TaskManager::GetInstance()->AddTask(new FadeOut());
 		if (mp_fadeout >= 1.0f)
 		{

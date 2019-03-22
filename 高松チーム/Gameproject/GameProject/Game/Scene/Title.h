@@ -26,6 +26,7 @@ private:
     float m_size;//rogoclearのサイズ変量
     float m_time;//お札の回転値
 	float mp_fadeout;
+    bool m_enter;
 public:
     Title();
     ~Title();
