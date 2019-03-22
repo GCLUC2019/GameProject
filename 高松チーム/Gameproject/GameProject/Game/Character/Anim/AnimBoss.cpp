@@ -48,7 +48,7 @@ TexAnimData BossAnimData[] = {
 };
 
 static TexAnim BossFireEffect[] = {
-	{ 0,3 },
+	{ 0,300 },
 { 1,3 },
 { 2,3 },
 { 3,3 },

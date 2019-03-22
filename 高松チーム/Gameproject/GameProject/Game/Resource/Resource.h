@@ -170,7 +170,7 @@ public:
 
 		ADD_RESOURCE("SkyRed", CImage::LoadImage("../data/Image/bg_sky_02.png"));
 		ADD_RESOURCE("BossLazer", CAnimImage::LoadImage("../data/Image/pipo-btleffect141.png", BossLazerEffectAnimData, 640, 480));
-		ADD_RESOURCE("BossFire", CAnimImage::LoadImage("../data/Image/pipo-btleffect162_2.png",BossFireEffectAnimData,320,240));
+		ADD_RESOURCE("BossFire", CAnimImage::LoadImage("../data/Image/pipo-btleffect162_2.png",BossFireEffectAnimData,640,480));
 		ADD_RESOURCE("BossSlash", CAnimImage::LoadImage("../data/Image/Effect_p036.png", BossSlashEffectAnimData, 200, 200));
 		ADD_RESOURCE("BossDeathEffect1", CAnimImage::LoadImage("../data/Image/pipo-mapeffect013c-1.png", BossDeathEffectAnimData, 192, 192));
 		ADD_RESOURCE("BossDeathEffect2", CAnimImage::LoadImage("../data/Image/pipo-mapeffect013c-2.png", BossDeathEffectAnimData, 192, 192));

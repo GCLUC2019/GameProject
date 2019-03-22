@@ -102,11 +102,11 @@ void BossHead::Idle()
 		m_pos.y -= 5;
 	}
 
-	if (CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectShortAttack01, 100.0f) ||
-		CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectShortAttack02, 100.0f) ||
-		CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectShortAttack03, 100.0f) ||
-		CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectLongAttack, 100.0f) ||
-		CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectSpecialAttack, 100.0f))
+	if (CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectShortAttack01, 50.0f) ||
+		CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectShortAttack02, 50.0f) ||
+		CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectShortAttack03, 50.0f) ||
+		CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectLongAttack, 50.0f) ||
+		CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectSpecialAttack, 50.0f))
 	{
 		g_game_data.m_boss_hp -= 0.05f;
 	}

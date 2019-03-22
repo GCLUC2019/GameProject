@@ -20,11 +20,11 @@ BossFireEffect::BossFireEffect(const CVector2D& pos) : Task(eBossFireEffectc)
 {
 	m_img = COPY_RESOURCE("BossFire", CAnimImage*);
 
-	m_img.SetCenter((FIRE_X_SIZE - BOSS_X_SIZE / 3) / 2, FIRE_Y_SIZE / 8);
+	m_img.SetCenter((1280 - BOSS_X_SIZE / 3) / 2, (720 - FIRE_Y_SIZE / 1.5) / 2);
 
-	m_rect = CRect(-450, -120, 500, 120);
+	m_rect = CRect(-300, -10, 100, 100);
 
-	m_pos.x = FIRE_X_SIZE - pos.x + 300;
+	m_pos.x = FIRE_X_SIZE - pos.x;
 	m_pos.y = pos.y;
 }
 
@@ -56,8 +56,8 @@ void BossFireEffect::Draw()
 	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
 #endif
 
-	m_img.SetSize(FIRE_X_SIZE - BOSS_X_SIZE / 5, FIRE_Y_SIZE / 6);
-	m_img.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
+	m_img.SetSize(1280 - BOSS_X_SIZE / 3, 720 - FIRE_Y_SIZE / 1.5);
+	m_img.SetPos(m_pos.x + 800, m_pos.y - 150 - g_game_data.m_scroll.y / 3);
 	m_img.Draw();
 }
 

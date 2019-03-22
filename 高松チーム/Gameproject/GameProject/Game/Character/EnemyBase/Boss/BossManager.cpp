@@ -67,7 +67,7 @@ void BossManager::Attack()
 		m_player_pos = p->GetPos();
 		m_boss_attack_type = rand() % 100;
 	}
-	int a = 1;
+	int a = 2;
 	if (m_boss_attack_type > 80) m_boss_attack_type = a;
 	else if (m_boss_attack_type <= 80 && m_boss_attack_type > 60) m_boss_attack_type = a;
 	else if (m_boss_attack_type <= 60 && m_boss_attack_type > 40) m_boss_attack_type = a;
@@ -187,7 +187,6 @@ void BossHpUI::Update()
 
 	m_boss_hp_now = m_boss_hp_now / m_boss_hp_max;
 
-	printf("%f\n", m_boss_hp_now);
 	if (m_boss_hp_now <= 0) m_boss_hp_now = 0;
 }
 
