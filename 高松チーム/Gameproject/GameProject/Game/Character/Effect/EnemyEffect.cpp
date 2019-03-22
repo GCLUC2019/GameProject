@@ -28,7 +28,7 @@ void E2Effect::Update()
 
 void E2Effect::Draw()
 {
-    m_img.SetPos(CVector2D(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3));
+    m_img.SetPos(CVector2D(m_pos.x - g_game_data.m_scroll.x, m_pos.y - g_game_data.m_scroll.y / 3));
     m_img.SetCenter(EFFECT_SIZE , EFFECT_SIZE / 2);
     m_img.SetSize(EFFECT_SIZE*2, EFFECT_SIZE);
     m_img.Draw();
@@ -62,7 +62,7 @@ void E4EffectEXAttack::Update()
 
 void E4EffectEXAttack::Draw()
 {
-	m_img.SetPos(m_pos);
+	m_img.SetPos(m_pos - CVector2D(g_game_data.m_scroll.x,0));
 	m_img.SetCenter(EFFECT_SIZE_E4_EX_X/2, EFFECT_SIZE_E4_EX_Y / 2);
 	m_img.SetSize(EFFECT_SIZE_E4_EX_X, EFFECT_SIZE_E4_EX_Y);
 	m_img.Draw();
@@ -149,7 +149,7 @@ void E4EffectLAttack::Update()
 
 void E4EffectLAttack::Draw()
 {
-	m_img.SetPos(m_pos);
+	m_img.SetPos(m_pos - CVector2D(g_game_data.m_scroll.x,0));
 	m_img.SetCenter(EFFECT_SIZE_E4_L, EFFECT_SIZE_E4_L);
 	m_img.SetSize(EFFECT_SIZE_E4_L * 2, EFFECT_SIZE_E4_L * 2);
 	m_img.Draw();

@@ -78,7 +78,7 @@ void ItemBox::Draw()
 	m_img.UpdateAnimation();
 	m_img.SetSize(200, 200);
 	m_img.SetCenter(100, 150);
-	m_img.SetPos(m_pos - CVector2D(0, g_game_data.m_scroll.y / 3));
+	m_img.SetPos(m_pos - CVector2D(g_game_data.m_scroll.x , g_game_data.m_scroll.y / 3));
 	m_img.Draw();
 }
 
