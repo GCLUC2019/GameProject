@@ -139,13 +139,14 @@
     <ClInclude Include="Game\CCharacterEnemy.h" />
     <ClInclude Include="Game\CCharacterPlayer.h" />
     <ClInclude Include="Game\CCommonObject.h" />
-    <ClInclude Include="Game\CDamageEfect.h" />
+    <ClInclude Include="Game\CDamageEffect.h" />
     <ClInclude Include="Game\CFade.h" />
     <ClInclude Include="Game\CGameOver.h" />
     <ClInclude Include="Game\CGameScene.h" />
     <ClInclude Include="Game\CGameSceneBossUI.h" />
     <ClInclude Include="Game\CGameSceneObject.h" />
     <ClInclude Include="Game\CGameSceneUI.h" />
+    <ClInclude Include="Game\CItem.h" />
     <ClInclude Include="Game\CLoadResorce.h" />
     <ClInclude Include="Game\CStageClear.h" />
     <ClInclude Include="Game\CStoryScene.h" />
@@ -170,7 +171,7 @@
     <ClCompile Include="Game\CCharacterEnemy.cpp" />
     <ClCompile Include="Game\CCharacterPlayer.cpp" />
     <ClCompile Include="Game\CCommonObject.cpp" />
-    <ClCompile Include="Game\CDamageEfect.cpp" />
+    <ClCompile Include="Game\CDamageEffect.cpp" />
     <ClCompile Include="Game\CFade.cpp" />
     <ClCompile Include="Game\CGameOver.cpp" />
     <ClCompile Include="Game\CGameScene.cpp" />
@@ -178,6 +179,7 @@
     <ClCompile Include="Game\CGameSceneObject.cpp" />
     <ClCompile Include="Game\CGameSceneUI.cpp" />
     <ClCompile Include="Game\CGameSceneWave.cpp" />
+    <ClCompile Include="Game\CItem.cpp" />
     <ClCompile Include="Game\CLoadResorce.cpp" />
     <ClCompile Include="Game\CObject.cpp" />
     <ClCompile Include="Game\CObjectImage.cpp" />

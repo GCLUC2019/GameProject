@@ -80,9 +80,10 @@
     <ClCompile Include="Game\CGameSceneObject.cpp">
       <Filter>Game\Object\GameSceneObject</Filter>
     </ClCompile>
-    <ClCompile Include="Game\CDamageEfect.cpp">
+    <ClCompile Include="Game\CDamageEffect.cpp">
       <Filter>Game\Object\GameSceneObject</Filter>
     </ClCompile>
+    <ClCompile Include="Game\CItem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -167,7 +168,10 @@
     <ClInclude Include="Game\CGameSceneBossUI.h">
       <Filter>Game\Object\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Game\CDamageEfect.h">
+    <ClInclude Include="Game\CDamageEffect.h">
+      <Filter>Game\Object\GameSceneObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CItem.h">
       <Filter>Game\Object\GameSceneObject</Filter>
     </ClInclude>
   </ItemGroup>

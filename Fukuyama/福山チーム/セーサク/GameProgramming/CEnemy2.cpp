@@ -140,10 +140,10 @@ void CEnemy2::OnCollision(CCollider*p){
 			if (mHpBar.mHp <= 0.0f){
 				CItem*Item = new CItem();   //¬ì
 				Item->mTaskTag = EITEM;
-				Item->mPosition = mCanon.mMatrix*CVector2(0.0f, 0.0f);
+				Item->mPosition = mPosition;
 				CTaskManager::Get()->Add(Item);
-			//	mEnabled = false;
-			//	CMain::mSceneTag = CScene::EWIN;
+				//	mEnabled = false;
+				//	CMain::mSceneTag = CScene::EWIN;
 			}
 		}
 		if (p->mpTask->mTaskTag == EPLAYERBULLET2){
@@ -155,10 +155,10 @@ void CEnemy2::OnCollision(CCollider*p){
 			if (mHpBar.mHp <= 0.0f){
 				CItem*Item = new CItem();   //¬ì
 				Item->mTaskTag = EITEM;
-				Item->mPosition = mCanon.mMatrix*CVector2(0.0f, 0.0f);
+				Item->mPosition = mPosition;
 				CTaskManager::Get()->Add(Item);
-			//	mEnabled = false;
-			//	CMain::mSceneTag = CScene::EWIN;
+				//	mEnabled = false;
+				//	CMain::mSceneTag = CScene::EWIN;
 			}
 		}
 

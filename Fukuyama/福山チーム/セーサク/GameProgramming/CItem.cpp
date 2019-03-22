@@ -3,29 +3,31 @@
 #include "CItem.h"
 #include "CPlayerTank.h"
 
-int type;
+CTexture CItem::mTexImage;
 
 void CItem::Init(){
-	SetVertex(-10.0f, 10.0f, -10.0f, 10.0f);
+	mTexImage.Load("Item.tga");
+	SetVertex(-15.0f, 15.0f, -15.0f, 15.0f);
 	mCollider = new CCircleCollider();
 	mCollider->mRadius = 10.0f;
 	mCollider->mpTask = this;
 	CCollisionManager::Get()->Add(mCollider);
+
 }
 
 void CItem::Update(){
-	/*
+	CRectangle::Update();
+	CCollisionManager::Get()->Collision(mCollider);
+
 	if (mType == 1){
-	SetUv(heal);
+		CRectangle::SetTexture(&mTexImage, 57, 83, 54, 12);
 	}
 	if (mType == 2){
-	SetUv(strengthen);
+		CRectangle::SetTexture(&mTexImage, 57, 83, 54, 12);
 	}
 	if (mType == 3){
-	SetUv(Invincible);
+		CRectangle::SetTexture(&mTexImage, 57, 83, 54, 12);
 	}
-	*/
-	CCollisionManager::Get()->Collision(mCollider);
 }
 
 void CItem::Render(){
@@ -49,40 +51,3 @@ void CItem::OnCollision(CCollider*p){
 		mEnabled = false;
 	}
 }
-
-
-//ªªª
-/*
-bool CItem::Collision(CCharacter *m, CCharacter *yo) {
-//‘Šè‚ÆÕ“Ë‚µ‚Ä‚¢‚é‚©”»’è
-if (CRectangle::Collision(yo, &dx, &dy)) {
-switch (yo->mTag) {
-case EPLAYER: //‘Šè‚ªƒvƒŒƒCƒ„[
-if (type == 1){  //‰ñ•œ
-
-}
-if (type == 2){  //‹­‰»
-
-}
-if (type == 3){  //–³“G
-
-}
-}
-//Õ“Ë‚µ‚Ä‚¢‚é
-return true;
-}
-//Õ“Ë‚µ‚Ä‚¢‚È‚¢
-return false;
-}
-*/
-
-/*
-if (mHpBar.mHp <= 0.0f){
-if(rand() % 2)==1{
-CItem*Item = new CItem();
-Item->mTaskTag = EITEM;
-Item->mPosition = mCanon.mMatrix*CVector2(0.0f, 25.0f);
-CTaskManager::Get()->Add(Item);
-}
-}
-*/
