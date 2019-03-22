@@ -39,7 +39,7 @@ void CLoadResorce::LoadResorce()
 	ReadResorceFile("Story/STORY_IMAGE.resorce");
 	ReadResorceFile("BossDog/DOG_ANIM_IMAGE.resorce");
 
-	ReadResorceFile("Efect/EFECT_ANIM_IMAGE.resorce");
+	ReadResorceFile("Effect/EFFECT_ANIM_IMAGE.resorce");
 
 	CSound::GetInstance()->GetSound("BGM_Boss")->Load("Sound/boss_bgm.wav", 1);
 	CSound::GetInstance()->GetSound("BGM_Stage_Clear")->Load("Sound/stage_clear_bgm.wav", 1);
