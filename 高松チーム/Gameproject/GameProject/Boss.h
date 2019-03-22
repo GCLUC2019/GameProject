@@ -39,7 +39,6 @@ private:
 	int m_anim_cnt;//アニメーションカウント
 	int m_idle_cnt;//待機状態でいる時間
 	int m_shadow_size;
-	float m_hp;
 
 	float m_shadow_y;//影のy座標
 	float m_shadow_x;

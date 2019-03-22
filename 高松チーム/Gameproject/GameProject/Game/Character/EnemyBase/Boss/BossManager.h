@@ -18,10 +18,8 @@ private:
 		eUp,
 	};
 
-	CVector2D m_pos; //やられたときの座標
 	CVector2D m_player_pos;//プレイヤーの座標を取得して格納
-	CVector2D m_pos2;//えふぇくと座標
-	CVector2D m_pos3;//エフェクト座標　その２
+	
 	CVector2D m_rect_pos;//矩形移動のぽす
 
 	int m_state;//ボスの状態
@@ -38,8 +36,6 @@ public:
 
 	BossManager();
 
-	BossManager(int state);
-
 	~BossManager();
 
 	void Nothing();
@@ -49,8 +45,6 @@ public:
 	void Attack();
 
 	void HitCheck();
-
-	void Death();
 
 	void Update();
 

@@ -28,6 +28,7 @@ BossManager::BossManager() : Task(eBossManager)
 	m_boss_hp = 100;
 
 	m_idle_cnt = 0;
+
 	m_cnt = 0;
 
 	m_boss_attack_type = 0;
@@ -56,7 +57,7 @@ void BossManager::Idle()
 
 	m_idle_cnt++;
 
-	if (m_idle_cnt >= 60) {
+	if (m_idle_cnt >= 600) {
 		m_idle_flag = false;
 		m_state = Manager::eAttackDown;
 	}
@@ -112,10 +113,10 @@ void BossManager::HitCheck()
 		m_hp -= 1;
 	}
 
-	if (m_hp <= 0) {
+	/*if (m_hp <= 0) {
 		TaskManager::GetInstance()->AddTask(new BossDeath());
 		SetKill();
-	}
+	}*/
 }
 
 void BossManager::Update()

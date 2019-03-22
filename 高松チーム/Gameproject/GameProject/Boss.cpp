@@ -396,7 +396,7 @@ void BossRightHand::Draw()
 	switch (m_state) {
 	case BossRightHand::eIdle:
 		m_img.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
-		m_img.SetSize(BOSS_X_SIZE / 3, BOSS_Y_SIZE / 3);
+		m_img.SetSize(BOSS_X_SIZE / 2, BOSS_Y_SIZE / 2);
 		break;
 	case BossRightHand::eDownAttack:
 	case BossRightHand::eLazerAttack:
