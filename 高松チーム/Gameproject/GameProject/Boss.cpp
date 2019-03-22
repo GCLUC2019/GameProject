@@ -4,6 +4,7 @@
 #include "../GameProject/Game/Character/EnemyBase/Boss/BossManager.h"
 #include "../GameProject/Game/GameData/GameData.h"
 #include "../GameProject/Game/Stage/CollisionBox.h"
+#include "../GameProject/Game/Resource/Resource.h"
 
 
 #define BOSS_X_SIZE 768
@@ -705,8 +706,9 @@ void BossTail::TailAttack()
 	m_anim_cnt++;
 
 	m_img.ChangeAnimation(Motion1::eBossTailAttackMotion, false);
-	m_img.UpdateAnimation();
-	if (m_anim_cnt > 120)m_state = eUp;
+
+	if (m_img.CheckAnimationEnd()) m_state = eUp;
+	//if (m_anim_cnt > 120)m_state = eUp;
 }
 
 void BossTail::UpMove()

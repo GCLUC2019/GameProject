@@ -50,7 +50,14 @@ public:
 
 	void Draw();
 
-	friend class BossHand;
+	float GetHP() {
+		return m_boss_hp;
+	}
+
+	friend class BossHead;
+	friend class BossRightHand;
+	friend class BossLeftHand;
+	friend class BossTail;
 };
 
 class BossGageBaseUI : public UI{
