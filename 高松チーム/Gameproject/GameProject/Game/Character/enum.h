@@ -63,3 +63,10 @@ const enum CharacterData{
 	eEnemy05,
 	eTutorialEnemy,
 };
+
+const enum ResourceData {
+	eTitleResource,
+	eTutorialResource,
+	eGameSceneResourse,
+	eGameScene2Resourse,
+};
