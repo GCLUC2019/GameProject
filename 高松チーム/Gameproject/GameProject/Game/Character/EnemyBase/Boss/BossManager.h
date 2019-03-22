@@ -1,5 +1,6 @@
 #pragma once
 #include "../GameProject/Base/Task.h"
+#include "../GameProject/Game/UI/UI.h"
 
 
 /*
@@ -17,10 +18,6 @@ private:
 		eUp,
 	};
 
-	CImage m_img; //やられたときの画像
-	CAnimImage m_img2;//やられたときエフェクト
-	CAnimImage m_img3;//やられたときエフェクト　その２
-
 	CVector2D m_pos; //やられたときの座標
 	CVector2D m_player_pos;//プレイヤーの座標を取得して格納
 	CVector2D m_pos2;//えふぇくと座標
@@ -33,11 +30,15 @@ private:
 	int m_idle_cnt;//待機状態でいる時間
 	int m_cnt;
 
+	float m_hp;
+
 	bool m_idle_flag;
 
 public:
 
 	BossManager();
+
+	BossManager(int state);
 
 	~BossManager();
 
@@ -47,6 +48,8 @@ public:
 
 	void Attack();
 
+	void HitCheck();
+
 	void Death();
 
 	void Update();
@@ -54,4 +57,23 @@ public:
 	void Draw();
 
 	friend class BossHand;
+};
+
+class BossGageBaseUI : public UI{
+private:
+public:
+	BossGageBaseUI();
+	void Update();
+	void Draw();
+};
+
+class BossHpUI : public UI {
+private:
+	float m_boss_hp_now;
+	float m_boss_hp_max;
+	float hp_width;
+public:
+	BossHpUI();
+	void Update();
+	void Draw();
 };

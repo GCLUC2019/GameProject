@@ -18,22 +18,10 @@
 
 BossManager::BossManager() : Task(eBossManager)
 {
-	m_img = COPY_RESOURCE("Boss", CImage*);
-	m_img2 = COPY_RESOURCE("BossDeathEffect1", CAnimImage*);
-	m_img3 = COPY_RESOURCE("BossDeathEffect2", CAnimImage*);
-
-	m_img.SetSize(BOSS_X_SIZE / 1.5f, BOSS_Y_SIZE / 1.5f);
-	m_img2.SetSize(EFFECT_SIZE * 4, EFFECT_SIZE *  2.8f);
-	m_img3.SetSize(EFFECT_SIZE * 4, EFFECT_SIZE *  2.8f);
-
-	m_pos = CVector2D(WIGHT_SIZE / 2 - BOSS_X_SIZE / 4, HEIGHT_SIZE - BOSS_Y_SIZE / 1.5f);
-	m_pos2 = CVector2D(WIGHT_SIZE / 2 - BOSS_X_SIZE / 2.5, HEIGHT_SIZE - BOSS_Y_SIZE / 2.8f);
-	m_pos3 = CVector2D(WIGHT_SIZE / 2 - BOSS_X_SIZE / 2.5, HEIGHT_SIZE - BOSS_Y_SIZE / 2.8f);
+	
 	m_rect_pos = CVector2D(WIGHT_SIZE - BOSS_X_SIZE / 2.5, HEIGHT_SIZE - BOSS_Y_SIZE / 2.5);
 
-	m_img3.SetCenter(BOSS_Y_SIZE / 4, BOSS_Y_SIZE / 4);
-
-	//m_state = Manager::eIdle;
+	m_state = Manager::eIdle;
 
 	m_player_pos = CVector2D(0, 0);
 
@@ -47,9 +35,9 @@ BossManager::BossManager() : Task(eBossManager)
 	m_idle_flag = true;
 }
 
+
 BossManager::~BossManager()
 {
-	//TaskManager::GetInstance()->AddTask(new BossManager());
 }
 
 void BossManager::Nothing()
@@ -59,7 +47,7 @@ void BossManager::Nothing()
 void BossManager::Idle()
 {
 	if (m_idle_cnt <= 0 && m_idle_flag == true) {
-		//TaskManager::GetInstance()->AddTask(new CollisionBox(CVector2D(m_rect_pos.x, m_rect_pos.y), CRect(-300, -100, 250, 300)));
+		TaskManager::GetInstance()->AddTask(new CollisionBox(CVector2D(m_rect_pos.x, m_rect_pos.y), CRect(-300, -100, 250, 300)));
 		TaskManager::GetInstance()->AddTask(new BossLeftHand(m_player_pos, Manager::eIdle));
 		TaskManager::GetInstance()->AddTask(new BossRightHand(m_player_pos, Manager::eIdle));
 		TaskManager::GetInstance()->AddTask(new BossHead(m_player_pos, Manager::eIdle));
@@ -81,9 +69,6 @@ void BossManager::Attack()
 		Task * p = TaskManager::GetInstance()->FindObject(ePlayer);
 		if (p == nullptr)return;
 		m_player_pos = p->GetPos();
-
-		printf("%f          %f\n", m_player_pos.x, m_player_pos.y);
-
 		m_boss_attack_type = rand() % 100;
 	}
 	if (m_boss_attack_type > 80) m_boss_attack_type = 5;
@@ -119,9 +104,18 @@ void BossManager::Attack()
 	}
 }
 
-void BossManager::Death()
+void BossManager::HitCheck()
 {
-	m_pos.y -= 6;
+	if (CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectShortAttack01, 50.0f) ||
+		CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectShortAttack02, 50.0f) ||
+		CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectShortAttack03, 50.0f)) {
+		m_hp -= 1;
+	}
+
+	if (m_hp <= 0) {
+		TaskManager::GetInstance()->AddTask(new BossDeath());
+		SetKill();
+	}
 }
 
 void BossManager::Update()
@@ -133,9 +127,6 @@ void BossManager::Update()
 	case Manager::eAttackDown:
 		Attack();
 		break;
-	case Manager::eDeath:
-		Death();
-		break;
 	case Manager::eNothing:
 		Nothing();
 		break;
@@ -143,37 +134,57 @@ void BossManager::Update()
 		break;
 	}
 
-
-	if (m_boss_hp <= 0)m_state = Manager::eDeath;
-
-	if (m_state == Manager::eDeath) {
-		m_img2.ChangeAnimation(eBossDeathEffect1);
-		m_img2.UpdateAnimation();
-		m_img3.ChangeAnimation(eBossDeathEffect2);
-		m_img3.UpdateAnimation();
-	}
+	
 }
 
 void BossManager::Draw()
 {
-	//#ifdef _DEBUG
-	//	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
-	//	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos2.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
-	//	Utility::DrawQuad(CVector2D(m_pos2.x + m_rect.m_right, m_pos2.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
-	//	Utility::DrawQuad(CVector2D(m_pos2.x + m_rect.m_right, m_pos2.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
-	//#endif
-	m_img.SetRect(0, BOSS_Y_SIZE * 5, BOSS_X_SIZE, BOSS_Y_SIZE * 6);
-	m_img.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
-	m_img2.SetPos(m_pos2.x, m_pos2.y - g_game_data.m_scroll.y / 3);
-	m_img3.SetPos(m_pos3.x, m_pos3.y - g_game_data.m_scroll.y / 3);
+	
+}
 
-	switch (m_state) {
-	case Manager::eDeath:
-		m_img.Draw();
-		m_img2.Draw();
-		m_img3.Draw();
-		break;
-	default:
-		break;
-	}
+BossGageBaseUI::BossGageBaseUI() :UI(eBossGageBaseUI)
+{
+	m_img = COPY_RESOURCE("BossHPBack", CImage*);
+	m_pos = CVector2D(100, 700);
+}
+
+void BossGageBaseUI::Update()
+{
+}
+
+void BossGageBaseUI::Draw()
+{
+	m_img.SetSize(CVector2D(1080, 10));
+	m_img.SetPos(m_pos);
+	m_img.Draw();
+}
+
+BossHpUI::BossHpUI() : UI(eBossHpUI)
+{
+	m_img = COPY_RESOURCE("BossHP", CImage*);
+	m_pos = CVector2D(100, 700);
+
+	hp_width = 1080.0f;
+	m_boss_hp_max = 100.0f;
+	m_boss_hp_now = 100.0f;
+}
+
+void BossHpUI::Update()
+{
+	Task* p = TaskManager::FindObject(eBossHead);
+	BossHead* n = dynamic_cast<BossHead*>(p);
+	if (n != nullptr)
+		m_boss_hp_now = n->GetHP();
+
+	m_boss_hp_now = m_boss_hp_now / m_boss_hp_max;
+
+	printf("%f\n", m_boss_hp_now);
+	if (m_boss_hp_now <= 0) m_boss_hp_now = 0;
+}
+
+void BossHpUI::Draw()
+{
+	m_img.SetSize(CVector2D(m_boss_hp_now * hp_width, 10));
+	m_img.SetPos(m_pos);
+	m_img.Draw();
 }

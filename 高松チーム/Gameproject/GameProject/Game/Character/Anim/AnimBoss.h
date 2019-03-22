@@ -2,15 +2,15 @@
 #include "../../Gameproject/GameProject/stdafx.h"
 
 
-enum Motion1{
+enum Motion1 {
 	eBossHeadAnim,
 	eBossTailAttackMotion,
 };
-enum Motion2{
-	
+enum Motion2 {
+
 	eBossTailAnim,
 	eBossFireAttackMotion,
-	
+
 };
 enum {
 	eBossFireEffect,

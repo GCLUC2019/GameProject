@@ -4,6 +4,7 @@
 #include "../GameProject/Game/UI/UI.h"
 #include "../GameProject/Game/Resource/Resource.h"
 #include "../GameProject/Base/Task.h"
+#include "../GameProject/Game/Scene/GameScene2.h"
 
 #define BACKXSIZE 1280
 #define BACKYSIZE 720
@@ -75,7 +76,7 @@ void Title::Update()
 				break;
 			case 1:
 				if (mp_fadeout >= 1.0f)
-				TaskManager::AddTask(new GameScene());
+				TaskManager::AddTask(new GameScene2());
 				break;
 			}
 

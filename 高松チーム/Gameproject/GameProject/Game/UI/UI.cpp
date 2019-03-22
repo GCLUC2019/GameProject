@@ -61,6 +61,7 @@ void SpecialGageUI::Update()
 {
 	Task* p = TaskManager::FindObject(ePlayer);
 	Player* n = dynamic_cast<Player*>(p);
+	if(n != nullptr)
 	m_special_gage = n->GetSpecial();
 
 	switch (m_special_gage)

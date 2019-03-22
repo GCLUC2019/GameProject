@@ -12,6 +12,8 @@ GameScene2::GameScene2() : Task(eGameScene2)
 	TaskManager::GetInstance()->AddTask(new BossManager());
 	TaskManager::GetInstance()->AddTask(new Player());
 	TaskManager::GetInstance()->AddTask(new UI());
+	TaskManager::GetInstance()->AddTask(new BossGageBaseUI());
+	TaskManager::GetInstance()->AddTask(new BossHpUI());
 	SOUND("n32")->Play(true);
 }
 

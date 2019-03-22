@@ -9,6 +9,8 @@ public:
 		eGageBaseUI,
 		ePlayerGageUI,
 		eGuidanceUI,
+		eBossHpUI,
+		eBossGageBaseUI,
 	};
 private:
 protected:
