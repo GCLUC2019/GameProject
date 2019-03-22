@@ -21,9 +21,13 @@ void PlayerEffectLongAttack::Update()
 	m_vec.x = 8.5f;
 	else m_vec.x = -8.5f;
 
+
+
 	m_pos += m_vec;
 	m_img.ChangeAnimation(PlayerEffectAnim::ePELongAttack);
 	m_img.UpdateAnimation();
+
+	MoveControl();
 }
 
 void PlayerEffectLongAttack::Draw()
@@ -40,7 +44,7 @@ void PlayerEffectLongAttack::Draw()
 void PlayerEffectLongAttack::MoveControl()
 {
 
-	if (m_pos.x < SCREEN_MIN_SIZE_X || m_pos.y > SCREEN_MAX_SIZE_X)
+	if (m_pos.x < SCREEN_MIN_SIZE_X || m_pos.x > SCREEN_MAX_SIZE_X)
 		SetKill();
 	if (m_pos.y < SCREEN_MIN_SIZE_Y || m_pos.y > SCREEN_MAX_SIZE_Y)
 		SetKill();

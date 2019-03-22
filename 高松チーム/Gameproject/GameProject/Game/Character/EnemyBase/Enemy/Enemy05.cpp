@@ -13,7 +13,8 @@
 #define SAIZE_SD 110
 
 Enemy05::Enemy05(CVector2D& _pos) : EnemyBase(CharacterData::eEnemy05),
-m_move_cnt(0)
+m_move_cnt(0),
+m_attack_flg(false)
 {
 	//初期化
 	m_img = COPY_RESOURCE("Enemy05", CAnimImage*);
@@ -70,8 +71,12 @@ void Enemy05::MoveManagement(int _type)
 void Enemy05::Attack()
 {
 	m_img.ChangeAnimation(Enemy05Anim ::eEAttack05,false);
-	if (m_img.CheckAnimationEnd())
+	m_attack_flg = true;
+	if (m_img.CheckAnimationEnd()) {
+		m_attack_flg = false;
 		m_state = Enemy05State::eMove;
+	}
+	
 	
 }
 
@@ -123,14 +128,14 @@ void Enemy05::Draw()
 	//サイズ指定と描画
 	m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
 	m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE/* - IMAGE_SIZE / 2*/);
-	m_img.SetPos(CVector2D(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3));
+	m_img.SetPos(CVector2D(m_pos.x - g_game_data.m_scroll.x, m_pos.y - g_game_data.m_scroll.y / 3));
 	m_img.SetRect(-IMAGE_SIZE / 2.7f, -IMAGE_SIZE / 4.0f - g_game_data.m_scroll.y / 3,
 					IMAGE_SIZE / 3.0f, IMAGE_SIZE / 2.3f - g_game_data.m_scroll.y / 3);
 	m_img.SetFlipH(m_flip);
 
 	m_shadow.SetSize(SAIZE_SD + m_depth / 5, 50);
 	m_shadow.SetCenter((SAIZE_SD + m_depth / 5) / 2, 50 / 2);
-	m_shadow.SetPos(CVector2D(m_pos.x,m_pos.y - g_game_data.m_scroll.y / 3));
+	m_shadow.SetPos(CVector2D(m_pos.x - g_game_data.m_scroll.x,m_pos.y - g_game_data.m_scroll.y / 3));
 	m_rect = CRect(-IMAGE_SIZE / 3.0f, -IMAGE_SIZE / 5.0f - g_game_data.m_scroll.y / 3, 
 					IMAGE_SIZE / 3.5f, IMAGE_SIZE / 2.5f - g_game_data.m_scroll.y / 3);
 
@@ -149,5 +154,13 @@ void Enemy05::HitCheck()
 		SOUND("punch-middle2")->Play();
 		m_hp -= 1;
 		m_state = Enemy05State::eDamage;
+	}
+	if (m_attack_flg)
+	{
+		Task* P = CollitionBase::GetCollisionCheckRectANDY(this, CharacterData::ePlayer, 50.0f);
+		Player* p = dynamic_cast<Player*>(P);
+		if (p == nullptr)
+			return;
+		p->Damage(5);
 	}
 }

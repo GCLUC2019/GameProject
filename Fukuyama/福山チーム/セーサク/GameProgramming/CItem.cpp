@@ -12,7 +12,7 @@ void CItem::Init(){
 	mCollider->mRadius = 10.0f;
 	mCollider->mpTask = this;
 	CCollisionManager::Get()->Add(mCollider);
-
+	SetColor(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 void CItem::Update(){
@@ -20,13 +20,13 @@ void CItem::Update(){
 	CCollisionManager::Get()->Collision(mCollider);
 
 	if (mType == 1){
-		CRectangle::SetTexture(&mTexImage, 57, 83, 54, 12);
+		CRectangle::SetTexture(&mTexImage, 84, 110, 54, 12);
 	}
 	if (mType == 2){
-		CRectangle::SetTexture(&mTexImage, 57, 83, 54, 12);
+		CRectangle::SetTexture(&mTexImage, 58, 84, 54, 12);
 	}
 	if (mType == 3){
-		CRectangle::SetTexture(&mTexImage, 57, 83, 54, 12);
+		CRectangle::SetTexture(&mTexImage, 110, 138, 54, 12);
 	}
 }
 

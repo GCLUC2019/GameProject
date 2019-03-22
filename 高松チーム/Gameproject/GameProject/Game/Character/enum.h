@@ -37,6 +37,7 @@ const enum CharacterData{
 	ePEffectShortAttack03,
 	ePEffectSpecialAttack,
 	ePEffectGetDamage,
+	ePlayerSpecial,
 	
 	eE1AttackEffect,
 	eE2AttackEffect,

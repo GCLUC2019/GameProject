@@ -30,13 +30,6 @@ void EnemyManager::Update()
 		WaveLoad1();
 	}
 
-	
-
-	++m_cnt;
-	if (m_cnt >= 300)	m_appear_type = EnemyManagerWave::eWave1_2;
-	if (m_cnt >= 1000)	m_appear_type = EnemyManagerWave::eWave2_1;
-	if (m_cnt >= 1600)	m_appear_type = EnemyManagerWave::eWave2_2;
-
 }
 
 void EnemyManager::Draw()
