@@ -183,7 +183,8 @@ void GuidanceUI::Update()
 	if (cnt >= 45 && cnt < 89) m_pos.y -= 0.1f;
 	if (cnt >= 90) cnt = 0;*/
 
-
+	if (g_game_data.m_scroll.x >= 1)
+		SetKill();
 }
 
 void GuidanceUI::Draw()
