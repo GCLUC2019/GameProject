@@ -37,6 +37,7 @@ m_search_flg(false)
     m_pos = _pos;
     m_state=eSearch;
 	m_hp = 100;
+    length = 0;
     m_vec = CVector2D(0, 0);
     m_dir = CVector2D(0, 0);
     m_rect = CRect(-IMAGE_SIZE / 2, -IMAGE_SIZE / 2, IMAGE_SIZE / 2, IMAGE_SIZE / 2);
@@ -106,10 +107,15 @@ void Enemy01::Move()
 {
     m_img.ChangeAnimation(eEMove01);
     m_vec = m_dir;
-   /* CVector2D vec = p->GetPos() - m_pos;
-    float length = sqrt(vec.x*vec.x + vec.y*vec.y);
-    if (length < IMAGE_SIZE / 2)
-        m_state = eAttack;*/
+    m_state = eSearch;
+    Task*t = TaskManager::FindObject(ePlayer);
+    Player*p = dynamic_cast<Player*>(t);
+    m_dir = p->GetPos() - m_pos;
+    length = m_dir.Length();
+    if (length < IMAGE_SIZE/2) {
+        m_dir = m_dir.GetNormalize();
+        m_state = eAttack;
+    }
 }
 
 void Enemy01::Search()
@@ -125,19 +131,21 @@ void Enemy01::Search()
         if (m_pos.x < IMAGE_SIZE / 2)
             m_flip = true;
     }
-    /*Player*p = nullptr;
-    if (PlayerCheck(p, this,300.0f)) {
-    m_dir=GetNormalize(playerpos-m_pos);
+    Task*t = TaskManager::FindObject(ePlayer);
+    Player*p = dynamic_cast<Player*>(t);
+    m_dir = p->GetPos() - m_pos;
+    length = m_dir.Length();
+    if (length < IMAGE_SIZE) {
+        m_dir = m_dir.GetNormalize();
         m_state = eMove;
-    }*/
+    }
 }
 
 void Enemy01::Attack()
 {
-    m_img.ChangeAnimation(eEAttack01, false);
+    m_img.ChangeAnimation(eEAttack03, false);
     if (m_img.CheckAnimationEnd()) {
         m_state = eSearch;
-        SetKill();
     }
        
 }
@@ -165,11 +173,6 @@ void Enemy01::MoveControl()
 }
 void Enemy01::HitCheck()
 {
-  /*  Task*t = TaskManager::FindObject(ePlayer);
-    if (t) {
-        printf("Player”­Œ©\n");
-    }
-*/
 	if (CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectLongAttack, 60.0f)) {
 		SOUND("punch-middle2")->Play();
 		m_hp -= 1;

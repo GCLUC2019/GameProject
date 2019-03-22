@@ -17,6 +17,7 @@ private:
     };
     CVector2D m_dir;
     float m_hover;//浮遊を表現するための変数
+    float length ;
     bool m_search_flg;//プレイヤーを見つけたかどうかのフラグ
     
     
