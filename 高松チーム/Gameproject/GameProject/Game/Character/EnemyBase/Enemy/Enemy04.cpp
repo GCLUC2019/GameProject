@@ -83,11 +83,11 @@ void Enemy04::Draw()
 	m_img.UpdateAnimation();
 	m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
 	m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE );
-	m_img.SetPos(m_pos + CVector2D(0, -m_hight - g_game_data.m_scroll.y / 3));
+	m_img.SetPos(m_pos + CVector2D(-g_game_data.m_scroll.x, -m_hight - g_game_data.m_scroll.y / 3));
 	m_img.SetFlipH(m_flip);
 	m_shadow.SetSize(SAIZE_SD, SAIZE_SD);
 	m_shadow.SetCenter(SAIZE_SD / 2, SAIZE_SD / 2);
-	m_shadow.SetPos(m_pos - CVector2D(0,  g_game_data.m_scroll.y / 3));
+	m_shadow.SetPos(m_pos - CVector2D(-g_game_data.m_scroll.x,  g_game_data.m_scroll.y / 3));
 	m_shadow.Draw();
 	m_img.Draw();
 }

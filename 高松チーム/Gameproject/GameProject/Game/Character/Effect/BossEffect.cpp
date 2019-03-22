@@ -1,6 +1,8 @@
 #include "BossEffect.h"
 #include "../GameProject/Game/Resource/Resource.h"
 #include "../GameProject/Game/GameData/GameData.h"
+#include "../GameProject/Game/CollitionBase.h"
+#include "../GameProject/Game/Character/Player.h"
 
 #define BOSS_X_SIZE 768
 #define BOSS_Y_SIZE 768
@@ -33,6 +35,16 @@ void BossFireEffect::Update()
 	m_img.UpdateAnimation();
 	m_img.CheckAnimationEnd();
 	if (m_img.CheckAnimationEnd())SetKill();
+}
+
+void BossFireEffect::HitCheck()
+{
+	Task*t = CollitionBase::GetCollisionCheckRectANDY(this, CharacterData::ePlayer, 50.0f);
+	Player*p = dynamic_cast<Player*>(t);
+
+	if (p != nullptr) {
+		p->Damage(20);
+	}
 }
 
 void BossFireEffect::Draw()
@@ -84,6 +96,16 @@ void BossLazerEffect::Update()
 	if (m_img.CheckAnimationEnd())SetKill();
 }
 
+void BossLazerEffect::HitCheck()
+{
+	Task*t = CollitionBase::GetCollisionCheckRectANDY(this, CharacterData::ePlayer, 100.0f);
+	Player*p = dynamic_cast<Player*>(t);
+
+	if (p != nullptr) {
+		p->Damage(20);
+	}
+}
+
 void BossLazerEffect::Draw()
 {
 #ifdef _DEBUG
@@ -101,7 +123,7 @@ void BossLazerEffect::Draw()
 	//m_img2.Draw();
 }
 
-BossSlashEffect::BossSlashEffect() : Task(eBossLazerEffectc)
+BossSlashEffect::BossSlashEffect(const CVector2D &pos) : Task(eBossLazerEffectc)
 {
 	m_img = COPY_RESOURCE("BossSlash", CAnimImage*);
 
@@ -113,7 +135,7 @@ BossSlashEffect::BossSlashEffect() : Task(eBossLazerEffectc)
 
 	//m_pos = pos;
 
-	m_pos = CVector2D(m_player_pos.x, m_player_pos.y);
+	m_pos = CVector2D(pos.x, m_player_pos.y);
 
 	m_flip = false;
 
@@ -131,6 +153,16 @@ void BossSlashEffect::Update()
 	if (m_img.CheckAnimationEnd())SetKill();
 }
 
+void BossSlashEffect::HitCheck()
+{
+	Task*t = CollitionBase::GetCollisionCheckRectANDY(this, CharacterData::ePlayer, 50.0f);
+	Player*p = dynamic_cast<Player*>(t);
+
+	if (p != nullptr) {
+		p->Damage(20);
+	}
+}
+
 void BossSlashEffect::Draw()
 {
 #ifdef _DEBUG
@@ -142,7 +174,7 @@ void BossSlashEffect::Draw()
 
 	m_img.SetFlipH(m_flip);
 	m_img.SetSize(SLASH_SIZE * 2, SLASH_SIZE * 2);
-	m_img.SetPos(m_pos.x, m_pos.y + 1 - g_game_data.m_scroll.y / 3);
+	m_img.SetPos(m_pos.x - 80, m_pos.y + 1 - g_game_data.m_scroll.y / 3);
 	m_img.SetFlipH(false);
 	m_img.Draw();
 

@@ -18,8 +18,16 @@
 
 BossManager::BossManager() : Task(eBossManager)
 {
+	m_img = COPY_RESOURCE("Boss", CImage*);
+
 	
-	m_rect_pos = CVector2D(WIGHT_SIZE - BOSS_X_SIZE / 2.5, HEIGHT_SIZE - BOSS_Y_SIZE / 2.5);
+	m_img.SetCenter(BOSS_Y_SIZE / 4, BOSS_Y_SIZE / 4);
+
+	/*m_rect_pos = CVector2D(WIGHT_SIZE - BOSS_X_SIZE / 2.5, HEIGHT_SIZE - BOSS_Y_SIZE / 2.5);*/
+
+	m_pos = CVector2D(WIGHT_SIZE - BOSS_X_SIZE / 2.5f, HEIGHT_SIZE - BOSS_Y_SIZE / 2.5f);
+
+	//m_rect = CRect();
 
 	m_state = Manager::eIdle;
 
@@ -48,11 +56,12 @@ void BossManager::Nothing()
 void BossManager::Idle()
 {
 	if (m_idle_cnt <= 0 && m_idle_flag == true) {
-		TaskManager::GetInstance()->AddTask(new CollisionBox(CVector2D(m_rect_pos.x, m_rect_pos.y), CRect(-300, -100, 250, 300)));
+		//TaskManager::GetInstance()->AddTask(new CollisionBox(CVector2D(m_rect_pos.x, m_rect_pos.y), CRect(-300, -100, 250, 300)));
 		TaskManager::GetInstance()->AddTask(new BossLeftHand(m_player_pos, Manager::eIdle));
 		TaskManager::GetInstance()->AddTask(new BossRightHand(m_player_pos, Manager::eIdle));
 		TaskManager::GetInstance()->AddTask(new BossHead(m_player_pos, Manager::eIdle));
 		TaskManager::GetInstance()->AddTask(new BossTail(m_player_pos, Manager::eIdle));
+		m_pos.x -= 0.5f;
 	}
 
 	m_idle_cnt++;
@@ -146,7 +155,14 @@ void BossManager::Update()
 
 void BossManager::Draw()
 {
-	
+	m_img.SetRect(0, BOSS_Y_SIZE * 2, BOSS_X_SIZE, BOSS_Y_SIZE * 3);
+	m_img.SetSize(BOSS_X_SIZE / 2, BOSS_Y_SIZE /2);
+	m_img.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
+
+	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
 }
 
 

@@ -76,11 +76,9 @@ void Title::Update()
 				break;
 			case 1:
 				if (mp_fadeout >= 1.0f)
-				TaskManager::AddTask(new GameScene2());
+				TaskManager::AddTask(new GameScene());
 				break;
 			}
-
-			n->SetKill();
 			SetKill();
 		}
     }
