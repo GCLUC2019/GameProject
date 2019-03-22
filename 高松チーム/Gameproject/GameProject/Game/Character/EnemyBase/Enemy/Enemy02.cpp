@@ -156,6 +156,9 @@ void Enemy02::Damage()
 	if (m_hp <= 0) {
 		m_img.ChangeAnimation(Enemy02Anim::eEDeath02, false);
 		if (m_img.CheckAnimationEnd()) {
+            Player* n = dynamic_cast<Player*>(TaskManager::FindObject(CharacterData::ePlayer));
+            if (n != nullptr)
+                n->SpecialPuls(5);
 			SetKill();
 			g_game_data.m_dead_cnt++;
 		}
