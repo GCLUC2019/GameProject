@@ -2,6 +2,8 @@
 #include "../Anim/AnimEnemyEffect.h"
 #include "../../CollitionBase.h"
 #include "../GameProject/Game/Character/Player.h"
+#include "../../GameData/GameData.h"
+
 #define EFFECT_SIZE 200
 #define EFFECT_SIZE_E4_EX_X 1000
 #define EFFECT_SIZE_E4_EX_Y 50
@@ -12,7 +14,7 @@ E2Effect::E2Effect(const CVector2D&pos) :Task(eE2AttackEffect)
 {
     m_img = COPY_RESOURCE("Enemy2Effect", CAnimImage*);
     m_pos = pos;
-    m_rect = CRect(-EFFECT_SIZE / 2, -EFFECT_SIZE / 4, EFFECT_SIZE / 2, EFFECT_SIZE / 4);
+    m_rect = CRect(-EFFECT_SIZE / 2, -EFFECT_SIZE / 4-g_game_data.m_scroll.y/3, EFFECT_SIZE / 2, EFFECT_SIZE / 4 - g_game_data.m_scroll.y / 3);
 }
 
 void E2Effect::Update()
@@ -26,7 +28,7 @@ void E2Effect::Update()
 
 void E2Effect::Draw()
 {
-    m_img.SetPos(m_pos);
+    m_img.SetPos(CVector2D(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3));
     m_img.SetCenter(EFFECT_SIZE , EFFECT_SIZE / 2);
     m_img.SetSize(EFFECT_SIZE*2, EFFECT_SIZE);
     m_img.Draw();
