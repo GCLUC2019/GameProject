@@ -32,13 +32,15 @@ private:
 	int m_idle_cnt;//‘Ò‹@ó‘Ô‚Å‚¢‚éŠÔ
 	int m_cnt;
 
-	float m_hp;
+	//float m_hp;
 
 	bool m_idle_flag;
 
 public:
 
 	BossManager();
+
+	BossManager(int state);
 
 	~BossManager();
 
@@ -48,15 +50,11 @@ public:
 
 	void Attack();
 
-	void HitCheck();
+	void Death();
 
 	void Update();
 
 	void Draw();
-
-	float GetHP() {
-		return m_boss_hp;
-	}
 
 	friend class BossHead;
 	friend class BossRightHand;
