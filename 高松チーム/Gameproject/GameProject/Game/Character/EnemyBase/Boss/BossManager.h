@@ -17,10 +17,14 @@ private:
 		eNothing,
 		eUp,
 	};
+	CImage m_img;
 
 	CVector2D m_player_pos;//プレイヤーの座標を取得して格納
-	
+	CVector2D m_pos;
+
 	CVector2D m_rect_pos;//矩形移動のぽす
+
+	CRect m_rect;
 
 	int m_state;//ボスの状態
 	int m_boss_attack_type;//ボスの攻撃する種類を番号で振り分ける
