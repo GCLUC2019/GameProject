@@ -5,6 +5,8 @@
 #include "../GameProject/Game/GameData/GameData.h"
 #include "../GameProject/Game/CollitionBase.h"
 #include "../GameProject/Game/Character/Effect/EnemyEffect.h"
+#include "../../Player.h"
+
 #define MOVE_SPEED 2.0f
 #define DEP_N 1200
 
@@ -118,6 +120,9 @@ void Enemy03::Damage()
     if (m_hp <= 0) {
         m_img.ChangeAnimation(Enemy03Anim::eEDeath03, false);
         if (m_img.CheckAnimationEnd()) {
+			Player* n = dynamic_cast<Player*>(TaskManager::FindObject(CharacterData::ePlayer));
+			if (n != nullptr)
+				n->SpecialPuls(5);
             g_game_data.m_dead_cnt++;
             SetKill();
 
