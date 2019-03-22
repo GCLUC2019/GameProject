@@ -72,6 +72,10 @@ public:
 		ADD_RESOURCE("PESpecialAttack", CAnimImage::LoadImage("../data/Image/pipo-mapeffect013a-1.png", PlayerEffectAnimData, 400, 400));
 		ADD_RESOURCE("PEGetDamage", CAnimImage::LoadImage("../data/Image/Effect_p020.png", PlayerEffectAnimData, 200, 200));
 
+		//•KŽE‚Ì‚à‚ë‚à‚ë
+		ADD_RESOURCE("Curtain", CImage::LoadImage("../data/Image/curtain.png"));
+		ADD_RESOURCE("Cutin", CImage::LoadImage("../data/Image/cutin.png"));
+		ADD_RESOURCE("Hissathu", CImage::LoadImage("../data/Image/text02.png"));
 
 		ADD_RESOURCE("Enemy01", CAnimImage::LoadImage("../data/Image/zako_chochin_motion.png", Enemy01AnimData, 512, 512));
 		ADD_RESOURCE("Enemy02", CAnimImage::LoadImage("../data/Image/zako_daruma_motion.png", Enemy02AnimData, 512, 512));
@@ -117,6 +121,10 @@ public:
 		ADD_RESOURCE("PESpecialAttack", CAnimImage::LoadImage("../data/Image/pipo-mapeffect013a-1.png", PlayerEffectAnimData, 400, 400));
 		ADD_RESOURCE("PEGetDamage", CAnimImage::LoadImage("../data/Image/Effect_p020.png", PlayerEffectAnimData, 200, 200));
 
+		//•KŽE‚Ì‚à‚ë‚à‚ë
+		ADD_RESOURCE("Curtain", CImage::LoadImage("../data/Image/curtain.png"));
+		ADD_RESOURCE("Cutin", CImage::LoadImage("../data/Image/cutin.png"));
+		ADD_RESOURCE("Hissathu", CImage::LoadImage("../data/Image/text02.png"));
 
 		ADD_RESOURCE("Enemy01", CAnimImage::LoadImage("../data/Image/zako_chochin_motion.png", Enemy01AnimData, 512, 512));
 		ADD_RESOURCE("Enemy02", CAnimImage::LoadImage("../data/Image/zako_daruma_motion.png", Enemy02AnimData, 512, 512));
