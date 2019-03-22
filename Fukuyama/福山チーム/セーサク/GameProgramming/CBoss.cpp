@@ -140,6 +140,24 @@ void CBoss::OnCollision(CCollider*p){
 
 			}
 		}
+		if (p->mpTask->mTaskTag == EPLAYERBULLET2){
+			CRectangle::SetTexture(&mTextImage3, 394, 552, -521, -426);
+			CExplosion*p = new CExplosion();
+			p->SetTexture(&Texture, 0, 64, 64, 0);
+			p->mPosition = mPosition;
+			CTaskManager::Get()->Add(p);
+			mHpBar.mHp -= 1.0f;
+
+			if (mHpBar.mHp <= 0.0f){
+				CRectangle::SetTexture(&mTextImage3, -17, 160, -380, -191);
+				CExplosion*p = new CExplosion();
+				p->SetTexture(&Texture, 0, 64, 64, 0);
+				p->mPosition = mPosition;
+				CTaskManager::Get()->Add(p);
+				mEnabled = false;
+
+			}
+		}
 	}
 }
 void CBoss::OnCollision(CBoxCollider*p){
