@@ -375,6 +375,9 @@ void Enemy04::HitCheck()
 	{
 		Damage(10);
 	}
+	if (CollitionBase::CollisionCheckRect(this, CharacterData::ePlayerSpecial)) {
+		Damage(100);
+	}
 }
 
 

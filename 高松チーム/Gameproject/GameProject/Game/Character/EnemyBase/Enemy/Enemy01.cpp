@@ -182,6 +182,11 @@ void Enemy01::HitCheck()
 		m_hp -= 1;
 		m_state = Enemy01State::eDamage;
 	}
+	if (CollitionBase::CollisionCheckRect(this, CharacterData::ePlayerSpecial)) {
+		SOUND("punch-middle2")->Play();
+		m_hp -= 100;
+		m_state = Enemy01State::eDamage;
+	}
 }
 //2019/3/11タスクの探索処理ができ次第実装可能　田中
 bool Enemy01::PlayerCheck(Player*p, Task*e, float _l)

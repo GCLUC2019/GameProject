@@ -600,12 +600,14 @@ void Player::Damage(int _damage)
 		return;
 	}
 	m_img.SetColor(0.5f, 0.5f, 0.5f, 1);
-	SpecialPuls(_damage);
+	SpecialPuls(_damage * 2);
 	m_damage_flg = true;
 }
 
 SpecialEvent::SpecialEvent() : Task(CharacterData::ePlayerSpecial),
 m_cutin_pos(CVector2D(1300,720/2)),
+m_pos(CVector2D(2000, 2000)),
+m_rect(CRect(-1280/2,-720/2, 1280/2, 720/2)),
 m_cnt(0)
 {
 	m_curtain = COPY_RESOURCE("Curtain", CImage*); 
@@ -625,12 +627,21 @@ void SpecialEvent::Update()
 
 	if (m_cutin_pos.x >= 50)
 		m_cutin_pos.x -= 50;
-	if (m_cnt>299)
+	if (m_cnt == 299)
+		m_pos = CVector2D(1280 / 2, 720 / 2);
+	if (m_cnt == 300)
 		SetKill();
 }
 
 void SpecialEvent::Draw()
 {
+
+	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+
+
 	m_cutin.SetSize(1280, 600);
 	m_cutin.SetPos(m_cutin_pos);
 	m_cutin.SetCenter(0, 300);

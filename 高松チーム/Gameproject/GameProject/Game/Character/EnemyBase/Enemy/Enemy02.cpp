@@ -177,6 +177,11 @@ void Enemy02::HitCheck()
 		m_hp -= 1;
 		m_state = Enemy02State::eDamage;
 	}
+	if (CollitionBase::CollisionCheckRect(this, CharacterData::ePlayerSpecial)) {
+		SOUND("punch-middle2")->Play();
+		m_hp -= 100;
+		m_state = Enemy02State::eDamage;
+	}
 }
 
 

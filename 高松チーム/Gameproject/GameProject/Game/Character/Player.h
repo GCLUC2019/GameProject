@@ -117,15 +117,18 @@ private:
 	CImage m_cutin;
 
 	CVector2D m_cutin_pos;
-
+	CVector2D m_pos;
+	CRect m_rect;
 public:
 	SpecialEvent();
 	~SpecialEvent();
 	void Update();
 	void Draw();
 	CVector2D GetPos() {
-		return  CVector2D(900, 900);
+		return m_pos;
 	}
-
+	 CRect GetRect() {
+		 return m_rect;
+	}
 };
 
