@@ -98,7 +98,7 @@ void BossLazerEffect::Update()
 
 void BossLazerEffect::HitCheck()
 {
-	Task*t = CollitionBase::GetCollisionCheckRectANDY(this, CharacterData::ePlayer, 100.0f);
+	Task*t = CollitionBase::GetCollisionCheckRectANDY(this, CharacterData::ePlayer, 150.0f);
 	Player*p = dynamic_cast<Player*>(t);
 
 	if (p != nullptr) {
