@@ -64,10 +64,10 @@ void ItemBox::Update()
 }
 void ItemBox::HitCheck()
 {
-	if (CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack01) ||
-		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack02) ||
-		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack03) ||
-		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectLongAttack))
+	if (CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectShortAttack01, 50.0f) ||
+		CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectShortAttack02, 50.0f) ||
+		CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectShortAttack03, 50.0f) ||
+		CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectLongAttack, 50.0f))
 	{
 		m_open_flg = true;
 	}

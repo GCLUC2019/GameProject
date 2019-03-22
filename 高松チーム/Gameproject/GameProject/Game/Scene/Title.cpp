@@ -21,6 +21,7 @@ m_choice(0)
 {
 	g_game_data.m_score = 0;
 	g_game_data.m_dead_cnt = 0;
+	g_game_data.m_player_switch_flg == false;
     ADD_RESOURCE("Title", CImage::LoadImage("../data/Image/title.png"));
     ADD_RESOURCE("Choice", CImage::LoadImage("../data/Image/choice.png"));
     ADD_RESOURCE("RogoBase", CImage::LoadImage("../data/Image/rogo_base.png"));
@@ -69,7 +70,7 @@ void Title::Update()
     if (CInput::GetState(0, CInput::ePush, CInput::eButton2)) {
 		SOUND("se_027")->Play();
 		TaskManager::GetInstance()->AddTask(new FadeOut());
-		if (mp_fadeout <= 1)
+		if (mp_fadeout >= 1.0f)
 		{
 			switch (m_choice) {
 			case 0:
@@ -79,10 +80,11 @@ void Title::Update()
 				TaskManager::AddTask(new GameScene());
 				break;
 			}
+
+			n->SetKill();
 			SetKill();
 		}
     }
-        //printf("%f,%f\n",m_ohuda_pos.x, m_ohuda_pos.y);
 
 
 }
