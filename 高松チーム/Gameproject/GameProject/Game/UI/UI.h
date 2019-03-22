@@ -74,8 +74,15 @@ class FadeOut : public Task {
 private:
 	CFont m_font;
 	CVector2D m_pos;
+	CVector2D m_pos_ohuda;
+	CVector2D m_pos_rogo;
+
 	CImage m_img;
+	CImage m_img_ohuda;
+	CImage m_img_rogo;
+
 	float m_fadeout;
+	float m_ohuda_ang;
 public:
 	FadeOut();
 	void Update();
