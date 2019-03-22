@@ -13,7 +13,8 @@
 #define SAIZE_SD 110
 
 Enemy05::Enemy05(CVector2D& _pos) : EnemyBase(CharacterData::eEnemy05),
-m_move_cnt(0)
+m_move_cnt(0),
+m_attack_flg(false)
 {
 	//‰Šú‰»
 	m_img = COPY_RESOURCE("Enemy05", CAnimImage*);
@@ -70,8 +71,12 @@ void Enemy05::MoveManagement(int _type)
 void Enemy05::Attack()
 {
 	m_img.ChangeAnimation(Enemy05Anim ::eEAttack05,false);
-	if (m_img.CheckAnimationEnd())
+	m_attack_flg = true;
+	if (m_img.CheckAnimationEnd()) {
+		m_attack_flg = false;
 		m_state = Enemy05State::eMove;
+	}
+	
 	
 }
 
@@ -149,5 +154,13 @@ void Enemy05::HitCheck()
 		SOUND("punch-middle2")->Play();
 		m_hp -= 1;
 		m_state = Enemy05State::eDamage;
+	}
+	if (m_attack_flg)
+	{
+		Task* P = CollitionBase::GetCollisionCheckRectANDY(this, CharacterData::ePlayer, 50.0f);
+		Player* p = dynamic_cast<Player*>(P);
+		if (p == nullptr)
+			return;
+		p->Damage(5);
 	}
 }

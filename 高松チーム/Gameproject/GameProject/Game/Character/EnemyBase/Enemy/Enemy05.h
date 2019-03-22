@@ -14,6 +14,8 @@ private:
 		eDamage,
 	};
 private:
+
+	bool m_attack_flg;
 	int m_move_cnt;	//‰¼UŒ‚ƒJƒEƒ“ƒg•Ï”
 public:
 	Enemy05(CVector2D& _pos);
