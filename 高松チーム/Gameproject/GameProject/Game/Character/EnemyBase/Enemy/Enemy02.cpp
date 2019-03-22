@@ -104,7 +104,6 @@ void Enemy02::Draw()
 void Enemy02::Move()
 {
     m_img.ChangeAnimation(eEMove02);
-    //m_vec = m_dir;
     m_jump_flg = true;
 }
 
@@ -121,14 +120,6 @@ void Enemy02::Search()
         if (m_pos.x < IMAGE_SIZE / 2)
             m_flip = true;
     }
-    /*Task*t = TaskManager::FindObject(ePlayer);
-    Player*p = dynamic_cast<Player*>(t);
-    m_dir = p->GetPos() - m_pos;
-    length = m_dir.Length();
-    if (length < IMAGE_SIZE) {
-        m_dir = m_dir.GetNormalize();
-        m_state = eMove;
-    }*/
    
 }
 
@@ -141,7 +132,7 @@ void Enemy02::Attack()
         m_hight = 0 + JUMP_SPD * cnt + GRAVITY / 10 * (cnt*cnt) / 2;
         if (m_hight > 0) {
             m_hight = 0;
-            cnt = 1;
+            cnt = 0;
             m_jump_flg = false;
             TaskManager::AddTask(new E2Effect(CVector2D(m_pos.x,m_pos.y-IMAGE_SIZE/3)));
         }
@@ -154,6 +145,7 @@ void Enemy02::Attack()
 void Enemy02::Damage()
 {
 	m_vec.x = 0;
+    m_hight = 0;
 	if (m_hp <= 0) {
 		m_img.ChangeAnimation(Enemy02Anim::eEDeath02, false);
 		if (m_img.CheckAnimationEnd()) {
