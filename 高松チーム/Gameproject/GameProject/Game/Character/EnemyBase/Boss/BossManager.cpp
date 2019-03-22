@@ -18,22 +18,9 @@
 
 BossManager::BossManager() : Task(eBossManager)
 {
-	m_img = COPY_RESOURCE("Boss", CImage*);
-
-	
-	m_img.SetCenter(BOSS_Y_SIZE / 4, BOSS_Y_SIZE / 4);
-
-	/*m_rect_pos = CVector2D(WIGHT_SIZE - BOSS_X_SIZE / 2.5, HEIGHT_SIZE - BOSS_Y_SIZE / 2.5);*/
-
-	m_pos = CVector2D(WIGHT_SIZE - BOSS_X_SIZE / 2.5f, HEIGHT_SIZE - BOSS_Y_SIZE / 2.5f);
-
-	//m_rect = CRect();
-
 	m_state = Manager::eIdle;
 
 	m_player_pos = CVector2D(0, 0);
-
-	m_boss_hp = 100;
 
 	m_idle_cnt = 0;
 
@@ -43,7 +30,6 @@ BossManager::BossManager() : Task(eBossManager)
 
 	m_idle_flag = true;
 }
-
 
 BossManager::~BossManager()
 {
@@ -56,12 +42,11 @@ void BossManager::Nothing()
 void BossManager::Idle()
 {
 	if (m_idle_cnt <= 0 && m_idle_flag == true) {
-		//TaskManager::GetInstance()->AddTask(new CollisionBox(CVector2D(m_rect_pos.x, m_rect_pos.y), CRect(-300, -100, 250, 300)));
+
 		TaskManager::GetInstance()->AddTask(new BossLeftHand(m_player_pos, Manager::eIdle));
 		TaskManager::GetInstance()->AddTask(new BossRightHand(m_player_pos, Manager::eIdle));
 		TaskManager::GetInstance()->AddTask(new BossHead(m_player_pos, Manager::eIdle));
 		TaskManager::GetInstance()->AddTask(new BossTail(m_player_pos, Manager::eIdle));
-		m_pos.x -= 0.5f;
 	}
 
 	m_idle_cnt++;
@@ -70,6 +55,7 @@ void BossManager::Idle()
 		m_idle_flag = false;
 		m_state = Manager::eAttackDown;
 	}
+	m_pos.x -= 0.5f;
 }
 
 void BossManager::Attack()
@@ -81,7 +67,7 @@ void BossManager::Attack()
 		m_player_pos = p->GetPos();
 		m_boss_attack_type = rand() % 100;
 	}
-	int a = 3;
+	int a = 2;
 	if (m_boss_attack_type > 80) m_boss_attack_type = a;
 	else if (m_boss_attack_type <= 80 && m_boss_attack_type > 60) m_boss_attack_type = a;
 	else if (m_boss_attack_type <= 60 && m_boss_attack_type > 40) m_boss_attack_type = a;
@@ -120,18 +106,10 @@ void BossManager::Attack()
 	}
 }
 
-void BossManager::HitCheck()
+void BossManager::Death()
 {
-	if (CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectShortAttack01, 50.0f) ||
-		CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectShortAttack02, 50.0f) ||
-		CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectShortAttack03, 50.0f)) {
-		m_hp -= 1;
-	}
-
-	/*if (m_hp <= 0) {
-		TaskManager::GetInstance()->AddTask(new BossDeath());
-		SetKill();
-	}*/
+	TaskManager::GetInstance()->AddTask(new BossDeath());
+	m_state = Manager::eNothing;
 }
 
 void BossManager::Update()
@@ -146,18 +124,23 @@ void BossManager::Update()
 	case Manager::eNothing:
 		Nothing();
 		break;
+	case Manager::eDeath:
+		Death();
+		break;
 	default:
 		break;
 	}
 
-	
+	if (g_game_data.m_boss_hp <= 0 && m_state != Manager::eNothing) {
+		m_state = Manager::eDeath;
+	}
 }
 
 void BossManager::Draw()
 {
-	m_img.SetRect(0, BOSS_Y_SIZE * 2, BOSS_X_SIZE, BOSS_Y_SIZE * 3);
+	m_img.SetPos(m_pos.x, m_pos.y - 150 - g_game_data.m_scroll.y / 3);
+	m_img.SetRect(0, BOSS_Y_SIZE, BOSS_X_SIZE, BOSS_Y_SIZE * 2);
 	m_img.SetSize(BOSS_X_SIZE / 2, BOSS_Y_SIZE /2);
-	m_img.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
 
 	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
 	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
@@ -192,15 +175,15 @@ BossHpUI::BossHpUI() : UI(eBossHpUI)
 	m_pos = CVector2D(100, 690);
 
 	hp_width = 1085;
-	m_boss_hp_max = 100;
+    m_boss_hp_max = 100;
 }
 
 void BossHpUI::Update()
 {
-	Task* p = TaskManager::FindObject(eBossManager);
-	BossManager* n = dynamic_cast<BossManager*>(p);
+	Task* p = TaskManager::FindObject(eBossHead);
+	BossHead* n = dynamic_cast<BossHead*>(p);
 	if (n != nullptr)
-		m_boss_hp_now = n->GetHP();
+		m_boss_hp_now = g_game_data.m_boss_hp;
 
 	m_boss_hp_now = m_boss_hp_now / m_boss_hp_max;
 
