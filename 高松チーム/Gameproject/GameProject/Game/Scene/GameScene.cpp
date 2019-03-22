@@ -55,8 +55,11 @@ void GameScene::Update()
 	if (g_game_data.m_scroll.x >= 1280)
 		g_game_data.m_scroll.x = 1280;
 
-	if (m_player_pos_x.x >= 1280 * 2) {
-		TaskManager::GetInstance()->AddTask(new GameScene2());
+
+	if (m_player_pos_x.x >= 1270 && g_game_data.m_dead_cnt >= 20) {
+
 		TaskManager::KillAll();
+		TaskManager::GetInstance()->AddTask(new GameScene2());
 	}
+	
 }

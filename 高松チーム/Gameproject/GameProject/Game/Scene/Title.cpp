@@ -24,6 +24,8 @@ m_choice(0)
 {
 	g_game_data.m_score = 0;
 	g_game_data.m_dead_cnt = 0;
+	g_game_data.m_gamescene_flg = false;
+
 
 	new TitleResource();
     m_img_back = COPY_RESOURCE("Title", CImage*);

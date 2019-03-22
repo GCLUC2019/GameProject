@@ -19,13 +19,15 @@ GameScene2::GameScene2() : Task(eGameScene2)
 
 GameScene2::~GameScene2()
 {
-	TaskManager::KillAll();
-	TaskManager::GetInstance()->AddTask(new GameClear());
+	
 }
 
 void GameScene2::Update()
 {
 	Task* p = TaskManager::FindObject(CharacterData::eBossManager);
 	BossManager* n = dynamic_cast<BossManager*>(p);
-	if (n == nullptr) SetKill();
+	if (n == nullptr) {
+		TaskManager::GetInstance()->AddTask(new GameClear());
+		TaskManager::KillAll();
+	}
 }
