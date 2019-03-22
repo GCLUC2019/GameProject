@@ -25,8 +25,18 @@ EnemyManager::EnemyManager(): Task(CharacterData::eEnemyBaseManager),
 
 void EnemyManager::Update()
 {
-	if (g_game_data.m_dead_cnt >= 3 && m_wave1_2_flg == false) {
+	if (g_game_data.m_dead_cnt >= 4 && m_wave1_2_flg == false) {
 		m_wave1_2_flg = true;
+		WaveLoad1();
+	}
+
+	if (g_game_data.m_dead_cnt >= 10 && m_wave2_1_flg == false && g_game_data.m_scroll.x >= 1280) {
+		m_wave2_1_flg = true;
+		WaveLoad1();
+	}
+
+	if (g_game_data.m_dead_cnt >= 14 && m_wave2_2_flg == false && g_game_data.m_scroll.x >= 1280) {
+		m_wave2_2_flg = true;
 		WaveLoad1();
 	}
 
@@ -170,7 +180,7 @@ void EnemyManager::WaveLoad1()
 		}
 
 
-		if (g_game_data.m_dead_cnt >= 4) {
+		if (g_game_data.m_dead_cnt >= 4 && g_game_data.m_dead_cnt <= 9) {
 			char wave2_key[64];
 			//‡A’PŒêiˆê‚Â‚Ì•¶š—ñj‚ğ“Ç‚İ‚Ş
 			fscanf_s(fp, "%s", wave2_key, 64);
@@ -196,6 +206,104 @@ void EnemyManager::WaveLoad1()
 							fscanf_s(fp, "%d %d", &x, &y);
 
 							switch (enemy_type2)
+							{
+							case eEnemy01:
+								TaskManager::GetInstance()->AddTask(new Enemy01(CVector2D(x, y)));
+								break;
+							case eEnemy02:
+								TaskManager::GetInstance()->AddTask(new Enemy02(CVector2D(x, y)));
+								break;
+							case eEnemy04:
+								TaskManager::GetInstance()->AddTask(new Enemy04(CVector2D(x, y)));
+								break;
+							case eEnemy05:
+								TaskManager::GetInstance()->AddTask(new Enemy05(CVector2D(x, y)));
+								break;
+							default:
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+
+
+		if (g_game_data.m_dead_cnt >= 10 && g_game_data.m_dead_cnt <= 13) {
+			char wave3_key[64];
+			//‡A’PŒêiˆê‚Â‚Ì•¶š—ñj‚ğ“Ç‚İ‚Ş
+			fscanf_s(fp, "%s", wave3_key, 64);
+			//‡B“Ç‚İ‚ñ‚¾’PŒê‚ªEnemyData‚È‚ç
+			if (strcmp(wave3_key, "WaveData1_3") == 0) {
+				while (!feof(fp)) {
+					//‡DEnd‚ªo‚Å‚½‚çA“Ç‚İ‚İI—¹
+					if (strcmp(wave3_key, "END1_3") == 0) break;
+					char key[64];
+					//‡A’PŒêiˆê‚Â‚Ì•¶š—ñj‚ğ“Ç‚İ‚Ş
+					fscanf_s(fp, "%s", key, 64);
+					//‡B“Ç‚İ‚ñ‚¾’PŒê‚ªEnemyData‚È‚ç
+					if (strcmp(key, "EnemyData1_3") == 0) {
+						while (!feof(fp)) {
+							//‡C’PŒêiˆê‚Â‚Ì•¶š—ñj‚ğ“Ç‚İ‚Ş
+							fscanf_s(fp, "%s", key, 64);
+							//‡DEnd‚ªo‚Å‚½‚çA“Ç‚İ‚İI—¹
+							if (strcmp(key, "END_Enemy1_3") == 0) break;
+							//‡E‚»‚¤‚¶‚á‚È‚©‚Á‚½‚ç“G‚Ìƒf[ƒ^‚ğ“Ç‚İ‚±‚Ş
+							//@“G‚ğ¶¬‚·‚é
+							int x, y;
+							int enemy_type3 = atoi(key);
+							fscanf_s(fp, "%d %d", &x, &y);
+
+							switch (enemy_type3)
+							{
+							case eEnemy01:
+								TaskManager::GetInstance()->AddTask(new Enemy01(CVector2D(x, y)));
+								break;
+							case eEnemy02:
+								TaskManager::GetInstance()->AddTask(new Enemy02(CVector2D(x, y)));
+								break;
+							case eEnemy04:
+								TaskManager::GetInstance()->AddTask(new Enemy04(CVector2D(x, y)));
+								break;
+							case eEnemy05:
+								TaskManager::GetInstance()->AddTask(new Enemy05(CVector2D(x, y)));
+								break;
+							default:
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+
+
+		if (g_game_data.m_dead_cnt >= 14) {
+			char wave4_key[64];
+			//‡A’PŒêiˆê‚Â‚Ì•¶š—ñj‚ğ“Ç‚İ‚Ş
+			fscanf_s(fp, "%s", wave4_key, 64);
+			//‡B“Ç‚İ‚ñ‚¾’PŒê‚ªEnemyData‚È‚ç
+			if (strcmp(wave4_key, "WaveData1_4") == 0) {
+				while (!feof(fp)) {
+					//‡DEnd‚ªo‚Å‚½‚çA“Ç‚İ‚İI—¹
+					if (strcmp(wave4_key, "END1_4") == 0) break;
+					char key[64];
+					//‡A’PŒêiˆê‚Â‚Ì•¶š—ñj‚ğ“Ç‚İ‚Ş
+					fscanf_s(fp, "%s", key, 64);
+					//‡B“Ç‚İ‚ñ‚¾’PŒê‚ªEnemyData‚È‚ç
+					if (strcmp(key, "EnemyData1_4") == 0) {
+						while (!feof(fp)) {
+							//‡C’PŒêiˆê‚Â‚Ì•¶š—ñj‚ğ“Ç‚İ‚Ş
+							fscanf_s(fp, "%s", key, 64);
+							//‡DEnd‚ªo‚Å‚½‚çA“Ç‚İ‚İI—¹
+							if (strcmp(key, "END_Enemy1_4") == 0) break;
+							//‡E‚»‚¤‚¶‚á‚È‚©‚Á‚½‚ç“G‚Ìƒf[ƒ^‚ğ“Ç‚İ‚±‚Ş
+							//@“G‚ğ¶¬‚·‚é
+							int x, y;
+							int enemy_type4 = atoi(key);
+							fscanf_s(fp, "%d %d", &x, &y);
+
+							switch (enemy_type4)
 							{
 							case eEnemy01:
 								TaskManager::GetInstance()->AddTask(new Enemy01(CVector2D(x, y)));

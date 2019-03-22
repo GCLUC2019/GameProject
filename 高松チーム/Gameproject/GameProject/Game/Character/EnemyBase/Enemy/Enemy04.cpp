@@ -4,6 +4,8 @@
 #include "../GameProject/Game/GameData/GameData.h"
 #include "../../Effect/EnemyEffect.h"
 #include "../../../CollitionBase.h"
+#include "../../Player.h"
+
 #define DEP_N 1200
 Enemy04::Enemy04() : EnemyBase(CharacterData::eEnemy04),
 m_hight(0.0f)
@@ -347,8 +349,14 @@ void Enemy04::Alignment_y()
 void Enemy04::DamageState()
 {
 	if (m_damage_cnt <= 0) {
-		if (m_hp <= 0)
+		if (m_hp <= 0) {
+			g_game_data.m_dead_cnt++;
+			Player* n = dynamic_cast<Player*>(TaskManager::FindObject(CharacterData::ePlayer));
+			if (n != nullptr)
+				n->SpecialPuls(5);
 			SetKill();
+		}
+			
 		m_damage_flg = false;
 	}
 	

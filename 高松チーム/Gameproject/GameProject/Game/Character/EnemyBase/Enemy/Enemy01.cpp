@@ -90,15 +90,15 @@ void Enemy01::Draw()
 #endif//DEBUG
     m_shadow.SetSize(SAIZE_SD + m_depth / 5, 50);
     m_shadow.SetCenter((SAIZE_SD + m_depth / 5) / 2, 50 / 2);
-    m_shadow.SetPos(CVector2D(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3 ));
+    m_shadow.SetPos(CVector2D(m_pos.x - g_game_data.m_scroll.x, m_pos.y - g_game_data.m_scroll.y / 3 ));
     m_shadow.Draw();
 
     m_hover += 0.1f;//リセットしたほうがいい？
 	m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
     m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
-    m_img.SetPos(CVector2D(m_pos.x, m_pos.y + sin(m_hover)*10.0f - g_game_data.m_scroll.y / 3 - IMAGE_SIZE / 2));
+    m_img.SetPos(CVector2D(m_pos.x - g_game_data.m_scroll.x, m_pos.y + sin(m_hover)*10.0f - g_game_data.m_scroll.y / 3 - IMAGE_SIZE / 2));
     m_img.SetFlipH(m_flip);
-    m_rect = CRect(-IMAGE_SIZE / 2, -IMAGE_SIZE / 2, IMAGE_SIZE / 2, IMAGE_SIZE / 2);
+    m_rect = CRect(-IMAGE_SIZE / 2 - g_game_data.m_scroll.x, -IMAGE_SIZE / 2, IMAGE_SIZE / 2 - g_game_data.m_scroll.x, IMAGE_SIZE / 2);
 	m_img.Draw();
 
 }
@@ -155,6 +155,9 @@ void Enemy01::Damage()
 	if (m_hp <= 0) {
 		m_img.ChangeAnimation(Enemy01Anim::eEDeath01, false);
 		if (m_img.CheckAnimationEnd()) {
+            Player* n = dynamic_cast<Player*>(TaskManager::FindObject(CharacterData::ePlayer));
+            if (n != nullptr)
+                n->SpecialPuls(5);
 			g_game_data.m_dead_cnt++;
 			SetKill();
 			

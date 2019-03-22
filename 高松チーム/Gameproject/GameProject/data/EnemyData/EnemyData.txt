@@ -22,3 +22,29 @@ EnemyData1_2
 
 END_Enemy1_2
 END1_2
+
+
+WaveData1_3
+EnemyData1_3
+
+101 200 550
+104 700 650
+102 800 500
+101 100 600
+104 300 450
+
+END_Enemy1_3
+END1_3
+
+
+WaveData1_4
+EnemyData1_4
+
+101 200 550
+105 700 650
+102 800 500
+105 100 600
+104 300 450
+
+END_Enemy1_4
+END1_4

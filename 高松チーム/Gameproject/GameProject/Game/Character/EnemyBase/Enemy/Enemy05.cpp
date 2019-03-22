@@ -5,6 +5,8 @@
 #include "../../Player.h"
 #include "../GameProject/Game/CollitionBase.h"
 #include "../GameProject/Game/GameData/GameData.h"
+#include "../../Player.h"
+
 #define MOVE_ 360
 
 #define GRAVITY -4//èdóÕ
@@ -86,6 +88,9 @@ void Enemy05::Damage()
 	if (m_hp <= 0){
 		m_img.ChangeAnimation(Enemy05Anim ::eEDeath05, false);
 		if (m_img.CheckAnimationEnd()) {
+			Player* n = dynamic_cast<Player*>(TaskManager::FindObject(CharacterData::ePlayer));
+			if (n != nullptr)
+				n->SpecialPuls(5);
 			SetKill();
 			g_game_data.m_dead_cnt++;
 		}

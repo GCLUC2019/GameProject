@@ -86,16 +86,16 @@ void Enemy02::Update()
 
 void Enemy02::Draw()
 {
-    m_rect = CRect(-47.0f, -120.0f - g_game_data.m_scroll.y / 3, 54.0f, -20.0f - g_game_data.m_scroll.y / 3);
+    m_rect = CRect(-47.0f - g_game_data.m_scroll.x, -120.0f - g_game_data.m_scroll.y / 3, 54.0f - g_game_data.m_scroll.x, -20.0f - g_game_data.m_scroll.y / 3);
 
     m_shadow.SetSize(SAIZE_SD + m_depth / 5, 50);
     m_shadow.SetCenter((SAIZE_SD + m_depth / 5) / 2, 50 / 2);
-    m_shadow.SetPos(CVector2D(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3-10));
+    m_shadow.SetPos(CVector2D(m_pos.x - g_game_data.m_scroll.x, m_pos.y - g_game_data.m_scroll.y / 3-10));
     m_shadow.Draw();
 
     m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
     m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE);
-    m_img.SetPos(CVector2D(m_pos.x , m_pos.y + m_hight - g_game_data.m_scroll.y/3));
+    m_img.SetPos(CVector2D(m_pos.x - g_game_data.m_scroll.x, m_pos.y + m_hight - g_game_data.m_scroll.y/3));
     m_img.SetFlipH(m_flip);
     m_img.Draw();
 }
@@ -156,6 +156,9 @@ void Enemy02::Damage()
 	if (m_hp <= 0) {
 		m_img.ChangeAnimation(Enemy02Anim::eEDeath02, false);
 		if (m_img.CheckAnimationEnd()) {
+            Player* n = dynamic_cast<Player*>(TaskManager::FindObject(CharacterData::ePlayer));
+            if (n != nullptr)
+                n->SpecialPuls(5);
 			SetKill();
 			g_game_data.m_dead_cnt++;
 		}
