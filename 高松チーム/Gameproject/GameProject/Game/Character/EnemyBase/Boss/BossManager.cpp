@@ -67,7 +67,7 @@ void BossManager::Attack()
 		m_player_pos = p->GetPos();
 		m_boss_attack_type = rand() % 100;
 	}
-	int a = 2;
+	int a = 1;
 	if (m_boss_attack_type > 80) m_boss_attack_type = a;
 	else if (m_boss_attack_type <= 80 && m_boss_attack_type > 60) m_boss_attack_type = a;
 	else if (m_boss_attack_type <= 60 && m_boss_attack_type > 40) m_boss_attack_type = a;

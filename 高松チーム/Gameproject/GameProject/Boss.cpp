@@ -168,7 +168,7 @@ void BossHead::HitCheck()
 
 void BossHead::FireDownMove()
 {
-	m_shadow_y = m_player_pos.y + 180;
+	m_shadow_y = m_player_pos.y + 50;
 	if (m_pos.y <= m_player_pos.y) {
 		m_pos.y += 5;
 		m_shadow_size += 2;

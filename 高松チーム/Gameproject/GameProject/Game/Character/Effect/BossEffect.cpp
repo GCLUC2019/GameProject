@@ -7,8 +7,8 @@
 #define BOSS_X_SIZE 768
 #define BOSS_Y_SIZE 768
 
-#define FIRE_X_SIZE 1280
-#define FIRE_Y_SIZE 960
+#define FIRE_X_SIZE 640
+#define FIRE_Y_SIZE 480
 
 #define LAZER_X_SIZE 640
 #define LAZER_Y_SIZE 480
@@ -56,7 +56,7 @@ void BossFireEffect::Draw()
 	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
 #endif
 
-	m_img.SetSize(FIRE_X_SIZE - BOSS_X_SIZE / 3, FIRE_Y_SIZE / 4);
+	m_img.SetSize(FIRE_X_SIZE - BOSS_X_SIZE / 5, FIRE_Y_SIZE / 6);
 	m_img.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
 	m_img.Draw();
 }
