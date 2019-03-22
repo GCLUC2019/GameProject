@@ -429,10 +429,6 @@ void CPlayerTank::OnCollision(CCollider*p){
 		//mPosition = mPosition + mpBoxCollider->mAdjust;
 		p->mPosition = mPosition;
 	}
-	if (p->mpTask->mTaskTag == EITEM){
-		mHpBar.mHp += 10.0f;
-		printf("CItem1::OnCollision\n");
-	}
 }
 
 
