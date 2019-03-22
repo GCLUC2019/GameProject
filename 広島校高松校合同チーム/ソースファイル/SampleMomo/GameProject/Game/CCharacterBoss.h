@@ -2,6 +2,7 @@
 #include "CCharacterPlayer.h"
 #include "../Global.h"
 
+
 //ボスの初期表示位置
 #define DEF_BOSS_POS CVector3D(1100, -1300, 500);
 #define DEF_BOSS_VEC CVector3D(0, 0, 0);
@@ -35,7 +36,7 @@
 #define WALK_LIMIT 60
 #define RUN_LIMIT  60
 #define AWAY_LIMIT  60
-#define DAMAGE_LIMIT 60
+#define DAMAGE_LIMIT 15
 
 //速度
 #define DEF_SPEED 2.0
@@ -52,7 +53,7 @@
 #define RASH_TIME 250.0
 
 //吠える攻撃の硬直時間
-#define BARK_FREEZE_TIME 180.0
+#define BARK_FREEZE_TIME 90.0
 
 //跳躍力
 #define JUMP_POWER 40
@@ -76,6 +77,8 @@
 #define RASH_JIMP_POWER 30
 #define RASH_ATTACK 3.0
 
+
+#define BOSS_KNOCK_BACK_FRAME (300.0)
 
 //ボスのアニメーションの種類番号
 enum {
@@ -196,10 +199,14 @@ public:
 	//初期化
 	void DefalutSet();
 
+	void ReceiveKnockBack(CCharacter *_from, double _power);
+
 	void AdjAnim();
 
 	void CharacterBeforeCollisionCheck();
 	void CharacterOutHitPoint();
+
+	static CCharacterBoss* GetInstance();
 };
 
 

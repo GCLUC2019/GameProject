@@ -1,25 +1,27 @@
 #pragma once
 #include "CCharacter.h"
 
+class CBar;
+
 #define ENEMY_SPEAR_FIND_LENGTH (3000.0f)
-#define ENEMY_SPEAR_ATTACK_FRAME (20.0)
+#define ENEMY_SPEAR_ATTACK_FRAME (30.0)
 #define ENEMY_SPEAR_ATTACK_LENGTH CVector3D(300.0f,150.0f,150.0)
 #define ENEMY_SPEAR_MOVE_END_LENGTH CVector3D(270.0f,150.0f,90.0)
 #define ENEMY_SPEAR_ATTACK_POWER (1.0)
-#define ENEMY_SPEAR_ATTACK_HIT_START_FRAME (12.0)
-#define ENEMY_SPEAR_ATTACK_HIT_END_FRAME (20.0)
+#define ENEMY_SPEAR_ATTACK_HIT_START_FRAME (15.0)
+#define ENEMY_SPEAR_ATTACK_HIT_END_FRAME (30.0)
 #define ENEMY_SPEAR_RECEIVE_DAMAGE_FRAME (50.0)
-#define ENEMY_SPEAR_SPACE_LENGTH (0.0)
+#define ENEMY_SPEAR_SPACE_LENGTH CVector3D(200,0,50)
 
 #define ENEMY_AXE_FIND_LENGTH (3000.0f)
-#define ENEMY_AXE_ATTACK_FRAME (20.0)
+#define ENEMY_AXE_ATTACK_FRAME (30.0)
 #define ENEMY_AXE_ATTACK_LENGTH CVector3D(300.0f,1000.0f,150.0)
 #define ENEMY_AXE_MOVE_END_LENGTH CVector3D(270.0f,1000.0f,90.0)
 #define ENEMY_AXE_ATTACK_POWER (1.0)
-#define ENEMY_AXE_ATTACK_HIT_START_FRAME (12.0)
-#define ENEMY_AXE_ATTACK_HIT_END_FRAME (20.0)
+#define ENEMY_AXE_ATTACK_HIT_START_FRAME (15.0)
+#define ENEMY_AXE_ATTACK_HIT_END_FRAME (30.0)
 #define ENEMY_AXE_RECEIVE_DAMAGE_FRAME (50.0)
-#define ENEMY_AXE_SPACE_LENGTH (0.0)
+#define ENEMY_AXE_SPACE_LENGTH CVector3D(200,0,50)
 
 
 #define ENEMY_GUN_FIND_LENGTH (3000.0f)
@@ -30,7 +32,10 @@
 #define ENEMY_GUN_ATTACK_HIT_START_FRAME (60.0)
 #define ENEMY_GUN_ATTACK_HIT_END_FRAME (61.0)
 #define ENEMY_GUN_RECEIVE_DAMAGE_FRAME (50.0)
-#define ENEMY_GUN_SPACE_LENGTH (300.0)
+#define ENEMY_GUN_SPACE_LENGTH CVector3D(300,0,50)
+
+
+#define ENEMY_KNOCK_BACK_FRAME (30.0)
 
 /*
 遠距離攻撃は、当たるのが確定したら撃つアニメーションを再生する。（わかりやすさのため)
@@ -57,6 +62,9 @@ private:
 	
 	bool m_is_moving = false;
 
+	//HPバー
+	CBar* m_hit_point_bar_p = nullptr;
+	CImage * m_hp_frame_image_p = nullptr;
 
 	CVector3D m_attack_length;
 
@@ -80,7 +88,7 @@ private:
 	CVector3D m_move_end_length;
 
 	//これ以上距離が近いなら離れる
-	float m_space_length;
+	CVector3D m_space_length;
 
 	bool m_is_receive_damage_now = false;
 	double m_receive_damage_frame;
@@ -92,7 +100,6 @@ public:
 	~CCharacterEnemy();
 
 	void LoadAnimImage();
-
 	void CharacterBeforeUpdate();
 	void CharacterUpdate();
 	void CharacterBeforeCollisionCheck();
@@ -102,6 +109,8 @@ public:
 	void ReceiveAttack();
 	
 	void ReceiveDamageNow();
+
+	void ReceiveKnockBack(CCharacter *_from, double _power);
 
 	void EnemyMoving();
 	void EnemyAttack();

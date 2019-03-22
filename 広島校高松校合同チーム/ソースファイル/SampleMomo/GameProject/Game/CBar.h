@@ -4,19 +4,15 @@
 
 class CBar: public CObject {
 private:
-	CImage * m_HPbar_img = nullptr;
+	CImage * m_bar_img = nullptr;
 public:
-	//int damage;
-	//int size_y;
-	float hp;
-	float*now_hp;
+	float m_max_value;
+	float* m_now_value;
 	float m_bar_value_now;
-	//int max_bar_size;
-	//int now_bar_size;
-	CVector2D m_bar_size;
-	CVector2D m_bar_pos;
-	float m_mult_hp;
-	CBar(CImage* _img, float*_hp,float _max_hp, CVector2D _pos, CVector2D _size);
+	float m_mult_value;
+	bool m_is_scroll = false;
+	CBar(CImage* _img, float*_value,float _max_value, CVector3D _pos, CVector2D _size,bool _is_scrool = false);
+	CBar(CImage* _img, float*_value, float _max_value, CVector2D _pos, CVector2D _size, bool _is_scrool = false);
 	~CBar();
 	void Update();
 	void Draw();

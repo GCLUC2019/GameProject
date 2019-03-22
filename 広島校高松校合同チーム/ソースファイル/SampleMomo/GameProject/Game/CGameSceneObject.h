@@ -78,6 +78,10 @@ protected:
 	//画面内にいるかどうかの判定
 	bool m_is_in_screen = false;
 
+	//カウントが無くなるまで動きが止まる
+	double m_stop_count = 0.0;
+	bool m_is_stop = false;
+	bool m_will_set_stop = false;
 	
 public:
 	CGameSceneObject(int _task_id = 0, int _draw_priority = 0);
@@ -140,6 +144,24 @@ public:
 
 	
 	void CheckInScreen();
+
+	void SetStop(double _count) { 
+		m_stop_count = _count;
+		m_will_set_stop = true;
+	}
+
+	bool GetStop() { return m_is_stop; };
+
+	void CheckSetStop() {
+		if (m_will_set_stop == true) {
+			m_is_stop = true;
+			m_will_set_stop = false;
+		}
+	}
+	void CountStop() {
+		m_stop_count -= CFPS::GetDeltaTime() * GAME_BASE_FPS;
+		if (m_stop_count <= 0.0) m_is_stop = false;
+	}
 
 	/*
 	//アニメーション再生関連

@@ -19,6 +19,7 @@ class CGameSceneWave;
 
 #define DEFAULT_HIT_POINT (10.0f)
 
+
 /*
 struct AnimInfo {
 	int image_id;
@@ -66,8 +67,11 @@ protected:
 	CGameSceneWave* m_from_wave_p = nullptr;
 	int m_wave_character_id = 0;
 
+	bool m_is_knock_back = false;
+	double m_knock_back_count = 0;
+	CVector3D m_knock_back_vec;
 
-	
+	double m_knock_back_frame;
 	
 public:
 	CCharacter(int _task_id, int _draw_priority);
@@ -84,6 +88,8 @@ public:
 	void SetInvincible(bool _is) { m_is_invincible = _is; };
 	bool GetInvincible() { return m_is_invincible; };
 
+
+	
 
 	//HPÇ™êsÇ´ÇΩéûÇ…åƒÇŒÇÍÇÈ
 	virtual void CharacterOutHitPoint();
@@ -108,7 +114,10 @@ public:
 	void HitPointGainValue(double _value);
 
 	virtual void ReceiveAttack();
+	void DoingKnockBack();
 
+	virtual void ReceiveKnockBack(CCharacter *_from, double _power);
+	void SetKnockBack(CCharacter *_from, double _power);
 
 	void SetFromWave(CGameSceneWave* _wave) { m_from_wave_p = _wave; };
 	void SetCharacterWaveId(int _id) { m_wave_character_id = _id; };

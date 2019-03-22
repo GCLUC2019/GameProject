@@ -35,58 +35,65 @@ void CGameSceneWave::LoadWave(int _wave_id)
 {
 	switch (_wave_id) {
 	case eWave1:
-		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdSpear, CVector3D(850+500, -151, 450 + 100), this));
-		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdSpear, CVector3D(1050 + 500, -151, 450 + 200), this));
-		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdSpear, CVector3D(1250 + 500, -151, 450 + 100), this));
-		m_pop_enemy_num = 3;
-		CGameScene::GetInstance()->SetGameSceneLimitPosMax(CVector3D(1280.0f * 1, 720.0f, 720.0f));
+		CGameScene::GetInstance()->SetCheckPoint(CVector3D(0, -220, 550));
+		//CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdSpear, CVector3D(1100, -151, 450 + 100), this));
+		//CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdSpear, CVector3D(1050 + pop_pos_offset_x, -151, 450 + 200), this));
+		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdSpear, CVector3D(1280, -151, 450 + 100), this));
+		m_pop_enemy_num = 1;
+		CGameScene::GetInstance()->SetGameSceneLimitPosMax(CVector3D(1280.0f, 720.0f, 720.0f));
 		m_next_wave_id = eWave2;
 		break;
 	case eWave2:
-		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdAxe, CVector3D(1500 + 500, -151, 450 + 100), this));
-		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdAxe, CVector3D(1800 + 500, -151, 450 + 200), this));
-		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdAxe, CVector3D(2000 + 500, -151, 450 + 100), this));
-		CGameScene::GetInstance()->SetGameSceneLimitPosMax(CVector3D(1280.0f * 2, 720.0f, 720.0f));
-		m_pop_enemy_num = 3;
+		CGameScene::GetInstance()->SetCheckPoint(CVector3D(600, -220, 550));
+		//CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdAxe, CVector3D(1400, -151, 450 + 100), this));
+		//CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdAxe, CVector3D(1600, -151, 450 + 200), this));
+		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdAxe, CVector3D(1840, -151, 450 + 100), this));
+		CGameScene::GetInstance()->SetGameSceneLimitPosMax(CVector3D(1280.0f + 640.0f * 1, 720.0f, 720.0f));
+		m_pop_enemy_num = 1;
 		m_next_wave_id = eWave3;
 		break;
 	case eWave3:
-		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdSpear, CVector3D(1500 + 500, -151, 450 + 100), this));
-		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdAxe, CVector3D(1800 + 500, -151, 450 + 200), this));
-		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdSpear, CVector3D(2000 + 500, -151, 450 + 100), this));
-		CGameScene::GetInstance()->SetGameSceneLimitPosMax(CVector3D(1280.0f * 2, 720.0f, 720.0f));
-		m_pop_enemy_num = 3;
+		CGameScene::GetInstance()->SetCheckPoint(CVector3D(1200, -220, 550));
+		//CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdSpear, CVector3D(2000, -151, 450 + 100), this));
+		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdAxe, CVector3D(2560, -151, 450 + 200), this));
+		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdSpear, CVector3D(2560, -151, 450 + 100), this));
+		CGameScene::GetInstance()->SetGameSceneLimitPosMax(CVector3D(1280.0f + 640.0f * 2, 720.0f, 720.0f));
+		m_pop_enemy_num = 2;
 		m_next_wave_id = eWave4;
 		break;
 	case eWave4:
-		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdSpear, CVector3D(1500 + 500, -151, 450 + 100), this));
-		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdAxe, CVector3D(1800 + 500, -151, 450 + 200), this));
-		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdGun, CVector3D(2000 + 500, -151, 450 + 100), this));
-		CGameScene::GetInstance()->SetGameSceneLimitPosMax(CVector3D(1280.0f * 2, 720.0f, 720.0f));
-		m_pop_enemy_num = 3;
+		CGameScene::GetInstance()->SetCheckPoint(CVector3D(1800, -220, 550));
+		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdSpear, CVector3D(2800, -151, 450 + 100), this));
+		//CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdAxe, CVector3D(2800, -151, 450 + 200), this));
+		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdGun, CVector3D(3000, -151, 450 + 100), this));
+		CGameScene::GetInstance()->SetGameSceneLimitPosMax(CVector3D(1280.0f + 640.0f * 3, 720.0f, 720.0f));
+		m_pop_enemy_num = 2;
 		m_next_wave_id = eWave5;
 		break;
 	case eWave5:
-		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdSpear, CVector3D(2700 + 500, -151, 450 + 100), this));
-		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdSpear, CVector3D(3000 + 500, -151, 450 + 200), this));
-		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdGun, CVector3D(3200 + 500, -151, 450 + 100), this));
-		CGameScene::GetInstance()->SetGameSceneLimitPosMax(CVector3D(1280.0f * 3, 720.0f, 720.0f));
+		CGameScene::GetInstance()->SetCheckPoint(CVector3D(2400, -220, 550));
+		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdSpear, CVector3D(3200, -151, 450 + 100), this));
+		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdSpear, CVector3D(3400, -151, 450 + 200), this));
+		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdGun, CVector3D(3600, -151, 450 + 100), this));
+		CGameScene::GetInstance()->SetGameSceneLimitPosMax(CVector3D(1280.0f + 640.0f * 4, 720.0f, 720.0f));
 		m_pop_enemy_num = 3;
 		m_next_wave_id = eWave6;
 		break;
 	case eWave6:
-		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdGun, CVector3D(2700 + 500, -151, 450 + 100), this));
-		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdGun, CVector3D(3000 + 500, -151, 450 + 200), this));
-		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdGun, CVector3D(3200 + 500, -151, 450 + 100), this));
-		CGameScene::GetInstance()->SetGameSceneLimitPosMax(CVector3D(1280.0f * 3, 720.0f, 720.0f));
+		CGameScene::GetInstance()->SetCheckPoint(CVector3D(3000, -220, 550));
+		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdGun, CVector3D(3800, -151, 450 + 100), this));
+		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdGun, CVector3D(4000, -151, 450 + 200), this));
+		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdGun, CVector3D(4200, -151, 450 + 100), this));
+		CGameScene::GetInstance()->SetGameSceneLimitPosMax(CVector3D(1280.0f + 640.0f * 5, 720.0f, 720.0f));
 		m_pop_enemy_num = 3;
 		m_next_wave_id = eWave7;
 		break;
 	case eWave7:
-		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdSpear, CVector3D(2700 + 500, -151, 450 + 100), this));
-		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdAxe, CVector3D(3000 + 500, -151, 450 + 200), this));
-		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdGun, CVector3D(3200 + 500, -151, 450 + 100), this));
-		CGameScene::GetInstance()->SetGameSceneLimitPosMax(CVector3D(1280.0f * 3, 720.0f, 720.0f));
+		CGameScene::GetInstance()->SetCheckPoint(CVector3D(3600, -220, 550));
+		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdSpear, CVector3D(4400, -151, 450 + 100), this));
+		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdAxe, CVector3D(4600, -151, 450 + 200), this));
+		CGameScene::GetInstance()->AddGameSceneObject(new CCharacterEnemy(eEnemyIdGun, CVector3D(4800, -151, 450 + 100), this));
+		CGameScene::GetInstance()->SetGameSceneLimitPosMax(CVector3D(1280.0f + 640.0f * 6, 720.0f, 720.0f));
 		m_pop_enemy_num = 3;
 		m_next_wave_id = -1;
 		break;
