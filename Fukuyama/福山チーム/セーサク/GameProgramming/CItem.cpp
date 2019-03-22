@@ -20,13 +20,13 @@ void CItem::Update(){
 	CCollisionManager::Get()->Collision(mCollider);
 
 	if (mType == 1){
-		CRectangle::SetTexture(&mTexImage, 84, 110, 54, 12);
+		CRectangle::SetTexture(&mTexImage, 78, 104, -39, -1);
 	}
 	if (mType == 2){
-		CRectangle::SetTexture(&mTexImage, 58, 84, 54, 12);
+		CRectangle::SetTexture(&mTexImage, 50, 78, -39, -1);
 	}
 	if (mType == 3){
-		CRectangle::SetTexture(&mTexImage, 110, 138, 54, 12);
+		CRectangle::SetTexture(&mTexImage, 104, 132, -39, -1);
 	}
 }
 
