@@ -46,7 +46,7 @@ void E2Effect::HitCheck()
 
 E4EffectEXAttack::E4EffectEXAttack(const CVector2D & pos) :Task(eE4AttackEffect)
 {
-	m_img = COPY_RESOURCE("Slash_EX", CAnimImage*);
+	m_img = COPY_RESOURCE("Enemy04EffectEX", CAnimImage*);
 	m_pos = CVector2D(1280 / 2, pos.y);
 	m_img.ChangeAnimation(E4EffectAnim::eE4EXAttack, false);
 	m_rect = CRect(-EFFECT_SIZE_E4_EX_X / 2, -EFFECT_SIZE_E4_EX_Y / 2, EFFECT_SIZE_E4_EX_X / 2, EFFECT_SIZE_E4_EX_Y / 2);
