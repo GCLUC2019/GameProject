@@ -49,7 +49,22 @@ void CBullet::OnCollision(CCollider*p){
 	if (mTaskTag == EPLAYERBULLET2&&p->mpTask->mTaskTag == EENEMY2){
 		mEnabled = false;
 	}
+	if (mTaskTag == EPLAYERBULLET&&p->mpTask->mTaskTag == EBOSS){
+		mEnabled = false;
+	}
+	if (mTaskTag == EPLAYERBULLET&&p->mpTask->mTaskTag == ESPEEDENEMY){
+		mEnabled = false;
+	}
+	if (mTaskTag == EPLAYERBULLET2&&p->mpTask->mTaskTag == EBOSS){
+		mEnabled = false;
+	}
+	if (mTaskTag == EPLAYERBULLET2&&p->mpTask->mTaskTag == ESPEEDENEMY){
+		mEnabled = false;
+	}
 	if (mTaskTag == EENEMYBULLET&&p->mpTask->mTaskTag == EPLAYERTANK){
+		mEnabled = false;
+	}
+	if (mTaskTag == EENEMYBULLET2&&p->mpTask->mTaskTag == EPLAYERTANK){
 		mEnabled = false;
 	}
 }

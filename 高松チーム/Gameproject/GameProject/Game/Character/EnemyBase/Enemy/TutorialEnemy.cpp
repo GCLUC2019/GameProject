@@ -67,9 +67,9 @@ void TutorialEnemy::Draw()
 
 void TutorialEnemy::HitCheck()
 {
-	if (CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack01)|| 
-		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack02)|| 
-		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack03)) 
+	if (CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectShortAttack01, 50.0f) ||
+		CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectShortAttack02, 50.0f) ||
+		CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectShortAttack03, 50.0f))
 	{
 		SOUND("punch-middle2")->Play();
 		m_state = TutorialEnemyState::eDamage;

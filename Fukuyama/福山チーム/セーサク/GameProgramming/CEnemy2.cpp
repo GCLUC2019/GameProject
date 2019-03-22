@@ -98,8 +98,8 @@ void CEnemy2::Update(){
 				EffectCount = EFFECT_COUNT;
 			}
 			bullet->SetVertex(-30.0f, 30.0f, -8.0f, 8.0f);
-			bullet->CRectangle::SetTexture(&mTexImage2, 0, 191, 0, 23);
-			bullet->mTaskTag = EENEMYBULLET;
+			bullet->CRectangle::SetTexture(&mTexImage2, 191, 0, 0, 23);
+			bullet->mTaskTag = EENEMYBULLET2;
 			bullet->mLife = CBULLET_LIFE;
 			bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, -29.0f);
 			bullet->mForward = bullet->mPosition - mCanon.mMatrix*CVector2(0.0f, -24.0f);
@@ -136,7 +136,7 @@ void CEnemy2::OnCollision(CCollider*p){
 			p->SetTexture(&Texture, 0, 64, 64, 0);
 			p->mPosition = mPosition;
 			CTaskManager::Get()->Add(p);
-			mHpBar.mHp -= 20.0f;
+			mHpBar.mHp -= 25.0f;
 			if (mHpBar.mHp <= 0.0f){
 				CItem*Item = new CItem();   //¬ì
 				Item->mTaskTag = EITEM;

@@ -64,6 +64,8 @@ public:
 		ADD_RESOURCE("BossSlash", CAnimImage::LoadImage("../data/Image/Effect_p036.png", BossSlashEffectAnimData, 200, 200));
 		ADD_RESOURCE("BossDeathEffect1", CAnimImage::LoadImage("../data/Image/pipo-mapeffect013c-1.png", BossDeathEffectAnimData, 192, 192));
 		ADD_RESOURCE("BossDeathEffect2", CAnimImage::LoadImage("../data/Image/pipo-mapeffect013c-2.png", BossDeathEffectAnimData, 192, 192));
+		ADD_RESOURCE("BossHP", CImage::LoadImage("../data/Image/boss_gauge.png"));
+		ADD_RESOURCE("BossHPBack", CImage::LoadImage("../data/Image/boss_gauge_base.png"));
 
 		ADD_RESOURCE("Slash_EX", CAnimImage::LoadImage("../data/Image/slash_ex.png", E4AttackEffectAnimData, 500, 50));
 

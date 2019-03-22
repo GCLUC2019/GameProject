@@ -76,7 +76,7 @@ void Item::Draw()
 void Item::HitCheck()
 {
 	
-	Task* p =CollitionBase::GetCollisionCheckRect(this, ePlayer);
+	Task* p = CollitionBase::GetCollisionCheckRectANDY(this, ePlayer, 50.0f);
 	Player* n = dynamic_cast<Player*>(p);
 	if (n != nullptr) {
 		n->ItemGet(m_item_type);

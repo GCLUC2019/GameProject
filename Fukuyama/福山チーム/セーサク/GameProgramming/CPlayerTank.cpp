@@ -260,13 +260,13 @@ void CPlayerTank::Update(){
 					}
 					CBullet*bullet = new CBullet();
 					bullet->mTaskTag = EPLAYERBULLET;
-					bullet->mLife = 4;
+					bullet->mLife = 1;
 					if (AttackSide == 1){
-						bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, 30.0f);
+						bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, 35.0f);
 						bullet->mForward = bullet->mPosition - mCanon.mMatrix*CVector2(0.0f, 24.0f);
 					}
 					if (AttackSide == 0){
-						bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, -30.0f);
+						bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, -35.0f);
 						bullet->mForward = bullet->mPosition - mCanon.mMatrix*CVector2(0.0f, -24.0f);
 					}
 					bullet->SetColor(mColor[0], mColor[1], mColor[2], mColor[3]);
@@ -308,6 +308,27 @@ void CPlayerTank::Update(){
 void CPlayerTank::OnCollision(CCollider*p){
 	if (Invincible == 0){
 		if (p->mpTask->mTaskTag == EENEMYBULLET){
+			CExplosion*p = new CExplosion();
+			//HeadRightTurn();
+			//HeadRightTurn();
+			//HeadRightTurn();
+			//HeadRightTurn();
+			//HeadRightTurn();
+			//HeadRightTurn();
+			//HeadRightTurn();
+			//HeadRightTurn();
+			p->SetTexture(&Texture, 0, 64, 64, 0);
+			Rect2.Draw(mPlayerfaceD, 0, 144, 0, 144);	//ダメージ画像追加　宮原
+
+			p->mPosition = mPosition;
+			CTaskManager::Get()->Add(p);
+			mHpBar.mHp -= 2.5f;
+			if (mHpBar.mHp <= 0.0f){
+				mEnabled = false;
+				CMain::mSceneTag = CScene::ELOSE;
+			}
+		}
+		if (p->mpTask->mTaskTag == EENEMYBULLET2){
 			CExplosion*p = new CExplosion();
 			//HeadRightTurn();
 			//HeadRightTurn();
@@ -407,6 +428,10 @@ void CPlayerTank::OnCollision(CCollider*p){
 		CExplosion*p = new CExplosion();
 		//mPosition = mPosition + mpBoxCollider->mAdjust;
 		p->mPosition = mPosition;
+	}
+	if (p->mpTask->mTaskTag == EITEM){
+		mHpBar.mHp += 10.0f;
+		printf("CItem1::OnCollision\n");
 	}
 }
 

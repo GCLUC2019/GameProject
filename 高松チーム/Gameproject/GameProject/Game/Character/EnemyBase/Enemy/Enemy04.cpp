@@ -64,8 +64,8 @@ void Enemy04::Update()
 	//SetAnim();
 	if (m_pos.x <0 || m_pos.x > 1280)
 		m_pos.x = m_pos_old.x;
-	/*if (m_pos.y < 480 || m_pos.y > 720)
-		m_pos.y = m_pos_old.y;*/
+	if (m_pos.y < 480 || m_pos.y > 720)
+		m_pos.y = m_pos_old.y;
 }
 
 void Enemy04::Draw()
@@ -344,10 +344,8 @@ void Enemy04::Alignment_y()
 void Enemy04::DamageState()
 {
 	if (m_damage_cnt <= 0) {
-		if (m_hp <= 0) {
-			g_game_data.m_dead_cnt++;
+		if (m_hp <= 0)
 			SetKill();
-		}
 		m_damage_flg = false;
 	}
 	
@@ -359,10 +357,10 @@ void Enemy04::DamageState()
 
 void Enemy04::HitCheck()
 {
-	if (CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack01) ||
-		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack02) ||
-		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack03) ||
-		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectLongAttack))
+	if (CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectShortAttack01, 50.0f) ||
+		CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectShortAttack02, 50.0f) ||
+		CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectShortAttack03, 50.0f) ||
+		CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectLongAttack, 50.0f))
 	{
 		Damage(10);
 	}

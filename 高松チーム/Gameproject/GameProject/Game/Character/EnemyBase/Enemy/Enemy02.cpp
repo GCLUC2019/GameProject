@@ -15,6 +15,7 @@ m_search_flg(false),
 m_jump_flg(false)
 {
     m_img = COPY_RESOURCE("Enemy02", CAnimImage*);
+    m_shadow = COPY_RESOURCE("Shadow", CImage*);
     m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
     m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
     m_img.ChangeAnimation(eEMove02);
@@ -35,6 +36,7 @@ m_search_flg(false),
 m_jump_flg(false)
 {
     m_img = COPY_RESOURCE("Enemy02", CAnimImage*);
+    m_shadow = COPY_RESOURCE("Shadow", CImage*);
     m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
     m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE / 2);
     m_img.ChangeAnimation(eEMove02);
@@ -84,6 +86,11 @@ void Enemy02::Update()
 
 void Enemy02::Draw()
 {
+    m_shadow.SetSize(SAIZE_SD + m_depth / 5, 50);
+    m_shadow.SetCenter((SAIZE_SD + m_depth / 5) / 2, 50 / 2);
+    m_shadow.SetPos(CVector2D(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3));
+    m_shadow.Draw();
+
     m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);
     m_img.SetCenter(IMAGE_SIZE / 2, IMAGE_SIZE);
     m_img.SetPos(CVector2D(m_pos.x , m_pos.y + m_hight - g_game_data.m_scroll.y/3));
@@ -164,9 +171,9 @@ void Enemy02::MoveControl()
 
 void Enemy02::HitCheck()
 {
-	if (CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack01) ||
-		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack02) ||
-		CollitionBase::CollisionCheckRect(this, CharacterData::ePEffectShortAttack03))
+	if (CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectShortAttack01, 50.0f) ||
+		CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectShortAttack02, 50.0f) ||
+		CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectShortAttack03, 50.0f))
 	{
 		SOUND("punch-middle2")->Play();
 		m_hp -= 1;
