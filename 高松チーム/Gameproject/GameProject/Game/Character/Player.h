@@ -33,7 +33,7 @@ private:
 	int m_HP;				//体力
 	int m_special;			//必殺用変数（勾玉のやつ）
 
-	CImage m_shadow;		//
+	CImage m_shadow;		//影
 	CVector2D m_pos_old;	//前座標
 	float m_speed;			//移動速度
 	int m_state;			// 状態

@@ -37,7 +37,7 @@ m_special(0)
     m_before_jump_pos = m_pos.y;
 	SetAnim();
 	m_shadow.SetColor(0.3f, 0.3f, 0.3f, 0.4f);
-	m_rect = CRect(-50, -180, 60, 0);
+	m_rect = CRect(-50, -180, 60, 50);
 }
 
 void Player::HitCheck()
@@ -74,35 +74,37 @@ void Player::Move()
 		}
 		if (CInput::GetState(0, CInput::ePush, CInput::eButton3) && m_squat_flg == false && m_attack_flg == false) {
 			m_jump_flg = true;
-            m_before_jump_pos = m_pos.y;
+			m_before_jump_pos = m_pos.y;
 			m_state = eJumpUp;
 		}
 	}
-	else 
+	else
 		Jump();
 	if (m_squat_flg || m_attack_flg)
 		return;
+	if (m_jump2_flg == false) {
+		if (CInput::GetState(0, CInput::eHold, CInput::eUp)) {
 
-	if (CInput::GetState(0, CInput::eHold, CInput::eUp)) {
-		
-        if (m_jump_flg)
-			m_pos_old.y -= m_speed;
-		else
-		{
-			m_pos.y -= m_speed;
-			m_state = eMove;
+			if (m_jump_flg)
+				m_pos_old.y -= m_speed;
+			else
+			{
+				m_pos.y -= m_speed;
+				m_state = eMove;
+			}
+
 		}
-      
-	}
-	if (CInput::GetState(0, CInput::eHold, CInput::eDown)) {
-		
-        if (m_jump_flg )
-			m_pos_old.y += m_speed; 
-		else{
-			m_pos.y += m_speed;
-            m_state = eMove;
-        }
-      
+
+		if (CInput::GetState(0, CInput::eHold, CInput::eDown)) {
+
+			if (m_jump_flg)
+				m_pos_old.y += m_speed;
+			else {
+				m_pos.y += m_speed;
+				m_state = eMove;
+			}
+
+		}
 	}
 	if (CInput::GetState(0, CInput::eHold, CInput::eRight)) {
 	
@@ -143,18 +145,19 @@ void Player::Jump()
 			return;
 		}
 		
-		Task* t = CollitionBase::GetCollisionCheckRect(this, CharacterData::eCollisionBox);
+		/*Task* t = CollitionBase::GetCollisionCheckRect(this, CharacterData::eCollisionBox);
 		if (t != nullptr&& jump_vec_old - m_jump_vec < 0) {
 			CollisionBox* b = dynamic_cast<CollisionBox*>(t);
-			//time = 0;
+			
 			if (b == nullptr)
 				return;
 			m_pos.y = b->GetPos().y - b->GetRect().m_bottom - 5;
-
+			time = 0;
+			m_jump_flg = false;
 			m_jump2_flg = true;
 			printf("æ‚ê‚½I\n");
 		}
-       
+       */
 		if (m_jump2_flg == false) {
 			jump_vec_old = m_jump_vec;
 			m_jump_vec = 0 + JUMP_SPD * time + GRAVITY * (time*time) / 2;
@@ -367,7 +370,7 @@ void Player::Update()
 		return;
 	}
 		
-	m_img.SetColor(1, 1, 1, 1);
+	
 	if (m_special >= 100 && CInput::GetState(0, CInput::eHold, CInput::eButton8) && m_attack_flg == false)
 		m_special_flg = true;
 	m_state_old = m_state;
@@ -384,6 +387,9 @@ void Player::Update()
 		Move();
 	if (m_attack_flg)
 		Attack();
+	
+	
+	
 	if (m_jump_flg)
 	{
 		if (m_pos_old.y < 480)
@@ -394,7 +400,8 @@ void Player::Update()
 			m_pos_old.x = 0;
 		if (m_pos_old.x > 1280)
 			m_pos_old.x = 1280;
-	}else {
+	}
+	else  if (m_jump2_flg == false) {
 		if (m_pos.x < 0 || m_pos.x > 1280)
 			m_pos.x = m_pos_old.x;
 		if (m_pos.y < 480 || m_pos.y > 720)
@@ -407,7 +414,7 @@ void Player::Update()
 }
 void Player::DamageState()
 {
-	m_img.SetColor(0.5f, 0.5f, 0.5f, 1);
+	
 	static int time = 60;
 	time--;
 	m_state = eDamage;
@@ -418,6 +425,7 @@ void Player::DamageState()
 	if (time < 30)
 		Move();
 	if (time < 0) {
+		m_img.SetColor(1, 1, 1, 1);
 		time = 60;
 		m_damage_flg = false;	
 	}
@@ -531,5 +539,6 @@ void Player::Damage(int _damage)
 		SetAnim();
 		return;
 	}
+	m_img.SetColor(0.5f, 0.5f, 0.5f, 1);
 	m_damage_flg = true;
 }
