@@ -361,14 +361,6 @@ void CPlayerTank::OnCollision(CCollider*p){
 	if (Invincible == 0){
 		if (p->mpTask->mTaskTag == EENEMYBULLET){
 			CExplosion*p = new CExplosion();
-			//HeadRightTurn();
-			//HeadRightTurn();
-			//HeadRightTurn();
-			//HeadRightTurn();
-			//HeadRightTurn();
-			//HeadRightTurn();
-			//HeadRightTurn();
-			//HeadRightTurn();
 			p->SetTexture(&Texture, 0, 64, 64, 0);
 			Rect2.Draw(mPlayerfaceD, 0, 144, 0, 144);	//ダメージ画像追加　宮原
 
@@ -382,14 +374,6 @@ void CPlayerTank::OnCollision(CCollider*p){
 		}
 		if (p->mpTask->mTaskTag == EENEMYBULLET2){
 			CExplosion*p = new CExplosion();
-			//HeadRightTurn();
-			//HeadRightTurn();
-			//HeadRightTurn();
-			//HeadRightTurn();
-			//HeadRightTurn();
-			//HeadRightTurn();
-			//HeadRightTurn();
-			//HeadRightTurn();
 			p->SetTexture(&Texture, 0, 64, 64, 0);
 			Rect2.Draw(mPlayerfaceD, 0, 144, 0, 144);	//ダメージ画像追加　宮原
 
@@ -456,20 +440,6 @@ void CPlayerTank::OnCollision(CCollider*p){
 			}
 		}
 	}
-	if (Invincible > 0){
-		if (p->mpTask->mTaskTag == EENEMYBULLET){
-			Invincible -= 1;
-		}
-		if (p->mpTask->mTaskTag == EBOSSBULLET){
-			Invincible -= 1;
-		}
-		if (p->mpTask->mTaskTag == ESPEEDENEMY){
-			Invincible -= 1;
-		}
-		if (p->mpTask->mTaskTag == EBOSS){
-			Invincible -= 1;
-		}
-	}
 	if (p->mpTask->mTaskTag == EENEMY1){
 		CExplosion*p = new CExplosion();
 		//mPosition = mPosition + mpBoxCollider->mAdjust;
@@ -481,9 +451,16 @@ void CPlayerTank::OnCollision(CCollider*p){
 		//mPosition = mPosition + mpBoxCollider->mAdjust;
 		p->mPosition = mPosition;
 	}
+<<<<<<< HEAD
 	if (p->mpTask->mTaskTag == EITEM){
 		mHpBar.mHp += 10.0f;
 		printf("CItem1::OnCollision\n");
+=======
+	if (p->mpTask->mTaskTag == EENEMYBULLET || EENEMYBULLET2){
+		if (Invincible > 0){ //無敵
+			Invincible -= 1;
+		}
+>>>>>>> 732e224df6889b848af53c88280d2fdff8efd54d
 	}
 }
 

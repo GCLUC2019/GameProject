@@ -182,14 +182,24 @@ void CEnemy1::OnCollision(CCollider*p){
 			p->SetTexture(&Texture, 0, 64, 64, 0);
 			p->mPosition = mPosition;
 			CTaskManager::Get()->Add(p);
+<<<<<<< HEAD
 			mHpBar.mHp -= 20.0f;
+=======
+			mHpBar.mHp -= 25.0f;
+			if (CPlayerTank::spInstance->strengthen > 0){
+				mHpBar.mHp -= 25.0f;
+			}
+>>>>>>> 732e224df6889b848af53c88280d2fdff8efd54d
 			if (mHpBar.mHp <= 0.0f){
 				CItem*Item = new CItem();   //¬ì
 				Item->mTaskTag = EITEM;
 				Item->mPosition = mPosition;
 				CTaskManager::Get()->Add(Item);
+<<<<<<< HEAD
 				//	mEnabled = false;
 				//	CMain::mSceneTag = CScene::EWIN;
+=======
+>>>>>>> 732e224df6889b848af53c88280d2fdff8efd54d
 			}
 		}
 		if (p->mpTask->mTaskTag == EPLAYERBULLET2){
@@ -198,13 +208,14 @@ void CEnemy1::OnCollision(CCollider*p){
 			p->mPosition = mPosition;
 			CTaskManager::Get()->Add(p);
 			mHpBar.mHp -= 10.0f;
+			if (CPlayerTank::spInstance->strengthen > 0){
+				mHpBar.mHp -= 25.0f;
+			}
 			if (mHpBar.mHp <= 0.0f){
 				CItem*Item = new CItem();   //¬ì
 				Item->mTaskTag = EITEM;
 				Item->mPosition = mPosition;
 				CTaskManager::Get()->Add(Item);
-				//	mEnabled = false;
-				//	CMain::mSceneTag = CScene::EWIN;
 			}
 		}
 		if (p->mpTask->mTaskTag == EPLAYERBULLET3){
@@ -224,13 +235,6 @@ void CEnemy1::OnCollision(CCollider*p){
 		}
 
 		if (p->mpTask->mTaskTag == EPLAYERTANK){
-			//CExplosion*p = new CExplosion();
-			//p->SetTexture(&Texture, 0, 64, 64, 0);
-			//p->mPosition = mPosition;
-			//CTaskManager::Get()->Add(p);
-
-			//p->mPosition = mPosition;
-			//mPosition = mPosition + mCollider->mAdjust;
 			p->mPosition = mPosition;
 			if (mAttackIntervar == ATTACKINTERVAR_E){
 				mAttackIntervar -= 1;
@@ -239,7 +243,6 @@ void CEnemy1::OnCollision(CCollider*p){
 				EffectCount = EFFECT_COUNT;
 			}
 		}
-		//printf("CEnemyTank::OnCollision\n");
 	}
 }
 
