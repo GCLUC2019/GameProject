@@ -9,9 +9,9 @@
 #include"../CollitionBase.h"
 #include "../GameProject/Game/CollitionBase.h"
 #include "../GameProject/Game/Stage/CollisionBox.h"
-#define GRAVITY -4//重力
+#define GRAVITY -0.5//重力
 #define DEP_N 540//奥行重石
-#define JUMP_SPD 50
+#define JUMP_SPD 15
 
 
 Player::Player() : CharacterBase(CharacterData::ePlayer),
@@ -85,10 +85,11 @@ void Player::Move()
 	if (m_jump2_flg == false) {
 		if (CInput::GetState(0, CInput::eHold, CInput::eUp)) {
 
-			if (m_jump_flg)
+			if (m_jump_flg) {
+				m_pos.y -= m_speed;
 				m_pos_old.y -= m_speed;
-			else
-			{
+			}
+			else {
 				m_pos.y -= m_speed;
 				m_state = eMove;
 			}
@@ -98,7 +99,10 @@ void Player::Move()
 		if (CInput::GetState(0, CInput::eHold, CInput::eDown)) {
 
 			if (m_jump_flg)
+			{
+				m_pos.y += m_speed;
 				m_pos_old.y += m_speed;
+			}
 			else {
 				m_pos.y += m_speed;
 				m_state = eMove;
@@ -111,7 +115,10 @@ void Player::Move()
 		m_flip = true;
 
 		if (m_jump_flg)
+		{
+			m_pos.x += m_speed;
 			m_pos_old.x += m_speed;
+		}
 		else {
 			m_pos.x += m_speed;
 			m_state = eMove;
@@ -120,8 +127,10 @@ void Player::Move()
 	}
 	if (CInput::GetState(0, CInput::eHold, CInput::eLeft)) {
 		m_flip = false;
-		if (m_jump_flg)
+		if (m_jump_flg) {
+			m_pos.x -= m_speed;
 			m_pos_old.x -= m_speed;
+		}
 		else {
 			m_pos.x -= m_speed;
 			m_state = eMove;
@@ -136,48 +145,78 @@ void Player::Move()
 void Player::Jump()
 {
         static float time = 0;
-		static int jump_vec_old = m_jump_vec;
-		m_pos = m_pos_old;
+		static float jump_vec_pow = JUMP_SPD;
 		m_jump2_flg = false;
-		if (m_death_flg) {
-			m_jump_flg = false;
-			time = 0;
-			return;
-		}
-		
-		/*Task* t = CollitionBase::GetCollisionCheckRect(this, CharacterData::eCollisionBox);
-		if (t != nullptr&& jump_vec_old - m_jump_vec < 0) {
-			CollisionBox* b = dynamic_cast<CollisionBox*>(t);
-			
-			if (b == nullptr)
-				return;
-			m_pos.y = b->GetPos().y - b->GetRect().m_bottom - 5;
-			time = 0;
-			m_jump_flg = false;
-			m_jump2_flg = true;
-			printf("乗れた！\n");
-		}
-       */
-		if (m_jump2_flg == false) {
-			jump_vec_old = m_jump_vec;
-			m_jump_vec = 0 + JUMP_SPD * time + GRAVITY * (time*time) / 2;
-			m_jump_vec *= -1;
-			if (jump_vec_old - m_jump_vec < 0)
-				m_state = eJumpDown;
+		m_state = PlayerState::eJumpUp;
 
+		m_pos.y -= jump_vec_pow;
+		jump_vec_pow += GRAVITY;
 
-			time += 0.5f;
-
-			g_game_data.m_scroll.y = m_jump_vec;
-			m_pos += CVector2D(0, m_jump_vec);
-			//
-			if (m_jump_vec > 0) {
-				time = 0;
-				m_jump_vec = 0;
-				m_jump_flg = false;
-				m_pos = m_pos_old;
+		if (jump_vec_pow < 0) {
+			m_state = PlayerState::eJumpDown;
+			if (m_pos_old.y < 520) {
+				Task* t = CollitionBase::GetCollisionCheckRect(this, CharacterData::eCollisionBox);
+				if (t != nullptr) {
+					CollisionBox* b = dynamic_cast<CollisionBox*>(t);
+					if (b == nullptr)
+						return;
+					if (m_pos.y > b->GetPos().y)
+						return;
+					m_pos.y = b->GetPos().y - b->GetRect().m_bottom - 5;
+					time = 0;
+					m_jump_flg = false;
+					m_jump2_flg = true;
+					jump_vec_pow = JUMP_SPD;
+				}
 			}
 		}
+		if (m_pos.y >= m_pos_old.y) {
+			m_jump_flg = false;
+			m_jump2_flg = false;
+			m_pos.y = m_pos_old.y; 
+			jump_vec_pow = JUMP_SPD;
+		}
+		//m_pos = m_pos_old;
+		//
+		//if (m_death_flg) {
+		//	m_jump_flg = false;
+		//	time = 0;
+		//	return;
+		//}
+		//
+		//Task* t = CollitionBase::GetCollisionCheckRect(this, CharacterData::eCollisionBox);
+		//if (t != nullptr&& jump_vec_old - m_jump_vec < 0) {
+		//	CollisionBox* b = dynamic_cast<CollisionBox*>(t);
+		//	
+		//	if (b == nullptr)
+		//		return;
+		//	m_pos.y = b->GetPos().y - b->GetRect().m_bottom - 5;
+		//	time = 0;
+		//	m_jump_flg = false;
+		//	m_jump2_flg = true;
+		//	printf("乗れた！\n");
+		//}
+  //     
+		//if (m_jump2_flg == false) {
+		//	jump_vec_old = m_jump_vec;
+		//	m_jump_vec = 0 + JUMP_SPD * time + GRAVITY * (time*time) / 2;
+		//	m_jump_vec *= -1;
+		//	if (jump_vec_old - m_jump_vec < 0)
+		//		m_state = eJumpDown;
+
+
+		//	time += 0.5f;
+
+		//	g_game_data.m_scroll.y = m_jump_vec;
+		//	m_pos += CVector2D(0, m_jump_vec);
+		//	//
+		//	if (m_jump_vec > 0) {
+		//		time = 0;
+		//		m_jump_vec = 0;
+		//		m_jump_flg = false;
+		//		m_pos = m_pos_old;
+		//	}
+		//}
 }
 
 void Player::Attack()
@@ -392,16 +431,31 @@ void Player::Update()
 	
 	if (m_jump_flg)
 	{
-		if (m_pos_old.y < 480)
+		if (m_pos_old.y < 480) {
+			m_pos.y += m_speed;
 			m_pos_old.y = 480;
-		if (m_pos_old.y > 720)
+		}
+		if (m_pos_old.y > 720) {
+			m_pos.y -= m_speed;
 			m_pos_old.y = 720;
+		}
 		if (m_pos_old.x < 0)
+		{
+			m_pos.x += m_speed;
 			m_pos_old.x = 0;
+		}
 		if (m_pos_old.x > 1280)
+		{
+			m_pos.x -= m_speed;
 			m_pos_old.x = 1280;
+		}
 	}
-	else  if (m_jump2_flg == false) {
+	else if (m_jump2_flg) {
+		Task* t = CollitionBase::GetCollisionCheckRect(this, CharacterData::eCollisionBox);
+		if (t == nullptr/*&&m_pos_old.y<=450*/)
+			m_jump_flg = true;
+	}
+	else{
 		if (m_pos.x < 0 || m_pos.x > 1280)
 			m_pos.x = m_pos_old.x;
 		if (m_pos.y < 480 || m_pos.y > 720)
@@ -467,8 +521,11 @@ void Player::Draw()
     if(g_game_data.m_scroll.x<0)g_game_data.m_scroll.x = 0;*/
 	if (m_jump_flg)
 		m_depth = (m_pos_old.y - DEP_N) / 3.5;
+	else if(m_jump2_flg)
+		m_depth = -18;//暫定
 	else
 		m_depth = (m_pos.y - DEP_N) / 3.5;
+	
 	m_img.SetSize(SAIZE + m_depth, SAIZE + m_depth);
 	m_img.SetCenter((SAIZE + m_depth) / 2, (SAIZE + m_depth));
 	m_img.SetPos(m_pos);
@@ -500,16 +557,18 @@ void Player::ItemGet(int _itemTyp)
 			m_HP = 100;
 		break;
 	case ItemList::eInari:
-		g_game_data.m_score += 10;
+		g_game_data.m_score += 50;
 
 		break;
 	case ItemList::eKakera:
-		
-
+		if (m_HP < 100)
+			m_HP += 50;
+		if (m_HP > 100)
+			m_HP = 100;
 		break;
 	case ItemList::eKoban:
 
-		g_game_data.m_score += 1;
+		g_game_data.m_score += 10;
 		break;
 
 	default:

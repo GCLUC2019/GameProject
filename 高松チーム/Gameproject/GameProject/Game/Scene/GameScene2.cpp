@@ -7,6 +7,7 @@
 
 GameScene2::GameScene2() : Task(eGameScene2)
 {
+	new GameSceneResourse2();
 	TaskManager::GetInstance()->AddTask(new BossStage());
 	TaskManager::GetInstance()->AddTask(new BossManager());
 	TaskManager::GetInstance()->AddTask(new Player());

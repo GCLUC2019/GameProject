@@ -4,6 +4,7 @@
 #include "CGameScene.h"
 #include "CSubWeapon.h"
 #include "CBar.h"
+#include "CDamageEffect.h"
 
 CCharacterEnemy::CCharacterEnemy(int _enemy_id, CVector3D _enemy_pos, CGameSceneWave* _from_wave) :CCharacter(eTaskIdEnemy, 0)
 {
@@ -18,8 +19,8 @@ CCharacterEnemy::CCharacterEnemy(int _enemy_id, CVector3D _enemy_pos, CGameScene
 	SetIsShowShadow(true);
 	SetRads(75, 150, 10);
 
-	m_hit_point = 10.0f;
-	m_hit_point_max = 10.0f;
+	m_hit_point = 7.5f;
+	m_hit_point_max = 7.5f;
 
 
 	LoadAnimImage();
@@ -145,6 +146,7 @@ void CCharacterEnemy::ReceiveAttack()
 	m_is_attacking = false;
 	m_is_moving = false;
 	CSound::GetInstance()->GetSound("SE_Damage")->Play();
+	CGameScene::GetInstance()->AddGameSceneObject(new CDamageEffect(&m_pos,CVector2D(-200,-210),CVector2D(400,400),30));
 }
 
 void CCharacterEnemy::ReceiveDamageNow()

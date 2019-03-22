@@ -72,9 +72,10 @@ public:
 
 class FadeOut : public Task {
 private:
-	float m_fadeout;
+	CFont m_font;
 	CVector2D m_pos;
 	CImage m_img;
+	float m_fadeout;
 public:
 	FadeOut();
 	void Update();

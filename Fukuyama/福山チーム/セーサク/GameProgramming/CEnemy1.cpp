@@ -13,7 +13,7 @@
 
 #define FIREINTERVER_E 40
 #define ATTACKINTERVAR_E 10
-#define CBULLET_LIFE 10
+#define CBULLET_LIFE 1
 
 #define EFFECT_COUNT 40
 #define DELETE_COUNT 210
@@ -177,7 +177,7 @@ void CEnemy1::OnCollision(CCollider*p){
 			p->SetTexture(&Texture, 0, 64, 64, 0);
 			p->mPosition = mPosition;
 			CTaskManager::Get()->Add(p);
-			mHpBar.mHp -= 20.0f;
+			mHpBar.mHp -= 25.0f;
 			if (mHpBar.mHp <= 0.0f){
 				CItem*Item = new CItem();   //¬ì
 				Item->mTaskTag = EITEM;

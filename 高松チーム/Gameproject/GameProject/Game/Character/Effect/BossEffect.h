@@ -15,6 +15,13 @@ public:
 	void Update();
 
 	void Draw();
+
+	CVector2D GetPos() {
+		return m_pos;
+	}
+	CRect GetRect() {
+		return m_rect;
+	}
 };
 
 class BossLazerEffect : public Task {
@@ -33,6 +40,13 @@ public:
 	void Update();
 
 	void Draw();
+
+	CVector2D GetPos() {
+		return m_pos;
+	}
+	CRect GetRect() {
+		return m_rect;
+	}
 };
 
 class BossSlashEffect : public Task {
@@ -49,4 +63,11 @@ public:
 	void Update();
 
 	void Draw();
+
+	CVector2D GetPos() {
+		return m_pos;
+	}
+	CRect GetRect() {
+		return m_rect;
+	}
 };

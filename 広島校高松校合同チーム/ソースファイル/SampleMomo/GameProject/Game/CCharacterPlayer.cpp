@@ -3,6 +3,7 @@
 #include "CGameScene.h"
 #include "CAnimation.h"
 #include "CSubWeapon.h"
+#include "CDamageEffect.h"
 
 #define PLAYER_SPEED (3.0f)
 
@@ -30,8 +31,8 @@ CCharacterPlayer::CCharacterPlayer(CVector3D _pos) :CCharacter(eTaskIdPlayer, 0)
 	SetPosOld(_pos);
 
 	//‘Ì—Í‚ÌÝ’è
-	m_hit_point = 10.0f;
-	m_hit_point_max = 10.0f;
+	m_hit_point = 15.0f;
+	m_hit_point_max = 15.0f;
 
 
 	//“–‚½‚è”»’è‚Ì—Dæ“x
@@ -1267,6 +1268,8 @@ void CCharacterPlayer::ReceiveAttack()
 	m_damage_count = PLAYER_DAMAGE_FRAME;
 	
 	
+	CGameScene::GetInstance()->AddGameSceneObject(new CDamageEffect(&m_pos, CVector2D(-200, -210), CVector2D(400, 400),30));
+
 	//–³“GŽžŠÔ“_“”
 	SetIsBlindDraw(true);
 	m_after_damage_invincible_count = PLAYER_AFTER_DAMAGE_INVINCIBLE;

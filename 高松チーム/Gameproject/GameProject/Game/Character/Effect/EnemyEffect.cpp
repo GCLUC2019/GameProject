@@ -2,17 +2,19 @@
 #include "../Anim/AnimEnemyEffect.h"
 #include "../../CollitionBase.h"
 #include "../GameProject/Game/Character/Player.h"
+#include "../../GameData/GameData.h"
+
 #define EFFECT_SIZE 200
 #define EFFECT_SIZE_E4_EX_X 1000
 #define EFFECT_SIZE_E4_EX_Y 50
-#define EFFECT_SIZE_E4_S 30
+#define EFFECT_SIZE_E4_S 70
 #define EFFECT_SIZE_E4_L 30
 
 E2Effect::E2Effect(const CVector2D&pos) :Task(eE2AttackEffect)
 {
     m_img = COPY_RESOURCE("Enemy2Effect", CAnimImage*);
     m_pos = pos;
-    m_rect = CRect(-EFFECT_SIZE / 2, -EFFECT_SIZE / 4, EFFECT_SIZE / 2, EFFECT_SIZE / 4);
+    m_rect = CRect(-EFFECT_SIZE / 2, -EFFECT_SIZE / 4-g_game_data.m_scroll.y/3, EFFECT_SIZE / 2, EFFECT_SIZE / 4 - g_game_data.m_scroll.y / 3);
 }
 
 void E2Effect::Update()
@@ -26,7 +28,7 @@ void E2Effect::Update()
 
 void E2Effect::Draw()
 {
-    m_img.SetPos(m_pos);
+    m_img.SetPos(CVector2D(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3));
     m_img.SetCenter(EFFECT_SIZE , EFFECT_SIZE / 2);
     m_img.SetSize(EFFECT_SIZE*2, EFFECT_SIZE);
     m_img.Draw();
@@ -44,7 +46,7 @@ void E2Effect::HitCheck()
 
 E4EffectEXAttack::E4EffectEXAttack(const CVector2D & pos) :Task(eE4AttackEffect)
 {
-	m_img = COPY_RESOURCE("Slash_EX", CAnimImage*);
+	m_img = COPY_RESOURCE("Enemy04EffectEX", CAnimImage*);
 	m_pos = CVector2D(1280 / 2, pos.y);
 	m_img.ChangeAnimation(E4EffectAnim::eE4EXAttack, false);
 	m_rect = CRect(-EFFECT_SIZE_E4_EX_X / 2, -EFFECT_SIZE_E4_EX_Y / 2, EFFECT_SIZE_E4_EX_X / 2, EFFECT_SIZE_E4_EX_Y / 2);
@@ -85,9 +87,9 @@ void E4EffectEXAttack::HitCheck()
 
 E4EffectSAttack::E4EffectSAttack(const CVector2D & pos) :Task(eE4AttackEffect)
 {
-	m_img = COPY_RESOURCE("Slash_EX", CAnimImage*);
+	m_img = COPY_RESOURCE("Enemy04EffectS", CAnimImage*);
 	m_pos = pos;
-	m_img.ChangeAnimation(E4EffectAnim::eE4EXAttack, false);
+	m_img.ChangeAnimation(E4EffectAnim::eE4SAttack, false);
 	m_rect = CRect(-EFFECT_SIZE_E4_S / 2, -EFFECT_SIZE_E4_S / 2, EFFECT_SIZE_E4_S / 2, EFFECT_SIZE_E4_S / 2);
 }
 
@@ -101,7 +103,7 @@ void E4EffectSAttack::Update()
 
 void E4EffectSAttack::Draw()
 {
-	m_img.SetPos(m_pos);
+	m_img.SetPos(m_pos - CVector2D(0, 50));
 	m_img.SetCenter(EFFECT_SIZE_E4_S, EFFECT_SIZE_E4_S);
 	m_img.SetSize(EFFECT_SIZE_E4_S * 2, EFFECT_SIZE_E4_S * 2);
 	m_img.Draw();
@@ -126,7 +128,7 @@ void E4EffectSAttack::HitCheck()
 E4EffectLAttack::E4EffectLAttack(const CVector2D & pos, const bool & _flip) :Task(eE4AttackEffect)
 {
 	m_flip = _flip;
-	m_img = COPY_RESOURCE("Slash_EX", CAnimImage*);
+	m_img = COPY_RESOURCE("Enemy04EffectS", CAnimImage*);
 	m_pos = pos;
 	m_img.ChangeAnimation(E4EffectAnim::eE4EXAttack);
 	m_rect = CRect(-EFFECT_SIZE_E4_L / 2, -EFFECT_SIZE_E4_L / 2, EFFECT_SIZE_E4_L / 2, EFFECT_SIZE_E4_L / 2);

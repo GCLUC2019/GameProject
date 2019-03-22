@@ -2,6 +2,8 @@
 #include"../GameData/GameData.h"
 #include "../Tutorial/Tutorial.h"
 #include "../GameProject/Game/UI/UI.h"
+#include "../GameProject/Game/Resource/Resource.h"
+#include "../GameProject/Base/Task.h"
 
 #define BACKXSIZE 1280
 #define BACKYSIZE 720
@@ -21,13 +23,8 @@ m_choice(0)
 {
 	g_game_data.m_score = 0;
 	g_game_data.m_dead_cnt = 0;
-    ADD_RESOURCE("Title", CImage::LoadImage("../data/Image/title.png"));
-    ADD_RESOURCE("Choice", CImage::LoadImage("../data/Image/choice.png"));
-    ADD_RESOURCE("RogoBase", CImage::LoadImage("../data/Image/rogo_base.png"));
-    ADD_RESOURCE("RogoClear", CImage::LoadImage("../data/Image/rogo_cl.png"));
-    ADD_RESOURCE("RogoHuda", CImage::LoadImage("../data/Image/rogo_huda.png"));
-    ADD_RESOURCE("RogoUI", CImage::LoadImage("../data/Image/chara_gauge_face.png"));
-    ADD_RESOURCE("Window", CImage::LoadImage("../data/Image/balloon.png"));
+
+	new TitleResource();
     m_img_back = COPY_RESOURCE("Title", CImage*);
     m_img_rogobase = COPY_RESOURCE("RogoBase", CImage*);
     m_img_rogoclear = COPY_RESOURCE("RogoClear", CImage*);
@@ -69,20 +66,23 @@ void Title::Update()
     if (CInput::GetState(0, CInput::ePush, CInput::eButton2)) {
 		SOUND("se_027")->Play();
 		TaskManager::GetInstance()->AddTask(new FadeOut());
-		if (mp_fadeout <= 1)
+		if (mp_fadeout >= 1.0f)
 		{
 			switch (m_choice) {
 			case 0:
+				if (mp_fadeout >= 1.0f)
 				TaskManager::AddTask(new Tutorial());
 				break;
 			case 1:
+				if (mp_fadeout >= 1.0f)
 				TaskManager::AddTask(new GameScene());
 				break;
 			}
+
+			n->SetKill();
 			SetKill();
 		}
     }
-        //printf("%f,%f\n",m_ohuda_pos.x, m_ohuda_pos.y);
 
 
 }

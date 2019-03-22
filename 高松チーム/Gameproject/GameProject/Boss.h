@@ -196,8 +196,11 @@ private:
 
 	int m_state;
 	int m_anim_cnt;
-
 	int m_shadow_size;
+
+	bool m_attack_flag;
+	bool m_idle_flag;
+
 	float m_shadow_y;//‰e‚ÌyÀ•W
 	float m_shadow_x;
 

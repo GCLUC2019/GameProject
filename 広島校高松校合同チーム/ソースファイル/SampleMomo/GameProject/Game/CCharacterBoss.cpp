@@ -2,6 +2,7 @@
 #include "CCharacterPlayer.h"
 #include "CAnimation.h"
 #include "CGameScene.h"
+#include "CDamageEffect.h"
 
 static CCharacterBoss* s_instance_p = nullptr;
 
@@ -429,6 +430,8 @@ void CCharacterBoss::ReceiveAttack()
 	SetIsBlindDraw(true);
 	m_hit_count++;
 	CSound::GetInstance()->GetSound("SE_Damage")->Play();
+	CGameScene::GetInstance()->AddGameSceneObject(new CDamageEffect(&m_pos, CVector2D(-200, -210), CVector2D(500, 500), 30));
+
 }
 
 void CCharacterBoss::DefalutSet()

@@ -16,7 +16,7 @@
 #include"../GameProject/Game/Scene/GameScene2.h"
 GameScene::GameScene() : Task(eGameScene)
 {
-	new Resource();
+	new GameSceneResourse();
 	TaskManager::GetInstance()->AddTask(new Stage01());
 	TaskManager::GetInstance()->AddTask(new EnemyManager());
 	TaskManager::GetInstance()->AddTask(new Item(ItemList::eHyoutan,CVector2D(256,360)));

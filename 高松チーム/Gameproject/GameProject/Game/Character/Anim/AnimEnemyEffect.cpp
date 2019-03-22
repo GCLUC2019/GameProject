@@ -1,11 +1,11 @@
 #include "../Anim/AnimEnemyEffect.h"
 
 static TexAnim E2AttackEffect[] = {
-    { 0,10 },
-{ 1,10 },
-{ 2,10 },
-{ 3,10 },
-{ 4,10 }
+    { 0,5 },
+{ 1,5 },
+{ 2,5 },
+{ 3,5 },
+{ 4,5 }
 };
 
 TexAnimData E2AttackEffectAnimData[] = {
@@ -24,8 +24,19 @@ static TexAnim E4EXAttackEffect[] = {
 { 9,3 },
 { 10,3 },
 { 11,3 }
-};
+}; 
 
+static TexAnim E4SAttackEffect[] = {
+	{ 0,3 },
+{ 1,3 },
+{ 2,3 },
+{ 3,3 },
+{ 4,3 },
+{ 5,3 },
+{ 6,3 },
+{ 7,20 }
+};
 TexAnimData E4AttackEffectAnimData[] = {
-	ANIMDATA(E4EXAttackEffect)
+	ANIMDATA(E4EXAttackEffect),
+	ANIMDATA(E4SAttackEffect)
 };

@@ -8,7 +8,6 @@
 */
 class Title : public Task {
 private:
-	float mp_fadeout;
     //画像データ
     CImage m_img_back;
     CImage m_img_rogobase;
@@ -26,6 +25,7 @@ private:
     int m_choice;
     float m_size;//rogoclearのサイズ変量
     float m_time;//お札の回転値
+	float mp_fadeout;
 public:
     Title();
     ~Title();

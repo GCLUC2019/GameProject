@@ -1,4 +1,5 @@
 #include "UI.h"
+#include "../GameData/GameData.h"
 #include "../GameProject/Game/Resource/Resource.h"
 #include "../GameProject/Game/CollitionBase.h"
 #include "../Character/Player.h"
@@ -192,11 +193,13 @@ void GuidanceUI::Draw()
 }
 
 FadeOut::FadeOut() : Task(CharacterData::eFadeOut),
-m_fadeout(0)
+m_fadeout(0),
+m_font("",28)
 {
 	ADD_RESOURCE("FadeOut", CImage::LoadImage("../data/Image/Fadeout.png"));
 	m_img = COPY_RESOURCE("FadeOut", CImage*);
 	m_pos = CVector2D(0, 0);
+
 }
 
 void FadeOut::Update()
@@ -206,9 +209,12 @@ void FadeOut::Update()
 
 void FadeOut::Draw()
 {
-	m_fadeout += 0.1f;
+	m_fadeout += 0.02f;
 	m_img.SetSize(CVector2D(1280,720));
 	m_img.SetPos(m_pos);
 	m_img.SetColor(0, 0, 0, m_fadeout);
 	m_img.Draw();
+
+	if(m_fadeout >= 1)
+	m_font.Draw(900, 700, 1, 1, 1, "4ƒ{ƒ^ƒ“‚ð‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢...");
 }
