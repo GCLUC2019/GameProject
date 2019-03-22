@@ -35,8 +35,6 @@ GameScene::GameScene() : Task(eGameScene)
 GameScene::~GameScene()
 {
 	SOUND("ikusa_japan2")->Stop();
-	TaskManager::KillAll();
-	TaskManager::GetInstance()->AddTask(new GameScene2());
 }
 
 void GameScene::Update()
@@ -57,6 +55,8 @@ void GameScene::Update()
 	if (g_game_data.m_scroll.x >= 1280)
 		g_game_data.m_scroll.x = 1280;
 
-	if (m_player_pos_x.x >= 1280 * 2)
-		SetKill();
+	if (m_player_pos_x.x >= 1280 * 2) {
+		TaskManager::GetInstance()->AddTask(new GameScene2());
+		TaskManager::KillAll();
+	}
 }

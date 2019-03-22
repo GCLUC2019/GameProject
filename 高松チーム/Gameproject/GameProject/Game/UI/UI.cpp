@@ -134,7 +134,7 @@ void GageBaseUI::Update()
 
 void GageBaseUI::Draw()
 {
-	m_img.SetSize(CVector2D(200, 15));
+	m_img.SetSize(CVector2D(220, 15));
 	m_img.SetPos(m_pos);
 	m_img.Draw();
 }
@@ -143,7 +143,7 @@ void GageBaseUI::Draw()
 PlayerGageUI::PlayerGageUI() : UI(ePlayerGageUI)
 {
 	m_img = COPY_RESOURCE("PlayerGageUI", CImage*);
-	m_pos = CVector2D(100, 102);
+	m_pos = CVector2D(110, 102);
 	hp_width = 200;
 	m_player_hp_max = 100;
 }
