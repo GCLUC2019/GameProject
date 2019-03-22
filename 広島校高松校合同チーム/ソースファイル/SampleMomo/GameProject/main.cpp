@@ -11,6 +11,7 @@
 #include "Task/TaskManager.h"
 #include "Game/CSetUpGame.h"
 #include "Game/CLoadResorce.h"
+#include "Game/CSwitchScreen.h"
 
 //--------------------------------------------
 //グローバル変数領域
@@ -22,6 +23,8 @@ void MainLoop(void) {
 	//ゲーム中の動きはここに書く
 	//ゲーム中はこの関数_を1秒間に60回呼び出している
 	//--------------------------------------------------------------
+
+	CSwitchScreen::InputSwitchScreen();
 
 	//削除フラグ確認
 	TaskManager::GetInstance()->CheckDeleteAll();
@@ -100,6 +103,7 @@ void Init(void)
 	
 	CLoadResorce::GetInstance()->LoadResorce();
 	CSetupGame::Setup();
+	CSwitchScreen::Init();
 
 	
 

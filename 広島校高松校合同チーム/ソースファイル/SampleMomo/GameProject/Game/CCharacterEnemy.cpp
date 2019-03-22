@@ -17,7 +17,7 @@ CCharacterEnemy::CCharacterEnemy(int _enemy_id, CVector3D _enemy_pos, CGameScene
 	m_knock_back_frame = ENEMY_KNOCK_BACK_FRAME;
 
 	SetIsShowShadow(true);
-	SetRads(75, 150, 10);
+	SetRads(75, 110, 10);
 
 	m_hit_point = 7.5f;
 	m_hit_point_max = 7.5f;
@@ -305,12 +305,13 @@ void CCharacterEnemy::Attacking()
 		//距離計算
 		const CVector3D& target_pos = m_target_p->GetPos();
 		CVector3D target_vec = target_pos - m_pos;
+		const CVector3D& target_rads = m_target_p->GetRads();
 		//float target_length = sqrt(target_vec.x * target_vec.x + target_vec.y * target_vec.y + target_vec.z * target_vec.z);
 
 		//printf("攻撃判定フレーム\n");
 
 		//もし攻撃範囲内なら
-		if (abs(target_vec.x) <= m_attack_length.x && abs(target_vec.y) <= m_attack_length.y && abs(target_vec.z) <= m_attack_length.z && m_is_hit_attack == false) {
+		if (abs(target_vec.x) <= m_attack_length.x + target_rads.x && abs(target_vec.y) <= m_attack_length.y + target_rads.y && abs(target_vec.z) <= m_attack_length.z + target_rads.z && m_is_hit_attack == false) {
 			//printf("ダメージを与えた\n");
 			m_is_hit_attack = true;
 
@@ -360,7 +361,7 @@ void CCharacterEnemy::DropItem()
 		break;
 	}
 
-	CGameScene::GetInstance()->AddGameSceneObject(new CSubWeaponItem(m_pos + CVector3D(0,140,0), drop_weapon_id));
+	CGameScene::GetInstance()->AddGameSceneObject(new CSubWeaponItem(m_pos + CVector3D(0,100,0), drop_weapon_id));
 }
 
 void CCharacterEnemy::AdjAnim()
@@ -370,22 +371,22 @@ void CCharacterEnemy::AdjAnim()
 	case eEnemyIdSpear:
 		switch (m_anim_p->GetWillPlayAnim()) {
 		case eEnemyAnimIdAttack:
-			SetSize(500, 400);
+			SetSize(400, 300);
 			SetShadowSize(CVector2D(160, 50));
 			SetDrawAdjPos(CVector2D(-60, 0.0f));
 			break;
 		case eEnemyAnimIdMove:
-			SetSize(400, 400);
+			SetSize(300, 300);
 			SetShadowSize(CVector2D(100, 50));
 			SetDrawAdjPos(CVector2D(0, 0.0f));
 			break;
 		case eEnemyAnimIdIdle:
-			SetSize(400, 400);
+			SetSize(300, 300);
 			SetShadowSize(CVector2D(100, 50));
 			SetDrawAdjPos(CVector2D(10, 0.0f));
 			break;
 		default:
-			SetSize(400, 400);
+			SetSize(300, 300);
 			SetShadowSize(CVector2D(100, 50));
 			SetDrawAdjPos(CVector2D(10, 0.0f));
 			break;
@@ -394,22 +395,22 @@ void CCharacterEnemy::AdjAnim()
 	case eEnemyIdAxe:
 		switch (m_anim_p->GetWillPlayAnim()) {
 		case eEnemyAnimIdAttack:
-			SetSize(400, 500);
+			SetSize(300, 400);
 			SetShadowSize(CVector2D(160, 50));
 			SetDrawAdjPos(CVector2D(0, 0.0f));
 			break;
 		case eEnemyAnimIdMove:
-			SetSize(400, 400);
+			SetSize(300, 300);
 			SetShadowSize(CVector2D(100, 50));
 			SetDrawAdjPos(CVector2D(0, 0.0f));
 			break;
 		case eEnemyAnimIdIdle:
-			SetSize(400, 400);
+			SetSize(300, 300);
 			SetShadowSize(CVector2D(100, 50));
 			SetDrawAdjPos(CVector2D(10, 0.0f));
 			break;
 		default:
-			SetSize(400, 400);
+			SetSize(300, 300);
 			SetShadowSize(CVector2D(100, 50));
 			SetDrawAdjPos(CVector2D(10, 0.0f));
 			break;
@@ -418,22 +419,22 @@ void CCharacterEnemy::AdjAnim()
 	case eEnemyIdGun:
 		switch (m_anim_p->GetWillPlayAnim()) {
 		case eEnemyAnimIdAttack:
-			SetSize(400, 400);
+			SetSize(300, 300);
 			SetShadowSize(CVector2D(160, 50));
 			SetDrawAdjPos(CVector2D(-35, 0.0f));
 			break;
 		case eEnemyAnimIdMove:
-			SetSize(400, 400);
+			SetSize(300, 300);
 			SetShadowSize(CVector2D(100, 50));
 			SetDrawAdjPos(CVector2D(0, 0.0f));
 			break;
 		case eEnemyAnimIdIdle:
-			SetSize(400, 400);
+			SetSize(300, 300);
 			SetShadowSize(CVector2D(100, 50));
 			SetDrawAdjPos(CVector2D(10, 0.0f));
 			break;
 		default:
-			SetSize(400, 400);
+			SetSize(300, 300);
 			SetShadowSize(CVector2D(100, 50));
 			SetDrawAdjPos(CVector2D(10, 0.0f));
 			break;

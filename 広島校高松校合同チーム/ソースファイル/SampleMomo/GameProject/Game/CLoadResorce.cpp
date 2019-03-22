@@ -187,7 +187,7 @@ void CLoadResorce::ReadResorceFile(char * _file_path)
 	int ret = fopen_s(&fp, _file_path, "r");
 	if (ret != 0) return;
 	//printf("ì«Ç›çûÇÒÇæ\n");
-	char file_data[10240] = "";
+	char file_data[20240] = "";
 	char file_read[1024];
 	while (fgets(file_read, 1024, fp) != NULL) {
 		strcat_s(file_data, sizeof(file_data), file_read);

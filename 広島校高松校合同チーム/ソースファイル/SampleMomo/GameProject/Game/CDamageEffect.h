@@ -2,6 +2,13 @@
 #include "CObject.h"
 class CAnimation;
 
+enum {
+	eEffectDamage = 0,
+	eEffectSlashX,
+	eEffectSlashY,
+	eEffectSlashFinish,
+};
+
 class  CDamageEffect :public CObject
 {
 private:
@@ -11,7 +18,7 @@ private:
 	double m_delete_cnt = 0;
 	int m_effect_id = 0;
 public:
-	CDamageEffect(CVector3D * _pos_p,CVector2D _offset_pos = CVector2D(0,0), CVector2D _size = CVector2D(100,100),double _count = 60.0,int _effect_id=0);
+	CDamageEffect(CVector3D * _pos_p,CVector2D _offset_pos = CVector2D(0,0), CVector2D _size = CVector2D(100,100),double _count = 60.0,int _effect_id=0,bool _is_flip = false);
 
 	~CDamageEffect();
 	void Update();

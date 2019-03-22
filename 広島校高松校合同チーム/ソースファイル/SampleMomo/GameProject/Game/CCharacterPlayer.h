@@ -17,7 +17,7 @@
 #define PLAYER_SIDE_ATTACK_HIT_FRAME_END (20)
 
 #define PLAYER_FINISH_ATTACK_FRAME (42)
-#define PLAYER_FINISH_ATTACK_HIT_FRAME_START (30)
+#define PLAYER_FINISH_ATTACK_HIT_FRAME_START (34)
 #define PLAYER_FINISH_ATTACK_HIT_FRAME_END (42)
 
 
@@ -41,25 +41,25 @@
 
 
 //攻撃の設定
-#define PLAYER_ATTACK_LENGTH CVector3D(300,100,200)
+#define PLAYER_ATTACK_LENGTH CVector3D(200,100,200)
 #define PLAYER_ATTACK_POWER (1.0)
 
-#define PLAYER_SIDE_ATTACK_LENGTH CVector3D(300,100,250)
+#define PLAYER_SIDE_ATTACK_LENGTH CVector3D(150,100,250)
 #define PLAYER_SIDE_ATTACK_POWER (1.0)
 
-#define PLAYER_FINISH_ATTACK_LENGTH CVector3D(300,500,200)
+#define PLAYER_FINISH_ATTACK_LENGTH CVector3D(150,500,200)
 #define PLAYER_FINISH_ATTACK_POWER (1.0)
 
-#define PLAYER_SPEAR_ATTACK_LENGTH CVector3D(400,500,200)
+#define PLAYER_SPEAR_ATTACK_LENGTH CVector3D(250,500,200)
 #define PLAYER_SPEAR_ATTACK_POWER (1.5)
 
 
-#define PLAYER_AXE_ATTACK_LENGTH CVector3D(300,500,300)
+#define PLAYER_AXE_ATTACK_LENGTH CVector3D(150,500,300)
 #define PLAYER_AXE_ATTACK_POWER (2.0)
 
 
 #define PLAYER_GUN_ATTACK_LENGTH CVector3D(1200,200,50)
-#define PLAYER_GUN_ATTACK_POWER (1.0)
+#define PLAYER_GUN_ATTACK_POWER (3.0)
 
 
 
@@ -146,6 +146,24 @@ enum {
 	ePlayerAnimIdAxeAttackReserve,
 	ePlayerAnimIdGunAttack,
 	ePlayerAnimIdGunAttackReserve,
+	ePlayerAnimIdMoveRight,
+	ePlayerAnimIdMoveLeft,
+	ePlayerAnimIdJumpRight,
+	ePlayerAnimIdJumpLeft,
+	ePlayerAnimIdLandRight,
+	ePlayerAnimIdLandLeft,
+	ePlayerAnimIdFallRight,
+	ePlayerAnimIdFallLeft,
+	ePlayerAnimIdIdleRight,
+	ePlayerAnimIdIdleLeft,
+	ePlayerAnimIdEvasionRight,
+	ePlayerAnimIdEvasionFastRight,
+	ePlayerAnimIdEvasionReserveRight,
+	ePlayerAnimIdEvasionLeft,
+	ePlayerAnimIdEvasionFastLeft,
+	ePlayerAnimIdEvasionReserveLeft,
+	ePlayerAnimIdVerticalAttack,
+	ePlayerAnimIdVerticalAttackReserve,
 	ePlayerAnimIdMax,
 };
 
@@ -293,6 +311,8 @@ private:
 	bool m_is_down = false;
 	double m_down_count = 0;
 
+	bool m_is_move = false;
+
 	bool m_is_sended_miss = false;
 	
 	
@@ -300,6 +320,8 @@ private:
 	//ボスの特殊攻撃などによる硬直
 	bool m_is_freeze = false;
 	double m_freeze_count = 0.0;
+
+	bool m_is_show_attack_effect = false;
 
 public:
 	CCharacterPlayer(CVector3D _pos);
@@ -385,6 +407,16 @@ public:
 
 
 	static CCharacterPlayer* GetInstance();
+
+
+	//チュートリアル用フラグ用入手
+	bool GetIsMoving() { return m_is_move; };
+	bool GetIsEvasion() { return m_is_evasion; };
+	bool GetIsJumping() { return m_is_jumping; };
+	bool GetIsAttacking() { return m_is_attacking; };
+	bool GetIsDashing() { return m_is_dashing; };
+	bool GetIsWeaponAttacking() { return m_is_weapon_attacking; };
+
 };
 
 /*

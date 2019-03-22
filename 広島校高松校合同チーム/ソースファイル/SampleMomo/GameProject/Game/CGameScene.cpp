@@ -138,7 +138,7 @@ void CGameScene::StageClear()
 void CGameScene::PopPlayer()
 {
 	if (m_player_object_p != nullptr) DeletePlayer();
-	TaskManager::GetInstance()->AddTask(m_player_object_p = new CCharacterPlayer(CVector3D(300, -201, 550)));
+	TaskManager::GetInstance()->AddTask(m_player_object_p = new CCharacterPlayer(CVector3D(300, -201 - 300, 550)));
 }
 
 void CGameScene::DeletePlayer()

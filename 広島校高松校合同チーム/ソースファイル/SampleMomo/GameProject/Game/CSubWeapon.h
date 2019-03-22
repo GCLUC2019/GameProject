@@ -5,7 +5,7 @@
 
 class CCharacterPlayer;
 
-#define ENDURANCE_MAX 10.0f
+#define ENDURANCE_MAX 30.0f
 
 enum {	//アニメーションの種類の番号
 	eItemAnimIdIdle,

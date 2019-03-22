@@ -43,7 +43,7 @@ void CAnimation::ReadAnimDataFile(char * _file_path)
 	int ret = fopen_s(&fp,_file_path, "r");
 	if (ret != 0) return;
 	//printf("ì«Ç›çûÇÒÇæ\n");
-	char file_data[10240] = "";
+	char file_data[20240] = "";
 	char file_read[1024];
 	while (fgets(file_read, 1024, fp) != NULL) {
 		strcat_s(file_data, sizeof(file_data), file_read);
@@ -91,6 +91,7 @@ void CAnimation::ReadAnimDataFile(char * _file_path)
 			int anim_deley[ANIMATION_DELAY_MAX];
 			sscanf_s(str_ad, "SET_ANIM_INFO: ANIM_ID: %d ANIM_BEGIN_IMAGE_ID: %d ANIM_IMAGE_NUM: %d", &anim_id, &anim_begin_image_id,&anim_image_num);
 			
+			printf("AnimId %d\n", anim_id);
 			//ÉfÉBÉåÉCÇÃéÊìæ
 			for (int i = 0; i < anim_image_num; i++) {
 				str_ad = strstr(str_ad, "ANIM_DELAY:");

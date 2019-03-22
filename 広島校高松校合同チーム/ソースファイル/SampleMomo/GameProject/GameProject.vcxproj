@@ -153,6 +153,7 @@
     <ClInclude Include="Game\CStorySceneClear.h" />
     <ClInclude Include="Game\CStorySceneOpening.h" />
     <ClInclude Include="Game\CSubWeapon.h" />
+    <ClInclude Include="Game\CSwitchScreen.h" />
     <ClInclude Include="Game\CTitle.h" />
     <ClInclude Include="Game\CObject.h" />
     <ClInclude Include="Game\CObjectImage.h" />
@@ -189,6 +190,7 @@
     <ClCompile Include="Game\CStorySceneClear.cpp" />
     <ClCompile Include="Game\CStorySceneOpening.cpp" />
     <ClCompile Include="Game\CSubWeapon.cpp" />
+    <ClCompile Include="Game\CSwitchScreen.cpp" />
     <ClCompile Include="Game\CTitle.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Task\Task.cpp" />

@@ -3,9 +3,9 @@
 
 class CImage;
 
-#define ANIMATION_INFO_MAX (100)
+#define ANIMATION_INFO_MAX (200)
 #define ANIMATION_IMAGE_MAX (500)
-#define ANIMATION_DELAY_MAX (100)
+#define ANIMATION_DELAY_MAX (200)
 
 struct AnimInfo {
 	int image_id;

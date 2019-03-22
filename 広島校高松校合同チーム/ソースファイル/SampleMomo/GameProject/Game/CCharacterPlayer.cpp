@@ -9,6 +9,8 @@
 
 static CCharacterPlayer* s_instance_p = nullptr;
 
+#define PLAYER_SCALE (0.8)
+
 CCharacterPlayer::CCharacterPlayer(CVector3D _pos) :CCharacter(eTaskIdPlayer, 0)
 {
 	s_instance_p = this;
@@ -19,12 +21,16 @@ CCharacterPlayer::CCharacterPlayer(CVector3D _pos) :CCharacter(eTaskIdPlayer, 0)
 	//m_anim_p->SetAnim(ePlayerAnimIdIdle);
 	LoadAnimImage();
 
-	SetSize(400, 400);
 	SetIsShowShadow(true);
+
+	
+	/*
+	SetSize(400, 400);
 	SetShadowSize(CVector2D(100, 50));
 	SetDrawAdjPos(CVector2D(-15, 20.0f));
-	SetRads(75,200,10);
-
+	*/
+	SetRads(75,150,10);
+	
 
 	//初期位置設定
 	SetPos(_pos);
@@ -42,7 +48,7 @@ CCharacterPlayer::CCharacterPlayer(CVector3D _pos) :CCharacter(eTaskIdPlayer, 0)
 
 	//テスト用
 	//m_equip_weapon_id = eWeaponAxe;
-	//m_equip_endurance = ENDURANCE_MAX;
+	//m_equip_endurance = ENDURANCE_MAX;4
 }
 
 CCharacterPlayer::~CCharacterPlayer()
@@ -243,7 +249,7 @@ void CCharacterPlayer::InputAttack()
 		m_is_range_attack = false;
 		m_is_hit_range_attack = false;
 		m_keep_final_attack_timeout = KEEP_FINAL_ATTACK_TIMEOUT;
-
+		m_is_show_attack_effect = false;
 
 		//攻撃した敵のデータを初期化
 		for (int i = 0; i < MEMORY_HIT_ATTACKED_ENEMY_MAX; i++) {
@@ -334,6 +340,7 @@ void CCharacterPlayer::InputAttack()
 				m_attacking_count = PLAYER_ATTACK_FRAME;
 				m_attack_power = PLAYER_ATTACK_POWER;
 				m_attack_length = PLAYER_ATTACK_LENGTH;
+				CGameScene::GetInstance()->AddGameSceneObject(new CDamageEffect(&m_pos, CVector2D(-80, -180), CVector2D(400, 400), 30, eEffectSlashY, m_is_flip));
 				break;
 			case 1:
 				m_attack_hit_frame_start = PLAYER_SIDE_ATTACK_HIT_FRAME_START;
@@ -341,6 +348,7 @@ void CCharacterPlayer::InputAttack()
 				m_attacking_count = PLAYER_SIDE_ATTACK_FRAME;
 				m_attack_power = PLAYER_SIDE_ATTACK_POWER;
 				m_attack_length = PLAYER_SIDE_ATTACK_LENGTH;
+				CGameScene::GetInstance()->AddGameSceneObject(new CDamageEffect(&m_pos, CVector2D(-160, -210), CVector2D(400, 400), 30, eEffectSlashX, m_is_flip));
 				break;
 			case 2:
 				m_attack_hit_frame_start = PLAYER_FINISH_ATTACK_HIT_FRAME_START;
@@ -392,18 +400,32 @@ void CCharacterPlayer::CharacterUpdate()
 	
 	if (m_landing_anim_count > 0.0) m_landing_anim_count -= CFPS::GetDeltaTime()  * GAME_BASE_FPS;
 	
-	//if (m_damage_anim_count > 0.0) m_damage_anim_count -= CFPS::GetDeltaTime()  * GAME_BASE_FPS;
-
-	if (m_is_landing_action_now == true) m_anim_p->SetWillPlayAnim(ePlayerAnimIdLand);
-	else if(m_anim_p->GetWillPlayAnim() == ePlayerAnimIdLand && m_landing_anim_count > 0)  m_anim_p->SetWillPlayAnim(ePlayerAnimIdLand);
-	else if (m_evasion_reserve_count > 0.0) m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionReserve);
+	if (m_is_landing_action_now == true) {
+		if(m_is_flip == false) m_anim_p->SetWillPlayAnim(ePlayerAnimIdLandRight);
+		else m_anim_p->SetWillPlayAnim(ePlayerAnimIdLandLeft);
+		//m_anim_p->SetWillPlayAnim(ePlayerAnimIdLand);
+	}
+	else if (m_landing_anim_count > 0) {
+		if (m_is_flip == false) m_anim_p->SetWillPlayAnim(ePlayerAnimIdLandRight);
+		else m_anim_p->SetWillPlayAnim(ePlayerAnimIdLandLeft);
+		//m_anim_p->SetWillPlayAnim(ePlayerAnimIdLand);
+	}
+	else if (m_evasion_reserve_count > 0.0) {
+		if(m_is_flip == false) m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionReserveRight);
+		else m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionReserveLeft);
+		//m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionReserve);
+	}
 	/*
 	else if (m_anim_p->GetWillPlayAnim() == ePlayerAnimIdDamage && m_damage_anim_count > 0) {
 		m_anim_p->SetWillPlayAnim(ePlayerAnimIdDamage);
 		//DEBUG_PRINT("ダメージモーション中 %d\n", m_damage_anim_count);
 	}
 	*/
-	else m_anim_p->SetWillPlayAnim(ePlayerAnimIdIdle);
+	else {
+		if (m_is_flip == false) m_anim_p->SetWillPlayAnim(ePlayerAnimIdIdleRight);
+		else m_anim_p->SetWillPlayAnim(ePlayerAnimIdIdleLeft);
+		//m_anim_p->SetWillPlayAnim(ePlayerAnimIdIdle);
+	}
 
 
 	/*
@@ -475,34 +497,42 @@ void CCharacterPlayer::InputMove()
 	if (m_is_landing_action_now == true) return;
 	if (m_is_freeze == true) return;
 	
-	bool is_move = false;
+	m_is_move = false;
 	if (CInput::GetState(0,CInput::eHold, CInput::eRight)) {
 		ClearEarlyInput();
 		m_is_flip = false;
-		is_move = true;
+		m_is_move = true;
 		m_vec.x = 1 * m_speed;
 	}
 	if (CInput::GetState(0, CInput::eHold, CInput::eLeft)) {
 		ClearEarlyInput();
 		m_is_flip = true;
-		is_move = true;
+		m_is_move = true;
 		m_vec.x = -1 * m_speed;
 	} 
 
 	if (CInput::GetState(0, CInput::eHold, CInput::eUp)) {
 		ClearEarlyInput();
-		is_move = true;
+		m_is_move = true;
 		m_vec.z = -1 * m_speed ;
 	}
 	if (CInput::GetState(0, CInput::eHold, CInput::eDown)) {
 		ClearEarlyInput();
-		is_move = true;
+		m_is_move = true;
 		m_vec.z = 1 * m_speed;
 	}
 
-	if (is_move == true) {
+	if (m_is_move == true) {
 		if (m_is_dashing == true) m_anim_p->SetWillPlayAnim(ePlayerAnimIdRun);
-		else m_anim_p->SetWillPlayAnim(ePlayerAnimIdMove);
+		else {
+			if (m_is_flip == false) {
+				m_anim_p->SetWillPlayAnim(ePlayerAnimIdMoveRight);
+			}
+			else {
+				m_anim_p->SetWillPlayAnim(ePlayerAnimIdMoveLeft);
+			}
+			//m_anim_p->SetWillPlayAnim(ePlayerAnimIdMove);
+		}
 	}
 
 }
@@ -518,7 +548,11 @@ void CCharacterPlayer::InputJump()
 
 	if (CInput::GetState(0, CInput::ePush, CInput::eButton1) && m_is_jumping == false && m_is_landing == true) {
 		ClearEarlyInput();
-		m_anim_p->SetWillPlayAnim(ePlayerAnimIdJump);
+		
+		//m_anim_p->SetWillPlayAnim(ePlayerAnimIdJump);
+		if(m_is_flip == false) m_anim_p->SetWillPlayAnim(ePlayerAnimIdJumpRight);
+		else m_anim_p->SetWillPlayAnim(ePlayerAnimIdJumpLeft);
+
 		m_is_jumping = true;
 		m_jumping_count = 30;
 		m_vec.y = -30.0f;
@@ -565,7 +599,10 @@ void CCharacterPlayer::Landing()
 
 	if (m_is_landing == true & m_is_landing_old == false) {
 		//DEBUG_PRINT("着地\n");
-		if(m_anim_p->GetWillPlayAnim() ==  ePlayerAnimIdIdle) m_anim_p->SetWillPlayAnim(ePlayerAnimIdLand);
+		
+		if(m_is_landing == false) m_anim_p->SetWillPlayAnim(ePlayerAnimIdLandRight);
+		else m_anim_p->SetWillPlayAnim(ePlayerAnimIdLandLeft);
+
 		m_landing_action_count = PLAYER_LANDING_ACTION_FRAME;
 		m_landing_anim_count = PLAYER_LANDING_ANIM_FRAME;
 		m_is_landing_action_now = true;
@@ -584,7 +621,7 @@ void CCharacterPlayer::ReserveAttacking()
 		//予備動作を再生
 		switch (m_attack_combo_count) {
 		case 0:
-			m_anim_p->SetWillPlayAnim(ePlayerAnimIdAttackReserve);
+			m_anim_p->SetWillPlayAnim(ePlayerAnimIdVerticalAttackReserve);
 			break;
 		case 1:
 			m_anim_p->SetWillPlayAnim(ePlayerAnimIdSideAttackReserve);
@@ -733,7 +770,7 @@ void CCharacterPlayer::BeginEvasion()
 
 
 	//もし着地モーションから派生した場合冒頭モーションの短縮を行う
-	if (m_anim_p->GetWillPlayAnim() == ePlayerAnimIdLand) {
+	if (m_anim_p->GetWillPlayAnim() == ePlayerAnimIdLand || m_anim_p->GetWillPlayAnim() == ePlayerAnimIdLandRight || m_anim_p->GetWillPlayAnim() == ePlayerAnimIdLandLeft) {
 		m_is_fast_evasion = true;
 		m_evasion_count = PLAYER_EVASION_FRAME - (PLAYER_EVASION_ANIM_DELAY * 2);
 	}
@@ -742,8 +779,16 @@ void CCharacterPlayer::BeginEvasion()
 
 
 	//アニメーションを設定
-	if (m_is_fast_evasion == true) m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionFast);
-	else m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasion);
+	if (m_is_fast_evasion == true) {
+		if(m_is_flip == false) m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionFastRight);
+		else m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionFastLeft);
+		//m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionFast);
+	}
+	else {
+		if (m_is_flip == false) m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionRight);
+		else m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionLeft);
+		//m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasion);
+	}
 
 	//無敵判定
 	SetInvincible(true);
@@ -762,7 +807,9 @@ void CCharacterPlayer::DoingEvasion()
 	}
 
 	if (m_evasion_reserve_count > 0.0) {
-		m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionReserve);
+		//m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionReserve);
+		if(m_is_flip == false) m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionReserveRight);
+		else m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionReserveLeft);
 		m_evasion_reserve_count -= CFPS::GetDeltaTime() * GAME_BASE_FPS;
 
 		//無敵判定
@@ -778,7 +825,14 @@ void CCharacterPlayer::DoingEvasion()
 	}
 	else if (m_evasion_count <= 0.0) {
 		m_is_fast_evasion = false;
-		m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionReserve);
+		if (m_is_flip == false) {
+			m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionReserveRight);
+		}
+		else {
+			m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionReserveLeft);
+		}
+
+		//m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionReserve);
 		m_evasion_reserve_count = PLAYER_EVASION_RESERVE_FRAME;
 		//printf("回避予備動作開始\n");
 	}
@@ -811,8 +865,24 @@ void CCharacterPlayer::DoingEvasion()
 		//無敵判定
 		SetInvincible(true);
 
-		if(m_is_fast_evasion == true) m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionFast);
-		else m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasion);
+		if (m_is_fast_evasion == true) {
+			if (m_is_flip == false) {
+				m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionFastRight);
+			}
+			else {
+				m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionFastLeft);
+			}
+			//m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionFast);
+		}
+		else {
+			if (m_is_flip == false) {
+				m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionRight);
+			}
+			else {
+				m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionLeft);
+			}
+			//m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasion);
+		}
 	}
 
 	
@@ -884,7 +954,7 @@ void CCharacterPlayer::Attacking()
 		m_attack_reserve_count = PLAYER_ATTACK_RESERVE_ANIM_FRAME;
 		switch (m_attack_combo_count) {
 		case 0:
-			m_anim_p->SetWillPlayAnim(ePlayerAnimIdAttackReserve);
+			m_anim_p->SetWillPlayAnim(ePlayerAnimIdVerticalAttackReserve);
 			break;
 		case 1:
 			m_anim_p->SetWillPlayAnim(ePlayerAnimIdSideAttackReserve);
@@ -914,6 +984,12 @@ void CCharacterPlayer::Attacking()
 	if (m_attacking_count <= m_attack_total_frame - m_attack_hit_frame_start && m_attacking_count > m_attack_total_frame - m_attack_hit_frame_end
 		|| is_keep_finish_attack == true && m_attacking_count <= m_attack_total_frame - m_attack_hit_frame_start) {
 		AttackingHitFrame();
+
+		//フィニッシュ攻撃エフェクト表示
+		if (m_is_show_attack_effect == false && m_attack_combo_count == 2 && m_is_weapon_attacking == false) {
+			m_is_show_attack_effect = true;
+			CGameScene::GetInstance()->AddGameSceneObject(new CDamageEffect(&m_pos, CVector2D(-80, -180), CVector2D(400, 400), 30, eEffectSlashFinish, m_is_flip));
+		}
 	}
 	
 	
@@ -922,7 +998,7 @@ void CCharacterPlayer::Attacking()
 
 	switch (m_attack_combo_count) {
 	case 0:
-		m_anim_p->SetWillPlayAnim(ePlayerAnimIdAttack);
+		m_anim_p->SetWillPlayAnim(ePlayerAnimIdVerticalAttack);
 		break;
 	case 1:
 		m_anim_p->SetWillPlayAnim(ePlayerAnimIdSideAttack);
@@ -959,8 +1035,8 @@ void CCharacterPlayer::AttackingHitFrame()
 
 	register CVector3D length;//距離ベクトル(位置の差)を計算
 	register CVector3D length_abs;//絶対距離
-	register const CVector3D& attack_length = m_attack_length; //攻撃範囲
-
+	const CVector3D& attack_length = m_attack_length; //攻撃範囲
+	
 															   //生成されている全てのエネミーのポインタを取得
 	register Task** enemy_array = TaskManager::GetInstance()->FindTaskArray(eTaskIdEnemy);
 
@@ -992,6 +1068,7 @@ void CCharacterPlayer::AttackingHitFrame()
 			//敵のポジションを取得
 			register const CVector3D& enemy_pos = enemy_p->GetPos();//敵の位置
 
+			const CVector3D& enemy_rads = enemy_p->GetRads();
 
 
 																	//距離ベクトル(位置の差)を計算
@@ -1012,7 +1089,7 @@ void CCharacterPlayer::AttackingHitFrame()
 
 				//printf("attack.x %lf attack.y %lf attack.z %lf\n", attack_length.x, attack_length.y, attack_length.z);
 				//攻撃範囲内に敵がいるなら
-				if (length_abs.x <= attack_length.x&& length_abs.y <= attack_length.y&&length_abs.z <= attack_length.z) {
+				if (length_abs.x <= attack_length.x + enemy_rads.x&& length_abs.y <= attack_length.y + enemy_rads.y&&length_abs.z <= attack_length.z + enemy_rads.z) {
 
 
 					register bool is_aready_hit = false;
@@ -1084,7 +1161,9 @@ void CCharacterPlayer::Jumping()
 			m_jumping_count -= CFPS::GetDeltaTime() * GAME_BASE_FPS;
 		}
 
-		m_anim_p->SetWillPlayAnim(ePlayerAnimIdJump);
+		if(m_is_flip == false) m_anim_p->SetWillPlayAnim(ePlayerAnimIdJumpRight);
+		else m_anim_p->SetWillPlayAnim(ePlayerAnimIdJumpLeft);
+		//m_anim_p->SetWillPlayAnim(ePlayerAnimIdJump);
 	}
 
 	
@@ -1094,7 +1173,9 @@ void CCharacterPlayer::Jumping()
 void CCharacterPlayer::Falling()
 {
 	if (m_is_landing == false && m_is_jumping == false && m_is_damage == false) {
-		m_anim_p->SetWillPlayAnim(ePlayerAnimIdFall);
+		if(m_is_flip == false)  m_anim_p->SetWillPlayAnim(ePlayerAnimIdFallRight);
+		else m_anim_p->SetWillPlayAnim(ePlayerAnimIdFallLeft);
+		//m_anim_p->SetWillPlayAnim(ePlayerAnimIdFall);
 	}
 }
 
@@ -1140,69 +1221,106 @@ void CCharacterPlayer::AdjAnim()
 	case ePlayerAnimIdEvasion:
 	case ePlayerAnimIdEvasionFast:
 	case ePlayerAnimIdEvasionReserve:
-		SetSize(400, 400);
+		SetSize(10000, 10000);
 		SetDrawAdjPos(CVector2D(20.0f, 50.0f));
 		SetShadowPosAdj(CVector2D(0, 0));
 		SetShadowSize(CVector2D(100, 50));
 		break;
+	case ePlayerAnimIdEvasionRight:
+	case ePlayerAnimIdEvasionFastRight:
+	case ePlayerAnimIdEvasionReserveRight:
+		SetSize(300, 300);
+		SetDrawAdjPos(CVector2D(-10.0f, 55.0f));
+		SetShadowPosAdj(CVector2D(0, 0));
+		SetShadowSize(CVector2D(100, 50));
+		break;
+	case ePlayerAnimIdEvasionLeft:
+	case ePlayerAnimIdEvasionFastLeft:
+	case ePlayerAnimIdEvasionReserveLeft:
+		SetSize(300, 300);
+		SetDrawAdjPos(CVector2D(-10.0f, 50.0f));
+		SetShadowPosAdj(CVector2D(0, 0));
+		SetShadowSize(CVector2D(100, 50));
+		break;
+	case ePlayerAnimIdIdleRight:
+	case ePlayerAnimIdIdleLeft:
+		SetSize(300, 300);
+		SetDrawAdjPos(CVector2D(0.0f, 10.0f));
+		SetShadowPosAdj(CVector2D(0, 0));
+		SetShadowSize(CVector2D(100, 50));
+		break;
+	case ePlayerAnimIdMoveRight:
+	case ePlayerAnimIdMoveLeft:
+		SetSize(300, 300);
+		SetDrawAdjPos(CVector2D(-10.0f, 10.0f));
+		SetShadowPosAdj(CVector2D(0, 0));
+		SetShadowSize(CVector2D(100, 50));
+		break;
 	case ePlayerAnimIdRun:
-		SetSize(400, 400);
+		SetSize(300, 300);
 		SetDrawAdjPos(CVector2D(-30.0f, 10.0f));
 		SetShadowPosAdj(CVector2D(-30,0));
 		SetShadowSize(CVector2D(100, 50));
 		break;
 	case ePlayerAnimIdAttackReserve:
 	case ePlayerAnimIdAttack:
-		SetSize(400, 400);
+		SetSize(300, 300);
 		SetDrawAdjPos(CVector2D(-30.0f, 10.0f));
 		SetShadowPosAdj(CVector2D(-65.0f, 0));
 		SetShadowSize(CVector2D(150, 50));
 		break;
+	case ePlayerAnimIdVerticalAttackReserve:
+	case ePlayerAnimIdVerticalAttack:
+		SetSize(300, 400);
+		SetDrawAdjPos(CVector2D(0.0f, -22.0f));
+		SetShadowPosAdj(CVector2D(0.0f, 0));
+		SetShadowSize(CVector2D(160, 50));
+		break;
 	case ePlayerAnimIdSideAttackReserve:
 	case ePlayerAnimIdSideAttack:
-		SetSize(400, 400);
+		SetSize(300, 300);
 		SetDrawAdjPos(CVector2D(-30.0f, 10.0f));
 		SetShadowPosAdj(CVector2D(-25.0f, 0));
 		SetShadowSize(CVector2D(170, 50));
 		break;
 	case ePlayerAnimIdFinishAttack:
-		SetSize(400, 400);
+		SetSize(300, 300);
 		SetDrawAdjPos(CVector2D(-30.0f, 10.0f));
 		SetShadowPosAdj(CVector2D(-30.0f, 0));
 		SetShadowSize(CVector2D(100, 50));
 		break;
 	case ePlayerAnimIdSpearAttack:
 	case ePlayerAnimIdSpearAttackReserve:
-		SetSize(500, 400);
+		SetSize(400, 300);
 		SetDrawAdjPos(CVector2D(75.0f, 10.0f));
 		SetShadowPosAdj(CVector2D(-25.0f, 0));
 		SetShadowSize(CVector2D(170, 50));
 		break;
 	case ePlayerAnimIdAxeAttack:
 	case ePlayerAnimIdAxeAttackReserve:
-		SetSize(400, 400);
+		SetSize(300, 300);
 		SetDrawAdjPos(CVector2D(5.0f, 10.0f));
 		SetShadowPosAdj(CVector2D(-25.0f, 0));
 		SetShadowSize(CVector2D(170, 50));
 		break;
 	case ePlayerAnimIdGunAttack:
 	case ePlayerAnimIdGunAttackReserve:
-		SetSize(400, 400);
+		SetSize(300, 300);
 		SetDrawAdjPos(CVector2D(5.0f, 10.0f));
 		SetShadowPosAdj(CVector2D(-25.0f, 0));
 		SetShadowSize(CVector2D(170, 50));
 		break;
 	case ePlayerAnimIdDown:
 	case ePlayerAnimIdDowned:
-		SetSize(400, 400);
+		SetSize(300, 300);
 		SetDrawAdjPos(CVector2D(-30.0f, 10.0f + 50.0f));
 		SetShadowPosAdj(CVector2D(0, -50 + 50.0f));
 		SetShadowSize(CVector2D(300, 50));
 		break;
 	default:
-		SetSize(400, 400);
+		SetSize(300, 300);
 		SetDrawAdjPos(CVector2D(-30.0f, 10.0f));
-		SetShadowPosAdj(CVector2D(0, 0));
+		SetShadowPosAdj(CVector2D(-10, 0));
 		SetShadowSize(CVector2D(100, 50));
 		break;
 	}
