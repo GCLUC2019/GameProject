@@ -339,7 +339,7 @@ BossRightHand::BossRightHand(const CVector2D &player_pos, const int state) :Enem
 BossRightHand::~BossRightHand()
 {
 	Task * p = TaskManager::GetInstance()->FindObject(eGameTitle);
-	if (p == nullptr&&m_hp>0)TaskManager::GetInstance()->AddTask(new BossManager());
+	if (p == nullptr&&g_game_data.m_boss_hp > 0)TaskManager::GetInstance()->AddTask(new BossManager());
 }
 
 void BossRightHand::Idle()
