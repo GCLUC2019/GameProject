@@ -40,7 +40,7 @@ void E2Effect::HitCheck()
     Player*p = dynamic_cast<Player*>(t);
 
     if (p != nullptr) {
-        p->Damage(10);
+        p->Damage(5);
     }
 }
 
@@ -80,7 +80,7 @@ void E4EffectEXAttack::HitCheck()
 	Player*p = dynamic_cast<Player*>(t);
 
 	if (p != nullptr) {
-		p->Damage(10);
+		p->Damage(6);
 	}
 }
 
@@ -121,7 +121,7 @@ void E4EffectSAttack::HitCheck()
 	Player*p = dynamic_cast<Player*>(t);
 
 	if (p != nullptr) {
-		p->Damage(5);
+		p->Damage(3);
 	}
 }
 
@@ -167,6 +167,6 @@ void E4EffectLAttack::HitCheck()
 	Player*p = dynamic_cast<Player*>(t);
 
 	if (p != nullptr) {
-		p->Damage(5);
+		p->Damage(3);
 	}
 }

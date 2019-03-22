@@ -373,7 +373,7 @@ void Enemy04::HitCheck()
 		CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectShortAttack03, 50.0f) ||
 		CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectLongAttack, 50.0f))
 	{
-		Damage(10);
+		Damage(15);
 	}
 	if (CollitionBase::CollisionCheckRect(this, CharacterData::ePlayerSpecial)) {
 		Damage(100);
