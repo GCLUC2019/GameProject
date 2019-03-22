@@ -137,6 +137,9 @@ void CEnemy2::OnCollision(CCollider*p){
 			p->mPosition = mPosition;
 			CTaskManager::Get()->Add(p);
 			mHpBar.mHp -= 25.0f;
+			if (CPlayerTank::spInstance->strengthen > 0){
+				mHpBar.mHp -= 25.0f;
+			}
 			if (mHpBar.mHp <= 0.0f){
 				CItem*Item = new CItem();   //¬ì
 				Item->mTaskTag = EITEM;
@@ -152,6 +155,9 @@ void CEnemy2::OnCollision(CCollider*p){
 			p->mPosition = mPosition;
 			CTaskManager::Get()->Add(p);
 			mHpBar.mHp -= 10.0f;
+			if (CPlayerTank::spInstance->strengthen > 0){
+				mHpBar.mHp -= 10.0f;
+			}
 			if (mHpBar.mHp <= 0.0f){
 				CItem*Item = new CItem();   //¬ì
 				Item->mTaskTag = EITEM;

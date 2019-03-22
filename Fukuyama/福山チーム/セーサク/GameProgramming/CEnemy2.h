@@ -12,6 +12,7 @@
 
 class CEnemy2 :public CTank{
 public:
+	static CEnemy2 *spInstance;
 
 	static CTexture mTexImage;
 	static CTexture mTexImage2;

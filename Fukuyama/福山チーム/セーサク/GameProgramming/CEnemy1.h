@@ -13,6 +13,7 @@
 
 class CEnemy1 :public CTank{
 public:
+	static CEnemy1 *spInstance;
 	int mFireIntervar;
 	int mAttackIntervar;
 	int AttackSide;

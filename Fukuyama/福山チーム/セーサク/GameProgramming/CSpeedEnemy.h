@@ -6,6 +6,7 @@
 
 class CSpeedEnemy :public CTank{
 public:
+	static CSpeedEnemy *spInstance;
 	CCircleCollider*mCollider;
 	void Init();
 	void Update();

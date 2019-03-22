@@ -114,6 +114,9 @@ void CBoss::OnCollision(CCollider*p){
 			p->mPosition = mPosition;
 			CTaskManager::Get()->Add(p);
 			mHpBar.mHp -= 8.0f;
+			if (CPlayerTank::spInstance->strengthen > 0){
+				mHpBar.mHp -= 8.0f;
+			}
 
 			if (mHpBar.mHp <= 0.0f){
 
