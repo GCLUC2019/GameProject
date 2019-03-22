@@ -80,6 +80,9 @@
     <ClCompile Include="Game\CGameSceneObject.cpp">
       <Filter>Game\Object\GameSceneObject</Filter>
     </ClCompile>
+    <ClCompile Include="Game\CDamageEfect.cpp">
+      <Filter>Game\Object\GameSceneObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -163,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="Game\CGameSceneBossUI.h">
       <Filter>Game\Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CDamageEfect.h">
+      <Filter>Game\Object\GameSceneObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

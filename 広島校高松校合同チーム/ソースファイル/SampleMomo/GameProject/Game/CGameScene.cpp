@@ -39,8 +39,9 @@ void CGameScene::Setup()
 {
 	m_reserve_num = RESERVE_MAX;
 	m_now_scene = eStage1;
-	PopPlayer();
 	SetCheckPoint(CVector3D(300, -220, 550));
+	m_last_wave = -1;
+	PopPlayer();
 	SetupScene();
 }
 

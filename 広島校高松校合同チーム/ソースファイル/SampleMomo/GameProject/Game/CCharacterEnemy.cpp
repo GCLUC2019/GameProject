@@ -18,8 +18,8 @@ CCharacterEnemy::CCharacterEnemy(int _enemy_id, CVector3D _enemy_pos, CGameScene
 	SetIsShowShadow(true);
 	SetRads(75, 150, 10);
 
-	m_hit_point = 10.0f;
-	m_hit_point_max = 10.0f;
+	m_hit_point = 7.5f;
+	m_hit_point_max = 7.5f;
 
 
 	LoadAnimImage();
