@@ -19,7 +19,7 @@ private:
     float m_hight;//高さ
     bool m_search_flg;//プレイヤーを見つけたかどうかのフラグ
     bool m_jump_flg;//ジャンプフラグ
-
+    float length;
     int cnt;
 public:
     Enemy02();
@@ -32,6 +32,6 @@ public:
     void Damage();//ダメージ
     void MoveControl();
 	void HitCheck();
-    bool PlayerCheck(Player*p,float _l);//プレイヤーを検知する
+    
 };
 
