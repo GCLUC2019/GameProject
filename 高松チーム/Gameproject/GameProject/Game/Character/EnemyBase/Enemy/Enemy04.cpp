@@ -64,8 +64,8 @@ void Enemy04::Update()
 	//SetAnim();
 	if (m_pos.x <0 || m_pos.x > 1280)
 		m_pos.x = m_pos_old.x;
-	/*if (m_pos.y < 480 || m_pos.y > 720)
-		m_pos.y = m_pos_old.y;*/
+	if (m_pos.y < 480 || m_pos.y > 720)
+		m_pos.y = m_pos_old.y;
 }
 
 void Enemy04::Draw()
