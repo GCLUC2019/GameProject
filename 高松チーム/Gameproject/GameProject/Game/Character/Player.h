@@ -104,3 +104,26 @@ public:
 		return m_special;
 	}
 };
+
+
+
+class SpecialEvent :public Task{
+private:
+	int m_cnt;
+
+	CImage m_curtain;
+	CImage m_hissathu01;
+	CImage m_hissathu02;
+	CImage m_cutin;
+
+	CVector2D m_cutin_pos;
+
+public:
+	SpecialEvent();
+	~SpecialEvent();
+	void Update();
+	void Draw();
+
+
+};
+

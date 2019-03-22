@@ -327,6 +327,7 @@ void Player::Special()
 	m_special = 0;
 	if (time == 300) {
 		TaskManager::GetInstance()->AddTask(new PlayerEffectSpecialAttack(m_pos));
+		TaskManager::GetInstance()->AddTask(new SpecialEvent);
 		m_state = eSpecial;
 		SetAnim();
 	}
@@ -600,4 +601,57 @@ void Player::Damage(int _damage)
 	}
 	m_img.SetColor(0.5f, 0.5f, 0.5f, 1);
 	m_damage_flg = true;
+}
+
+SpecialEvent::SpecialEvent() : Task(CharacterData::ePlayerSpecial),
+m_cutin_pos(CVector2D(1300,720/2)),
+m_cnt(0)
+{
+	m_curtain = COPY_RESOURCE("Curtain", CImage*); 
+	m_hissathu01 = COPY_RESOURCE("Hissathu", CImage*);
+	m_hissathu02 = COPY_RESOURCE("Hissathu", CImage*);
+	m_cutin = COPY_RESOURCE("Cutin", CImage*);
+}
+
+SpecialEvent::~SpecialEvent()
+{
+
+}
+
+void SpecialEvent::Update()
+{
+	m_cnt++;
+
+	if (m_cutin_pos.x >= 50)
+		m_cutin_pos.x -= 50;
+	if (m_cnt>299)
+		SetKill();
+}
+
+void SpecialEvent::Draw()
+{
+	m_cutin.SetSize(1280, 600);
+	m_cutin.SetPos(m_cutin_pos);
+	m_cutin.SetCenter(0, 300);
+
+
+	m_curtain.SetSize(1280, 720);
+	m_curtain.SetPos(CVector2D(0, 0));
+
+	m_hissathu01.SetSize(300, 300);
+	m_hissathu01.SetCenter(150, 150);
+	m_hissathu01.SetRect(0, 0, 197, 197);
+	m_hissathu01.SetPos(CVector2D(320, 720 / 2));
+	m_hissathu02.SetSize(300, 300);
+	m_hissathu02.SetCenter(150, 150);
+	m_hissathu02.SetRect(197, 0, 394, 197);
+	m_hissathu02.SetPos(CVector2D(960, 720 / 2));
+
+	m_curtain.Draw();
+	if (m_cnt <= 150)
+		m_cutin.Draw();
+	if (m_cnt >= 150)
+		m_hissathu01.Draw();
+	if (m_cnt >= 200)
+		m_hissathu02.Draw();
 }
