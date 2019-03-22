@@ -600,6 +600,7 @@ void Player::Damage(int _damage)
 		return;
 	}
 	m_img.SetColor(0.5f, 0.5f, 0.5f, 1);
+	SpecialPuls(_damage);
 	m_damage_flg = true;
 }
 
