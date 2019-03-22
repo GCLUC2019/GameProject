@@ -167,7 +167,7 @@ void CEnemy2::OnCollision(CCollider*p){
 			//mPosition = mPosition + mCollider->mAdjust;
 			p->mPosition = mPosition;
 		}
-		printf("CEnemyTank::OnCollision\n");
+		//printf("CEnemyTank::OnCollision\n");
 	}
 }
 

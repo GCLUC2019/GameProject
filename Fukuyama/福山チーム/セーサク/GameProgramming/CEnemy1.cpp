@@ -218,7 +218,7 @@ void CEnemy1::OnCollision(CCollider*p){
 				EffectCount = EFFECT_COUNT;
 			}
 		}
-		printf("CEnemyTank::OnCollision\n");
+		//printf("CEnemyTank::OnCollision\n");
 	}
 }
 
