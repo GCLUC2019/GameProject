@@ -72,11 +72,12 @@ void BossManager::Attack()
 		m_player_pos = p->GetPos();
 		m_boss_attack_type = rand() % 100;
 	}
-	if (m_boss_attack_type > 80) m_boss_attack_type = 5;
-	else if (m_boss_attack_type <= 80 && m_boss_attack_type > 60) m_boss_attack_type = 5;
-	else if (m_boss_attack_type <= 60 && m_boss_attack_type > 40) m_boss_attack_type = 5;
-	else if (m_boss_attack_type <= 40 && m_boss_attack_type > 20) m_boss_attack_type = 5;
-	else if (m_boss_attack_type <= 20 && m_boss_attack_type > 0) m_boss_attack_type = 5;
+	int a = 3;
+	if (m_boss_attack_type > 80) m_boss_attack_type = a;
+	else if (m_boss_attack_type <= 80 && m_boss_attack_type > 60) m_boss_attack_type = a;
+	else if (m_boss_attack_type <= 60 && m_boss_attack_type > 40) m_boss_attack_type = a;
+	else if (m_boss_attack_type <= 40 && m_boss_attack_type > 20) m_boss_attack_type = a;
+	else if (m_boss_attack_type <= 20 && m_boss_attack_type > 0) m_boss_attack_type = a;
 
 
 	switch (m_boss_attack_type) {
@@ -84,22 +85,27 @@ void BossManager::Attack()
 		TaskManager::GetInstance()->AddTask(new BossHead(m_player_pos, Manager::eAttackDown));
 		m_state = Manager::eNothing;
 		break;
+
 	case 2:
 		TaskManager::GetInstance()->AddTask(new BossRightHand(m_player_pos, Manager::eAttackDown));
 		m_state = Manager::eNothing;//ok
 		break;
+
 	case 3:
 		TaskManager::GetInstance()->AddTask(new BossTail(m_player_pos, Manager::eAttackDown));
 		m_state = Manager::eNothing;
 		break;
+
 	case 4:
 		TaskManager::GetInstance()->AddTask(new BossHead(m_player_pos, Manager::eAttackDown2));
 		m_state = Manager::eNothing;//ok
 		break;
+
 	case 5:
 		TaskManager::GetInstance()->AddTask(new BossLeftHand(m_player_pos, Manager::eAttackDown));
 		m_state = Manager::eNothing;//ok
 		break;
+
 	default:
 		break;
 	}
@@ -143,10 +149,12 @@ void BossManager::Draw()
 	
 }
 
+
+//ゲージベース
 BossGageBaseUI::BossGageBaseUI() :UI(eBossGageBaseUI)
 {
 	m_img = COPY_RESOURCE("BossHPBack", CImage*);
-	m_pos = CVector2D(100, 700);
+	m_pos = CVector2D(100, 690);
 }
 
 void BossGageBaseUI::Update()
@@ -155,25 +163,26 @@ void BossGageBaseUI::Update()
 
 void BossGageBaseUI::Draw()
 {
-	m_img.SetSize(CVector2D(1080, 10));
+	m_img.SetSize(CVector2D(1080, 20));
 	m_img.SetPos(m_pos);
 	m_img.Draw();
 }
 
+
+//HPゲージ
 BossHpUI::BossHpUI() : UI(eBossHpUI)
 {
 	m_img = COPY_RESOURCE("BossHP", CImage*);
-	m_pos = CVector2D(100, 700);
+	m_pos = CVector2D(100, 690);
 
-	hp_width = 1080.0f;
-	m_boss_hp_max = 100.0f;
-	m_boss_hp_now = 100.0f;
+	hp_width = 1085;
+	m_boss_hp_max = 100;
 }
 
 void BossHpUI::Update()
 {
-	Task* p = TaskManager::FindObject(eBossHead);
-	BossHead* n = dynamic_cast<BossHead*>(p);
+	Task* p = TaskManager::FindObject(eBossManager);
+	BossManager* n = dynamic_cast<BossManager*>(p);
 	if (n != nullptr)
 		m_boss_hp_now = n->GetHP();
 
@@ -185,7 +194,7 @@ void BossHpUI::Update()
 
 void BossHpUI::Draw()
 {
-	m_img.SetSize(CVector2D(m_boss_hp_now * hp_width, 10));
+	m_img.SetSize(CVector2D(m_boss_hp_now * hp_width, 20));
 	m_img.SetPos(m_pos);
 	m_img.Draw();
 }
