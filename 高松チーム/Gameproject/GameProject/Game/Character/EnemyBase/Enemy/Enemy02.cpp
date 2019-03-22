@@ -88,7 +88,7 @@ void Enemy02::Draw()
 {
     m_shadow.SetSize(SAIZE_SD + m_depth / 5, 50);
     m_shadow.SetCenter((SAIZE_SD + m_depth / 5) / 2, 50 / 2);
-    m_shadow.SetPos(CVector2D(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3));
+    m_shadow.SetPos(CVector2D(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3-10));
     m_shadow.Draw();
 
     m_img.SetSize(IMAGE_SIZE, IMAGE_SIZE);

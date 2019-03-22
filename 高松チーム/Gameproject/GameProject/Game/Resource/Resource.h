@@ -77,6 +77,8 @@ public:
 		ADD_RESOURCE("Enemy02", CAnimImage::LoadImage("../data/Image/zako_daruma_motion.png", Enemy02AnimData, 512, 512));
 		ADD_RESOURCE("Enemy2Effect", CAnimImage::LoadImage("../data/Image/Enemy2Effect.png", E2AttackEffectAnimData, 192, 192));
 		ADD_RESOURCE("Enemy03", CAnimImage::LoadImage("../data/Image/zako_hi_motion.png", Enemy03AnimData, 512, 512));
+		ADD_RESOURCE("Enemy04EffectS", CAnimImage::LoadImage("../data/Image/ef_s01.png", E4AttackEffectAnimData, 200, 180));
+		ADD_RESOURCE("Enemy04EffectEX", CAnimImage::LoadImage("../data/Image/slash_ex.png", E4AttackEffectAnimData, 500, 50));
 		ADD_RESOURCE("Enemy04", CAnimImage::LoadImage("../data/Image/zako_kamaitachi_motion.png", Enemy04AnimData, 512, 512));
 		ADD_RESOURCE("Enemy05", CAnimImage::LoadImage("../data/Image/zako_niku_motion.png", Enemy05AnimData, 512, 512));
 		
@@ -98,8 +100,6 @@ public:
 		ADD_RESOURCE("SpecialGageUI", CAnimImage::LoadImage("../data/Image/item_matome_1.png", SpecialGageUIAnimData, 128, 128));
 		ADD_RESOURCE("SpecialGageEffect", CAnimImage::LoadImage("../data/Image/pipo-gate01b480.png", SpecialGageEffectAnimData, 480, 480));
 		
-
-		ADD_RESOURCE("Slash_EX", CAnimImage::LoadImage("../data/Image/slash_ex.png", E4AttackEffectAnimData, 500, 50));
 	}
 };
 

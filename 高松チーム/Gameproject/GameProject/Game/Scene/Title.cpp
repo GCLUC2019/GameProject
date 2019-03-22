@@ -23,7 +23,6 @@ m_choice(0)
 {
 	g_game_data.m_score = 0;
 	g_game_data.m_dead_cnt = 0;
-	g_game_data.m_player_switch_flg == false;
 
 	new TitleResource();
     m_img_back = COPY_RESOURCE("Title", CImage*);
@@ -71,9 +70,11 @@ void Title::Update()
 		{
 			switch (m_choice) {
 			case 0:
+				if (mp_fadeout >= 1.0f)
 				TaskManager::AddTask(new Tutorial());
 				break;
 			case 1:
+				if (mp_fadeout >= 1.0f)
 				TaskManager::AddTask(new GameScene());
 				break;
 			}

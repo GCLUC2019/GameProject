@@ -349,60 +349,60 @@ void CPlayerTank::OnCollision(CCollider*p){
 				CMain::mSceneTag = CScene::ELOSE;
 			}
 		}
-		if (p->mpTask->mTaskTag == EBOSSBULLET){
-			CExplosion*p = new CExplosion();
-			/*HeadRightTurn();
-			HeadRightTurn();
-			HeadRightTurn();
-			HeadRightTurn();
-			HeadRightTurn();
-			HeadRightTurn();
-			HeadRightTurn();
-			HeadRightTurn();*/
-			p->SetTexture(&Texture, 0, 64, 64, 0);
-			Rect2.Draw(mPlayerfaceD, 0, 144, 0, 144);	//ダメージ画像追加　宮原
-			p->mPosition = mPosition;
-			CTaskManager::Get()->Add(p);
-			mHpBar.mHp -= 5.0f;
-			if (mHpBar.mHp <= 0.0f){
-				mEnabled = false;
-				CMain::mSceneTag = CScene::ELOSE;
-			}
-		}
-		if (p->mpTask->mTaskTag == ESPEEDENEMY){
-			CExplosion*p = new CExplosion();
-			//HeadRightTurn();
-			//HeadRightTurn();
-			//HeadRightTurn();
-			//HeadRightTurn();
-			//HeadRightTurn();
-			//HeadRightTurn();
-			//HeadRightTurn();
-			//HeadRightTurn();
-			p->SetTexture(&Texture, 0, 64, 64, 0);
-			Rect2.Draw(mPlayerfaceD, 0, 144, 0, 144);	//ダメージ画像追加　宮原
+	//	if (p->mpTask->mTaskTag == EBOSSBULLET){
+	//		CExplosion*p = new CExplosion();
+	//		/*HeadRightTurn();
+	//		HeadRightTurn();
+	//		HeadRightTurn();
+	//		HeadRightTurn();
+	//		HeadRightTurn();
+	//		HeadRightTurn();
+	//		HeadRightTurn();
+	//		HeadRightTurn();*/
+	//		p->SetTexture(&Texture, 0, 64, 64, 0);
+	//		Rect2.Draw(mPlayerfaceD, 0, 144, 0, 144);	//ダメージ画像追加　宮原
+	//		p->mPosition = mPosition;
+	//		CTaskManager::Get()->Add(p);
+	//		mHpBar.mHp -= 5.0f;
+	//		if (mHpBar.mHp <= 0.0f){
+	//			mEnabled = false;
+	//			CMain::mSceneTag = CScene::ELOSE;
+	//		}
+	//	}
+	//	if (p->mpTask->mTaskTag == ESPEEDENEMY){
+	//		CExplosion*p = new CExplosion();
+	//		//HeadRightTurn();
+	//		//HeadRightTurn();
+	//		//HeadRightTurn();
+	//		//HeadRightTurn();
+	//		//HeadRightTurn();
+	//		//HeadRightTurn();
+	//		//HeadRightTurn();
+	//		//HeadRightTurn();
+	//		p->SetTexture(&Texture, 0, 64, 64, 0);
+	//		Rect2.Draw(mPlayerfaceD, 0, 144, 0, 144);	//ダメージ画像追加　宮原
 
-			p->mPosition = mPosition;
-			CTaskManager::Get()->Add(p);
-			mHpBar.mHp -= 1.0f;
-			if (mHpBar.mHp <= 0.0f){
-				mEnabled = false;
-				CMain::mSceneTag = CScene::ELOSE;
-			}
-		}
-		if (p->mpTask->mTaskTag == EBOSS){
-			CExplosion*p = new CExplosion();
-			p->SetTexture(&Texture, 0, 64, 64, 0);
-			Rect2.Draw(mPlayerfaceD, 0, 144, 0, 144);	//ダメージ画像追加　宮原
+	//		p->mPosition = mPosition;
+	//		CTaskManager::Get()->Add(p);
+	//		mHpBar.mHp -= 1.0f;
+	//		if (mHpBar.mHp <= 0.0f){
+	//			mEnabled = false;
+	//			CMain::mSceneTag = CScene::ELOSE;
+	//		}
+	//	}
+	//	if (p->mpTask->mTaskTag == EBOSS){
+	//		CExplosion*p = new CExplosion();
+	//		p->SetTexture(&Texture, 0, 64, 64, 0);
+	//		Rect2.Draw(mPlayerfaceD, 0, 144, 0, 144);	//ダメージ画像追加　宮原
 
-			p->mPosition = mPosition;
-			CTaskManager::Get()->Add(p);
-			mHpBar.mHp -= 1.0f;
-			if (mHpBar.mHp <= 0.0f){
-				mEnabled = false;
-				CMain::mSceneTag = CScene::ELOSE;
-			}
-		}
+	//		p->mPosition = mPosition;
+	//		CTaskManager::Get()->Add(p);
+	//		mHpBar.mHp -= 1.0f;
+	//		if (mHpBar.mHp <= 0.0f){
+	//			mEnabled = false;
+	//			CMain::mSceneTag = CScene::ELOSE;
+	//		}
+	//	}
 	}
 	if (Invincible > 0){
 		if (p->mpTask->mTaskTag == EENEMYBULLET){

@@ -154,19 +154,20 @@ void Player::Jump()
 
 		if (jump_vec_pow < 0) {
 			m_state = PlayerState::eJumpDown;
-			
-			Task* t = CollitionBase::GetCollisionCheckRect(this, CharacterData::eCollisionBox);
-			if (t != nullptr/*&&m_pos_old.y<=450*/) {
-				CollisionBox* b = dynamic_cast<CollisionBox*>(t);
-				if (b == nullptr)
-					return;
-				if(m_pos.y > b->GetPos().y)
-					return;
-				m_pos.y = b->GetPos().y - b->GetRect().m_bottom - 5;
-				time = 0;
-				m_jump_flg = false;
-				m_jump2_flg = true;
-				jump_vec_pow = JUMP_SPD;
+			if (m_pos_old.y < 520) {
+				Task* t = CollitionBase::GetCollisionCheckRect(this, CharacterData::eCollisionBox);
+				if (t != nullptr) {
+					CollisionBox* b = dynamic_cast<CollisionBox*>(t);
+					if (b == nullptr)
+						return;
+					if (m_pos.y > b->GetPos().y)
+						return;
+					m_pos.y = b->GetPos().y - b->GetRect().m_bottom - 5;
+					time = 0;
+					m_jump_flg = false;
+					m_jump2_flg = true;
+					jump_vec_pow = JUMP_SPD;
+				}
 			}
 		}
 		if (m_pos.y >= m_pos_old.y) {
@@ -520,10 +521,11 @@ void Player::Draw()
     if(g_game_data.m_scroll.x<0)g_game_data.m_scroll.x = 0;*/
 	if (m_jump_flg)
 		m_depth = (m_pos_old.y - DEP_N) / 3.5;
+	else if(m_jump2_flg)
+		m_depth = -18;//Žb’è
 	else
 		m_depth = (m_pos.y - DEP_N) / 3.5;
-	if (m_jump2_flg)
-		m_depth = -18;//Žb’è
+	
 	m_img.SetSize(SAIZE + m_depth, SAIZE + m_depth);
 	m_img.SetCenter((SAIZE + m_depth) / 2, (SAIZE + m_depth));
 	m_img.SetPos(m_pos);
@@ -555,16 +557,18 @@ void Player::ItemGet(int _itemTyp)
 			m_HP = 100;
 		break;
 	case ItemList::eInari:
-		g_game_data.m_score += 10;
+		g_game_data.m_score += 50;
 
 		break;
 	case ItemList::eKakera:
-		
-
+		if (m_HP < 100)
+			m_HP += 50;
+		if (m_HP > 100)
+			m_HP = 100;
 		break;
 	case ItemList::eKoban:
 
-		g_game_data.m_score += 1;
+		g_game_data.m_score += 10;
 		break;
 
 	default:
