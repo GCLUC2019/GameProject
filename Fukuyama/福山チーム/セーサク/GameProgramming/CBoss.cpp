@@ -26,7 +26,7 @@ void CBoss::Init(){
 
 	mFireInterval = FIREINTERVAL_E;
 	CTank::Init();
-	SetVertex(-100.0f, 100.0f, -100.0f, 100.0f);
+	SetVertex(-150.0f, 150.0f, -150.0f, 150.0f);
 	SetColor(1.0f, 1.0f, 1.0f, 1.0f);
 	mHead.SetColor(1.0f, 0.6f, 0.0f, 1.0f);
 	mHead.SetVertex(-50.0f, 50.0f, -50.0f, 50.0f);
@@ -39,7 +39,7 @@ void CBoss::Init(){
 
 
 	mCollider = new CCircleCollider();
-	mCollider->mRadius = 20.0f;
+	mCollider->mRadius = 80.0f;
 	mCollider->mpTask = this;
 	mpTarget = Tank;
 	CCollisionManager::Get()->Add(mCollider);
