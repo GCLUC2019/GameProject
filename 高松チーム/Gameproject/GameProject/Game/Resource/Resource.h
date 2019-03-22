@@ -83,7 +83,7 @@ public:
 		ADD_RESOURCE("Hissathu", CImage::LoadImage("../data/Image/text02.png"));
 		
 		ADD_RESOURCE("Enemy01", CAnimImage::LoadImage("../data/Image/zako_chochin_motion.png", Enemy01AnimData, 512, 512));
-		ADD_RESOURCE("Enemy1Effect", CAnimImage::LoadImage("../data/Image/pipo - btleffect122.png", E1AttackEffectAnimData, 240,240));
+		//ADD_RESOURCE("Enemy1Effect", CAnimImage::LoadImage("../data/Image/pipo - btleffect122.png", E1AttackEffectAnimData, 240,240));
 		ADD_RESOURCE("Enemy02", CAnimImage::LoadImage("../data/Image/zako_daruma_motion.png", Enemy02AnimData, 512, 512));
 		ADD_RESOURCE("Enemy2Effect", CAnimImage::LoadImage("../data/Image/Enemy2Effect.png", E2AttackEffectAnimData, 192, 192));
 		ADD_RESOURCE("Enemy03", CAnimImage::LoadImage("../data/Image/zako_hi_motion.png", Enemy03AnimData, 512, 512));
