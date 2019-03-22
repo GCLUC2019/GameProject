@@ -86,6 +86,8 @@ void Enemy02::Update()
 
 void Enemy02::Draw()
 {
+    m_rect = CRect(-47.0f, -120.0f - g_game_data.m_scroll.y / 3, 54.0f, -20.0f - g_game_data.m_scroll.y / 3);
+
     m_shadow.SetSize(SAIZE_SD + m_depth / 5, 50);
     m_shadow.SetCenter((SAIZE_SD + m_depth / 5) / 2, 50 / 2);
     m_shadow.SetPos(CVector2D(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3-10));
@@ -183,7 +185,11 @@ void Enemy02::HitCheck()
 
 bool Enemy02::PlayerCheck(Player * p, float _l)
 {
-    CollisionLine l1, l2;
-    l1.s = m_pos; l1.e = m_pos + CVector2D(1, 1)*_l;
-    return false;
+    bool hit = false;
+    CollisionLine l;
+    l.start = m_pos; l.end = m_pos + CVector2D(1, -1)*_l;
+    for (int i = 0; i < 3; ++i) {
+        
+    }
+    return hit;
 }

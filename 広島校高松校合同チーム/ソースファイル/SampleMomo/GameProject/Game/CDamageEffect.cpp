@@ -2,7 +2,13 @@
 #include "CAnimation.h"
 #include "CGameScene.h"
 
-CDamageEffect::CDamageEffect(CVector3D * _pos_p, CVector2D _offset_pos, CVector2D _size, double _count):CObject(0, DP_UI + 100)
+enum {
+	eEffectDamage=0,
+	eEffectSlashX,
+	eEffectSlashY,
+};
+
+CDamageEffect::CDamageEffect(CVector3D * _pos_p, CVector2D _offset_pos, CVector2D _size, double _count,int _effect_id = 0):CObject(0, DP_UI + 100)
 {
 	m_anim_p = new CAnimation();
 	m_pos_p = _pos_p;
@@ -15,7 +21,8 @@ CDamageEffect::CDamageEffect(CVector3D * _pos_p, CVector2D _offset_pos, CVector2
 
 	m_delete_cnt = _count;
 
-	
+	m_effect_id = _effect_id;
+
 	LoadAnimImage();
 }
 
@@ -50,4 +57,22 @@ void CDamageEffect::Draw()
 void CDamageEffect::LoadAnimImage()
 {
 	m_anim_p->ReadAnimDataFile("Effect/EFFECT_ANIM_DATA.anim");
+}
+
+void CDamageEffect::ChangeAnim(int _anim_id)
+{
+	switch (_anim_id)
+	{
+	case eEffectDamage:
+		m_anim_p->SetWillPlayAnim(eEffectDamage);
+		break;
+	case eEffectSlashX:
+		m_anim_p->SetWillPlayAnim(eEffectSlashX);
+		break;
+	case eEffectSlashY:
+		m_anim_p->SetWillPlayAnim(eEffectSlashY);
+		break;
+	default:
+		break;
+	}
 }

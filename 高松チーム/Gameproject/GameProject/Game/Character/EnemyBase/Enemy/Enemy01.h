@@ -16,8 +16,8 @@ private:
         eDamage,
     };
     CVector2D m_dir;
-    int m_state;//状態
     float m_hover;//浮遊を表現するための変数
+    float length ;
     bool m_search_flg;//プレイヤーを見つけたかどうかのフラグ
     
     

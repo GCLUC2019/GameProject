@@ -61,6 +61,7 @@ void SpecialGageUI::Update()
 {
 	Task* p = TaskManager::FindObject(ePlayer);
 	Player* n = dynamic_cast<Player*>(p);
+	if(n != nullptr)
 	m_special_gage = n->GetSpecial();
 
 	switch (m_special_gage)
@@ -198,8 +199,10 @@ m_font("",28)
 {
 	ADD_RESOURCE("FadeOut", CImage::LoadImage("../data/Image/Fadeout.png"));
 	m_img = COPY_RESOURCE("FadeOut", CImage*);
+	m_img_rogo = COPY_RESOURCE("RogoBase", CImage*);
+	m_img_ohuda = COPY_RESOURCE("RogoHuda", CImage*);
 	m_pos = CVector2D(0, 0);
-
+	m_pos_ohuda = CVector2D(1180, 630);
 }
 
 void FadeOut::Update()
@@ -215,6 +218,18 @@ void FadeOut::Draw()
 	m_img.SetColor(0, 0, 0, m_fadeout);
 	m_img.Draw();
 
-	if(m_fadeout >= 1)
-	m_font.Draw(900, 700, 1, 1, 1, "4ボタンを押してください...");
+	if (m_fadeout >= 1) {
+		m_ohuda_ang -= 0.05f;
+		m_img_ohuda.SetSize(CVector2D(200, 200));
+		m_img_ohuda.SetCenter(100, 100);
+		m_img_ohuda.SetPos(m_pos_ohuda);
+		m_img_ohuda.SetAng(m_ohuda_ang);
+		m_img_ohuda.Draw();
+
+		m_img_rogo.SetSize(CVector2D(180, 220));
+		m_img_rogo.SetPos(1090,530);
+		m_img_rogo.Draw();
+
+		m_font.Draw(900, 700, 1, 1, 1, "4ボタンを押してください...");
+	}
 }

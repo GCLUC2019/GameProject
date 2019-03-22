@@ -1,6 +1,7 @@
 #pragma once
 #include "../GameProject/Game/Character/EnemyBase/EnemyBase.h"
 
+
 /*
 担当
 番條　Boss.cppp,h
@@ -21,6 +22,7 @@ private:
 		eHeadAttackDown,
 		eFireAttack,
 		eHeadAttack,
+		eDeath,
 	};
 	CImage m_shadow;//影
 
@@ -65,6 +67,10 @@ public:
 	void Update();
 
 	void Draw();
+
+	int GetHP() {
+		return m_hp;
+	}
 
 	friend class BossManager;
 };
@@ -130,6 +136,11 @@ public:
 	friend class BossManager;
 };
 
+//////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////手クラス/////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 class BossLeftHand :public EnemyBase {
 private:
 	enum LeftHand {
@@ -224,5 +235,42 @@ public:
 
 	void Draw();
 	friend class BossManager;
+
+
+};
+
+class BossDeath :public EnemyBase {
+private:
+	
+	CImage m_img; //やられたときの画像
+	CAnimImage m_img2;//やられたときエフェクト
+	CAnimImage m_img3;//やられたときエフェクト　その２
+
+	CVector2D m_pos; //やられたときの座標
+	CVector2D m_player_pos;//プレイヤーの座標を取得して格納
+	CVector2D m_pos2;//えふぇくと座標
+	CVector2D m_pos3;//エフェクト座標　その２
+	CVector2D m_rect_pos;//矩形移動のぽす
+
+	int m_state;//ボスの状態
+	int m_boss_attack_type;//ボスの攻撃する種類を番号で振り分ける
+	int m_boss_hp;//ボスの体力
+	int m_idle_cnt;//待機状態でいる時間
+	int m_cnt;
+
+	bool m_idle_flag;
+
+public:
+
+	BossDeath();
+
+	~BossDeath();
+
+	void Update();
+
+	void Draw();
+	friend class BossManager;
+
+
 };
 

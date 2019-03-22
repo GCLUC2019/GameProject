@@ -3,6 +3,8 @@
 #include "../GameProject/Game/Character/Anim/AnimBoss.h"
 #include "../GameProject/Game/Character/EnemyBase/Boss/BossManager.h"
 #include "../GameProject/Game/GameData/GameData.h"
+#include "../GameProject/Game/Stage/CollisionBox.h"
+#include "../GameProject/Game/Resource/Resource.h"
 
 
 #define BOSS_X_SIZE 768
@@ -13,6 +15,9 @@
 
 #define SHADOW_X_SIZE 174
 #define SHADOW_Y_SIZE 45
+
+#define EFFECT_SIZE 192
+
 
 #define PIE 3.14
 
@@ -69,17 +74,19 @@ BossHead::BossHead(const CVector2D &player_pos, const int state) :EnemyBase(eBos
 
 	m_shadow.SetColor(0.3f, 0.3f, 0.3f, 0.4f);
 
+
+
 }
 
 BossHead::~BossHead()
 {
 	Task * p = TaskManager::GetInstance()->FindObject(eGameTitle);
-	if (p == nullptr)TaskManager::GetInstance()->AddTask(new BossManager());
+	if (p == nullptr&&m_hp>0)TaskManager::GetInstance()->AddTask(new BossManager());
 }
 
 void BossHead::Idle()
 {
-	m_rect = CRect(-192, -210, 192, 130);
+	//m_rect = CRect(-192, -210, 192, 130);
 
 	if (m_pos.x >= WIGHT_SIZE / 1.73f) {
 		m_shadow_pos.x -= 0.5f;
@@ -390,7 +397,7 @@ void BossRightHand::Draw()
 	switch (m_state) {
 	case BossRightHand::eIdle:
 		m_img.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
-		m_img.SetSize(BOSS_X_SIZE / 3, BOSS_Y_SIZE / 3);
+		m_img.SetSize(BOSS_X_SIZE / 2, BOSS_Y_SIZE / 2);
 		break;
 	case BossRightHand::eDownAttack:
 	case BossRightHand::eLazerAttack:
@@ -626,6 +633,7 @@ BossTail::BossTail(const CVector2D & player_pos, const int state) :EnemyBase(eBo
 		m_pos = CVector2D(WIGHT_SIZE - BOSS_X_SIZE / 1.6, HEIGHT_SIZE - BOSS_Y_SIZE / 15);
 		m_shadow_y = m_pos.y;
 		m_shadow_x = 0;
+		m_img.ChangeAnimation(Motion2::eBossTailAnim);
 	}
 
 	if (m_state == Tail::eDown) {
@@ -635,6 +643,7 @@ BossTail::BossTail(const CVector2D & player_pos, const int state) :EnemyBase(eBo
 		m_pos = CVector2D(player_pos.x, 0);
 		m_shadow_y = m_pos.y;
 		m_shadow_x = 0;
+		m_img.ChangeAnimation(Motion1::eBossTailAttackMotion, false);
 
 	}
 
@@ -660,8 +669,6 @@ BossTail::~BossTail()
 
 void BossTail::Update()
 {
-	m_img.ChangeAnimation(Motion1::eBossTailAttackMotion, false);
-	m_img.UpdateAnimation();
 
 	switch (m_state) {
 	case eIdle:
@@ -680,15 +687,8 @@ void BossTail::Update()
 		break;
 	}
 
-	if (m_state == Tail::eTailAttack) {
-
-	}
-
-	if (m_idle_flag == true) {
-		m_img.ChangeAnimation(Motion2::eBossTailAnim);
-		m_img.UpdateAnimation();
-	}
-
+	
+	m_img.UpdateAnimation();
 }
 
 void BossTail::Idle()
@@ -706,8 +706,9 @@ void BossTail::TailAttack()
 	m_anim_cnt++;
 
 	m_img.ChangeAnimation(Motion1::eBossTailAttackMotion, false);
-	m_img.UpdateAnimation();
-	if (m_anim_cnt > 120)m_state = eUp;
+
+	if (m_img.CheckAnimationEnd()) m_state = eUp;
+	//if (m_anim_cnt > 120)m_state = eUp;
 }
 
 void BossTail::UpMove()
@@ -781,3 +782,52 @@ void BossTail::Draw()
 
 }
 
+BossDeath::BossDeath() :EnemyBase(eBossTail)
+{
+	m_img = COPY_RESOURCE("Boss", CImage*);
+	m_img2 = COPY_RESOURCE("BossDeathEffect1", CAnimImage*);
+	m_img3 = COPY_RESOURCE("BossDeathEffect2", CAnimImage*);
+
+	m_img.SetSize(BOSS_X_SIZE / 1.5f, BOSS_Y_SIZE / 1.5f);
+	m_img2.SetSize(EFFECT_SIZE * 4, EFFECT_SIZE *  2.8f);
+	m_img3.SetSize(EFFECT_SIZE * 4, EFFECT_SIZE *  2.8f);
+
+	m_pos = CVector2D(WIGHT_SIZE / 2 - BOSS_X_SIZE / 4, HEIGHT_SIZE - BOSS_Y_SIZE / 1.5f);
+	m_pos2 = CVector2D(WIGHT_SIZE / 2 - BOSS_X_SIZE / 2.5, HEIGHT_SIZE - BOSS_Y_SIZE / 2.8f);
+	m_pos3 = CVector2D(WIGHT_SIZE / 2 - BOSS_X_SIZE / 2.5, HEIGHT_SIZE - BOSS_Y_SIZE / 2.8f);
+
+	m_img3.SetCenter(BOSS_Y_SIZE / 4, BOSS_Y_SIZE / 4);
+}
+
+BossDeath::~BossDeath()
+{
+}
+
+void BossDeath::Update()
+{
+	m_img2.ChangeAnimation(eBossDeathEffect1);
+	m_img2.UpdateAnimation();
+	m_img3.ChangeAnimation(eBossDeathEffect2);
+	m_img3.UpdateAnimation();
+
+	m_pos.y -= 6;
+}
+
+void BossDeath::Draw()
+{
+	#ifdef _DEBUG
+		Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+		Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_left, m_pos2.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+		Utility::DrawQuad(CVector2D(m_pos2.x + m_rect.m_right, m_pos2.y + m_rect.m_top), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+		Utility::DrawQuad(CVector2D(m_pos2.x + m_rect.m_right, m_pos2.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
+	#endif
+
+	m_img.SetRect(0, BOSS_Y_SIZE * 2, BOSS_X_SIZE, BOSS_Y_SIZE * 3);
+	m_img.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
+	m_img2.SetPos(m_pos2.x, m_pos2.y - g_game_data.m_scroll.y / 3);
+	m_img3.SetPos(m_pos3.x, m_pos3.y - g_game_data.m_scroll.y / 3);
+
+	m_img.Draw();
+	m_img2.Draw();
+	m_img3.Draw();
+}
