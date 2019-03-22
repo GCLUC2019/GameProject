@@ -16,6 +16,9 @@ public:
 	}
 	void Init();
 	void Update();
+
+	int mEnemyIntervar;
+	int mEnemyLimit;
 };
 
 class CSceneWin :public CScene{

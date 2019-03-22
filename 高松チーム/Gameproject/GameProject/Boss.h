@@ -43,6 +43,10 @@ private:
 	float m_shadow_y;//âeÇÃyç¿ïW
 	float m_shadow_x;
 
+	float m_hp;
+
+
+
 
 protected:
 
@@ -60,6 +64,8 @@ public:
 
 	void UpMove();
 
+	void HitCheck();
+
 	void FireDownMove();
 
 	void HeadDownMove();
@@ -68,9 +74,7 @@ public:
 
 	void Draw();
 
-	int GetHP() {
-		return m_hp;
-	}
+	
 
 	friend class BossManager;
 };

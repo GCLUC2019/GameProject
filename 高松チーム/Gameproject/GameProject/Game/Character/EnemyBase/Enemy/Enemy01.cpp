@@ -144,6 +144,7 @@ void Enemy01::Search()
 void Enemy01::Attack()
 {
     m_img.ChangeAnimation(eEAttack03, false);
+
     if (m_img.CheckAnimationEnd()) {
         m_state = eSearch;
     }

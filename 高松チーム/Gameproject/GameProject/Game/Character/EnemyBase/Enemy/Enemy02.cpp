@@ -49,6 +49,7 @@ m_jump_flg(false)
 	m_hp = 100;
 	m_rect = CRect( - 47.0f, -120.0f - g_game_data.m_scroll.y/3, 54.0f, -20.0f - g_game_data.m_scroll.y / 3);
     cnt = 0;
+    length = 0;
 }
 
 void Enemy02::Update()
@@ -61,7 +62,7 @@ void Enemy02::Update()
         cnt = 0;
     }
     m_vec = CVector2D(0, 0);
-    
+    m_dir = CVector2D(0, 0);
         switch (m_state) {
         case eMove:
             Move();
@@ -103,10 +104,7 @@ void Enemy02::Draw()
 void Enemy02::Move()
 {
     m_img.ChangeAnimation(eEMove02);
-    /* CVector2D vec = p->GetPos() - m_pos;
-    float length = sqrt(vec.x*vec.x + vec.y*vec.y);
-    if (length < IMAGE_SIZE / 2)
-    m_state = eAttack;*/
+    //m_vec = m_dir;
     m_jump_flg = true;
 }
 
@@ -123,12 +121,15 @@ void Enemy02::Search()
         if (m_pos.x < IMAGE_SIZE / 2)
             m_flip = true;
     }
-    
-    Task*t = TaskManager::FindObject(ePlayer);
+    /*Task*t = TaskManager::FindObject(ePlayer);
     Player*p = dynamic_cast<Player*>(t);
-    if (p!=nullptr&&PlayerCheck(p,50.0f)) {
-        Move();
-    }
+    m_dir = p->GetPos() - m_pos;
+    length = m_dir.Length();
+    if (length < IMAGE_SIZE) {
+        m_dir = m_dir.GetNormalize();
+        m_state = eMove;
+    }*/
+   
 }
 
 void Enemy02::Attack()
@@ -186,13 +187,4 @@ void Enemy02::HitCheck()
 	}
 }
 
-bool Enemy02::PlayerCheck(Player * p, float _l)
-{
-    bool hit = false;
-    CollisionLine l;
-    l.start = m_pos; l.end = m_pos + CVector2D(1, -1)*_l;
-    for (int i = 0; i < 3; ++i) {
-        
-    }
-    return hit;
-}
+

@@ -8,6 +8,7 @@
 
 class CBoss :public CTank{
 public:
+	static CBoss *spInstance;
 
 	CCircleCollider*mCollider;
 	CTexture*mTexture;

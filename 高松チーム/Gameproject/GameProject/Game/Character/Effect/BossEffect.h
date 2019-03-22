@@ -28,8 +28,8 @@ public:
 
 class BossLazerEffect : public Task {
 private:
-	CAnimImage m_img;
-	CImage m_img2;//矩形移動の座標確認用の画像
+	CImage m_img;
+	CAnimImage m_img2;//矩形移動の座標確認用の画像
 	CVector2D m_pos;
 	CVector2D m_pos2;//矩形移動用の座標
 
