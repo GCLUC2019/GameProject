@@ -51,7 +51,9 @@ void GameScene::Update()
 	if(n != nullptr)
 	m_player_pos_x = n->GetPos();
 
-	if (/*g_game_data.m_dead_cnt >= 10 && */m_player_pos_x.x >= 1280)
+	//g_game_data.m_dead_cnt = 11;
+
+	if (g_game_data.m_dead_cnt >= 10 && m_player_pos_x.x >= 1280)
 			g_game_data.m_scroll.x += 10;
 	if (g_game_data.m_scroll.x >= 1280)
 		g_game_data.m_scroll.x = 1280;
