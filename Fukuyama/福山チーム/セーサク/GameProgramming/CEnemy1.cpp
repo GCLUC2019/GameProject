@@ -173,7 +173,7 @@ void CEnemy1::Update(){
 void CEnemy1::OnCollision(CCollider*p){
 	if (mHpBar.mHp >= 1){
 		if (p->mpTask->mTaskTag == EPLAYERBULLET){
-			CItem*p = new CItem();
+			CExplosion*p = new CExplosion();
 			p->SetTexture(&Texture, 0, 64, 64, 0);
 			p->mPosition = mPosition;
 			CTaskManager::Get()->Add(p);
