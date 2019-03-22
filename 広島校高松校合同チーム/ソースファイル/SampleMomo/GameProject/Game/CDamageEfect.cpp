@@ -1,10 +1,12 @@
 #include "CDamageEfect.h"
+#include "CAnimation.h"
 
-CDamageEfect::CDamageEfect(CVector3D _pos):CObject(0, DP_UI + 1)
+CDamageEfect::CDamageEfect(CVector3D * _pos_p):CGameSceneObject(0, DP_UI + 1)
 {
-	m_damage_p= GET_RESOURCE("GameOver", CImage*);
-	m_damage_p->SetPos(_pos.x,_pos.y);
+	m_target_p = _pos_p;
+	m_damage_p->SetPos(m_target_p->x, m_target_p->y);
 	m_damage_p->SetSize(100,100);
+	m_anim_p->SetWillPlayAnim(0);
 }
 
 CDamageEfect::~CDamageEfect()
@@ -20,4 +22,9 @@ void CDamageEfect::Update()
 void CDamageEfect::Draw()
 {
 	m_damage_p->Draw();
+}
+
+void CDamageEfect::LoadAnimImage()
+{
+	m_anim_p->ReadAnimDataFile("Efect/Efect_ANIM_DATA.anim");
 }
