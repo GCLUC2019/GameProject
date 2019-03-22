@@ -3,9 +3,12 @@
 #include "CAnimation.h"
 #include "../Global.h"
 
+
+
 class CItem : public CGameSceneObject {
 private:
 	int m_item_id;
+	static bool m_get_item_flag;
 public:
 	CItem(CVector3D pos, int _item_id);
 	~CItem();
