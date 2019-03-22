@@ -15,6 +15,7 @@ public:
 	~Tutorial();
 	void Draw();
 	void Update();
+	
 
 
 };
@@ -28,6 +29,9 @@ public:
 	Balloon();
 	void Update();
 	void Draw();
+	CVector2D GetPos() {
+		return  CVector2D(0, 750);
+	}
 };
 
 class DescriptionUI : public Task {
@@ -41,4 +45,7 @@ public:
 	DescriptionUI();
 	void Update();
 	void Draw();
+	CVector2D GetPos() {
+		return  CVector2D(0, 800);
+	}
 };

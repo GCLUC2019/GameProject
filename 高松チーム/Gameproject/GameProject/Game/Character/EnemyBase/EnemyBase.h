@@ -45,6 +45,6 @@ public:
     }
 };
 struct CollisionLine {
-    CVector2D s;//始点
-    CVector2D e;//終点
+    CVector2D start;//始点
+    CVector2D end;//終点
 };
