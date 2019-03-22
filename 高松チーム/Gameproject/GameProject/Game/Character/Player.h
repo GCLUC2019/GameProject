@@ -123,7 +123,9 @@ public:
 	~SpecialEvent();
 	void Update();
 	void Draw();
-
+	CVector2D GetPos() {
+		return  CVector2D(900, 900);
+	}
 
 };
 
