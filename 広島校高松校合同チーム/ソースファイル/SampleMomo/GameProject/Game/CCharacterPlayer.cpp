@@ -30,8 +30,8 @@ CCharacterPlayer::CCharacterPlayer(CVector3D _pos) :CCharacter(eTaskIdPlayer, 0)
 	SetPosOld(_pos);
 
 	//‘Ì—Í‚Ìİ’è
-	m_hit_point = 10.0f;
-	m_hit_point_max = 10.0f;
+	m_hit_point = 15.0f;
+	m_hit_point_max = 15.0f;
 
 
 	//“–‚½‚è”»’è‚Ì—Dæ“x

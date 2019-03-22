@@ -1,4 +1,5 @@
 #include "Tutorial.h"
+#include "../GameProject/Game/Resource/Resource.h"
 #include "../Character/Player.h"
 #include "../Character/EnemyBase/Enemy/TutorialEnemy.h"
 #include "../Stage/ground.h"
@@ -8,8 +9,8 @@
 
 Tutorial::Tutorial() : Task(eGameTutorial)
 {
+	new TutorialResource();
 
-    TaskManager::GetInstance()->AddTask(new Resource());
 	TaskManager::GetInstance()->AddTask(new Stage01());
 	TaskManager::GetInstance()->AddTask(new Player());
 	TaskManager::GetInstance()->AddTask(new TutorialEnemy(CVector2D(800, 550)));
