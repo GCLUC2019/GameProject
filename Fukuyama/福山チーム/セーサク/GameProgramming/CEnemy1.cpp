@@ -15,7 +15,7 @@
 #define ATTACKINTERVAR_E 10
 #define CBULLET_LIFE 1
 
-#define EFFECT_COUNT 40
+#define EFFECT_COUNT 50
 #define DELETE_COUNT 210
 
 extern CPlayerTank*Tank;
@@ -37,15 +37,15 @@ void CEnemy1::Init(){
 	mAttackIntervar = ATTACKINTERVAR_E;
 	//CTank::Init();
 	SetVertex(-53.0f, 53.0f, -40.0f, 40.0f);
-	mBoxCollider.mSize.x = 40.0f;
-	mBoxCollider.mSize.y = 53.0f;
+	mBoxCollider.mSize.x = 20.0f;
+	mBoxCollider.mSize.y = 24.0f;
 	mBoxCollider.mpTask = this;
 
 	SetColor(1.0f, 1.0f, 1.0f, 1.0f);
 	mHead.SetColor(0.6f, 1.0f, 1.0f, 1.0f);
 	mCanon.SetColor(0.6f, 1.0f, 1.0f, 1.0f);
 	mCollider = new CCircleCollider();
-	mCollider->mRadius = 20.0f;
+	mCollider->mRadius = 25.0f;
 	mCollider->mpTask = this;
 	mpTarget = Tank;
 	CCollisionManager::Get()->Add(mCollider);
@@ -73,12 +73,17 @@ void CEnemy1::Update(){
 
 	if (AttackSide == 0){
 
-		if (EffectCount > 0){
+		if (EffectCount > 0 && EffectCount <= 36){
 			SetVertex(-48.0f, 48.0f, -55.0f, 55.0f);
 			CRectangle::SetTexture(&mTexImage, 147, 207, -69, -1);
 			EffectCount--;
 		}
-		if (EffectCount == 0){
+		if (EffectCount >= 37){
+			SetVertex(-53.0f, 53.0f, -40.0f, 40.0f);
+			CRectangle::SetTexture(&mTexImage, 139, 207, -175, -120);
+			EffectCount--;
+		}
+		if (EffectCount <= 10){
 			SetVertex(-53.0f, 53.0f, -40.0f, 40.0f);
 			CRectangle::SetTexture(&mTexImage, 139, 207, -175, -120);
 		}
@@ -90,7 +95,7 @@ void CEnemy1::Update(){
 			CRectangle::SetTexture(&mTexImage, 147, 207, -1, -69);
 			EffectCount--;
 		}
-		if (EffectCount == 0){
+		if (EffectCount <= 10){
 			SetVertex(-53.0f, 53.0f, -40.0f, 40.0f);
 			CRectangle::SetTexture(&mTexImage, 139, 207, -120, -175);
 		}
@@ -123,7 +128,7 @@ void CEnemy1::Update(){
 	if (mAttackIntervar < ATTACKINTERVAR_E){
 		mAttackIntervar--;
 	}
-	if (EffectCount>20){
+	if (EffectCount <= 15){
 		if (mHpBar.mHp >= 1){
 			if (mAttackIntervar <= 0){
 				if (mFireIntervar <= 0){
@@ -133,11 +138,11 @@ void CEnemy1::Update(){
 					bullet->mTaskTag = EENEMYBULLET;
 					bullet->mLife = CBULLET_LIFE;
 					if (dot2 < 0.0f){
-						bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, -24.0f);
+						bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, -25.0f);
 						bullet->mForward = bullet->mPosition - mCanon.mMatrix*CVector2(0.0f, -24.0f);
 					}
 					if (dot2 > 0.0f){
-						bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, 24.0f);
+						bullet->mPosition = mCanon.mMatrix*CVector2(0.0f, 25.0f);
 						bullet->mForward = bullet->mPosition - mCanon.mMatrix*CVector2(0.0f, 24.0f);
 					}
 					bullet->SetColor(mColor[0], mColor[0], mColor[0], mColor[0]);
@@ -162,7 +167,7 @@ void CEnemy1::Update(){
 	}
 	if (mHpBar.mHp <= 0){
 		SetVertex(-45.0f, 45.0f, -70.0f, 70.0f);
-		     
+		CRectangle::SetTexture(&mTexImage, 300, 359, -200, -100);
 		DeleteCount--;
 	}
 	if (DeleteCount <= 0){
@@ -177,14 +182,14 @@ void CEnemy1::OnCollision(CCollider*p){
 			p->SetTexture(&Texture, 0, 64, 64, 0);
 			p->mPosition = mPosition;
 			CTaskManager::Get()->Add(p);
-			mHpBar.mHp -= 25.0f;
+			mHpBar.mHp -= 20.0f;
 			if (mHpBar.mHp <= 0.0f){
 				CItem*Item = new CItem();   //¬ì
 				Item->mTaskTag = EITEM;
 				Item->mPosition = mPosition;
 				CTaskManager::Get()->Add(Item);
-			//	mEnabled = false;
-			//	CMain::mSceneTag = CScene::EWIN;
+				//	mEnabled = false;
+				//	CMain::mSceneTag = CScene::EWIN;
 			}
 		}
 		if (p->mpTask->mTaskTag == EPLAYERBULLET2){
@@ -202,6 +207,22 @@ void CEnemy1::OnCollision(CCollider*p){
 				//	CMain::mSceneTag = CScene::EWIN;
 			}
 		}
+		if (p->mpTask->mTaskTag == EPLAYERBULLET3){
+			CExplosion*p = new CExplosion();
+			p->SetTexture(&Texture, 0, 64, 64, 0);
+			p->mPosition = mPosition;
+			CTaskManager::Get()->Add(p);
+			mHpBar.mHp -= 5.0f;
+			if (mHpBar.mHp <= 0.0f){
+				CItem*Item = new CItem();   //¬ì
+				Item->mTaskTag = EITEM;
+				Item->mPosition = mPosition;
+				CTaskManager::Get()->Add(Item);
+				//	mEnabled = false;
+				//	CMain::mSceneTag = CScene::EWIN;
+			}
+		}
+
 		if (p->mpTask->mTaskTag == EPLAYERTANK){
 			//CExplosion*p = new CExplosion();
 			//p->SetTexture(&Texture, 0, 64, 64, 0);

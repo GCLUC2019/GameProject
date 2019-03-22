@@ -58,10 +58,10 @@ void CTank::PHeadRightTurn(){
 
 //’Ç‰Á Š˜“c
 void CTank::EnemyUp(){
-	mPosition.y += 0.7f;
+	mPosition.y += 1.0f;
 }
 void CTank::EnemyDown(){
-	mPosition.y -= 0.7f;
+	mPosition.y -= 1.0f;
 }
 void CTank::PForward(){
 	mPosition = mPosition + mPForward;

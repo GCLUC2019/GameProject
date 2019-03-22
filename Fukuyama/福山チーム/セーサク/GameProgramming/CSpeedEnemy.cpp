@@ -23,7 +23,7 @@ void CSpeedEnemy::Init(){
 	mHead.SetColor(1.0f, 0.0f, 0.0f, 1.0f);
 	mCanon.SetColor(0.8f, 0.0f, 0.0f, 1.0f);
 	mCollider = new CCircleCollider();
-	mCollider->mRadius = 20.0f;
+	mCollider->mRadius = 40.0f;
 	mCollider->mpTask = this;
 	mpTarget = Tank;
 	CCollisionManager::Get()->Add(mCollider);
@@ -96,10 +96,28 @@ void CSpeedEnemy::OnCollision(CCollider*p){
 			Item->mTaskTag = EITEM;
 			Item->mPosition = mPosition;
 			CTaskManager::Get()->Add(Item);
-			//	mEnabled = false;
+				mEnabled = false;
 			//	CMain::mSceneTag = CScene::EWIN;
 		}
 	}
+
+	if (p->mpTask->mTaskTag == EPLAYERBULLET2){
+		CExplosion*p = new CExplosion();
+		p->SetTexture(&Texture, 0, 64, 64, 0);
+		p->mPosition = mPosition;
+		CTaskManager::Get()->Add(p);
+		mHpBar.mHp -= 500.0f;
+
+		if (mHpBar.mHp <= 0.0f){
+			CItem*Item = new CItem();   //¬ì
+			Item->mTaskTag = EITEM;
+			Item->mPosition = mPosition;
+			CTaskManager::Get()->Add(Item);
+			mEnabled = false;
+			//	CMain::mSceneTag = CScene::EWIN;
+		}
+	}
+
 
 	//mPosition = mPosition + mCollider->mAdjust;
 

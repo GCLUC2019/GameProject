@@ -32,13 +32,17 @@ public:
 	CTexture mTexture;
 	static CTexture mTexImage;
 	static CTexture mTexImage2;
+	static CTexture mTexImage3;
 	static CTexture mPlayerface;
 	static CTexture mPlayerfaceD;
 	int mFireInterval;
-	int p_Jump;
+	float j_Prev;  //ジャンプ前の座標
+	float j_Temp;  //ジャンプ後の座標
+	float p_Jump;
 	int JumpCount;
 	int EffectCount;
 	int EffectCount2;
+	int EffectCount3;
 	int AttackSide;
 	CHpBar mHpBar;
 	CHpBar mSpBar;
