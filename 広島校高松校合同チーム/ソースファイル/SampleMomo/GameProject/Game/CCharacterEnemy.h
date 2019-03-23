@@ -1,27 +1,27 @@
-#pragma once
+ï»¿#pragma once
 #include "CCharacter.h"
 
 class CBar;
 
 #define ENEMY_SPEAR_FIND_LENGTH (3000.0f)
 #define ENEMY_SPEAR_ATTACK_FRAME (30.0)
-#define ENEMY_SPEAR_ATTACK_LENGTH CVector3D(150.0f,150.0f,75.0)
+#define ENEMY_SPEAR_ATTACK_LENGTH CVector3D(200.0f,150.0f,75.0)
 #define ENEMY_SPEAR_MOVE_END_LENGTH CVector3D(120.0f,150.0f,90.0)
 #define ENEMY_SPEAR_ATTACK_POWER (1.0)
 #define ENEMY_SPEAR_ATTACK_HIT_START_FRAME (15.0)
 #define ENEMY_SPEAR_ATTACK_HIT_END_FRAME (30.0)
 #define ENEMY_SPEAR_RECEIVE_DAMAGE_FRAME (50.0)
-#define ENEMY_SPEAR_SPACE_LENGTH CVector3D(200,0,50)
+#define ENEMY_SPEAR_SPACE_LENGTH CVector3D(50,0,50)
 
 #define ENEMY_AXE_FIND_LENGTH (3000.0f)
 #define ENEMY_AXE_ATTACK_FRAME (30.0)
-#define ENEMY_AXE_ATTACK_LENGTH CVector3D(150.0f,500.0f,75.0)
+#define ENEMY_AXE_ATTACK_LENGTH CVector3D(200.0f,500.0f,75.0)
 #define ENEMY_AXE_MOVE_END_LENGTH CVector3D(120.0f,500.0f,90.0)
 #define ENEMY_AXE_ATTACK_POWER (1.0)
 #define ENEMY_AXE_ATTACK_HIT_START_FRAME (15.0)
 #define ENEMY_AXE_ATTACK_HIT_END_FRAME (30.0)
 #define ENEMY_AXE_RECEIVE_DAMAGE_FRAME (50.0)
-#define ENEMY_AXE_SPACE_LENGTH CVector3D(200,0,50)
+#define ENEMY_AXE_SPACE_LENGTH CVector3D(50,0,50)
 
 
 #define ENEMY_GUN_FIND_LENGTH (3000.0f)
@@ -34,11 +34,14 @@ class CBar;
 #define ENEMY_GUN_RECEIVE_DAMAGE_FRAME (50.0)
 #define ENEMY_GUN_SPACE_LENGTH CVector3D(300,0,50)
 
+#define ENEMY_GUN_BULLET_DESTROY_LENGTH CVector3D(1000,50,50)
+
+#define ENEMY_BULLET_ATTACK_LENGTH CVector3D(15,15,15)
 
 #define ENEMY_KNOCK_BACK_FRAME (30.0)
 
 /*
-‰“‹——£UŒ‚‚ÍA“–‚½‚é‚Ì‚ªŠm’è‚µ‚½‚çŒ‚‚ÂƒAƒjƒ[ƒVƒ‡ƒ“‚ğÄ¶‚·‚éBi‚í‚©‚è‚â‚·‚³‚Ì‚½‚ß)
+é è·é›¢æ”»æ’ƒã¯ã€å½“ãŸã‚‹ã®ãŒç¢ºå®šã—ãŸã‚‰æ’ƒã¤ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å†ç”Ÿã™ã‚‹ã€‚ï¼ˆã‚ã‹ã‚Šã‚„ã™ã•ã®ãŸã‚)
 */
 
 enum {
@@ -58,11 +61,11 @@ enum {
 class CCharacterEnemy : public CCharacter {
 private:
 	int m_enemy_id;
-	CCharacter* m_target_p = nullptr;//ƒ^[ƒQƒbƒg ’Pƒ‚È˜bƒLƒƒƒ‰‚È‚ç‚Î‚¢‚¢‚Ì‚Å“¯m“¢‚¿‚àİ’èŸ‘æ‚Å‚Í‰Â”\‚©
+	CCharacter* m_target_p = nullptr;//ã‚¿ãƒ¼ã‚²ãƒƒãƒˆ å˜ç´”ãªè©±ã‚­ãƒ£ãƒ©ãªã‚‰ã°ã„ã„ã®ã§åŒå£«è¨ã¡ã‚‚è¨­å®šæ¬¡ç¬¬ã§ã¯å¯èƒ½ã‹
 	
 	bool m_is_moving = false;
 
-	//HPƒo[
+	//HPãƒãƒ¼
 	CBar* m_hit_point_bar_p = nullptr;
 	CImage * m_hp_frame_image_p = nullptr;
 
@@ -81,13 +84,13 @@ private:
 
 	bool m_is_hit_attack = false;
 
-	//‹——£‚ªİ’è’lˆÈ‰º‚È‚çƒ^[ƒQƒbƒg‚ÉŒü‚©‚Á‚ÄˆÚ“®ŠJn
+	//è·é›¢ãŒè¨­å®šå€¤ä»¥ä¸‹ãªã‚‰ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã«å‘ã‹ã£ã¦ç§»å‹•é–‹å§‹
 	float m_find_length;
 
-	//İ’è’lˆÈ‰º‚È‚ç~‚Ü‚é
+	//è¨­å®šå€¤ä»¥ä¸‹ãªã‚‰æ­¢ã¾ã‚‹
 	CVector3D m_move_end_length;
 
-	//‚±‚êˆÈã‹——£‚ª‹ß‚¢‚È‚ç—£‚ê‚é
+	//ã“ã‚Œä»¥ä¸Šè·é›¢ãŒè¿‘ã„ãªã‚‰é›¢ã‚Œã‚‹
 	CVector3D m_space_length;
 
 	bool m_is_receive_damage_now = false;
@@ -110,7 +113,7 @@ public:
 	
 	void ReceiveDamageNow();
 
-	void ReceiveKnockBack(CCharacter *_from, double _power);
+	void ReceiveKnockBack(CVector3D _from_pos, double _power);
 
 	void EnemyMoving();
 	void EnemyAttack();
@@ -122,5 +125,5 @@ public:
 };
 
 /*
-2019/03/17 ƒNƒ‰ƒX’è‹`A‹@”\À‘•B(ƒXƒPƒWƒ…[ƒ‹•Ï“®‚É‡‚í‚¹AV‹Kì¬‚µ‚½ˆ×AƒeƒXƒg”Å‚ÌCCharacterEnemy‚Æ‚Í•Ê‚Ì•¨)  by shingai
+2019/03/17 ã‚¯ãƒ©ã‚¹å®šç¾©ã€æ©Ÿèƒ½å®Ÿè£…ã€‚(ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ«å¤‰å‹•ã«åˆã‚ã›ã€æ–°è¦ä½œæˆã—ãŸç‚ºã€ãƒ†ã‚¹ãƒˆç‰ˆã®CCharacterEnemyã¨ã¯åˆ¥ã®ç‰©)  by shingai
 */

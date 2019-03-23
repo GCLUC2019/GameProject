@@ -1,10 +1,10 @@
-#pragma once
+﻿#pragma once
 #include "CCharacter.h"
 
 /*
-�W�����v��̒��n���ɍd���ǉ�
-����s���𒅒n����̂��܂��^�C�~���O�ōs���΍d�����L�����Z���ł���̂�
-��肭���Ό��͐����ɂ����͂�
+ジャンプ後の着地時に硬直追加
+回避行動を着地直後のうまいタイミングで行えば硬直をキャンセルできるので
+上手くやれば隙は生じにくいはず
 */
 
 
@@ -36,18 +36,18 @@
 #define PLAYER_GUN_ATTACK_HIT_FRAME_START (21)
 #define PLAYER_GUN_ATTACK_HIT_FRAME_END (22)
 
-//�\������̃t���[��(������U�����Ƃɂ����ق����悢)
+//予備動作のフレーム(これも攻撃ごとにしたほうがよい)
 #define PLAYER_ATTACK_RESERVE_ANIM_FRAME (15)
 
 
-//�U���̐ݒ�
+//攻撃の設定
 #define PLAYER_ATTACK_LENGTH CVector3D(200,100,200)
 #define PLAYER_ATTACK_POWER (1.0)
 
-#define PLAYER_SIDE_ATTACK_LENGTH CVector3D(150,100,250)
+#define PLAYER_SIDE_ATTACK_LENGTH CVector3D(160,100,250)
 #define PLAYER_SIDE_ATTACK_POWER (1.0)
 
-#define PLAYER_FINISH_ATTACK_LENGTH CVector3D(150,500,200)
+#define PLAYER_FINISH_ATTACK_LENGTH CVector3D(175,500,200)
 #define PLAYER_FINISH_ATTACK_POWER (1.0)
 
 #define PLAYER_SPEAR_ATTACK_LENGTH CVector3D(250,500,200)
@@ -58,18 +58,26 @@
 #define PLAYER_AXE_ATTACK_POWER (2.0)
 
 
+#define PLAYER_BULLET_ATTACK_LENGTH CVector3D(15,15,15)
+
+//弾が消える距離(実質的な飛距離になる)
+#define PLAYER_GUN_BULLET_DESTROY_LENGTH CVector3D(1000,50,50)
+
+//現在弾のシステムが実装されたためこの値は使われない
 #define PLAYER_GUN_ATTACK_LENGTH CVector3D(1200,200,50)
+
+
 #define PLAYER_GUN_ATTACK_POWER (3.0)
 
 
 
 
 
-//���n�d������
+//着地硬直時間
 //0 15
 #define PLAYER_LANDING_ACTION_FRAME (10)
 
-//���n�A�j����������������鎞��
+//着地アニメが自動解除される時間
 #define PLAYER_LANDING_ANIM_FRAME (20)
 
 
@@ -95,7 +103,7 @@
 
 #define PLAYER_EVASION_RESERVE_FRAME (PLAYER_EVASION_ANIM_DELAY * 2)
 
-//����̈ړ��������I�������̓��[�V�����L�����Z���\�Ƃ���B
+//回避の移動部分が終わった後はモーションキャンセル可能とする。
 
 #define PLAYER_DOWN_FRAME (60 * 2)
 
@@ -108,10 +116,10 @@
 
 #define KEEP_FINAL_ATTACK_TIMEOUT (54)
 
-//���n���[�V�����������ɔh�������ꍇ�`�����[�V�������J�b�g�\�ɂ���B
+//着地モーションから回避に派生した場合冒頭モーションをカット可能にする。
 
 /*
-���n���[�V�����̓W�����v�ȊO�ł̓L�����Z���s�ɂ���B
+着地モーションはジャンプ以外ではキャンセル不可にする。
 */
 
 enum {
@@ -132,7 +140,7 @@ enum {
 	ePlayerAnimIdFall,
 	ePlayerAnimIdDamage,
 	ePlayerAnimIdEvasion,
-	ePlayerAnimIdEvasionFast,//�ŏ��̂��Ⴊ�ރ��[�V�������J�b�g�����ȗ���
+	ePlayerAnimIdEvasionFast,//最初のしゃがむモーションをカットした省略版
 	ePlayerAnimIdEvasionReserve,
 	ePlayerAnimIdDown,
 	ePlayerAnimIdDowned,
@@ -168,7 +176,7 @@ enum {
 };
 
 
-//����enum�̎g�p�p�x�������Ԍ������B�������Ă������ق����������肵�����ł͂���
+//このenumの使用頻度もだいぶ減った。無くしていったほうがすっきりしそうではある
 enum {
 	ePlayerAnimIdle0,
 	ePlayerAnimIdle1,
@@ -248,22 +256,22 @@ private:
 	int m_attack_combo_count = 0;
 
 
-	//�U�����̕���̏��
+	//攻撃中の武器の情報
 	int m_attack_weapon_id = -1;
 
-	//����̏��
+	//武器の情報
 	int m_equip_weapon_id = -1;
 
-	//����ϋv�l
+	//武器耐久値
 	float m_equip_endurance = 0.0f;
 
-	//����U�����Ă��邩�̃X�e�[�g
+	//武器攻撃しているかのステート
 	bool m_is_weapon_attacking = false;
 
-	//�������U����
+	//遠距離攻撃か
 	bool m_is_range_attack = false;
 	
-	//�������U�������ɂ����ꂩ�̓G�ɓ��ĂĂ��邩(���̏ꍇ�͈ꔭ�ɂ�1�̂̓G�Ȃ̂ŁA�ђʂȂ�)
+	//遠距離攻撃を既にいずれかの敵に当てているか(今の場合は一発につき1体の敵なので、貫通なし)
 	bool m_is_hit_range_attack = false;
 
 	bool m_is_dashing = false;
@@ -275,11 +283,11 @@ private:
 	double m_landing_anim_count = 0;
 	double m_landing_action_count = 0;
 
-	//�U�������G���L�����Ă����|�C���^�z��
+	//攻撃した敵を記憶しておくポインタ配列
 	int m_memory_hit_attacked_enemy_num = 0;
 	Task* m_memory_hit_attacked_enemy_p[MEMORY_HIT_ATTACKED_ENEMY_MAX];
 
-	//�W�����v�U�����͉����s�����ł��Ȃ��̂ŁA���̂Ƃ��ɓG�ɂ͂��܂�Ƌl�݂ɂȂ�̂�
+	//ジャンプ攻撃中は何も行動ができないので、このときに敵にはさまると詰みになるので
 	double m_keep_final_attack_timeout = 0;
 
 	bool m_is_input_evasion_flip = 0;
@@ -317,7 +325,7 @@ private:
 	
 	
 
-	//�{�X�̓���U���Ȃǂɂ��d��
+	//ボスの特殊攻撃などによる硬直
 	bool m_is_freeze = false;
 	double m_freeze_count = 0.0;
 
@@ -367,14 +375,14 @@ public:
 
 	
 
-	//�V���ȓ��͂������ꍇ�A���炩���ߓ��͂��Ă��������̂�j������
+	//新たな入力をした場合、あらかじめ入力しておいたものを破棄する
 	void ClearEarlyInput();
 
 
 	void AdjAnim();
 
 	void ReceiveAttack();
-	void ReceiveKnockBack(CCharacter *_from, double _power);
+	void ReceiveKnockBack(CVector3D _from_pos, double _power);
 
 
 	void CheckEquipEndurance();
@@ -409,7 +417,7 @@ public:
 	static CCharacterPlayer* GetInstance();
 
 
-	//�`���[�g���A���p�t���O�p����
+	//チュートリアル用フラグ用入手
 	bool GetIsMoving() { return m_is_move; };
 	bool GetIsEvasion() { return m_is_evasion; };
 	bool GetIsJumping() { return m_is_jumping; };
@@ -420,14 +428,14 @@ public:
 };
 
 /*
-2019/03/06 �N���X��`�B��{�@�\�����B by shingai
-2019/03/11 �ړ��A�W�����v���A�X�N���[���@�\�������B by shingai
-�`2019/03/17 �F�X�ȋ@�\������ by shingai
-�U���͈ړ����͂Ȃ��ŃR���{�U���i3��ނ̋Z���J��o��)
+2019/03/06 クラス定義。基本機能実装。 by shingai
+2019/03/11 移動、ジャンプ等、スクロール機能等実装。 by shingai
+～2019/03/17 色々な機能を実装 by shingai
+攻撃は移動入力なしでコンボ攻撃（3種類の技を繰り出す)
 
-���ړ����͂ōU��1(X���ɔ��肪�L��)
-�c�ړ����͂ōU��2(Z���ɔ��肪�L��)
-�󒆂ɂ����Ԃœ��͂ōU��3(Y���ɔ��肪�L���A���n�܂ōU�����肪����)
-���J��o�����Ƃ��ł���B�i�R���{�������ɓ����U����A�����邱�Ƃ��\)
+横移動入力で攻撃1(X軸に判定が広い)
+縦移動入力で攻撃2(Z軸に判定が広い)
+空中にいる状態で入力で攻撃3(Y軸に判定が広く、着地まで攻撃判定がある)
+を繰り出すことができる。（コンボをせずに同じ攻撃を連続することも可能)
 
 */

@@ -1,9 +1,10 @@
-#include "CCharacterPlayer.h"
+ï»¿#include "CCharacterPlayer.h"
 #include "../Global.h"
 #include "CGameScene.h"
 #include "CAnimation.h"
 #include "CSubWeapon.h"
 #include "CDamageEffect.h"
+#include "CBullet.h"
 
 #define PLAYER_SPEED (3.0f)
 
@@ -32,23 +33,25 @@ CCharacterPlayer::CCharacterPlayer(CVector3D _pos) :CCharacter(eTaskIdPlayer, 0)
 	SetRads(75,150,10);
 	
 
-	//‰ŠúˆÊ’uİ’è
+	//åˆæœŸä½ç½®è¨­å®š
 	SetPos(_pos);
 	SetPosOld(_pos);
 
-	//‘Ì—Í‚Ìİ’è
+	//ä½“åŠ›ã®è¨­å®š
 	m_hit_point = 15.0f;
 	m_hit_point_max = 15.0f;
 
 
-	//“–‚½‚è”»’è‚Ì—Dæ“x
+	//å½“ãŸã‚Šåˆ¤å®šã®å„ªå…ˆåº¦
 	SetCollisionPriority(100);
 
 	SetIsCalcScrollBaseObject(true);
 
-	//ƒeƒXƒg—p
-	//m_equip_weapon_id = eWeaponAxe;
-	//m_equip_endurance = ENDURANCE_MAX;4
+	//ãƒ†ã‚¹ãƒˆç”¨
+	//m_equip_weapon_id = eWeaponGun;
+	//m_equip_endurance = ENDURANCE_MAX;
+
+	
 }
 
 CCharacterPlayer::~CCharacterPlayer()
@@ -120,7 +123,7 @@ void CCharacterPlayer::LoadAnimImage()
 	m_anim_p->SetAnimImage(ePlayerAnimDown0, GET_RESOURCE("Player_Down_Anim_0", CImage*));
 	m_anim_p->SetAnimImage(ePlayerAnimDown1, GET_RESOURCE("Player_Down_Anim_1", CImage*));
 
-	//ƒAƒjƒ[ƒVƒ‡ƒ“ƒf[ƒ^‚Ìİ’è
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‡ãƒ¼ã‚¿ã®è¨­å®š
 	int anim_delay_array[ANIMATION_DELAY_MAX];
 
 
@@ -251,7 +254,7 @@ void CCharacterPlayer::InputAttack()
 		m_keep_final_attack_timeout = KEEP_FINAL_ATTACK_TIMEOUT;
 		m_is_show_attack_effect = false;
 
-		//UŒ‚‚µ‚½“G‚Ìƒf[ƒ^‚ğ‰Šú‰»
+		//æ”»æ’ƒã—ãŸæ•µã®ãƒ‡ãƒ¼ã‚¿ã‚’åˆæœŸåŒ–
 		for (int i = 0; i < MEMORY_HIT_ATTACKED_ENEMY_MAX; i++) {
 			m_memory_hit_attacked_enemy_p[i] = nullptr;
 
@@ -260,7 +263,7 @@ void CCharacterPlayer::InputAttack()
 
 
 
-		//DEBUG_PRINT("UŒ‚\n");
+		//DEBUG_PRINT("æ”»æ’ƒ\n");
 		ClearEarlyInput();
 		m_is_attacking = true;
 		if (m_attack_reserve_count > 0.0) m_attack_combo_count++;
@@ -271,28 +274,28 @@ void CCharacterPlayer::InputAttack()
 		
 		
 
-		//‚à‚µˆÚ“®ƒL[‚ğ“ü—Í‚µ‚Ä‚é‚È‚ç”CˆÓ‚ÌUŒ‚‚ğo‚·
+		//ã‚‚ã—ç§»å‹•ã‚­ãƒ¼ã‚’å…¥åŠ›ã—ã¦ã‚‹ãªã‚‰ä»»æ„ã®æ”»æ’ƒã‚’å‡ºã™
 		if (CInput::GetState(0, CInput::eHold, CInput::eLeft) || (CInput::GetState(0, CInput::eHold, CInput::eRight))) {
 			m_attack_combo_count = 0;
-			//printf("’P”­UŒ‚ (ˆÚ“®ƒL[‰Ÿ‚µ‚È‚ª‚ç‚Å”CˆÓ‚ÌUŒ‚‚ªo‚¹‚é)\n");
+			//printf("å˜ç™ºæ”»æ’ƒ (ç§»å‹•ã‚­ãƒ¼æŠ¼ã—ãªãŒã‚‰ã§ä»»æ„ã®æ”»æ’ƒãŒå‡ºã›ã‚‹)\n");
 		}
 		if (CInput::GetState(0, CInput::eHold, CInput::eUp) || (CInput::GetState(0, CInput::eHold, CInput::eDown))) {
 			m_attack_combo_count = 1;
-			//printf("’P”­UŒ‚ (ˆÚ“®ƒL[‰Ÿ‚µ‚È‚ª‚ç‚Å”CˆÓ‚ÌUŒ‚‚ªo‚¹‚é)\n");
+			//printf("å˜ç™ºæ”»æ’ƒ (ç§»å‹•ã‚­ãƒ¼æŠ¼ã—ãªãŒã‚‰ã§ä»»æ„ã®æ”»æ’ƒãŒå‡ºã›ã‚‹)\n");
 		}
 
-		//‚à‚µ‹ó’†‚É‚¢‚é‚È‚çƒtƒBƒjƒbƒVƒ…ƒ‚[ƒVƒ‡ƒ“‚É‚·‚é(ƒWƒƒƒ“ƒvUŒ‚)
+		//ã‚‚ã—ç©ºä¸­ã«ã„ã‚‹ãªã‚‰ãƒ•ã‚£ãƒ‹ãƒƒã‚·ãƒ¥ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ã«ã™ã‚‹(ã‚¸ãƒ£ãƒ³ãƒ—æ”»æ’ƒ)
 		if (m_is_landing == false) m_attack_combo_count = 2;
 
 		//printf("m_attack_combo_count %d\n", m_attack_combo_count);
 
 
 
-		//•ŠíUŒ‚‚Ìê‡‚Ìˆ—
+		//æ­¦å™¨æ”»æ’ƒã®å ´åˆã®å‡¦ç†
 		m_is_weapon_attacking = false;
 
 		m_attack_weapon_id = m_equip_weapon_id;
-		//‚à‚µ’nã‚É‚¢‚Ä•Ší‚ğ‚à‚Á‚Ä‚¢‚é‚È‚ç•ŠíUŒ‚‚ğs‚¤
+		//ã‚‚ã—åœ°ä¸Šã«ã„ã¦æ­¦å™¨ã‚’ã‚‚ã£ã¦ã„ã‚‹ãªã‚‰æ­¦å™¨æ”»æ’ƒã‚’è¡Œã†
 		if (m_is_landing == true) {
 			switch (m_attack_weapon_id) {
 			case eWeaponSpear:
@@ -331,7 +334,7 @@ void CCharacterPlayer::InputAttack()
 			
 		}
 
-		//•ŠíUŒ‚‚µ‚È‚¢ê‡
+		//æ­¦å™¨æ”»æ’ƒã—ãªã„å ´åˆ
 		if (m_is_weapon_attacking == false) {
 			switch (m_attack_combo_count) {
 			case 0:
@@ -340,7 +343,7 @@ void CCharacterPlayer::InputAttack()
 				m_attacking_count = PLAYER_ATTACK_FRAME;
 				m_attack_power = PLAYER_ATTACK_POWER;
 				m_attack_length = PLAYER_ATTACK_LENGTH;
-				CGameScene::GetInstance()->AddGameSceneObject(new CDamageEffect(&m_pos, CVector2D(-80, -180), CVector2D(400, 400), 30, eEffectSlashY, m_is_flip));
+				CGameScene::GetInstance()->AddGameSceneObject(new CDamageEffect(&m_pos, CVector2D(-200, -180), CVector2D(400, 400), 30, eEffectSlashY,m_is_flip,CVector2D(120,0)));
 				break;
 			case 1:
 				m_attack_hit_frame_start = PLAYER_SIDE_ATTACK_HIT_FRAME_START;
@@ -348,7 +351,7 @@ void CCharacterPlayer::InputAttack()
 				m_attacking_count = PLAYER_SIDE_ATTACK_FRAME;
 				m_attack_power = PLAYER_SIDE_ATTACK_POWER;
 				m_attack_length = PLAYER_SIDE_ATTACK_LENGTH;
-				CGameScene::GetInstance()->AddGameSceneObject(new CDamageEffect(&m_pos, CVector2D(-160, -210), CVector2D(400, 400), 30, eEffectSlashX, m_is_flip));
+				CGameScene::GetInstance()->AddGameSceneObject(new CDamageEffect(&m_pos, CVector2D(-200, -210), CVector2D(400, 400), 30, eEffectSlashX, m_is_flip, CVector2D(0, 0)));
 				break;
 			case 2:
 				m_attack_hit_frame_start = PLAYER_FINISH_ATTACK_HIT_FRAME_START;
@@ -356,12 +359,12 @@ void CCharacterPlayer::InputAttack()
 				m_attacking_count = PLAYER_FINISH_ATTACK_FRAME;
 				m_attack_power = PLAYER_FINISH_ATTACK_POWER;
 				m_attack_length = PLAYER_FINISH_ATTACK_LENGTH;
-				//áŠ±ã‚Éã¸‚·‚é
+				//è‹¥å¹²ä¸Šã«ä¸Šæ˜‡ã™ã‚‹
 				m_vec.y = -20.0f;
 				break;
 			}
 
-			//ƒAƒjƒ[ƒVƒ‡ƒ“‚ğÄ¶
+			//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å†ç”Ÿ
 			switch (m_attack_combo_count) {
 			case 0:
 				m_anim_p->SetWillPlayAnim(ePlayerAnimIdAttack);
@@ -377,9 +380,12 @@ void CCharacterPlayer::InputAttack()
 
 		
 		if (m_is_range_attack == false) CSound::GetInstance()->GetSound("SE_Slash1")->Play();
-		else if (m_is_range_attack == true) CSound::GetInstance()->GetSound("SE_Shot1")->Play();
+		else if (m_is_range_attack == true) {
+			CGameScene::GetInstance()->AddGameSceneObject(new CBullet(GET_RESOURCE("Bullet", CImage*),eTaskIdEnemy,m_pos,CVector2D(50,-5),CVector2D(15,15), m_is_flip, m_attack_power, PLAYER_BULLET_ATTACK_LENGTH, PLAYER_GUN_BULLET_DESTROY_LENGTH,20.0, GET_RESOURCE("Shadow", CImage*), CVector2D(-20, 170), CVector2D(30,30)));
+			CSound::GetInstance()->GetSound("SE_Shot1")->Play();
+		}
 
-		//‡ŒvƒtƒŒ[ƒ€‹L˜^
+		//åˆè¨ˆãƒ•ãƒ¬ãƒ¼ãƒ è¨˜éŒ²
 		m_attack_total_frame = m_attacking_count;
 		
 	}
@@ -418,7 +424,7 @@ void CCharacterPlayer::CharacterUpdate()
 	/*
 	else if (m_anim_p->GetWillPlayAnim() == ePlayerAnimIdDamage && m_damage_anim_count > 0) {
 		m_anim_p->SetWillPlayAnim(ePlayerAnimIdDamage);
-		//DEBUG_PRINT("ƒ_ƒ[ƒWƒ‚[ƒVƒ‡ƒ“’† %d\n", m_damage_anim_count);
+		//DEBUG_PRINT("ãƒ€ãƒ¡ãƒ¼ã‚¸ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ä¸­ %d\n", m_damage_anim_count);
 	}
 	*/
 	else {
@@ -430,7 +436,7 @@ void CCharacterPlayer::CharacterUpdate()
 
 	/*
 	if (m_is_in_screen == true) {
-		//printf("ƒXƒNƒŠ[ƒ“‚Ì’†‚É‚¢‚é\n");
+		//printf("ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã®ä¸­ã«ã„ã‚‹\n");
 	}
 	*/
 
@@ -455,7 +461,7 @@ void CCharacterPlayer::CharacterUpdate()
 	InputEvasion();
 
 
-	//À•WˆÚ“®
+	//åº§æ¨™ç§»å‹•
 	
 	DoingDamage();
 	DoingLandingAction();
@@ -467,19 +473,11 @@ void CCharacterPlayer::CharacterUpdate()
 	Freezing();
 	DoingKnockBack();
 
-	//Gravity();
-	
-	//Move();
-	//MoveLimit();
-	
-	
 	AfterDamageInvincible();
 	Attacking();
 
-
 	CheckEquipEndurance();
 
-	//CalcScroll();
 	AdjAnim();
 }
 
@@ -598,7 +596,7 @@ void CCharacterPlayer::Landing()
 	if (m_is_knock_back == true) return;
 
 	if (m_is_landing == true & m_is_landing_old == false) {
-		//DEBUG_PRINT("’…’n\n");
+		//DEBUG_PRINT("ç€åœ°\n");
 		
 		if(m_is_landing == false) m_anim_p->SetWillPlayAnim(ePlayerAnimIdLandRight);
 		else m_anim_p->SetWillPlayAnim(ePlayerAnimIdLandLeft);
@@ -606,10 +604,10 @@ void CCharacterPlayer::Landing()
 		m_landing_action_count = PLAYER_LANDING_ACTION_FRAME;
 		m_landing_anim_count = PLAYER_LANDING_ANIM_FRAME;
 		m_is_landing_action_now = true;
-		//printf("’…’n\n");
+		//printf("ç€åœ°\n");
 
 		CSound::GetInstance()->GetSound("SE_Landing")->Play();
-		//‚à‚µd’¼ŠÔ‚ª0‚È‚çfalse‚É
+		//ã‚‚ã—ç¡¬ç›´æ™‚é–“ãŒ0ãªã‚‰falseã«
 		if (m_landing_action_count == 0.0) m_is_landing_action_now = false;
 	}
 }
@@ -618,7 +616,7 @@ void CCharacterPlayer::ReserveAttacking()
 {
 	if (m_attack_reserve_count > 0.0) {
 		m_attack_reserve_count -= CFPS::GetDeltaTime()  * GAME_BASE_FPS;
-		//—\”õ“®ì‚ğÄ¶
+		//äºˆå‚™å‹•ä½œã‚’å†ç”Ÿ
 		switch (m_attack_combo_count) {
 		case 0:
 			m_anim_p->SetWillPlayAnim(ePlayerAnimIdVerticalAttackReserve);
@@ -631,7 +629,7 @@ void CCharacterPlayer::ReserveAttacking()
 			break;
 		}
 
-		//•Ší‚Ìê‡‚Ì—\”õ“®ì
+		//æ­¦å™¨ã®å ´åˆã®äºˆå‚™å‹•ä½œ
 		if (m_is_weapon_attacking == true) {
 			switch (m_attack_weapon_id) {
 			case eWeaponSpear:
@@ -735,22 +733,22 @@ void CCharacterPlayer::BeginEvasion()
 
 	if (m_is_down == true) return;
 
-	//‰ñ”ğ’†‚©‚Â—\”õ“®ì’†‚Å‚È‚¢‚È‚ç‚È‚É‚à‚µ‚È‚¢
+	//å›é¿ä¸­ã‹ã¤äºˆå‚™å‹•ä½œä¸­ã§ãªã„ãªã‚‰ãªã«ã‚‚ã—ãªã„
 	if (m_is_evasion == true && m_evasion_reserve_count <= 0) return;
 
-	//‰ñ”ğ—\”õ“®ì’†‚¾‚ª“ü—Í‚µ‚½•ûŠp‚ªˆá‚¤ê‡‚È‚É‚à‚µ‚È‚¢
+	//å›é¿äºˆå‚™å‹•ä½œä¸­ã ãŒå…¥åŠ›ã—ãŸæ–¹è§’ãŒé•ã†å ´åˆãªã«ã‚‚ã—ãªã„
 	if (m_is_evasion == true && m_evasion_reserve_count > 0 && m_is_flip != m_is_input_evasion_flip) return;
 
 	if (m_is_freeze == true) return;
 
-	//‹ó’†‚É‚¢‚é‚È‚ç‰ñ”ğ‚µ‚È‚¢
+	//ç©ºä¸­ã«ã„ã‚‹ãªã‚‰å›é¿ã—ãªã„
 	if (m_is_landing == false) return;
-	//UŒ‚‚ğ‚â‚ß‚é
+	//æ”»æ’ƒã‚’ã‚„ã‚ã‚‹
 	m_is_attacking = false;
 	//m_is_jumping = false;
 
 
-	//DEBUG_PRINT("‰ñ”ğŠJn\n");
+	//DEBUG_PRINT("å›é¿é–‹å§‹\n");
 	m_evasion_dir_type = m_will_evasion_dir_type;
 	m_receive_input_evasion_time_count_l = 0;
 	m_receive_input_evasion_time_count_r = 0;
@@ -769,7 +767,7 @@ void CCharacterPlayer::BeginEvasion()
 
 
 
-	//‚à‚µ’…’nƒ‚[ƒVƒ‡ƒ“‚©‚ç”h¶‚µ‚½ê‡–`“ªƒ‚[ƒVƒ‡ƒ“‚Ì’Zk‚ğs‚¤
+	//ã‚‚ã—ç€åœ°ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ã‹ã‚‰æ´¾ç”Ÿã—ãŸå ´åˆå†’é ­ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ã®çŸ­ç¸®ã‚’è¡Œã†
 	if (m_anim_p->GetWillPlayAnim() == ePlayerAnimIdLand || m_anim_p->GetWillPlayAnim() == ePlayerAnimIdLandRight || m_anim_p->GetWillPlayAnim() == ePlayerAnimIdLandLeft) {
 		m_is_fast_evasion = true;
 		m_evasion_count = PLAYER_EVASION_FRAME - (PLAYER_EVASION_ANIM_DELAY * 2);
@@ -778,7 +776,7 @@ void CCharacterPlayer::BeginEvasion()
 	//DEBUG_PRINT("m_is_input_evasion false\n");
 
 
-	//ƒAƒjƒ[ƒVƒ‡ƒ“‚ğİ’è
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’è¨­å®š
 	if (m_is_fast_evasion == true) {
 		if(m_is_flip == false) m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionFastRight);
 		else m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionFastLeft);
@@ -790,7 +788,7 @@ void CCharacterPlayer::BeginEvasion()
 		//m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasion);
 	}
 
-	//–³“G”»’è
+	//ç„¡æ•µåˆ¤å®š
 	SetInvincible(true);
 }
 
@@ -800,7 +798,7 @@ void CCharacterPlayer::DoingEvasion()
 	if (m_is_evasion == false) return;
 
 
-	//—\”õ“®ì‚ªI‚í‚é‚ÆŠ®—¹‚·‚é(‰ñ”ğ—\”õ“®ì‚Í‰ñ”ğs“®‚È‚çƒLƒƒƒ“ƒZƒ‹‚Å‚«‚é)
+	//äºˆå‚™å‹•ä½œãŒçµ‚ã‚ã‚‹ã¨å®Œäº†ã™ã‚‹(å›é¿äºˆå‚™å‹•ä½œã¯å›é¿è¡Œå‹•ãªã‚‰ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã§ãã‚‹)
 
 	if (m_evasion_count > 0.0) {
 		m_evasion_count -= CFPS::GetDeltaTime()  * GAME_BASE_FPS;
@@ -812,7 +810,7 @@ void CCharacterPlayer::DoingEvasion()
 		else m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionReserveLeft);
 		m_evasion_reserve_count -= CFPS::GetDeltaTime() * GAME_BASE_FPS;
 
-		//–³“G”»’è
+		//ç„¡æ•µåˆ¤å®š
 		SetInvincible(true);
 
 		//printf("m_evasion_reserve_count %lf\n", CFPS::GetDeltaTime() * GAME_BASE_FPS);
@@ -820,7 +818,7 @@ void CCharacterPlayer::DoingEvasion()
 			m_evasion_reserve_count = 0;
 			m_is_evasion = false;
 			//SetInvincible(false);
-			//printf("‰ñ”ğ—\”õ“®ìI—¹\n");
+			//printf("å›é¿äºˆå‚™å‹•ä½œçµ‚äº†\n");
 		}
 	}
 	else if (m_evasion_count <= 0.0) {
@@ -834,15 +832,15 @@ void CCharacterPlayer::DoingEvasion()
 
 		//m_anim_p->SetWillPlayAnim(ePlayerAnimIdEvasionReserve);
 		m_evasion_reserve_count = PLAYER_EVASION_RESERVE_FRAME;
-		//printf("‰ñ”ğ—\”õ“®ìŠJn\n");
+		//printf("å›é¿äºˆå‚™å‹•ä½œé–‹å§‹\n");
 	}
 	else {
 		
-		//ˆÚ“®ŠJnƒtƒŒ[ƒ€‚É‚È‚Á‚½‚çˆÚ“®‚·‚é
+		//ç§»å‹•é–‹å§‹ãƒ•ãƒ¬ãƒ¼ãƒ ã«ãªã£ãŸã‚‰ç§»å‹•ã™ã‚‹
 		//if (m_evasion_count <= PLAYER_EVASION_FRAME - PLAYER_EVASION_MOVE_START_FRAME && m_evasion_count > PLAYER_EVASION_FRAME - PLAYER_EVASION_MOVE_END_FRAME) {
 		if (m_evasion_count <= PLAYER_EVASION_FRAME - PLAYER_EVASION_MOVE_START_FRAME) {
 			const double moving_vec = PLAYER_EVASION_MOVE_VEC;
-			//Œü‚«‚É‰‚¶‚ÄˆÚ“®
+			//å‘ãã«å¿œã˜ã¦ç§»å‹•
 
 			switch (m_evasion_dir_type) {
 			case eEvasionFlipRight:
@@ -860,9 +858,9 @@ void CCharacterPlayer::DoingEvasion()
 			}
 		}
 
-		//DEBUG_PRINT("‰ñ”ğ %d\n", m_evasion_count);
+		//DEBUG_PRINT("å›é¿ %d\n", m_evasion_count);
 		
-		//–³“G”»’è
+		//ç„¡æ•µåˆ¤å®š
 		SetInvincible(true);
 
 		if (m_is_fast_evasion == true) {
@@ -929,7 +927,7 @@ void CCharacterPlayer::Attacking()
 
 
 	bool is_keep_finish_attack = false;
-	//‹ó’†‚É‚¢‚Ä‚È‚¨‚©‚ÂƒtƒBƒjƒbƒVƒ…UŒ‚‚È‚ç’…’n‚·‚é‚Ü‚Å‚ÍUŒ‚”»’è‚ğŒp‘±‚³‚¹‚é
+	//ç©ºä¸­ã«ã„ã¦ãªãŠã‹ã¤ãƒ•ã‚£ãƒ‹ãƒƒã‚·ãƒ¥æ”»æ’ƒãªã‚‰ç€åœ°ã™ã‚‹ã¾ã§ã¯æ”»æ’ƒåˆ¤å®šã‚’ç¶™ç¶šã•ã›ã‚‹
 	if (m_is_landing == false && m_attack_combo_count == 2) {
 		m_keep_final_attack_timeout -= CFPS::GetDeltaTime() * GAME_BASE_FPS;
 		printf("time_out %lf\n", m_keep_final_attack_timeout);
@@ -980,15 +978,17 @@ void CCharacterPlayer::Attacking()
 		return;
 	}
 
-	//UŒ‚”»’è‚ªoŒ»‚·‚éƒtƒŒ[ƒ€‚Ìê‡‚Ìˆ—
+	//æ”»æ’ƒåˆ¤å®šãŒå‡ºç¾ã™ã‚‹ãƒ•ãƒ¬ãƒ¼ãƒ ã®å ´åˆã®å‡¦ç†
 	if (m_attacking_count <= m_attack_total_frame - m_attack_hit_frame_start && m_attacking_count > m_attack_total_frame - m_attack_hit_frame_end
 		|| is_keep_finish_attack == true && m_attacking_count <= m_attack_total_frame - m_attack_hit_frame_start) {
-		AttackingHitFrame();
+		
+		//ã‚‚ã—é è·é›¢æ”»æ’ƒã§ãªã„ãªã‚‰ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼å´ã§æ”»æ’ƒå‡¦ç†ã‚’ã™ã‚‹
+		if(m_is_range_attack == false) AttackingHitFrame();
 
-		//ƒtƒBƒjƒbƒVƒ…UŒ‚ƒGƒtƒFƒNƒg•\¦
+		//ãƒ•ã‚£ãƒ‹ãƒƒã‚·ãƒ¥æ”»æ’ƒã‚¨ãƒ•ã‚§ã‚¯ãƒˆè¡¨ç¤º
 		if (m_is_show_attack_effect == false && m_attack_combo_count == 2 && m_is_weapon_attacking == false) {
 			m_is_show_attack_effect = true;
-			CGameScene::GetInstance()->AddGameSceneObject(new CDamageEffect(&m_pos, CVector2D(-80, -180), CVector2D(400, 400), 30, eEffectSlashFinish, m_is_flip));
+			CGameScene::GetInstance()->AddGameSceneObject(new CDamageEffect(&m_pos, CVector2D(-200, -250), CVector2D(400, 400), 30, eEffectSlashFinish, m_is_flip,CVector2D(100,0)));
 		}
 	}
 	
@@ -1027,17 +1027,17 @@ void CCharacterPlayer::Attacking()
 }
 
 
-//UŒ‚”»’è‚ª”­¶‚·‚éƒtƒŒ[ƒ€‚Ìê‡ŒÄ‚Î‚ê‚é
+//æ”»æ’ƒåˆ¤å®šãŒç™ºç”Ÿã™ã‚‹ãƒ•ãƒ¬ãƒ¼ãƒ ã®å ´åˆå‘¼ã°ã‚Œã‚‹
 void CCharacterPlayer::AttackingHitFrame()
 {
-	//ƒ[ƒJƒ‹•Ï”’è‹`
-	register const CVector3D& player_pos = GetPos();//ƒvƒŒƒCƒ„[‚ÌˆÊ’u
+	//ãƒ­ãƒ¼ã‚«ãƒ«å¤‰æ•°å®šç¾©
+	register const CVector3D& player_pos = GetPos();//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ä½ç½®
 
-	register CVector3D length;//‹——£ƒxƒNƒgƒ‹(ˆÊ’u‚Ì·)‚ğŒvZ
-	register CVector3D length_abs;//â‘Î‹——£
-	const CVector3D& attack_length = m_attack_length; //UŒ‚”ÍˆÍ
+	register CVector3D length;//è·é›¢ãƒ™ã‚¯ãƒˆãƒ«(ä½ç½®ã®å·®)ã‚’è¨ˆç®—
+	register CVector3D length_abs;//çµ¶å¯¾è·é›¢
+	const CVector3D& attack_length = m_attack_length; //æ”»æ’ƒç¯„å›²
 	
-															   //¶¬‚³‚ê‚Ä‚¢‚é‘S‚Ä‚ÌƒGƒlƒ~[‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+															   //ç”Ÿæˆã•ã‚Œã¦ã„ã‚‹å…¨ã¦ã®ã‚¨ãƒãƒŸãƒ¼ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	register Task** enemy_array = TaskManager::GetInstance()->FindTaskArray(eTaskIdEnemy);
 
 	if (enemy_array != nullptr) {
@@ -1045,14 +1045,14 @@ void CCharacterPlayer::AttackingHitFrame()
 		register CCharacter* range_attack_enemy_p = nullptr;
 		register double range_target_enemy_length;
 
-		//ƒJƒEƒ“ƒ^
+		//ã‚«ã‚¦ãƒ³ã‚¿
 		register int i = 0;
 
-		//“G‚Ìƒ|ƒCƒ“ƒ^æ“¾—p
+		//æ•µã®ãƒã‚¤ãƒ³ã‚¿å–å¾—ç”¨
 		CCharacter* enemy_p = nullptr;
 
 		while (true) {
-			//printf("UŒ‚—pƒ‹[ƒv\n");
+			//printf("æ”»æ’ƒç”¨ãƒ«ãƒ¼ãƒ—\n");
 			if (enemy_array[i] == nullptr) {
 				break;
 			}
@@ -1063,24 +1063,24 @@ void CCharacterPlayer::AttackingHitFrame()
 				continue;
 			}
 
-			//ˆÊ’uŠÖŒW‚ğæ“¾
+			//ä½ç½®é–¢ä¿‚ã‚’å–å¾—
 
-			//“G‚Ìƒ|ƒWƒVƒ‡ƒ“‚ğæ“¾
-			register const CVector3D& enemy_pos = enemy_p->GetPos();//“G‚ÌˆÊ’u
+			//æ•µã®ãƒã‚¸ã‚·ãƒ§ãƒ³ã‚’å–å¾—
+			register const CVector3D& enemy_pos = enemy_p->GetPos();//æ•µã®ä½ç½®
 
 			const CVector3D& enemy_rads = enemy_p->GetRads();
 
 
-																	//‹——£ƒxƒNƒgƒ‹(ˆÊ’u‚Ì·)‚ğŒvZ
+																	//è·é›¢ãƒ™ã‚¯ãƒˆãƒ«(ä½ç½®ã®å·®)ã‚’è¨ˆç®—
 			length = enemy_pos - player_pos;
 
-			//â‘Î‹——£‚ğŒvZ
+			//çµ¶å¯¾è·é›¢ã‚’è¨ˆç®—
 			length_abs.x = abs(length.x);
 			length_abs.y = abs(length.y);
 			length_abs.z = abs(length.z);
 
-			//“G‚ª¶‘¤‚É‚¢‚Ä©•ª‚ª¶Œü‚«
-			//‚à‚µ‚­‚Í“G‚ª‰E‘¤‚É‚¢‚ÄA©•ª‚ª‰EŒü‚«‚È‚ç
+			//æ•µãŒå·¦å´ã«ã„ã¦è‡ªåˆ†ãŒå·¦å‘ã
+			//ã‚‚ã—ãã¯æ•µãŒå³å´ã«ã„ã¦ã€è‡ªåˆ†ãŒå³å‘ããªã‚‰
 			if (length.x <= 0.0f && m_is_flip == true
 				|| length.x >= 0.0f && m_is_flip == false) {
 				//DEBUG_PRINT("length.x %lf length.y %lf length.z %lf \n", length.x, length.y, length.z);
@@ -1088,12 +1088,12 @@ void CCharacterPlayer::AttackingHitFrame()
 
 
 				//printf("attack.x %lf attack.y %lf attack.z %lf\n", attack_length.x, attack_length.y, attack_length.z);
-				//UŒ‚”ÍˆÍ“à‚É“G‚ª‚¢‚é‚È‚ç
+				//æ”»æ’ƒç¯„å›²å†…ã«æ•µãŒã„ã‚‹ãªã‚‰
 				if (length_abs.x <= attack_length.x + enemy_rads.x&& length_abs.y <= attack_length.y + enemy_rads.y&&length_abs.z <= attack_length.z + enemy_rads.z) {
 
 
 					register bool is_aready_hit = false;
-					//“–‚½‚Á‚Ä‚¢‚é‚Ì‚ÅUŒ‚”»’è‚ªŠù‚É‚³‚ê‚Ä‚¢‚éƒIƒuƒWƒFƒNƒg‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN
+					//å½“ãŸã£ã¦ã„ã‚‹ã®ã§æ”»æ’ƒåˆ¤å®šãŒæ—¢ã«ã•ã‚Œã¦ã„ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‹ã©ã†ã‹ãƒã‚§ãƒƒã‚¯
 					for (int i = 0; i < m_memory_hit_attacked_enemy_num; i++) {
 						if (m_memory_hit_attacked_enemy_p[i] == enemy_p) {
 							is_aready_hit = true;
@@ -1102,14 +1102,14 @@ void CCharacterPlayer::AttackingHitFrame()
 					}
 
 
-					//‚Ü‚¾UŒ‚‚ğ“–‚½‚Á‚½ˆµ‚¢‚É‚È‚Á‚Ä‚È‚¢‚È‚çUŒ‚”»’è‚ğs‚¤
+					//ã¾ã æ”»æ’ƒã‚’å½“ãŸã£ãŸæ‰±ã„ã«ãªã£ã¦ãªã„ãªã‚‰æ”»æ’ƒåˆ¤å®šã‚’è¡Œã†
 					if (is_aready_hit == false && m_is_range_attack == false) {
-						//ƒqƒbƒgƒXƒgƒbƒv
+						//ãƒ’ãƒƒãƒˆã‚¹ãƒˆãƒƒãƒ—
 						SetStop(5);
 						enemy_p->SetStop(5);
 
-						//ƒmƒbƒNƒoƒbƒN‚ğ—^‚¦‚é
-						enemy_p->ReceiveKnockBack(this, 5.0);
+						//ãƒãƒƒã‚¯ãƒãƒƒã‚¯ã‚’ä¸ãˆã‚‹
+						enemy_p->ReceiveKnockBack(m_pos, 5.0);
 						*enemy_p->GetHitPointPointer() -= m_attack_power;
 						enemy_p->ReceiveAttack();
 						m_memory_hit_attacked_enemy_p[m_memory_hit_attacked_enemy_num++] = enemy_p;
@@ -1129,11 +1129,11 @@ void CCharacterPlayer::AttackingHitFrame()
 				}
 			}
 
-			//ƒCƒ“ƒNƒŠƒƒ“ƒg
+			//ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
 			i++;
 		}
 
-		//ƒ‹[ƒvI—¹Œã(ƒuƒƒbƒN‚ª‚í‚©‚è‚É‚­‚¢‚Ì‚ÅƒŠƒtƒ@ƒNƒ^ƒŠƒ“ƒO‚Ì—]’n‚ ‚è)
+		//ãƒ«ãƒ¼ãƒ—çµ‚äº†å¾Œ(ãƒ–ãƒ­ãƒƒã‚¯ãŒã‚ã‹ã‚Šã«ãã„ã®ã§ãƒªãƒ•ã‚¡ã‚¯ã‚¿ãƒªãƒ³ã‚°ã®ä½™åœ°ã‚ã‚Š)
 		if (m_is_range_attack == true && m_is_hit_range_attack == false) {
 			if (range_attack_enemy_p != nullptr) {
 				range_attack_enemy_p->ReceiveAttack();
@@ -1151,7 +1151,7 @@ void CCharacterPlayer::AttackingHitFrame()
 void CCharacterPlayer::Jumping()
 {
 	
-	//ƒWƒƒƒ“ƒv‚Åg‚í‚ê‚é‚Ì‚Íã¸‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚­‚ç‚¢‚©B
+	//ã‚¸ãƒ£ãƒ³ãƒ—ã§ä½¿ã‚ã‚Œã‚‹ã®ã¯ä¸Šæ˜‡æ™‚ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãã‚‰ã„ã‹ã€‚
 
 	if (m_is_jumping == true) {
 		if (m_is_landing == true || m_jumping_count <= 0) {
@@ -1182,9 +1182,9 @@ void CCharacterPlayer::Falling()
 void CCharacterPlayer::Move()
 {
 	//MovePos();
-	//m_pos_old = m_pos; //eƒNƒ‰ƒX‚Ås‚Á‚Ä‚é‚Ì‚Å•K—v‚È‚­‚È‚Á‚½‚Í‚¸ “®‚«‚Í•Ï‚í‚ç‚È‚¢‚Í‚¸‚¾‚ªcc
+	//m_pos_old = m_pos; //è¦ªã‚¯ãƒ©ã‚¹ã§è¡Œã£ã¦ã‚‹ã®ã§å¿…è¦ãªããªã£ãŸã¯ãš å‹•ãã¯å¤‰ã‚ã‚‰ãªã„ã¯ãšã ãŒâ€¦â€¦
 	//m_pos += m_vec;
-	//ˆÚ“®‹@”\‚ÍAeƒNƒ‰ƒX‚ÅˆÚ“®‚Í’è‹`‚³‚ê‚½
+	//ç§»å‹•æ©Ÿèƒ½ã¯ã€è¦ªã‚¯ãƒ©ã‚¹ã§ç§»å‹•ã¯å®šç¾©ã•ã‚ŒãŸ
 }
 
 void CCharacterPlayer::CharacterOutHitPoint()
@@ -1329,7 +1329,7 @@ void CCharacterPlayer::AdjAnim()
 /*
 void CCharacterPlayer::CalcScroll()
 {
-	//‰æ–Êã‚ÌÀ•W
+	//ç”»é¢ä¸Šã®åº§æ¨™
 
 	const CVector2D& scroll_pos = GetScroll();
 	CVector2D calc_scroll_pos = scroll_pos;
@@ -1337,10 +1337,10 @@ void CCharacterPlayer::CalcScroll()
 	register const float offset_x = - 120.0f;
 	register const float offset_y = -200.0f;
 
-	//ƒXƒNƒ[ƒ‹ŒÀŠE’l‚ğİ’è
+	//ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«é™ç•Œå€¤ã‚’è¨­å®š
 	register const double max_x = CGameScene::GetInstance()->GetGameSceneLimitPosMax().x - 1280.0f;
 
-	//ƒLƒƒƒ‰•`‰æˆÊ’u
+	//ã‚­ãƒ£ãƒ©æç”»ä½ç½®
 	register double draw_pos_y = m_pos.y + m_pos.z;
 
 
@@ -1376,9 +1376,9 @@ void CCharacterPlayer::CalcScroll()
 
 void CCharacterPlayer::ReceiveAttack()
 {
-	//ƒ_ƒEƒ“‚µ‚Ä‚¢‚é‚È‚ç‰½‚à‚µ‚È‚¢
+	//ãƒ€ã‚¦ãƒ³ã—ã¦ã„ã‚‹ãªã‚‰ä½•ã‚‚ã—ãªã„
 	if (m_is_down == true) return;
-	//–³“G‚È‚ç‚È‚É‚à‚µ‚È‚¢
+	//ç„¡æ•µãªã‚‰ãªã«ã‚‚ã—ãªã„
 	if (GetInvincible() == true) return;
 
 	m_anim_p->SetWillPlayAnim(ePlayerAnimIdDamage);
@@ -1388,26 +1388,26 @@ void CCharacterPlayer::ReceiveAttack()
 	
 	CGameScene::GetInstance()->AddGameSceneObject(new CDamageEffect(&m_pos, CVector2D(-200, -210), CVector2D(400, 400),30));
 
-	//–³“GŠÔ“_“”
+	//ç„¡æ•µæ™‚é–“ç‚¹ç¯
 	SetIsBlindDraw(true);
 	m_after_damage_invincible_count = PLAYER_AFTER_DAMAGE_INVINCIBLE;
 	CSound::GetInstance()->GetSound("SE_Damage")->Play();
 }
 
-void CCharacterPlayer::ReceiveKnockBack(CCharacter * _from, double _power)
+void CCharacterPlayer::ReceiveKnockBack(CVector3D _from_pos, double _power)
 {
 	if (m_is_knock_back == true) return;
 	if (m_is_invincible == true) return;
 	if (m_is_down == true) return;
 
-	SetKnockBack(_from,_power);
+	SetKnockBack(_from_pos,_power);
 
-	//“®ì’†’f
+	//å‹•ä½œä¸­æ–­
 	m_is_evasion = false;
 	m_is_attacking = false;
 	m_is_jumping = false;
 
-	//Y²‚Ì’l‚Í—˜—p‚³‚ê‚È‚¢“_‚É’ˆÓ
+	//Yè»¸ã®å€¤ã¯åˆ©ç”¨ã•ã‚Œãªã„ç‚¹ã«æ³¨æ„
 }
 
 void CCharacterPlayer::CheckEquipEndurance()

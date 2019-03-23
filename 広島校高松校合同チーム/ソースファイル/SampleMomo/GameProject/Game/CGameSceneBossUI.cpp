@@ -6,11 +6,11 @@
 
 CGameSceneBossUI::CGameSceneBossUI() :CObject(0, DP_UI)
 {
-	m_ui_pos = CVector2D(780, 470);
-	m_ui_size = CVector2D(500, 250);
+	m_ui_pos = CVector2D(880, -10);
+	m_ui_size = CVector2D(500, 250) * 0.8;
 
 	m_hp_frame_image_p = GET_RESOURCE("Boss_HP_Bar_Frame", CImage*);
-	m_hp_bar_p = new CBar(GET_RESOURCE("Boss_HP_Bar", CImage*), CCharacterBoss::GetInstance()->GetHitPointPointer(), CCharacterBoss::GetInstance()->GetHitPointMax(), m_ui_pos + CVector2D(11, 138.0), CVector2D(335,25));
+	m_hp_bar_p = new CBar(GET_RESOURCE("Boss_HP_Bar", CImage*), CCharacterBoss::GetInstance()->GetHitPointPointer(), CCharacterBoss::GetInstance()->GetHitPointMax(), m_ui_pos + CVector2D(9, 110.0), CVector2D(263,19));
 
 }
 

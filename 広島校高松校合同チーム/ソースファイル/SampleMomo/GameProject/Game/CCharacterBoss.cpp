@@ -255,7 +255,7 @@ void CCharacterBoss::Attack1()
 	if (float length = CheckAttackRange() <= ATTACK1_RANGE_BITE) {
 		m_is_attack = false;
 		m_player_p->HitPointGainValue(-ATTACK);
-		m_player_p->ReceiveKnockBack(this, 5.0);
+		m_player_p->ReceiveKnockBack(m_pos, 5.0);
 		m_player_p->ReceiveAttack();
 
 		//攻撃が当たると、カウント減少
@@ -313,7 +313,7 @@ void CCharacterBoss::SpecialAttack1()
 			m_anim_p->SetWillPlayAnim(eEnemyAnimBossIdRun);
 			if (m_pos.z > m_player_pos.z + RANGE_Z)m_vec.z -= RASH_Z_SPEED;
 			if (m_pos.z < m_player_pos.z - RANGE_Z)m_vec.z += RASH_Z_SPEED;
-			printf("attack:%f ex:%f\n", s_boss_mode.boss_attack, s_boss_mode.boss_rush);
+			//printf("attack:%f ex:%f\n", s_boss_mode.boss_attack, s_boss_mode.boss_rush);
 		}
 		else if (s_boss_mode.boss_rush > RASH_STEP2_TIME) {
 			m_ex_attack_state = eExRashStep3;
@@ -328,7 +328,7 @@ void CCharacterBoss::SpecialAttack1()
 			if (float length = CheckAttackRange() <= EX1_RANGE_RASH) {
 				m_is_attack = false;
 				m_player_p->HitPointGainValue(-RASH_ATTACK);
-				m_player_p->ReceiveKnockBack(this, 5.0);
+				m_player_p->ReceiveKnockBack(m_pos, 5.0);
 				m_player_p->ReceiveAttack();
 			}
 		}
@@ -461,26 +461,26 @@ void CCharacterBoss::DefalutSet()
 	*/
 }
 
-void CCharacterBoss::ReceiveKnockBack(CCharacter * _from, double _power)
+void CCharacterBoss::ReceiveKnockBack(CVector3D _from_pos, double _power)
 {
 	if (m_is_knock_back == true) return;
 	if (m_is_invincible == true) return;
 
-	SetKnockBack(_from, _power);
+	SetKnockBack(_from_pos, _power);
 }
 
 void CCharacterBoss::AdjAnim()
 {
 	switch (m_anim_p->GetWillPlayAnim()) {
 	case eEnemyAnimBossIdJump:
-		SetSize(500,750);
+		SetSize(400,650);
 		SetShadowSize(BOSS_SHADOW_SIZE);
-		SetDrawAdjPos(CVector2D(-20.0, -15.0 - 125 + 100));
+		SetDrawAdjPos(CVector2D(-20.0, -15.0 - 125 + 140));
 		break;
 	default:
-		SetSize(BOSS_SIZE);
+		SetSize(400, 400);
 		SetShadowSize(BOSS_SHADOW_SIZE);
-		SetDrawAdjPos(CVector2D(-20.0, -15.0 + 100));
+		SetDrawAdjPos(CVector2D(-20.0, -15.0 + 140));
 		break;
 	}
 }

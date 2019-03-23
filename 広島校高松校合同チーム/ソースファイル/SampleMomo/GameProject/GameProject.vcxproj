@@ -134,6 +134,7 @@
   <ItemGroup>
     <ClInclude Include="Game\CAnimation.h" />
     <ClInclude Include="Game\CBar.h" />
+    <ClInclude Include="Game\CBullet.h" />
     <ClInclude Include="Game\CCharacter.h" />
     <ClInclude Include="Game\CCharacterBoss.h" />
     <ClInclude Include="Game\CCharacterEnemy.h" />
@@ -167,6 +168,7 @@
   <ItemGroup>
     <ClCompile Include="Game\CAnimation.cpp" />
     <ClCompile Include="Game\CBar.cpp" />
+    <ClCompile Include="Game\CBullet.cpp" />
     <ClCompile Include="Game\CCharacter.cpp" />
     <ClCompile Include="Game\CCharacterBoss.cpp" />
     <ClCompile Include="Game\CCharacterEnemy.cpp" />
@@ -195,6 +197,9 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Task\Task.cpp" />
     <ClCompile Include="Task\TaskManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -14,7 +14,7 @@
 #include "CStorySceneClear.h"
 #include "CGameSceneWave.h"
 #include "CGameSceneBossUI.h"
-
+#include "CSubWeapon.h"
 
 
 static CGameScene* s_instance_p = nullptr;
@@ -196,6 +196,9 @@ void CGameScene::SetupScene()
 		*/
 		m_next_scene = eStage1Boss;
 		m_next_scene_pos = 1280 * 6 - 100;
+
+		//テスト用銃
+		//AddGameSceneObject(new CSubWeaponItem(CVector3D(300,-100,500),eWeaponGun));
 		break;
 	case eStage1Boss:
 		CSound::GetInstance()->StopAll();

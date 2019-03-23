@@ -116,8 +116,8 @@ public:
 	virtual void ReceiveAttack();
 	void DoingKnockBack();
 
-	virtual void ReceiveKnockBack(CCharacter *_from, double _power);
-	void SetKnockBack(CCharacter *_from, double _power);
+	virtual void ReceiveKnockBack(CVector3D _from_pos, double _power);
+	void SetKnockBack(CVector3D _from_pos, double _power);
 
 	void SetFromWave(CGameSceneWave* _wave) { m_from_wave_p = _wave; };
 	void SetCharacterWaveId(int _id) { m_wave_character_id = _id; };

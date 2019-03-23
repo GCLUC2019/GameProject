@@ -146,17 +146,16 @@ void CCharacter::DoingKnockBack()
 	}
 }
 
-void CCharacter::ReceiveKnockBack(CCharacter * _from, double _power)
+void CCharacter::ReceiveKnockBack(CVector3D _from_pos, double _power)
 {
 }
 
-void CCharacter::SetKnockBack(CCharacter * _from, double _power)
+void CCharacter::SetKnockBack(CVector3D _from_pos, double _power)
 {
 	//ノックバック
 	m_is_knock_back = true;
 	m_knock_back_count = m_knock_back_frame;
-	const CVector3D& from_pos = _from->GetPos();
-	CVector3D vec = from_pos - m_pos;
+	CVector3D vec = _from_pos - m_pos;
 	m_knock_back_vec = vec.GetNormalize() * -1.0 * _power;
 }
 

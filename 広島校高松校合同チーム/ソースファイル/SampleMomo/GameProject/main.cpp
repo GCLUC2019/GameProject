@@ -1,4 +1,4 @@
-#ifndef _USE_MATH_DEFINES
+Ôªø#ifndef _USE_MATH_DEFINES
 #define _USE_MATH_DEFINES
 #endif
 
@@ -14,43 +14,43 @@
 #include "Game/CSwitchScreen.h"
 
 //--------------------------------------------
-//ÉOÉçÅ[ÉoÉãïœêîóÃàÊ
+//„Ç∞„É≠„Éº„Éê„É´Â§âÊï∞È†òÂüü
 //--------------------------------------------
 
 void MainLoop(void) {
 
 	//--------------------------------------------------------------
-	//ÉQÅ[ÉÄíÜÇÃìÆÇ´ÇÕÇ±Ç±Ç…èëÇ≠
-	//ÉQÅ[ÉÄíÜÇÕÇ±ÇÃä÷êî_Ç1ïbä‘Ç…60âÒåƒÇ—èoÇµÇƒÇ¢ÇÈ
+	//„Ç≤„Éº„É†‰∏≠„ÅÆÂãï„Åç„ÅØ„Åì„Åì„Å´Êõ∏„Åè
+	//„Ç≤„Éº„É†‰∏≠„ÅØ„Åì„ÅÆÈñ¢Êï∞_„Çí1ÁßíÈñì„Å´60ÂõûÂëº„Å≥Âá∫„Åó„Å¶„ÅÑ„Çã
 	//--------------------------------------------------------------
 
 	CSwitchScreen::InputSwitchScreen();
 
-	//çÌèúÉtÉâÉOämîF
+	//ÂâäÈô§„Éï„É©„Ç∞Á¢∫Ë™ç
 	TaskManager::GetInstance()->CheckDeleteAll();
 	
-	//çXêV(êÊÇ…åƒÇŒÇÍÇÈÇ‡ÇÃ)
+	//Êõ¥Êñ∞(ÂÖà„Å´Âëº„Å∞„Çå„Çã„ÇÇ„ÅÆ)
 	TaskManager::GetInstance()->BeforeUpdateAll();
 
-	//çXêV
+	//Êõ¥Êñ∞
 	TaskManager::GetInstance()->UpdateAll();
 
-	//çXêV(å„Ç©ÇÁåƒÇŒÇÍÇÈÇ‡ÇÃ)
+	//Êõ¥Êñ∞(Âæå„Åã„ÇâÂëº„Å∞„Çå„Çã„ÇÇ„ÅÆ)
 	TaskManager::GetInstance()->AfterUpdateAll();
 
-	//ìñÇΩÇËîªíËëOçXêV
+	//ÂΩì„Åü„ÇäÂà§ÂÆöÂâçÊõ¥Êñ∞
 	TaskManager::GetInstance()->BeforeCollisionAll();
 
-	//îªíËèáÉ\Å[Ég
+	//Âà§ÂÆöÈ†Ü„ÇΩ„Éº„Éà
 	TaskManager::GetInstance()->Sort(eSortCollisionPriority);
 	
-	//ìñÇΩÇËîªíËÉ`ÉFÉbÉN
+	//ÂΩì„Åü„ÇäÂà§ÂÆö„ÉÅ„Çß„ÉÉ„ÇØ
 	TaskManager::GetInstance()->CollisionAll();
 
-	//ï`âÊèáÉ\Å[Ég
+	//ÊèèÁîªÈ†Ü„ÇΩ„Éº„Éà
 	TaskManager::GetInstance()->Sort(eSortDrawPriority);
 
-	//ï`âÊ
+	//ÊèèÁîª
 	TaskManager::GetInstance()->DrawAll();
 }
 void Init(void)
@@ -59,18 +59,18 @@ void Init(void)
 
 	glEnable(GL_DEPTH_TEST);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_BLEND);//ÉuÉåÉìÉhÇÃóLå¯âª
+	glEnable(GL_BLEND);//„Éñ„É¨„É≥„Éâ„ÅÆÊúâÂäπÂåñ
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 
 
 	glEnable(GL_ALPHA_TEST);
 
-	//ÉtÉåÅ[ÉÄÉåÅ[Égê›íË
+	//„Éï„É¨„Éº„É†„É¨„Éº„ÉàË®≠ÂÆö
 	CFPS::SetFPS(FPS);
-	//ÉtÉåÅ[ÉÄêßå‰èâä˙âª
+	//„Éï„É¨„Éº„É†Âà∂Âæ°ÂàùÊúüÂåñ
 	CFPS::Init();
-	//É{É^ÉìÇÃê›íË
+	//„Éú„Çø„É≥„ÅÆË®≠ÂÆö
 	CInput::Init();
 	CInput::Init();
 	CInput::SetButton(0, CInput::eButton1, VK_SPACE);
@@ -97,8 +97,8 @@ void Init(void)
 	CSound::GetInstance();
 
 	//-----------------------------------------------------
-	//èâä˙âªÇÃñΩóﬂÇèëÇ≠
-	//ÉQÅ[ÉÄãNìÆéûÇ…àÍìxÇæÇØåƒÇŒÇÍÇÈ
+	//ÂàùÊúüÂåñ„ÅÆÂëΩ‰ª§„ÇíÊõ∏„Åè
+	//„Ç≤„Éº„É†Ëµ∑ÂãïÊôÇ„Å´‰∏ÄÂ∫¶„Å†„ÅëÂëº„Å∞„Çå„Çã
 	//-----------------------------------------------------
 	
 	CLoadResorce::GetInstance()->LoadResorce();
@@ -141,7 +141,7 @@ static void error_callback(int error, const char* description)
 }
 
 int __main(int* argcp, char** argv) {
-	// ÉÅÉÇÉäÉäÅ[ÉNåüèo
+	// „É°„É¢„É™„É™„Éº„ÇØÊ§úÂá∫
 	//	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF | _CRTDBG_CHECK_ALWAYS_DF);
 	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
@@ -149,7 +149,7 @@ int __main(int* argcp, char** argv) {
 	glfwSetErrorCallback(error_callback);
 	if (!glfwInit()) return -1;
 
-	GL::window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Simple", nullptr, nullptr);
+	GL::window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Momotarou", nullptr, nullptr);
 	glfwGetWindowSize(GL::window, &GL::window_width, &GL::window_height);
 	glfwGetWindowPos(GL::window, &GL::window_x, &GL::window_y);
 
@@ -198,7 +198,9 @@ int __main(int* argcp, char** argv) {
 		CFPS::Wait();
 
 		char title[32];
-		sprintf_s(title, "sample fps:%d dt:%.3f", CFPS::GetFPS(), CFPS::GetDeltaTime());
+		//sprintf_s(title, "sample fps:%d dt:%.3f", CFPS::GetFPS(), CFPS::GetDeltaTime());
+		sprintf_s(title, "Momotarou");
+		//sprintf_s(title, "Ê°ÉÂ§™ÈÉé");
 		glfwSetWindowTitle(GL::window, title);
 
 		glfwPollEvents();

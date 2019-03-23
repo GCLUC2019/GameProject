@@ -35,7 +35,7 @@ void CBar::Draw()
 {
 	float now_bar_size = m_size.x * m_mult_value;
 	m_bar_img->SetSize(CVector2D(now_bar_size,m_size.y));
-	m_bar_img->SetRect(0, now_bar_size, now_bar_size, now_bar_size);
+	m_bar_img->SetRect(0, 0, now_bar_size, m_size.y);
 
 	m_bar_img->SetColor(2.55f,2.55f,2.55f,2.55f);
 

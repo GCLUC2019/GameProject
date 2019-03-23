@@ -10,6 +10,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameProject", "GameProject\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GLLibrary", "GLLibrary\GLLibrary.vcxproj", "{A40DA46F-E8C8-4D25-855B-90E024BF9DB4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{24F408A9-834B-41D3-83BB-17864A78CFFC}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64

@@ -9,7 +9,6 @@
 #define DEF_SAHDOW_POS CVector2D(-30.0, -90.0);
 
 //ボスのサイズ
-#define BOSS_SIZE CVector2D(500,500)
 #define BOSS_SHADOW_SIZE CVector2D(300, 50)
 
 //ボスのHP
@@ -199,7 +198,7 @@ public:
 	//初期化
 	void DefalutSet();
 
-	void ReceiveKnockBack(CCharacter *_from, double _power);
+	void ReceiveKnockBack(CVector3D _from_pos, double _power);
 
 	void AdjAnim();
 
