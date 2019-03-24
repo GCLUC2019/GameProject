@@ -7,7 +7,7 @@
 #include "CCollider.h"
 #include "CStdafx.h"
 
-class CItem :public CRectangle, Task{
+class CItem :public CRectangle{
 public:
 	static CItem *spInstance;
 	int mType;
