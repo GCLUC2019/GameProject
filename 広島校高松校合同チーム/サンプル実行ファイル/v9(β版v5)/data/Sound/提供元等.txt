@@ -1,0 +1,21 @@
+
+//BGM
+//表記不要なもの
+ファイル名:boss_bgm 曲名:～ペンギンの長～ 用途:ボス戦BGM  URL: https://dova-s.jp/bgm/play10064.html 作者:Sparrow Tune
+ファイル名:stage_clear_bgm 曲名:Like A Dog 用途:ステージクリアイベントBGM  URL: https://dova-s.jp/bgm/play10678.html 作者:thaiK
+ファイル名:intro_story 曲名Good Morning Sky 用途:ストーリーイントロBGM  URL: https://dova-s.jp/bgm/play1800.html 作者:ISAo.
+ファイル名:title_bgm 曲名Sunrise 用途:タイトルBGM  URL: https://dova-s.jp/bgm/play1561.html 作者:かずち
+ファイル名:stage_clear_screen 曲名楽しく軽快に 用途:ステージクリアスクリーンBG<  URL: https://dova-s.jp/bgm/play2886.html 作者:yuki
+
+
+
+//SE
+slash1 剣の素振り1 効果音ラボ
+shot1 銃の音1 効果音ラボ
+cursor カーソル移動10 効果音ラボ
+decision 決定、ボタン押下5 効果音ラボ
+jump ジャンプ 効果音ラボ
+landing 着地 効果音ラボ
+down バタンと倒れる 効果音ラボ
+take ぷよん 効果音ラボ
+damage 小パンチ 効果音ラボ
