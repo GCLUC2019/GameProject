@@ -116,6 +116,7 @@ private:
 	bool m_anim_flag;//アニメーションフラグ
 	bool m_move_flag;//移動フラグ
 	bool m_idle_flag;
+	bool a = true;
 
 protected:
 
@@ -163,12 +164,12 @@ private:
 	int m_cnt;//エフェクト用に使ってます
 	int m_state;
 	int m_idle_cnt;//待機状態でいる時間
+	int m_shadow_size;
 
 	float m_ang;
 	float m_rot;//円周率
 	float m_rot2;//円周率
 	float m_r;  //半径
-	int m_shadow_size;
 	float m_shadow_y;//影のy座標
 	float m_shadow_x;
 
@@ -208,6 +209,8 @@ private:
 	};
 	CVector2D m_player_pos; //攻撃するときに使うプレイヤーの座標を格納する
 	CImage m_shadow;//影
+	CAnimImage m_img2;
+	CImage m_tail_img;
 
 	int m_state;
 	int m_anim_cnt;
@@ -215,6 +218,7 @@ private:
 
 	bool m_attack_flag;
 	bool m_idle_flag;
+
 
 	float m_shadow_y;//影のy座標
 	float m_shadow_x;
