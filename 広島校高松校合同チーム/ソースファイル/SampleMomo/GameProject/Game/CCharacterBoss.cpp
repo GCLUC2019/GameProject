@@ -1,4 +1,4 @@
-#include "CCharacterBoss.h"
+ï»¿#include "CCharacterBoss.h"
 #include "CCharacterPlayer.h"
 #include "CAnimation.h"
 #include "CGameScene.h"
@@ -12,7 +12,7 @@ CCharacterBoss::CCharacterBoss():CCharacter(eTaskIdEnemy,0)
 	//m_player_p  = dynamic_cast<CCharacterPlayer*>(TaskManager::GetInstance()->FindTask(eTaskIdPlayer));
 	m_player_p = CCharacterPlayer::GetInstance();
 
-	//Šeƒpƒ‰ƒ[ƒ^‚ğ‰Šú‰»
+	//å„ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’åˆæœŸåŒ–
 	DefalutSet();
 
 	m_knock_back_count = BOSS_KNOCK_BACK_FRAME;
@@ -31,7 +31,7 @@ void CCharacterBoss::CharacterUpdate()
 		DoingKnockBack();
 		return;
 	}
-
+	printf("x%f\n", m_pos.x);
 	m_player_pos = m_player_p->GetPos();
 	
 	ChangeFlip();
@@ -60,17 +60,17 @@ void CCharacterBoss::LoadAnimImage()
 
 void CCharacterBoss::ChangeFlip()
 {
-	//ƒvƒŒƒCƒ„[‚ª‚¢‚é•û‚ğŒü‚­
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒã„ã‚‹æ–¹ã‚’å‘ã
 	if (m_player_pos.x > m_pos.x + RANGE)
 		m_is_flip = false;
-	//•KE‹Z”­“®‚Í’Ê‚è‰ß‚¬‚Ä‚àU‚èŒü‚©‚È‚¢
+	//å¿…æ®ºæŠ€ç™ºå‹•æ™‚ã¯é€šã‚Šéãã¦ã‚‚æŒ¯ã‚Šå‘ã‹ãªã„
 	if (m_player_pos.x < m_pos.x - RANGE && m_ex_attack_state != eExRashStep3)
 		m_is_flip = true;
 }
 
 void CCharacterBoss::ModeCount()
 {
-	//Šeó‘Ô‚ª‘±‚¯‚¢‚Ä‚¢‚éŠÔ‚ğ‹L˜^‚·‚é
+	//å„çŠ¶æ…‹ãŒç¶šã‘ã„ã¦ã„ã‚‹æ™‚é–“ã‚’è¨˜éŒ²ã™ã‚‹
 	if (m_boss_state == eEnemyBossStateIdle) {
 		s_boss_mode.boss_idle += CFPS::GetDeltaTime() * GAME_BASE_FPS;
 	}
@@ -98,7 +98,7 @@ void CCharacterBoss::ModeCount()
 
 void CCharacterBoss::ChangeDist()
 {
-	//UŒ‚‚ğŠJn‚·‚é‹——£‚Ì•ÏX
+	//æ”»æ’ƒã‚’é–‹å§‹ã™ã‚‹è·é›¢ã®å¤‰æ›´
 	if (m_boss_state == eEnemyBossStateWalk)
 		m_just_dist = NEXT_JUST_DIST2;
 	else if (m_boss_state == eEnemyBossStateRun)
@@ -107,9 +107,9 @@ void CCharacterBoss::ChangeDist()
 
 void CCharacterBoss::ChangeState()
 {
-	//Œo‰ß‚µ‚½ŠÔ‚É‚æ‚Á‚ÄA“®ì‚Ìó‘Ô‚ğ•Ï‚¦‚é
+	//çµŒéã—ãŸæ™‚é–“ã«ã‚ˆã£ã¦ã€å‹•ä½œã®çŠ¶æ…‹ã‚’å¤‰ãˆã‚‹
 	if (s_boss_mode.boss_idle >= IDLE_LIMIT) {
-		if (abs(m_player_pos.x - m_pos.x) >= PLAYER_DISTQFAR)
+		if (abs(m_player_pos.x - m_pos.x) >= PLAYER_DISTï¼¿FAR)
 			m_boss_state = eEnemyBossStateRun;
 		else
 			m_boss_state = eEnemyBossStateWalk;
@@ -139,7 +139,7 @@ void CCharacterBoss::ChangeState()
 		s_boss_mode.boss_damage = 0;
 	}
 
-	if (m_ex_count == 5) {
+	if (m_ex_count == 8) {
 		m_ex_state = eEnemyBossStateRush;
 		m_ex_count = 0;
 	}
@@ -153,26 +153,26 @@ void CCharacterBoss::ChangeState()
 
 void CCharacterBoss::ChengeStateIdleOrAway()
 {
-	//UŒ‚‚ª“–‚½‚é‚ÆA“¦‚°ó‘Ô‚É‘JˆÚ
+	//æ”»æ’ƒãŒå½“ãŸã‚‹ã¨ã€é€ƒã’çŠ¶æ…‹ã«é·ç§»
 	if (m_is_hit == true)m_boss_state = eEnemyBossStateAway;
-	//“–‚½‚ç‚È‚©‚Á‚½‚çA‘Ò‹@ó‘Ô‚É–ß‚é
+	//å½“ãŸã‚‰ãªã‹ã£ãŸã‚‰ã€å¾…æ©ŸçŠ¶æ…‹ã«æˆ»ã‚‹
 	else if (m_is_hit == false) m_boss_state = eEnemyBossStateIdle;
 }
 
 void CCharacterBoss::ChangeAttackState(int _state, int attack_time)
 {
-	//UŒ‚ƒAƒjƒ[ƒVƒ‡ƒ“‚ÆAUŒ‚ƒAƒjƒ[ƒVƒ‡ƒ“‚ªŠ®—¹‚·‚éŠÔ‚ğ•ÏX‚³‚¹‚é
+	//æ”»æ’ƒã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã¨ã€æ”»æ’ƒã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãŒå®Œäº†ã™ã‚‹æ™‚é–“ã‚’å¤‰æ›´ã•ã›ã‚‹
 	m_anim_p->SetWillPlayAnim(_state);
 	m_attack_complete = attack_time;
 }
 
 void CCharacterBoss::Idle()
 {
-	//‘Ò‹@ó‘ÔF‚»‚Ìê‚Å“®‚©‚È‚¢
+	//å¾…æ©ŸçŠ¶æ…‹ï¼šãã®å ´ã§å‹•ã‹ãªã„
 	if (m_boss_state != eEnemyBossStateIdle) {
 		return;
 	}
-		
+	
 	m_anim_p->SetWillPlayAnim(eEnemyAnimBossIdIdle);
 	
 	m_vec.x = 0;
@@ -184,7 +184,7 @@ void CCharacterBoss::Idle()
 
 void CCharacterBoss::Run()
 {
-	//‘–‚èó‘ÔF‘–‚Á‚ÄƒvƒŒƒCƒ„[‚É‹ß‚Ã‚­
+	//èµ°ã‚ŠçŠ¶æ…‹ï¼šèµ°ã£ã¦ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«è¿‘ã¥ã
 	if (m_boss_state != eEnemyBossStateRun) {
 		return;
 	}
@@ -195,7 +195,7 @@ void CCharacterBoss::Run()
 
 void CCharacterBoss::Walk()
 {
-	//•àsó‘ÔG•à‚¢‚ÄƒvƒŒƒCƒ„[‚É‹ß‚Ã‚­
+	//æ­©è¡ŒçŠ¶æ…‹ï¼›æ­©ã„ã¦ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«è¿‘ã¥ã
 	if (m_boss_state != eEnemyBossStateWalk) {
 		return;
 	}
@@ -206,12 +206,12 @@ void CCharacterBoss::Walk()
 
 void CCharacterBoss::Away()
 {
-	//“¦‚°ó‘ÔFUŒ‚‚ğ“–‚Ä‚é‚Æ‚±‚Ìó‘Ô‚É‘JˆÚ
-	//ƒ{ƒX‚ÌŒã•û‚É’µ‚Ô
+	//é€ƒã’çŠ¶æ…‹ï¼šæ”»æ’ƒã‚’å½“ã¦ã‚‹ã¨ã“ã®çŠ¶æ…‹ã«é·ç§»
+	//ãƒœã‚¹ã®å¾Œæ–¹ã«è·³ã¶
 	if (m_boss_state != eEnemyBossStateAway)return;
 
 	m_anim_p->SetWillPlayAnim(eEnemyAnimBossIdJump);
-
+	
 	if (m_away_flg == false) {
 	/*	m_vec.y -= JUMP_POWER;*/
 		m_away_flg = true;
@@ -230,7 +230,7 @@ void CCharacterBoss::Away()
 
 void CCharacterBoss::CloseToPlayer()
 {
-	//ƒvƒŒƒCƒ„[‚É‹ß‚Ã‚­ˆ—i‘–‚Á‚Ä‚¢‚é‚©A•à‚¢‚Ä‚¢‚é‚©‚Å‘¬“x‚ªˆá‚¤j
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«è¿‘ã¥ãå‡¦ç†ï¼ˆèµ°ã£ã¦ã„ã‚‹ã‹ã€æ­©ã„ã¦ã„ã‚‹ã‹ã§é€Ÿåº¦ãŒé•ã†ï¼‰
 	float Speed = DEF_SPEED;
 	if(m_boss_state==eEnemyBossStateRun) 
 		Speed = RUN_SPEED;
@@ -244,21 +244,21 @@ void CCharacterBoss::CloseToPlayer()
 
 void CCharacterBoss::Attack1()
 {
-	//’¼‘O‚Ìó‘Ô‚ª•àsó‘Ô‚È‚çA‚Ğ‚Á‚©‚«UŒ‚
+	//ç›´å‰ã®çŠ¶æ…‹ãŒæ­©è¡ŒçŠ¶æ…‹ãªã‚‰ã€ã²ã£ã‹ãæ”»æ’ƒ
 	if (m_befor_state != eEnemyBossStateWalk)return;
 	if (m_ex_state == eEnemyBossStateRush)return;
 	if (m_is_attack == false)return;
 
 	ChangeAttackState(eEnemyAnimBossIdBite, BITE_TIME);
 	
-	//ƒvƒŒƒCƒ„[‚ª”ÍˆÍ“à‚É‚¢‚é‚Æƒ_ƒ[ƒW‚ğ—^‚¦‚é
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒç¯„å›²å†…ã«ã„ã‚‹ã¨ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’ä¸ãˆã‚‹
 	if (float length = CheckAttackRange() <= ATTACK1_RANGE_BITE) {
 		m_is_attack = false;
 		m_player_p->HitPointGainValue(-ATTACK);
 		m_player_p->ReceiveKnockBack(m_pos, 5.0);
 		m_player_p->ReceiveAttack();
 
-		//UŒ‚‚ª“–‚½‚é‚ÆAƒJƒEƒ“ƒgŒ¸­
+		//æ”»æ’ƒãŒå½“ãŸã‚‹ã¨ã€ã‚«ã‚¦ãƒ³ãƒˆæ¸›å°‘
 		m_ex_count++;
 		m_is_hit = true;
 	}
@@ -267,20 +267,19 @@ void CCharacterBoss::Attack1()
 
 void CCharacterBoss::Attack2()
 {
-	//’¼‘O‚Ìó‘Ô‚ª‘–‚èó‘Ô‚È‚ç™ôšK
+	//ç›´å‰ã®çŠ¶æ…‹ãŒèµ°ã‚ŠçŠ¶æ…‹ãªã‚‰å’†å“®
 	if (m_befor_state != eEnemyBossStateRun)return;
 	if (m_ex_state == eEnemyBossStateRush)return;
 	if (m_is_attack == false)return;
 
 	ChangeAttackState(eEnemyAnimBossIdBark, BARK_TIME);
 
-
-	//ƒvƒŒƒCƒ„[‚ª”ÍˆÍ“à‚É‚¢‚é‚ÆA‚Ğ‚é‚Ü‚¹‚é
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒç¯„å›²å†…ã«ã„ã‚‹ã¨ã€ã²ã‚‹ã¾ã›ã‚‹
 	if (float length= CheckAttackRange() <= ATTACK1_RANGE_BARK) {
 		m_is_attack = false;
 		m_player_p->SetFreeze(BARK_FREEZE_TIME);
 
-		//UŒ‚‚ª“–‚½‚é‚ÆAƒJƒEƒ“ƒgŒ¸­
+		//æ”»æ’ƒãŒå½“ãŸã‚‹ã¨ã€ã‚«ã‚¦ãƒ³ãƒˆæ¸›å°‘
 		m_ex_count++;
 		m_is_hit = true;
 	}
@@ -291,23 +290,25 @@ void CCharacterBoss::SpecialAttack1()
 	if (m_ex_state != eEnemyBossStateRush)return;
 
 
-	//ƒXƒeƒbƒv‚²‚Æ‚Éˆ—‚ªˆá‚¤
+	//ã‚¹ãƒ†ãƒƒãƒ—ã”ã¨ã«å‡¦ç†ãŒé•ã†
 	switch (m_ex_attack_state)
 	{
-	//‘æˆê’iŠKFã‚ÉŒü‚©‚Á‚Ä’µ–ô‚·‚é
+	//ç¬¬ä¸€æ®µéšï¼šä¸Šã«å‘ã‹ã£ã¦è·³èºã™ã‚‹
 	case eExStepStart:
 		ChangeAttackState(eEnemyAnimBossIdJump, RASH_TIME);
 		m_vec.y -= RASH_JIMP_POWER;
 		m_ex_attack_state = eExRashStep1;
 		break;
-	//‘æ“ñ’iŠKF‰æ–Ê¶’[‚ÉˆÚ“®‚·‚é
+	//ç¬¬äºŒæ®µéšï¼šç”»é¢å·¦ç«¯ã«ç§»å‹•ã™ã‚‹
 	case eExRashStep1:
-		if (s_boss_mode.boss_rush <= RASH_STEP1_TIME) {
-			m_pos.x = -10.0;
+		if (m_pos.x > 140.0) {
+			m_pos.x -= 10.0;
+		}
+		else{
 			m_ex_attack_state = eExRashStep2;
 		}
 		break;
-	//‘æO’iŠKF‚šÀ•W‚ğŒˆ’è‚·‚é
+	//ç¬¬ä¸‰æ®µéšï¼šï½šåº§æ¨™ã‚’æ±ºå®šã™ã‚‹
 	case eExRashStep2:
 		if (s_boss_mode.boss_rush <= RASH_STEP2_TIME) {
 			m_anim_p->SetWillPlayAnim(eEnemyAnimBossIdRun);
@@ -319,7 +320,7 @@ void CCharacterBoss::SpecialAttack1()
 			m_ex_attack_state = eExRashStep3;
 		}
 		break;
-	//‘æl’iŠKFƒvƒŒƒCƒ„[‚ÉŒü‚©‚Á‚Ä“Ëi‚·‚é
+	//ç¬¬å››æ®µéšï¼šãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«å‘ã‹ã£ã¦çªé€²ã™ã‚‹
 	case eExRashStep3:
 		if (s_boss_mode.boss_rush < RASH_STEP3_TIME) {
 			m_anim_p->SetWillPlayAnim(eEnemyAnimBossIdRush);
@@ -336,7 +337,7 @@ void CCharacterBoss::SpecialAttack1()
 			m_ex_attack_state = eExRashStep4;
 		}
 		break;
-	//‘æŒÜ’iŠKG“ËiI—¹ŒãA‰Šú’l‚É–ß‚·
+	//ç¬¬äº”æ®µéšï¼›çªé€²çµ‚äº†å¾Œã€åˆæœŸå€¤ã«æˆ»ã™
 	case eExRashStep4:
 		s_boss_mode.boss_rush = 0;
 		m_is_hit = true;
@@ -361,7 +362,7 @@ void CCharacterBoss::AttackHub()
 	s_boss_mode.boss_attack += CFPS::GetDeltaTime() * GAME_BASE_FPS;
 	printf("attack:%f comp:%f\n", s_boss_mode.boss_attack, m_attack_complete);
 
-	//UŒ‚‚Ì“®ì‚ªI‚í‚é‚ÆA‘Ò‹@‚ª“¦‚°‚ÉˆÚs‚·‚é
+	//æ”»æ’ƒã®å‹•ä½œãŒçµ‚ã‚ã‚‹ã¨ã€å¾…æ©ŸãŒé€ƒã’ã«ç§»è¡Œã™ã‚‹
 	if (s_boss_mode.boss_attack >= m_attack_complete) {
 		s_boss_mode.boss_attack = 0;
 		ChengeStateIdleOrAway();
@@ -385,10 +386,10 @@ void CCharacterBoss::MoveLimit()
 	m_vec.x = min(max(m_vec.x, -MAX_SPEED), MAX_SPEED);
 	m_vec.z = min(max(m_vec.z, -MAX_SPEED), MAX_SPEED);
 
-	//‚Æ‚è‚ ‚¦‚¸ƒeƒXƒg—p‚È‚Ì‚Å
+	//ã¨ã‚Šã‚ãˆãšãƒ†ã‚¹ãƒˆç”¨ãªã®ã§
 	if (m_ex_state != eEnemyBossStateRush) {
-		if (m_player_pos.x<m_pos.x - 1000) m_pos.x = m_player_pos.x + 900;
-		if (m_player_pos.x>m_pos.x + 1000) m_pos.x == m_player_pos.x - 100;
+		if (m_player_pos.x<m_pos.x - 1500) m_pos.x = m_player_pos.x + 1400;
+		if (m_player_pos.x>m_pos.x + 1500) m_pos.x = m_player_pos.x - 1400;
 	}
 
 }
@@ -404,7 +405,7 @@ void CCharacterBoss::CheckDist()
 
 	ChangeDist();
 
-	//UŒ‚”ÍˆÍ‚É‹ß‚Ã‚«‚ªŠ®—¹‚·‚é‚ÆAUŒ‚ó‘Ô‚É
+	//æ”»æ’ƒç¯„å›²ã«è¿‘ã¥ããŒå®Œäº†ã™ã‚‹ã¨ã€æ”»æ’ƒçŠ¶æ…‹ã«
 	if (abs(m_player_pos.x - m_pos.x) <= m_just_dist) {
 		m_vec.x = 0;
 		if (abs(m_player_pos.z - m_pos.z) <= JUST_DIST_Z) {
@@ -424,7 +425,7 @@ float CCharacterBoss::CheckAttackRange()
 
 void CCharacterBoss::ReceiveAttack()
 {
-	//–³“G‚È‚ç‚È‚É‚à‚µ‚È‚¢
+	//ç„¡æ•µãªã‚‰ãªã«ã‚‚ã—ãªã„
 	if (GetInvincible() == true) return;
 	m_ex_state = eEnemyBossStateDamage;
 	SetIsBlindDraw(true);
@@ -437,11 +438,11 @@ void CCharacterBoss::ReceiveAttack()
 void CCharacterBoss::DefalutSet()
 {
 	m_vec = DEF_BOSS_VEC;
-	//‰Šú’l‚Ìy²‚Í’n–Ê‚É–„‚Ü‚ç‚È‚¢‚æ‚¤‚É­‚µ•‚‚©‚¹‚é
+	//åˆæœŸå€¤ã®yè»¸ã¯åœ°é¢ã«åŸ‹ã¾ã‚‰ãªã„ã‚ˆã†ã«å°‘ã—æµ®ã‹ã›ã‚‹
 	m_pos = DEF_BOSS_POS;
 	m_pos_old = m_pos;
 
-	//”ò‚Ñ‰z‚¦‚ê‚È‚¢‚­‚ç‚¢‚Ì‚‚³‚É‚Í‚µ‚Ä‚¨‚­
+	//é£›ã³è¶Šãˆã‚Œãªã„ãã‚‰ã„ã®é«˜ã•ã«ã¯ã—ã¦ãŠã
 	m_rads = CVector3D(75, 300, 10);
 	
 	m_is_flip = false;

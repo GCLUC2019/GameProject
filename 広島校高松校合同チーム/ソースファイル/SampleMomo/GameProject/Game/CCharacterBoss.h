@@ -1,85 +1,85 @@
-#include "CCharacter.h"
+ï»¿#include "CCharacter.h"
 #include "CCharacterPlayer.h"
 #include "../Global.h"
 
 
-//ƒ{ƒX‚Ì‰Šú•\¦ˆÊ’u
+//ãƒœã‚¹ã®åˆæœŸè¡¨ç¤ºä½ç½®
 #define DEF_BOSS_POS CVector3D(1100, -1300, 500);
 #define DEF_BOSS_VEC CVector3D(0, 0, 0);
 #define DEF_SAHDOW_POS CVector2D(-30.0, -90.0);
 
-//ƒ{ƒX‚ÌƒTƒCƒY
+//ãƒœã‚¹ã®ã‚µã‚¤ã‚º
 #define BOSS_SHADOW_SIZE CVector2D(300, 50)
 
-//ƒ{ƒX‚ÌHP
+//ãƒœã‚¹ã®HP
 #define BOSS_HP 20.0f
 
-//‹N“®Œë·
+//èµ·å‹•èª¤å·®
 #define RANGE (150)
-#define RANGE_Z (50)
+#define RANGE_Z (75)
 
-//UŒ‚‚Ì“K³‹——£‚Ì‰Šú’l
+//æ”»æ’ƒã®é©æ­£è·é›¢ã®åˆæœŸå€¤
 #define DEF_JUST_DIST 350
 #define JUST_DIST_Z 25
 
-//Ÿ‚Ì“K³‹——£
+//æ¬¡ã®é©æ­£è·é›¢
 #define NEXT_JUST_DIST1 400
 #define NEXT_JUST_DIST2 100
 
-//ƒvƒŒƒCƒ„[‚Æ‚Ì‹——£
-#define PLAYER_DISTQFAR 600
+//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨ã®è·é›¢
+#define PLAYER_DISTï¼¿FAR 600
 #define AWAY_DIST 500
 
-//Šeó‘Ô‚ÌŒÀŠEŠÔ
+//å„çŠ¶æ…‹ã®é™ç•Œæ™‚é–“
 #define IDLE_LIMIT 60
 #define WALK_LIMIT 60
-#define RUN_LIMIT  60
+#define RUN_LIMIT  90
 #define AWAY_LIMIT  60
 #define DAMAGE_LIMIT 15
 
-//‘¬“x
+//é€Ÿåº¦
 #define DEF_SPEED 2.0
 #define RUN_SPEED 4.5
 
-//UŒ‚”ÍˆÍ
+//æ”»æ’ƒç¯„å›²
 #define ATTACK1_RANGE_BITE 400
 #define ATTACK1_RANGE_BARK 500
 #define EX1_RANGE_RASH 300
 
-//UŒ‚ŠÔ
+//æ”»æ’ƒæ™‚é–“
 #define BITE_TIME 30.0
-#define BARK_TIME 50.0
+#define BARK_TIME 70.0
 #define RASH_TIME 250.0
 
-//–i‚¦‚éUŒ‚‚Ìd’¼ŠÔ
+//å ãˆã‚‹æ”»æ’ƒã®ç¡¬ç›´æ™‚é–“
 #define BARK_FREEZE_TIME 90.0
 
-//’µ–ô—Í
+//è·³èºåŠ›
 #define JUMP_POWER 40
 #define JUMP_POWER_X 10
 
-//Œ¸‘¬ŒW”
+//æ¸›é€Ÿä¿‚æ•°
 #define FLICTION 0.7
 
-//Å‘å‘¬“x
+//æœ€å¤§é€Ÿåº¦
 #define MAX_SPEED 8.0f
 
-//UŒ‚—Í
+//æ”»æ’ƒåŠ›
 #define ATTACK 1.0
 
-//•KE‹Z‚ÌŠe”’l
+//å¿…æ®ºæŠ€ã®å„æ•°å€¤
 #define RASH_STEP1_TIME 30.0
-#define RASH_STEP2_TIME 120.0
+#define RASH_STEP2_TIME 180.0
 #define RASH_STEP3_TIME 240.0
 #define RASH_Z_SPEED 5.0
 #define RASH_SPEED 18.0
-#define RASH_JIMP_POWER 30
+#define RASH_JIMP_POWER 50
 #define RASH_ATTACK 3.0
 
 
 #define BOSS_KNOCK_BACK_FRAME (300.0)
 
-//ƒ{ƒX‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Ìí—Ş”Ô†
+//ãƒœã‚¹ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ç¨®é¡ç•ªå·
 enum {
 	eEnemyAnimBossIdIdle = 0,
 	eEnemyAnimBossIdRun,
@@ -91,7 +91,7 @@ enum {
 	eEnmeyAnimBossIdMax,
 };
 
-//ƒ{ƒX‚Ì‰æ‘œ‚ğ“ü‚ê‚é”Ô†
+//ãƒœã‚¹ã®ç”»åƒã‚’å…¥ã‚Œã‚‹ç•ªå·
 enum {
 	eEnemyAnimBossIdle1=0,
 	eEnemyAnimBossIdle2,
@@ -149,7 +149,7 @@ private:
 	int m_ex_state = 0;
 	int m_just_dist = DEF_JUST_DIST;
 	int m_ex_count = 0;
-	int m_hit_count = 0; //ƒvƒŒƒCƒ„[‚©‚çUŒ‚‚ª“–‚½‚Á‚½‰ñ”
+	int m_hit_count = 0; //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‹ã‚‰æ”»æ’ƒãŒå½“ãŸã£ãŸå›æ•°
 
 	bool m_is_attack = true;
 	bool m_is_hit = false;
@@ -164,38 +164,38 @@ public:
 
 	void LoadAnimImage();
 	void ChangeFlip();
-	//ƒGƒlƒ~[‚Ìó‘Ô‚ğƒJƒEƒ“ƒg‚·‚éŠÖ”
+	//ã‚¨ãƒãƒŸãƒ¼ã®çŠ¶æ…‹ã‚’ã‚«ã‚¦ãƒ³ãƒˆã™ã‚‹é–¢æ•°
 	void ModeCount();
-	//ƒGƒlƒ~[‚ÌˆÚ“®‹——£‚ğ•ÏX
+	//ã‚¨ãƒãƒŸãƒ¼ã®ç§»å‹•è·é›¢ã‚’å¤‰æ›´
 	void ChangeDist();
-	//ƒGƒlƒ~[‚Ìó‘Ô‚ğ•ÏX
+	//ã‚¨ãƒãƒŸãƒ¼ã®çŠ¶æ…‹ã‚’å¤‰æ›´
 	void ChangeState();
 	void ChengeStateIdleOrAway();
 	void ChangeAttackState(int _state, int attack_time);
-	//ˆÈ‰ºAƒGƒlƒ~[‚Ìs“®ó‘Ô
-	//ˆÚ“®Œn
+	//ä»¥ä¸‹ã€ã‚¨ãƒãƒŸãƒ¼ã®è¡Œå‹•çŠ¶æ…‹
+	//ç§»å‹•ç³»
 	void Idle();
 	void Run();
 	void Walk();
 	void Away();
 	void CloseToPlayer();
-	//UŒ‚Œn
+	//æ”»æ’ƒç³»
 	void Attack1();
 	void Attack2();
 	void SpecialAttack1();
 	void AttackHub();
-	//ƒ_ƒ[ƒWŒn
+	//ãƒ€ãƒ¡ãƒ¼ã‚¸ç³»
 	void Damage();
-	//ˆÚ“®‚ÌŒÀŠE’l
+	//ç§»å‹•ã®é™ç•Œå€¤
 	void MoveLimit();
-	//‹——£‚Ì¸¸
+	//è·é›¢ã®ç²¾æŸ»
 	void CheckDist();
 	float CheckAttackRange();
 
-	//”íƒ_ƒ[ƒWˆ—
+	//è¢«ãƒ€ãƒ¡ãƒ¼ã‚¸å‡¦ç†
 	void ReceiveAttack();
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void DefalutSet();
 
 	void ReceiveKnockBack(CVector3D _from_pos, double _power);
