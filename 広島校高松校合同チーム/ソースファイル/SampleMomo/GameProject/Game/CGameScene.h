@@ -4,7 +4,9 @@
 
 #define GAME_SCENE_OBJECT_MAX (3000)
 
-#define RESERVE_MAX (6)
+#define RESERVE_MAX (12)
+#define RESERVE_DEFAULT (6)
+
 class CCharacterPlayer;
 
 enum {

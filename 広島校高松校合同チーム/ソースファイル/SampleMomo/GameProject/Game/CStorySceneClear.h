@@ -3,6 +3,8 @@
 
 class CStorySceneClear:public CStoryScene
 {
+private:
+	int m_clear_stage;
 public:
 	CStorySceneClear(int _clear_stage);
 	~CStorySceneClear();

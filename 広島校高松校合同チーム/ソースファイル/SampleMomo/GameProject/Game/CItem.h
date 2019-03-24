@@ -3,7 +3,11 @@
 #include "CAnimation.h"
 #include "../Global.h"
 
-
+enum {
+	eItemPeach,
+	eItemFlag,
+	eItemMax,
+};
 
 class CItem : public CGameSceneObject {
 private:

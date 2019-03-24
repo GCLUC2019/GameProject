@@ -4,6 +4,10 @@
 #include "CSubWeapon.h"
 #include "CGameScene.h"
 
+/*
+どうも複数のCImageを同時使用した場合位置ずれがおこることがあるようだ？？？
+*/
+
 CGameSceneUI::CGameSceneUI() :CObject(0, DP_UI)
 {
 	m_ui_pos = CVector2D(0,15);

@@ -75,7 +75,7 @@ void CSubWeaponItem::GameSceneObjectUpdate()
 		float x = m_pos.x - player_pos.x;
 		float z = m_pos.z - player_pos.z;
 		
-		if (m_get_flag && abs(x) < 100 && abs(z) < 50) {	//ƒvƒŒƒCƒ„[‚Æ‚Ì‹——£‚ªX100Z50ˆÈ“à‚É‚¢‚éê‡E‚¦‚Ü‚·
+		if (m_get_flag && abs(x) < 100 && abs(z) < 100) {
 			m_get_flag = false;
 			PlayerGetItem();
 			SetIsDelete();
