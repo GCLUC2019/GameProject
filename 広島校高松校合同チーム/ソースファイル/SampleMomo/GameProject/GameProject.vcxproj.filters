@@ -83,10 +83,12 @@
     <ClCompile Include="Game\CDamageEffect.cpp">
       <Filter>Game\Object\GameSceneObject</Filter>
     </ClCompile>
-    <ClCompile Include="Game\CItem.cpp" />
     <ClCompile Include="Game\CSwitchScreen.cpp" />
     <ClCompile Include="Game\CBullet.cpp">
       <Filter>Game\Object\GameSceneObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\CItem.cpp">
+      <Filter>Game\Object\GameSceneObject\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -175,14 +177,14 @@
     <ClInclude Include="Game\CDamageEffect.h">
       <Filter>Game\Object\GameSceneObject</Filter>
     </ClInclude>
-    <ClInclude Include="Game\CItem.h">
-      <Filter>Game\Object\GameSceneObject</Filter>
-    </ClInclude>
     <ClInclude Include="Game\CSwitchScreen.h">
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Game\CBullet.h">
       <Filter>Game\Object\GameSceneObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\CItem.h">
+      <Filter>Game\Object\GameSceneObject\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

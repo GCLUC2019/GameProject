@@ -6,6 +6,7 @@
 #include "CBar.h"
 #include "CDamageEffect.h"
 #include "CBullet.h"
+#include "CItem.h"
 
 CCharacterEnemy::CCharacterEnemy(int _enemy_id, CVector3D _enemy_pos, CGameSceneWave* _from_wave) :CCharacter(eTaskIdEnemy, 0)
 {
@@ -351,25 +352,57 @@ void CCharacterEnemy::Attacking()
 void CCharacterEnemy::DropItem()
 {
 	//出現率3分の1
-	int rand = Utility::Rand(0,2);
+	int rand = Utility::Rand(0,3);
 	if (rand != 0) return;
 
-	//アイテムドロップ
-	int drop_weapon_id = 0;
 
-	switch (m_enemy_id) {
-	case eEnemyIdSpear:
-		drop_weapon_id = eWeaponSpear;
-		break;
-	case eEnemyIdAxe:
-		drop_weapon_id = eWeaponAxe;
-		break;
-	case eEnemyIdGun:
-		drop_weapon_id = eWeaponGun;
+	//出現するアイテムの種類(0:持っている武器 1:アイテム)
+	rand = Utility::Rand(0, 2);
+
+	
+	//テスト用
+	CGameScene::GetInstance()->AddGameSceneObject(new CItem(m_pos + CVector3D(0, 100, 0), eItemFlag));
+	return;
+
+	switch (rand) {
+	case 0: {
+		int drop_weapon_id = 0;
+		switch (m_enemy_id) {
+		case eEnemyIdSpear:
+			drop_weapon_id = eWeaponSpear;
+			break;
+		case eEnemyIdAxe:
+			drop_weapon_id = eWeaponAxe;
+			break;
+		case eEnemyIdGun:
+			drop_weapon_id = eWeaponGun;
+			break;
+		}
+		CGameScene::GetInstance()->AddGameSceneObject(new CSubWeaponItem(m_pos + CVector3D(0, 100, 0), drop_weapon_id));
 		break;
 	}
+	case 1: {
+		//出現するアイテムを決定
+		rand = Utility::Rand(0, 4);
+		int drop_item_id;
+		switch (rand) {
+		case 0:
+		case 1:
+		case 2:
+			drop_item_id = eItemPeach;
+			break;
+		case 3:
+			drop_item_id = eItemFlag;
+			break;
+		}
+		CGameScene::GetInstance()->AddGameSceneObject(new CItem(m_pos + CVector3D(0, 100, 0), drop_item_id));
+		break;
+	}
+	}
+	
+	
 
-	CGameScene::GetInstance()->AddGameSceneObject(new CSubWeaponItem(m_pos + CVector3D(0,100,0), drop_weapon_id));
+	
 }
 
 void CCharacterEnemy::AdjAnim()

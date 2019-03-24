@@ -1,4 +1,4 @@
-#include "CGameScene.h"
+ï»¿#include "CGameScene.h"
 //#include "CCharacterEnemy.h"
 #include "CCharacterPlayer.h"
 #include "CObjectImage.h"
@@ -37,7 +37,7 @@ void CGameScene::Init()
 
 void CGameScene::Setup()
 {
-	m_reserve_num = RESERVE_MAX;
+	m_reserve_num = RESERVE_DEFAULT;
 	m_now_scene = eStage1;
 	SetCheckPoint(CVector3D(300, -220, 550));
 	m_last_wave = -1;
@@ -54,7 +54,7 @@ void CGameScene::AddGameSceneObject(Task * _object)
 
 void CGameScene::ClearGameSceneObject()
 {
-	//ƒ|ƒCƒ“ƒ^‚Ì’†g‚ª‚»‚à‚»‚à”jŠü‚³‚ê‚Ä‚éê‡‚ª‚ ‚é‚æ‚ËA¡‰ñB
+	//ãƒã‚¤ãƒ³ã‚¿ã®ä¸­èº«ãŒãã‚‚ãã‚‚ç ´æ£„ã•ã‚Œã¦ã‚‹å ´åˆãŒã‚ã‚‹ã‚ˆã­ã€ä»Šå›ã€‚
 	for (int i = 0; i < m_game_scene_object_num; i++) {
 		if (m_game_scene_object_p[i] == nullptr) continue;
 		m_game_scene_object_p[i]->SetIsDelete();
@@ -76,15 +76,18 @@ void CGameScene::WaveDone(int _next_wave)
 {
 	m_last_wave = _next_wave;
 
-	switch (m_now_scene) {
-	case eStage1:
-		SetGameSceneLimitPosMin(CVector3D(100.0f, 0.0f, 340.0f));
-		SetGameSceneLimitPosMax(CVector3D(1280.0f * 6, 720.0f, 720.0f));
-		break;
-	case eStage1Boss:
-		SetGameSceneLimitPosMin(CVector3D(100.0f, 0.0f, 340.0f));
-		SetGameSceneLimitPosMax(CVector3D(1280.0f * 2, 720.0f, 720.0f));
-		break;
+
+	if (_next_wave == -1) {
+		switch (m_now_scene) {
+		case eStage1:
+			SetGameSceneLimitPosMin(CVector3D(100.0f, 0.0f, 340.0f));
+			SetGameSceneLimitPosMax(CVector3D(1280.0f * 5, 720.0f, 720.0f));
+			break;
+		case eStage1Boss:
+			SetGameSceneLimitPosMin(CVector3D(100.0f, 0.0f, 340.0f));
+			SetGameSceneLimitPosMax(CVector3D(1280.0f * 2, 720.0f, 720.0f));
+			break;
+		}
 	}
 
 	if(_next_wave != -1) AddGameSceneObject(new CGameSceneWave(_next_wave));
@@ -111,7 +114,7 @@ void CGameScene::Miss()
 {
 	m_reserve_num--;
 	if (m_reserve_num < 0) {
-		//ƒQ[ƒ€ƒI[ƒo[ŒÄ‚Ño‚µ
+		//ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼å‘¼ã³å‡ºã—
 		TaskManager::GetInstance()->AddTask(new CGameOver());
 		return;
 	}
@@ -149,7 +152,7 @@ void CGameScene::DeletePlayer()
 
 void CGameScene::SetupScene()
 {
-	//ƒtƒF[ƒhƒCƒ“EƒtƒF[ƒhƒAƒEƒg
+	//ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³ãƒ»ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆ
 	CFade::GetInstance()->SetFadeOut(0);
 	CFade::GetInstance()->SetFadeIn(30);
 
@@ -170,14 +173,14 @@ void CGameScene::SetupScene()
 		CSound::GetInstance()->GetSound("BGM_Title")->Play(true);
 		//CSound::GetInstance()->StopAll();
 		//CSound::GetInstance()->GetSound("BGM_Stage")->Play(true);
-		for (int i = 0; i < 6; i++) {
-			//°’£‚è(–ğŠ„‚Í’Pƒ‚È‚Ì‚Åˆ—‚ÌŒy‚¢”Ä—pƒIƒuƒWƒFƒNƒg‚Å‘ã—p)
+		for (int i = 0; i < 5; i++) {
+			//åºŠå¼µã‚Š(å½¹å‰²ã¯å˜ç´”ãªã®ã§å‡¦ç†ã®è»½ã„æ±ç”¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã§ä»£ç”¨)
 			AddGameSceneObject(new CCommonObject(nullptr, CVector3D(1280.0f * i, 10000.0f, 0.0f), CVector2D(0, 0), CVector3D(1280.0f, 1.0f + 10000.0f, 720.0f)));
 			AddGameSceneObject(new CObjectImage(GET_RESOURCE("Stage_Background_0_Bot", CImage*), CVector3D(1280 * i, 0, 0), CVector2D(1280, 720), -1));
 			AddGameSceneObject(new CObjectImage(GET_RESOURCE("Stage_Background_0_Top", CImage*), CVector3D(1280 * i, -720, 0), CVector2D(1280, 720), -1));			
 		}
 		SetGameSceneLimitPosMin(CVector3D(100.0f, 0.0f, 340.0f));
-		SetGameSceneLimitPosMax(CVector3D(1280.0f * 6, 720.0f, 720.0f));
+		SetGameSceneLimitPosMax(CVector3D(1280.0f * 5, 720.0f, 720.0f));
 		
 
 		if(m_last_wave != -1) AddGameSceneObject(new CGameSceneWave(m_last_wave));
@@ -195,16 +198,16 @@ void CGameScene::SetupScene()
 		AddGameSceneObject(new CCharacterEnemy(eEnemyIdSpear, CVector3D(4600, -151, 450 + 100)));
 		*/
 		m_next_scene = eStage1Boss;
-		m_next_scene_pos = 1280 * 6 - 100;
+		m_next_scene_pos = 1280 * 5 - 100;
 
-		//ƒeƒXƒg—pe
+		//ãƒ†ã‚¹ãƒˆç”¨éŠƒ
 		//AddGameSceneObject(new CSubWeaponItem(CVector3D(300,-100,500),eWeaponGun));
 		break;
 	case eStage1Boss:
 		CSound::GetInstance()->StopAll();
 		CSound::GetInstance()->GetSound("BGM_Boss")->Play(true);
 		for (int i = 0; i < 2; i++) {
-			//°’£‚è(–ğŠ„‚Í’Pƒ‚È‚Ì‚Åˆ—‚ÌŒy‚¢”Ä—pƒIƒuƒWƒFƒNƒg‚Å‘ã—p)
+			//åºŠå¼µã‚Š(å½¹å‰²ã¯å˜ç´”ãªã®ã§å‡¦ç†ã®è»½ã„æ±ç”¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã§ä»£ç”¨)
 			AddGameSceneObject(new CCommonObject(nullptr, CVector3D(1280.0f * i, 10000.0f, 0.0f), CVector2D(0, 0), CVector3D(1280.0f, 1.0f + 10000.0f, 720.0f)));
 
 			if (i % 2 == 0) {
@@ -226,7 +229,7 @@ void CGameScene::SetupScene()
 		m_next_scene = -1;
 		break;
 	}
-	CFPS::Wait();//deltatimeˆÀ’è‰»—p
+	CFPS::Wait();//deltatimeå®‰å®šåŒ–ç”¨
 }
 
 void CGameScene::ReturnTitle()

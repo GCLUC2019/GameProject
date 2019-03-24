@@ -5,7 +5,7 @@
 ファイル名:stage_clear_bgm 曲名:Like A Dog 用途:ステージクリアイベントBGM  URL: https://dova-s.jp/bgm/play10678.html 作者:thaiK
 ファイル名:intro_story 曲名Good Morning Sky 用途:ストーリーイントロBGM  URL: https://dova-s.jp/bgm/play1800.html 作者:ISAo.
 ファイル名:title_bgm 曲名Sunrise 用途:タイトルBGM  URL: https://dova-s.jp/bgm/play1561.html 作者:かずち
-
+ファイル名:stage_clear_screen 曲名楽しく軽快に 用途:ステージクリアスクリーンBG<  URL: https://dova-s.jp/bgm/play2886.html 作者:yuki
 
 
 

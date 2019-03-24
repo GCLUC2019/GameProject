@@ -1,6 +1,7 @@
 #include "CStorySceneClear.h"
 #include "CTitle.h"
 #include "CGameScene.h"
+#include "CStageClear.h"
 
 //ステージクリア１のテキスト数
 #define CREAR_SENTENSE_NUM 11
@@ -72,12 +73,14 @@ CStorySceneClear::CStorySceneClear(int _clear_stage)
 	Setchar(_clear_stage);
 	SetValue(_clear_stage);
 	SetAll(CREAR_SENTENSE_NUM);
+	m_clear_stage = _clear_stage;
 }
 
 CStorySceneClear::~CStorySceneClear()
 {
-  CTitle* c_title_p = new CTitle();
-  TaskManager::GetInstance()->AddTask(c_title_p);
+ // CTitle* c_title_p = new CTitle();
+  //TaskManager::GetInstance()->AddTask(c_title_p);
+	TaskManager::GetInstance()->AddTask(new CStageClear(m_clear_stage));
 }
 
 void CStorySceneClear::Update()

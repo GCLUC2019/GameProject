@@ -1,24 +1,20 @@
-#include "CItem.h"
+ï»¿#include "CItem.h"
 #include "CCharacterPlayer.h"
 #include "CGameScene.h"
 
 bool CItem::m_get_item_flag = true;
 
-enum {	//ƒAƒjƒ[ƒVƒ‡ƒ“‚Ìí—Ş‚Ì”Ô†
+enum {	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ç¨®é¡ã®ç•ªå·
 	eItemAnimIdIdle,
 	eItemyAnimIdMax,
 };
 
-enum {	//ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì‰æ‘œ‚ğ“ü‚ê‚é”Ô†
+enum {	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ç”»åƒã‚’å…¥ã‚Œã‚‹ç•ªå·
 	eItemAnimIdle1,
 	eItemAnimMax,
 };
 
-enum {
-	eItemPeach,
-	eItemFlag,
-	eItemMax,
-};
+
 
 CItem::CItem(CVector3D pos, int _item_id) :CGameSceneObject(eTaskIdDropItem, 0)
 {
@@ -26,7 +22,7 @@ CItem::CItem(CVector3D pos, int _item_id) :CGameSceneObject(eTaskIdDropItem, 0)
 
 	SetPos(pos);
 	SetPosOld(pos);
-	SetSize(CVector2D(150, 150));
+	SetSize(CVector2D(50, 50));
 
 	m_speed = 1.0f;
 
@@ -36,14 +32,14 @@ CItem::CItem(CVector3D pos, int _item_id) :CGameSceneObject(eTaskIdDropItem, 0)
 	SetRads(75, 15, 10);
 
 	SetShadowSize(CVector2D(60, 15));
-	SetDrawAdjPos(CVector2D(0, -68.0f));
+	SetDrawAdjPos(CVector2D(0, -10.0f));
 
-	//“–‚½‚è”»’è‚Ì—Dæ“x
+	//å½“ãŸã‚Šåˆ¤å®šã®å„ªå…ˆåº¦
 	SetCollisionPriority(5);
 
 	m_anim_p->SetWillPlayAnim(eItemAnimIdIdle);
 
-	//‘¼‚ÌƒIƒuƒWƒFƒNƒg‚Ì•Ç‚É‚Í‚È‚ç‚È‚¢
+	//ä»–ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å£ã«ã¯ãªã‚‰ãªã„
 	SetIsCollisionOthers(false);
 }
 
@@ -73,7 +69,7 @@ void CItem::GameSceneObjectUpdate()
 {
 	CCharacterPlayer * player_p = CCharacterPlayer::GetInstance();
 	if (player_p == nullptr) {
-		printf("ƒvƒŒƒCƒ„[‚¢‚Ü‚¹‚ñI SubWeapon\n");
+		//printf("ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã„ã¾ã›ã‚“ï¼ SubWeapon\n");
 		return;
 	}
 
@@ -82,7 +78,7 @@ void CItem::GameSceneObjectUpdate()
 		float x = m_pos.x - player_pos.x;
 		float z = m_pos.z - player_pos.z;
 
-		if (m_get_item_flag && abs(x) < 100 && abs(z) < 50) {	//ƒvƒŒƒCƒ„[‚Æ‚Ì‹——£‚ªX100Z50ˆÈ“à‚É‚¢‚éê‡E‚¦‚Ü‚·
+		if (m_get_item_flag && abs(x) < 100 && abs(z) < 100) {
 			m_get_item_flag = false;
 			PlayerGetItem();
 			SetIsDelete();
@@ -104,7 +100,6 @@ void CItem::PlayerGetItem()
 	}
 
 	if (m_item_id == eItemFlag) {
-		int *num_p = CGameScene::GetInstance()->GetReserveNumPointer();
-		num_p++;
+		*CGameScene::GetInstance()->GetReserveNumPointer() += 1;
 	}
 }

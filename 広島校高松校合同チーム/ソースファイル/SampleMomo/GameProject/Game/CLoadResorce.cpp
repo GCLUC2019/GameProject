@@ -57,6 +57,8 @@ void CLoadResorce::LoadResorce()
 	CSound::GetInstance()->GetSound("SE_Take")->Load("Sound/take.wav", 10);
 	CSound::GetInstance()->GetSound("SE_Damage")->Load("Sound/damage.wav", 10);
 
+	CSound::GetInstance()->GetSound("BGM_Stage_Clear_Screen")->Load("Sound/stage_clear_screen.wav", 10);
+	
 	//m_bgm[e_BGM_Party_Menu] = CSound::GetInstance()->GetSound("BGM_Party_Menu");
 
 
