@@ -20,12 +20,12 @@ BossFireEffect::BossFireEffect(const CVector2D& pos) : Task(eBossFireEffectc)
 {
 	m_img = COPY_RESOURCE("BossFire", CAnimImage*);
 
-	m_img.SetCenter((1280 - BOSS_X_SIZE / 3) / 2, (720 - FIRE_Y_SIZE / 1.5) / 2);
+	m_img.SetCenter(FIRE_X_SIZE * 2 / 2, FIRE_Y_SIZE / 1.5 / 2);
 
-	m_rect = CRect(-300, -10, 100, 100);
+	m_rect = CRect(-400, -160, 640, 50);
 
-	m_pos.x = FIRE_X_SIZE - pos.x;
-	m_pos.y = pos.y;
+	m_pos.x = pos.x - 700;
+	m_pos.y = pos.y + 50;
 }
 
 
@@ -43,7 +43,7 @@ void BossFireEffect::HitCheck()
 	Player*p = dynamic_cast<Player*>(t);
 
 	if (p != nullptr) {
-		p->Damage(20);
+		p->Damage(15);
 	}
 }
 
@@ -56,8 +56,8 @@ void BossFireEffect::Draw()
 	Utility::DrawQuad(CVector2D(m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_bottom), CVector2D(4, 4), CVector4D(1, 0, 0, 1));
 #endif
 
-	m_img.SetSize(1280 - BOSS_X_SIZE / 3, 720 - FIRE_Y_SIZE / 1.5);
-	m_img.SetPos(m_pos.x + 800, m_pos.y - 150 - g_game_data.m_scroll.y / 3);
+	m_img.SetSize(FIRE_X_SIZE * 2, FIRE_Y_SIZE / 2);
+	m_img.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
 	m_img.Draw();
 }
 
@@ -102,7 +102,7 @@ void BossLazerEffect::HitCheck()
 	Player*p = dynamic_cast<Player*>(t);
 
 	if (p != nullptr) {
-		p->Damage(20);
+		p->Damage(15);
 	}
 }
 
@@ -159,7 +159,7 @@ void BossSlashEffect::HitCheck()
 	Player*p = dynamic_cast<Player*>(t);
 
 	if (p != nullptr) {
-		p->Damage(20);
+		p->Damage(10);
 	}
 }
 
