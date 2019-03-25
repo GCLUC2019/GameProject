@@ -68,11 +68,11 @@ void BossManager::Attack()
 		m_boss_attack_type = rand() % 1000;
 	}
 	int a = 5;
-	if (m_boss_attack_type > 800) m_boss_attack_type = 3;
-	else if (m_boss_attack_type <= 800 && m_boss_attack_type > 600) m_boss_attack_type = 3;
+	if (m_boss_attack_type > 800) m_boss_attack_type = 1;
+	else if (m_boss_attack_type <= 800 && m_boss_attack_type > 600) m_boss_attack_type = 2;
 	else if (m_boss_attack_type <= 600 && m_boss_attack_type > 400) m_boss_attack_type = 3;
-	else if (m_boss_attack_type <= 400 && m_boss_attack_type > 200) m_boss_attack_type = 3;
-	else if (m_boss_attack_type <= 200 && m_boss_attack_type > 0) m_boss_attack_type = 3;
+	else if (m_boss_attack_type <= 400 && m_boss_attack_type > 200) m_boss_attack_type = 4;
+	else if (m_boss_attack_type <= 200 && m_boss_attack_type > 0) m_boss_attack_type = 5;
 
 
 	switch (m_boss_attack_type) {
