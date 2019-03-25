@@ -5,6 +5,7 @@
 #include "../../Effect/EnemyEffect.h"
 #include "../../../CollitionBase.h"
 #include "../../Player.h"
+#include "../GameProject/Game/Item/Item.h"
 
 #define DEP_N 1200
 Enemy04::Enemy04() : EnemyBase(CharacterData::eEnemy04),
@@ -355,6 +356,7 @@ void Enemy04::DamageState()
 			if (n != nullptr)
 				n->SpecialPuls(5);
 			SetKill();
+			TaskManager::GetInstance()->AddTask(new Item(ItemList::eKakera, m_pos));
 		}
 			
 		m_damage_flg = false;
