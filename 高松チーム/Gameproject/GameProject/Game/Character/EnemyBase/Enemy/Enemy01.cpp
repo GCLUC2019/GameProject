@@ -140,8 +140,7 @@ void Enemy01::Search()
     Task*t = TaskManager::FindObject(ePlayer);
     Player*p = dynamic_cast<Player*>(t);
     m_dir = p->GetPos() - m_pos;
-    length = m_dir.Length();
-    if (length < IMAGE_SIZE) {
+    if (m_dir.Length() < IMAGE_SIZE) {
         m_dir = m_dir.GetNormalize();
         m_state = eMove;
     }
