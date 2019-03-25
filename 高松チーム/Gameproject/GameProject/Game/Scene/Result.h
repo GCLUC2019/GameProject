@@ -15,5 +15,7 @@ public:
 	~GameClear();
 	void Update();
 	void Draw();
-
+	CVector2D GetPos() {
+		return  CVector2D(0, 800);
+	}
 };
