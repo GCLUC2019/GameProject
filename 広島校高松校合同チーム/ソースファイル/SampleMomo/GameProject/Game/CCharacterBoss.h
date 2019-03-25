@@ -4,7 +4,7 @@
 
 
 //ボスの初期表示位置
-#define DEF_BOSS_POS CVector3D(1100, -1300, 500);
+#define DEF_BOSS_POS CVector3D(1100, -500, 500);
 #define DEF_BOSS_VEC CVector3D(0, 0, 0);
 #define DEF_SAHDOW_POS CVector2D(-30.0, -90.0);
 
@@ -12,7 +12,7 @@
 #define BOSS_SHADOW_SIZE CVector2D(300, 50)
 
 //ボスのHP
-#define BOSS_HP 20.0f
+#define BOSS_HP 10.0f
 
 //起動誤差
 #define RANGE (150)
@@ -31,9 +31,9 @@
 #define AWAY_DIST 500
 
 //各状態の限界時間
-#define IDLE_LIMIT 60
-#define WALK_LIMIT 60
-#define RUN_LIMIT  90
+#define IDLE_LIMIT 20
+#define WALK_LIMIT 120
+#define RUN_LIMIT  180
 #define AWAY_LIMIT  60
 #define DAMAGE_LIMIT 15
 
@@ -48,7 +48,7 @@
 
 //攻撃時間
 #define BITE_TIME 30.0
-#define BARK_TIME 70.0
+#define BARK_TIME 90.0
 #define RASH_TIME 250.0
 
 //吠える攻撃の硬直時間
