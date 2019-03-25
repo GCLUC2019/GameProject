@@ -9,6 +9,7 @@
 #include"../CollitionBase.h"
 #include "../GameProject/Game/CollitionBase.h"
 #include "../GameProject/Game/Stage/CollisionBox.h"
+#include "../../Game/Scene/Result.h"
 #define GRAVITY -0.5//èdóÕ
 #define DEP_N 540//âúçsèdêŒ
 #define JUMP_SPD 15
@@ -499,8 +500,9 @@ void Player::Death()
 	time--;
 	if (time <= 0)
 	{
-		TaskManager::GetInstance()->KillAll();
-		TaskManager::GetInstance()->AddTask(new Title());
+		//TaskManager::GetInstance()->KillAll();
+        SetKill();
+		TaskManager::GetInstance()->AddTask(new GameOver());
 		time = 300;
 	}
 }

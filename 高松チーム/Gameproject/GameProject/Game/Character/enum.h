@@ -6,6 +6,7 @@ const enum CharacterData{
 	eGameScene2,
 	eFadeOut,
 	eGameClear,
+    eGameOver,
 	eGameTutorial,
     eGameTitle,
 	eCollition,
