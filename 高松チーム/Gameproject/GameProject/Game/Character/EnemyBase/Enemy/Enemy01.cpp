@@ -3,6 +3,7 @@
 #include "../../Anim/AnimData.h"
 #include "../GameProject/Game/GameData/GameData.h"
 #include "../GameProject/Game/CollitionBase.h"
+#include "../GameProject/Game/Item/Item.h"
 
 #define MOVE_SPEED 2.0f
 #define DEP_N 1200
@@ -162,7 +163,7 @@ void Enemy01::Damage()
                 n->SpecialPuls(5);
 			g_game_data.m_dead_cnt++;
 			SetKill();
-			
+			TaskManager::GetInstance()->AddTask(new Item(ItemList::eHyoutan, m_pos));
 		}
 	}
 	else {

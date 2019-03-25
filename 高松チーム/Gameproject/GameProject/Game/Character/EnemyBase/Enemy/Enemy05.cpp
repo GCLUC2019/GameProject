@@ -6,6 +6,7 @@
 #include "../GameProject/Game/CollitionBase.h"
 #include "../GameProject/Game/GameData/GameData.h"
 #include "../../Player.h"
+#include "../GameProject/Game/Item/Item.h"
 
 #define MOVE_ 360
 
@@ -93,6 +94,8 @@ void Enemy05::Damage()
 				n->SpecialPuls(5);
 			SetKill();
 			g_game_data.m_dead_cnt++;
+			for(int i=0; i<3; i++)
+			TaskManager::GetInstance()->AddTask(new Item(ItemList::eHyoutan, m_pos));
 		}
 	}
 	else {

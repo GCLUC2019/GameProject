@@ -570,7 +570,7 @@ void Player::ItemGet(int _itemTyp)
 		break;
 	case ItemList::eKakera:
 		if (m_HP < 100)
-			m_HP += 50;
+			m_HP += 30;
 		if (m_HP > 100)
 			m_HP = 100;
 		break;
