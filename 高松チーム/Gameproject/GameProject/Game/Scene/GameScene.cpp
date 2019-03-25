@@ -27,7 +27,7 @@ GameScene::GameScene() : Task(eGameScene)
 	TaskManager::GetInstance()->AddTask(new ItemBox(Box_Typ::eDummyBox, CVector2D(768, 560)));
 	TaskManager::GetInstance()->AddTask(new Player());
 	TaskManager::GetInstance()->AddTask(new UI());
-    TaskManager::GetInstance()->AddTask(new CollisionBox(CVector2D(500, 300), CRect(-200, -1, 200, 1)));
+    TaskManager::GetInstance()->AddTask(new CollisionBox(CVector2D(500, 300), CRect(-50, -1, 50, 1)));
 	SOUND("ikusa_japan2")->Play(true);
 
 }
