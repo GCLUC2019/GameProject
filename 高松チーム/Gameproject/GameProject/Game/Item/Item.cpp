@@ -3,6 +3,7 @@
 #include "../Character/Player.h"
 #include "../CollitionBase.h"
 #include "../GameData/GameData.h"
+#include "../Resource/Sound/Sound.h"
 
 Item::Item(int _m_item_type, CVector2D _m_pos) : Task(CharacterData::eItem),
 m_item_type(_m_item_type),
@@ -81,6 +82,7 @@ void Item::HitCheck()
 	if (n != nullptr) {
 		n->ItemGet(m_item_type);
 		SetKill();
+		SOUND("cursor3")->Play();
 	}
 	
 }
