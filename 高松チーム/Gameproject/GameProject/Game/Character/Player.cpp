@@ -413,6 +413,7 @@ void Player::Update()
 		Death();
 		return;
 	}
+	if (m_state == eMove) SOUND("dash2")->Play(true);
 		
 	
 	if (m_special >= 100 && CInput::GetState(0, CInput::eHold, CInput::eButton8) && m_attack_flg == false)
@@ -555,7 +556,7 @@ void Player::Draw()
 
 void Player::ItemGet(int _itemTyp)
 {
-	
+	SOUND("magic-status-cure1")->Play();
 	switch (_itemTyp)
 	{
 	case ItemList::eHyoutan:
