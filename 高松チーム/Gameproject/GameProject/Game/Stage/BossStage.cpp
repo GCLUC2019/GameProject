@@ -17,7 +17,7 @@ void BossStage::Update()
 
 void BossStage::Draw()
 {
-    m_img.SetPos(0, -(1200-720)+ g_game_data.m_scroll.y/3);
+    m_img.SetPos(0, -(1200-720)- g_game_data.m_scroll.y/3);
     m_img.SetSize(1280, 1200);
     m_img.Draw();
 }
