@@ -31,7 +31,7 @@ m_state_old(m_state),
 m_HP(100),
 m_special(0)
 {
-	m_pos = CVector2D(1280/2, 540);
+	m_pos = CVector2D(100, 540);
 	m_img = COPY_RESOURCE("Player",CAnimImage*);
 	m_shadow= COPY_RESOURCE("Shadow", CImage*);
 	m_depth = (m_pos.y - DEP_N)/3.5;
