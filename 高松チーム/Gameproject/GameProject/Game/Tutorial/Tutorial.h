@@ -25,6 +25,7 @@ private:
 	CVector2D m_pos;
 	CImage m_img;
 	int cnt;
+	bool m_get_specialattack;
 public:
 	Balloon();
 	void Update();

@@ -74,4 +74,8 @@ void TutorialEnemy::HitCheck()
 		SOUND("punch-middle2")->Play();
 		m_state = TutorialEnemyState::eDamage;
 	}
+	if (CollitionBase::CollisionCheckRect(this, CharacterData::ePlayerSpecial)) {
+		SOUND("punch-middle2")->Play();
+		m_state = TutorialEnemyState::eDamage;
+	}
 }
