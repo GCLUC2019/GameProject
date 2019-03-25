@@ -290,3 +290,12 @@ void TaskManager::ClearInstance()
 	if (mp_instance != nullptr) delete mp_instance;
 	mp_instance = nullptr;
 }
+
+void TaskManager::ScrollAll(CVector2D _vec)
+{
+	Task* d = mp_head;
+	while (d) {
+		d->Scroll(_vec);
+		d = d->GetNext();
+	}
+}

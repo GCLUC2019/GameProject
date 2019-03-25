@@ -30,4 +30,8 @@ public:
 	 CRect GetRect() {
 		 return m_rect;
 	 }
+
+	 void Scroll(const CVector2D& _vec) {
+		 m_pos += _vec;
+	 }
 };

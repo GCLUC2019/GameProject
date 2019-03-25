@@ -34,4 +34,7 @@ public:
 	int  Random(int _h, int _l) {
 		return Utility::Rand(_l, _h);
 	}
+	void Scroll(const CVector2D& _vec) {
+		m_pos += _vec;
+	}
 };

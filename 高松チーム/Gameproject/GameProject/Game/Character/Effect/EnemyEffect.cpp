@@ -28,7 +28,7 @@ void E2Effect::Update()
 
 void E2Effect::Draw()
 {
-    m_img.SetPos(CVector2D(m_pos.x - g_game_data.m_scroll.x, m_pos.y - g_game_data.m_scroll.y / 3));
+    m_img.SetPos(CVector2D(m_pos.x , m_pos.y - g_game_data.m_scroll.y / 3));
     m_img.SetCenter(EFFECT_SIZE , EFFECT_SIZE / 2);
     m_img.SetSize(EFFECT_SIZE*2, EFFECT_SIZE);
     m_img.Draw();
@@ -49,7 +49,7 @@ E4EffectEXAttack::E4EffectEXAttack(const CVector2D & pos) :Task(eE4AttackEffect)
 	m_img = COPY_RESOURCE("Enemy04EffectEX", CAnimImage*);
 	m_pos = CVector2D(1280 / 2, pos.y);
 	m_img.ChangeAnimation(E4EffectAnim::eE4EXAttack, false);
-	m_rect = CRect(-EFFECT_SIZE_E4_EX_X / 2, -EFFECT_SIZE_E4_EX_Y / 2, EFFECT_SIZE_E4_EX_X / 2, EFFECT_SIZE_E4_EX_Y / 2);
+	m_rect = CRect(-EFFECT_SIZE_E4_EX_X / 2, -EFFECT_SIZE_E4_EX_Y / 2 - g_game_data.m_scroll.y / 3, EFFECT_SIZE_E4_EX_X / 2, EFFECT_SIZE_E4_EX_Y / 2 - g_game_data.m_scroll.y / 3);
 }
 
 void E4EffectEXAttack::Update()
@@ -62,7 +62,8 @@ void E4EffectEXAttack::Update()
 
 void E4EffectEXAttack::Draw()
 {
-	m_img.SetPos(m_pos - CVector2D(g_game_data.m_scroll.x,0));
+	m_rect = CRect(-EFFECT_SIZE_E4_EX_X / 2, -EFFECT_SIZE_E4_EX_Y / 2 - g_game_data.m_scroll.y / 3, EFFECT_SIZE_E4_EX_X / 2, EFFECT_SIZE_E4_EX_Y / 2 - g_game_data.m_scroll.y / 3);
+	m_img.SetPos(m_pos - CVector2D(0, g_game_data.m_scroll.y / 3));
 	m_img.SetCenter(EFFECT_SIZE_E4_EX_X/2, EFFECT_SIZE_E4_EX_Y / 2);
 	m_img.SetSize(EFFECT_SIZE_E4_EX_X, EFFECT_SIZE_E4_EX_Y);
 	m_img.Draw();
@@ -90,7 +91,7 @@ E4EffectSAttack::E4EffectSAttack(const CVector2D & pos) :Task(eE4AttackEffect)
 	m_img = COPY_RESOURCE("Enemy04EffectS", CAnimImage*);
 	m_pos = pos;
 	m_img.ChangeAnimation(E4EffectAnim::eE4SAttack, false);
-	m_rect = CRect(-EFFECT_SIZE_E4_S / 2, -EFFECT_SIZE_E4_S / 2, EFFECT_SIZE_E4_S / 2, EFFECT_SIZE_E4_S / 2);
+	m_rect = CRect(-EFFECT_SIZE_E4_S / 2, -EFFECT_SIZE_E4_S / 2 - g_game_data.m_scroll.y / 3, EFFECT_SIZE_E4_S / 2, EFFECT_SIZE_E4_S / 2 - g_game_data.m_scroll.y / 3);
 }
 
 void E4EffectSAttack::Update()
@@ -103,7 +104,8 @@ void E4EffectSAttack::Update()
 
 void E4EffectSAttack::Draw()
 {
-	m_img.SetPos(m_pos - CVector2D(0, 50));
+	m_rect = CRect(-EFFECT_SIZE_E4_S / 2, -EFFECT_SIZE_E4_S / 2 - g_game_data.m_scroll.y / 3, EFFECT_SIZE_E4_S / 2, EFFECT_SIZE_E4_S / 2 - g_game_data.m_scroll.y / 3);
+	m_img.SetPos(m_pos - CVector2D(0, 50 + g_game_data.m_scroll.y / 3));
 	m_img.SetCenter(EFFECT_SIZE_E4_S, EFFECT_SIZE_E4_S);
 	m_img.SetSize(EFFECT_SIZE_E4_S * 2, EFFECT_SIZE_E4_S * 2);
 	m_img.Draw();
@@ -131,7 +133,7 @@ E4EffectLAttack::E4EffectLAttack(const CVector2D & pos, const bool & _flip) :Tas
 	m_img = COPY_RESOURCE("Enemy04EffectL", CAnimImage*);
 	m_pos = pos;
 	m_img.ChangeAnimation(E4EffectAnim::eE4LAttack);
-	m_rect = CRect(-EFFECT_SIZE_E4_L / 2, -EFFECT_SIZE_E4_L / 2, EFFECT_SIZE_E4_L / 2, EFFECT_SIZE_E4_L / 2);
+	m_rect = CRect(-EFFECT_SIZE_E4_L / 2, -EFFECT_SIZE_E4_L / 2 - g_game_data.m_scroll.y / 3, EFFECT_SIZE_E4_L / 2, EFFECT_SIZE_E4_L / 2 - g_game_data.m_scroll.y / 3);
 }
 
 void E4EffectLAttack::Update()
@@ -149,7 +151,8 @@ void E4EffectLAttack::Update()
 
 void E4EffectLAttack::Draw()
 {
-	m_img.SetPos(m_pos - CVector2D(g_game_data.m_scroll.x,0));
+	m_rect = CRect(-EFFECT_SIZE_E4_L / 2, -EFFECT_SIZE_E4_L / 2 - g_game_data.m_scroll.y / 3, EFFECT_SIZE_E4_L / 2, EFFECT_SIZE_E4_L / 2 - g_game_data.m_scroll.y / 3);
+	m_img.SetPos(m_pos - CVector2D(0, g_game_data.m_scroll.y / 3));
 	m_img.SetCenter(EFFECT_SIZE_E4_L, EFFECT_SIZE_E4_L);
 	m_img.SetSize(EFFECT_SIZE_E4_L * 2, EFFECT_SIZE_E4_L * 2);
 	m_img.Draw();

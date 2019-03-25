@@ -6,6 +6,7 @@ class CharacterBase : public Task {
 private:
 protected:
 	CVector2D m_pos;
+
 	CAnimImage m_img;
 	int m_type;
 	CRect m_rect;
@@ -25,4 +26,7 @@ public:
     float GetDepth() {
         return m_depth;
     }
+	void Scroll(const CVector2D& _vec) {
+		m_pos += _vec;
+	}
 };

@@ -43,6 +43,9 @@ public:
     float GetDepth() {
         return m_depth;
     }
+	void Scroll(const CVector2D& _vec) {
+		m_pos += _vec;
+	}
 };
 struct CollisionLine {
     CVector2D start;//Žn“_

@@ -9,6 +9,7 @@
 class CollisionBox :public Task {
 protected:
     CVector2D m_pos;
+	CVector2D m_pos_org;
     CRect m_rect;
 public:
     CollisionBox(const CVector2D &_pos, const CRect &_rect);
@@ -25,4 +26,7 @@ public:
     CRect GetRect() {
         return m_rect;
     }
+	void Scroll(const CVector2D& _vec) {
+		m_pos += _vec;
+	}
 };

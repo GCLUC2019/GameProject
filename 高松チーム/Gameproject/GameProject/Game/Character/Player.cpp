@@ -151,7 +151,7 @@ void Player::Jump()
 
 		m_pos.y -= jump_vec_pow;
 		jump_vec_pow += GRAVITY;
-
+		g_game_data.m_scroll.y -= jump_vec_pow;
 		if (jump_vec_pow < 0) {
 			m_state = PlayerState::eJumpDown;
 			if (m_pos_old.y < 520) {
@@ -171,6 +171,7 @@ void Player::Jump()
 			}
 		}
 		if (m_pos.y >= m_pos_old.y) {
+			g_game_data.m_scroll.y = 0;
 			m_jump_flg = false;
 			m_jump2_flg = false;
 			m_pos.y = m_pos_old.y; 
@@ -442,15 +443,15 @@ void Player::Update()
 			m_pos.y -= m_speed;
 			m_pos_old.y = 720;
 		}
-		if (m_pos_old.x < 0 + g_game_data.m_scroll.x)
+		if (m_pos_old.x < 0)
 		{
 			m_pos.x += m_speed;
-			m_pos_old.x = 0 + g_game_data.m_scroll.x;
+			m_pos_old.x = 0 ;
 		}
-		if (m_pos_old.x > 1280 + g_game_data.m_scroll.x)
+		if (m_pos_old.x > 1280 )
 		{
 			m_pos.x -= m_speed;
-			m_pos_old.x = 1280 + g_game_data.m_scroll.x;
+			m_pos_old.x = 1280 ;
 		}
 	}
 	else if (m_jump2_flg) {
@@ -459,7 +460,7 @@ void Player::Update()
 			m_jump_flg = true;
 	}
 	else{
-		if (m_pos.x < 0 + g_game_data.m_scroll.x || m_pos.x > 1280 + g_game_data.m_scroll.x)
+		if (m_pos.x < 0  || m_pos.x > 1280 )
 			m_pos.x = m_pos_old.x;
 		if (m_pos.y < 480 || m_pos.y > 720)
 			m_pos.y = m_pos_old.y;
@@ -531,16 +532,16 @@ void Player::Draw()
 	
 	m_img.SetSize(SAIZE + m_depth, SAIZE + m_depth);
 	m_img.SetCenter((SAIZE + m_depth) / 2, (SAIZE + m_depth));
-	m_img.SetPos(m_pos - CVector2D(g_game_data.m_scroll.x,0));
+	m_img.SetPos(m_pos - CVector2D(0,0));
 	m_img.SetFlipH(m_flip);
 	m_shadow.SetSize(SAIZE_SD + m_depth + m_jump_vec / 5, SAIZE_SD - 70 );
 	m_shadow.SetCenter((SAIZE_SD + m_depth + m_jump_vec / 5) / 2, (SAIZE_SD - 70 ) / 2);
 	if (m_jump2_flg)
 		m_shadow.SetPos(m_pos);
 	else if (m_jump_flg)
-		m_shadow.SetPos(m_pos.x - g_game_data.m_scroll.x, m_pos_old.y - g_game_data.m_scroll.y / 3);
+		m_shadow.SetPos(m_pos.x, m_pos_old.y - g_game_data.m_scroll.y / 3);
 	else
-		m_shadow.SetPos(m_pos.x - g_game_data.m_scroll.x, m_pos.y - g_game_data.m_scroll.y / 3);
+		m_shadow.SetPos(m_pos.x , m_pos.y - g_game_data.m_scroll.y / 3);
 	
 
 	m_shadow.Draw();

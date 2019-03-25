@@ -50,15 +50,21 @@ void GameScene::Update()
 	m_player_pos_x = n->GetPos();
 
 
-	if (g_game_data.m_dead_cnt >= 10 && m_player_pos_x.x >= 1280)
-			g_game_data.m_scroll.x += 10;
+	static bool scroll = false;
+	if (g_game_data.m_dead_cnt >= 10 && m_player_pos_x.x >= 1280 || scroll) {
+		scroll = true;
+		g_game_data.m_scroll.x += 10;
+		TaskManager::ScrollAll(CVector2D(-10, 0));
+		if (g_game_data.m_scroll.x >= 1280)
+			scroll = false;
+	}
 	if (g_game_data.m_scroll.x >= 1280) g_game_data.m_scroll.x = 1280;
 
 
 	if (g_game_data.m_dead_cnt >= 20)
 		TaskManager::GetInstance()->AddTask(new GuidanceUI());
 
-	if (g_game_data.m_dead_cnt >= 20 && m_player_pos_x.x - g_game_data.m_scroll.x >= 1280) {
+	if (g_game_data.m_dead_cnt >= 20 && m_player_pos_x.x  >= 1280) {
 
 		TaskManager::KillAll();
 		TaskManager::GetInstance()->AddTask(new GameScene2());

@@ -1,5 +1,5 @@
 #pragma once
-
+#include "../stdafx.h"
 class Task;
 class TaskManager {
 private:
@@ -35,6 +35,6 @@ public:
     static Task*FindObject(int _type);
 	static TaskManager* GetInstance();
 	static void ClearInstance();
-	
+	static void ScrollAll(CVector2D _vec);
 };
 

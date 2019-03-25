@@ -69,7 +69,7 @@ void Item::Update()
 
 void Item::Draw()
 {
-	m_img.SetPos(m_pos - CVector2D(g_game_data.m_scroll.x,0));
+	m_img.SetPos(m_pos - CVector2D(0,0));
 	m_img.Draw();
 }
 
