@@ -65,11 +65,11 @@ void GameOver::Update()
         switch (m_choice) {
         case 0:
             TaskManager::GetInstance()->KillAll();
-            TaskManager::AddTask(new Title());
+            TaskManager::AddTask(new GameScene());
             break;
         case 1:
             TaskManager::GetInstance()->KillAll();
-            TaskManager::AddTask(new GameScene());
+            TaskManager::AddTask(new Title());
             break;
         default:
             break;

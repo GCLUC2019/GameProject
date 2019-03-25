@@ -46,6 +46,8 @@ Title::~Title()
 
 void Title::Update()
 {
+    static int time = 60;
+
 	Task* p = TaskManager::FindObject(CharacterData::eFadeOut);
 	FadeOut* n = dynamic_cast<FadeOut*>(p);
 	if (n != nullptr)
@@ -69,7 +71,8 @@ void Title::Update()
     if (m_choice < 0)m_choice = 1;
     if (m_choice > 1)m_choice = 0;
     //printf("%d", m_choice);
-    if (CInput::GetState(0, CInput::ePush, CInput::eButton2)) {
+    
+    if (time<=0&&CInput::GetState(0, CInput::ePush, CInput::eButton2)) {
 		SOUND("se_027")->Play();
         m_enter = true;
 		TaskManager::GetInstance()->AddTask(new FadeOut());
@@ -86,9 +89,10 @@ void Title::Update()
 				break;
 			}
 			SetKill();
+            time = 60;
 		}
     }
-
+    time--;
 
 }
 

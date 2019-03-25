@@ -491,7 +491,10 @@ void Player::DamageState()
 }
 void Player::Death()
 {
+
 	static int time = 300;
+    if (TaskManager::FindObject(eGameOver) != nullptr)
+        return;
 	if (time == 299) {
 		Attack();
 		Jump();
@@ -500,8 +503,7 @@ void Player::Death()
 	time--;
 	if (time <= 0)
 	{
-		//TaskManager::GetInstance()->KillAll();
-        SetKill();
+		TaskManager::GetInstance()->KillAll();
 		TaskManager::GetInstance()->AddTask(new GameOver());
 		time = 300;
 	}

@@ -107,19 +107,21 @@ void Enemy01::Move()
     Task*t = TaskManager::FindObject(ePlayer);
     Player*p = dynamic_cast<Player*>(t);
     m_dir = p->GetPos() - m_pos;
-    if (m_dir.Length() < IMAGE_SIZE) {
-        if (m_dir.x > 0 && m_flip == true)m_flip = false;
-        if (m_dir.x < 0 && m_flip == false)m_flip = true;
-        m_dir = m_dir.GetNormalize();
-        m_pos -= m_dir * MOVE_SPEED;
-        if (m_pos.x < SCREEN_MIN_SIZE_X || m_pos.x > SCREEN_MAX_SIZE_X)
-            m_pos.x = m_pos_old.x;
-        if (m_pos.y < 480 || m_pos.y > SCREEN_MAX_SIZE_Y)
-            m_pos.y = m_pos_old.y;
-    }
-    else {
-        m_dir = CVector2D(0, 0);
-        m_state = eSearch;
+    if (p != nullptr) {
+        if (m_dir.Length() < IMAGE_SIZE) {
+            if (m_dir.x > 0 && m_flip == true)m_flip = false;
+            if (m_dir.x < 0 && m_flip == false)m_flip = true;
+            m_dir = m_dir.GetNormalize();
+            m_pos -= m_dir * MOVE_SPEED;
+            if (m_pos.x < SCREEN_MIN_SIZE_X || m_pos.x > SCREEN_MAX_SIZE_X)
+                m_pos.x = m_pos_old.x;
+            if (m_pos.y < 480 || m_pos.y > SCREEN_MAX_SIZE_Y)
+                m_pos.y = m_pos_old.y;
+        }
+        else {
+            m_dir = CVector2D(0, 0);
+            m_state = eSearch;
+        }
     }
     m_dir = CVector2D(0, 0);
 }
@@ -139,10 +141,12 @@ void Enemy01::Search()
     }
     Task*t = TaskManager::FindObject(ePlayer);
     Player*p = dynamic_cast<Player*>(t);
-    m_dir = p->GetPos() - m_pos;
-    if (m_dir.Length() < IMAGE_SIZE) {
-        m_dir = m_dir.GetNormalize();
-        m_state = eMove;
+    if (p != nullptr) {
+        m_dir = p->GetPos() - m_pos;
+        if (m_dir.Length() < IMAGE_SIZE) {
+            m_dir = m_dir.GetNormalize();
+            m_state = eMove;
+        }
     }
 }
 
