@@ -139,13 +139,17 @@ void CCharacterBoss::ChangeState()
 		s_boss_mode.boss_damage = 0;
 	}
 
-	if (m_ex_count == 8) {
+	if (m_ex_count == 5) {
 		m_ex_state = eEnemyBossStateRush;
 		m_ex_count = 0;
 	}
 
-	if (m_hit_count == 5) {
+	if (m_hit_count == 3) {
 		m_boss_state = eEnemyBossStateAttack;
+	}
+
+	if (m_hit_count == 5) {
+		m_ex_state = eEnemyBossStateRush;
 		m_hit_count = 0;
 	}
 
@@ -211,7 +215,7 @@ void CCharacterBoss::Away()
 	if (m_boss_state != eEnemyBossStateAway)return;
 
 	m_anim_p->SetWillPlayAnim(eEnemyAnimBossIdJump);
-	
+	CGameScene::GetInstance()->AddGameSceneObject(new CDamageEffect(&m_pos, CVector2D(-250, 0), CVector2D(500, 500), 30, eEffectJump,!m_is_flip, CVector2D(-200, 0)));
 	if (m_away_flg == false) {
 	/*	m_vec.y -= JUMP_POWER;*/
 		m_away_flg = true;
@@ -250,7 +254,10 @@ void CCharacterBoss::Attack1()
 	if (m_is_attack == false)return;
 
 	ChangeAttackState(eEnemyAnimBossIdBite, BITE_TIME);
-	
+
+	if (m_hit_point < 10.0f) {
+		CGameScene::GetInstance()->AddGameSceneObject(new CDamageEffect(&m_pos, CVector2D(-200, -180), CVector2D(400, 400), 30, eEffectBite, m_is_flip, CVector2D(120, 0)));
+	}
 	//プレイヤーが範囲内にいるとダメージを与える
 	if (float length = CheckAttackRange() <= ATTACK1_RANGE_BITE) {
 		m_is_attack = false;
@@ -289,13 +296,15 @@ void CCharacterBoss::SpecialAttack1()
 {
 	if (m_ex_state != eEnemyBossStateRush)return;
 
-
+	CVector3D draw_pos = CVector3D(0, 0, 0);
 	//ステップごとに処理が違う
 	switch (m_ex_attack_state)
 	{
 	//第一段階：上に向かって跳躍する
 	case eExStepStart:
 		ChangeAttackState(eEnemyAnimBossIdJump, RASH_TIME);
+		draw_pos = m_pos;
+		CGameScene::GetInstance()->AddGameSceneObject(new CDamageEffect(&draw_pos, CVector2D(0, 0), CVector2D(500, 500), 30, eEffectJump));
 		m_vec.y -= RASH_JIMP_POWER;
 		m_ex_attack_state = eExRashStep1;
 		break;
@@ -303,6 +312,8 @@ void CCharacterBoss::SpecialAttack1()
 	case eExRashStep1:
 		if (m_pos.x > 140.0) {
 			m_pos.x -= 10.0;
+			if (m_pos.z > m_player_pos.z)m_vec.z = +100;
+			if (m_pos.z < m_player_pos.z)m_vec.z = -100;
 		}
 		else{
 			m_ex_attack_state = eExRashStep2;

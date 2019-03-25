@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "CObject.h"
 class CAnimation;
 
@@ -7,6 +7,10 @@ enum {
 	eEffectSlashX,
 	eEffectSlashY,
 	eEffectSlashFinish,
+	eEffectBark,
+	eEffectBite,
+	eEffectRash,
+	eEffectJump,
 };
 
 class  CDamageEffect :public CObject
@@ -16,7 +20,7 @@ private:
 	CVector3D* m_pos_p;
 	CVector2D m_offset_pos;
 
-	//‰ñ“]‚É‚æ‚Á‚Ä•Ï‚í‚éƒIƒtƒZƒbƒg’l
+	//å›è»¢ã«ã‚ˆã£ã¦å¤‰ã‚ã‚‹ã‚ªãƒ•ã‚»ãƒƒãƒˆå€¤
 	CVector2D m_flip_offset_pos;
 	double m_delete_cnt = 0;
 	int m_effect_id = 0;

@@ -9,6 +9,7 @@
 #include"../CollitionBase.h"
 #include "../GameProject/Game/CollitionBase.h"
 #include "../GameProject/Game/Stage/CollisionBox.h"
+#include "../../Game/Scene/Result.h"
 #define GRAVITY -0.5//d—Í
 #define DEP_N 540//‰œsdÎ
 #define JUMP_SPD 15
@@ -30,7 +31,7 @@ m_state_old(m_state),
 m_HP(100),
 m_special(0)
 {
-	m_pos = CVector2D(1280/2, 540);
+	m_pos = CVector2D(100, 540);
 	m_img = COPY_RESOURCE("Player",CAnimImage*);
 	m_shadow= COPY_RESOURCE("Shadow", CImage*);
 	m_depth = (m_pos.y - DEP_N)/3.5;
@@ -412,6 +413,7 @@ void Player::Update()
 		Death();
 		return;
 	}
+	if (m_state == eMove) SOUND("dash2")->Play(true);
 		
 	
 	if (m_special >= 100 && CInput::GetState(0, CInput::eHold, CInput::eButton8) && m_attack_flg == false)
@@ -490,7 +492,10 @@ void Player::DamageState()
 }
 void Player::Death()
 {
+
 	static int time = 300;
+    if (TaskManager::FindObject(eGameOver) != nullptr)
+        return;
 	if (time == 299) {
 		Attack();
 		Jump();
@@ -500,7 +505,7 @@ void Player::Death()
 	if (time <= 0)
 	{
 		TaskManager::GetInstance()->KillAll();
-		TaskManager::GetInstance()->AddTask(new Title());
+		TaskManager::GetInstance()->AddTask(new GameOver());
 		time = 300;
 	}
 }
@@ -551,7 +556,7 @@ void Player::Draw()
 
 void Player::ItemGet(int _itemTyp)
 {
-	
+	SOUND("magic-status-cure1")->Play();
 	switch (_itemTyp)
 	{
 	case ItemList::eHyoutan:
@@ -566,7 +571,7 @@ void Player::ItemGet(int _itemTyp)
 		break;
 	case ItemList::eKakera:
 		if (m_HP < 100)
-			m_HP += 50;
+			m_HP += 30;
 		if (m_HP > 100)
 			m_HP = 100;
 		break;

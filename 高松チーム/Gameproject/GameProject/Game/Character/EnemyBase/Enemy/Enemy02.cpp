@@ -5,6 +5,8 @@
 #include "../GameProject/Game/GameData/GameData.h"
 #include "../GameProject/Game/CollitionBase.h"
 #include "../GameProject/Game/Character/Effect/EnemyEffect.h"
+#include "../GameProject/Game/Item/Item.h"
+
 #define MOVE_SPEED 2.5f
 #define DEP_N 1200
 #define JUMP_SPD -20.0f
@@ -154,6 +156,7 @@ void Enemy02::Damage()
                 n->SpecialPuls(5);
 			SetKill();
 			g_game_data.m_dead_cnt++;
+			TaskManager::GetInstance()->AddTask(new Item(ItemList::eHyoutan, m_pos));
 		}
 	}
 	else {

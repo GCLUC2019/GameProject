@@ -38,7 +38,8 @@ void Tutorial::Draw()
 
 }
 
-Balloon::Balloon() : Task(CharacterData::eBalloon)
+Balloon::Balloon() : Task(CharacterData::eBalloon),
+m_get_specialattack(false)
 {
 	m_img = COPY_RESOURCE("BalloonUI", CImage*);
 	m_pos = CVector2D(5, 595);
@@ -48,7 +49,17 @@ Balloon::Balloon() : Task(CharacterData::eBalloon)
 void Balloon::Update()
 {
 	
+	
 	if (CInput::GetState(0, CInput::ePush, CInput::eButton6)) ++cnt;
+
+	if (cnt == 6 && m_get_specialattack == false) {
+		m_get_specialattack = true;
+		Task* p = TaskManager::FindObject(ePlayer);
+		Player* n = dynamic_cast<Player*>(p);
+		if (n != nullptr)
+			n->SpecialPuls(100);
+	}
+
 	if (cnt >= 9) SetKill();
 }
 
