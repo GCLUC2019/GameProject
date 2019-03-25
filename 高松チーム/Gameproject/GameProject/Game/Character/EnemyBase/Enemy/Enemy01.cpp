@@ -37,7 +37,6 @@ m_search_flg(false)
     m_pos = _pos;
     m_state=eSearch;
 	m_hp = 100;
-    length = 0;
     m_vec = CVector2D(0, 0);
     m_dir = CVector2D(0, 0);
     m_rect = CRect(-IMAGE_SIZE / 2, -IMAGE_SIZE / 2, IMAGE_SIZE / 2, IMAGE_SIZE / 2);
@@ -54,9 +53,6 @@ void Enemy01::Update()
         break;
     case eSearch:
         Search();
-        break;
-    case eAttack:
-        Attack();
         break;
     case eDamage:
         Damage();
@@ -111,11 +107,23 @@ void Enemy01::Move()
     Task*t = TaskManager::FindObject(ePlayer);
     Player*p = dynamic_cast<Player*>(t);
     m_dir = p->GetPos() - m_pos;
-    length = m_dir.Length();
-    if (length < IMAGE_SIZE/2) {
-        m_dir = m_dir.GetNormalize();
-        m_state = eAttack;
+    if (p != nullptr) {
+        if (m_dir.Length() < IMAGE_SIZE) {
+            if (m_dir.x > 0 && m_flip == true)m_flip = false;
+            if (m_dir.x < 0 && m_flip == false)m_flip = true;
+            m_dir = m_dir.GetNormalize();
+            m_pos -= m_dir * MOVE_SPEED;
+            if (m_pos.x < SCREEN_MIN_SIZE_X || m_pos.x > SCREEN_MAX_SIZE_X)
+                m_pos.x = m_pos_old.x;
+            if (m_pos.y < 480 || m_pos.y > SCREEN_MAX_SIZE_Y)
+                m_pos.y = m_pos_old.y;
+        }
+        else {
+            m_dir = CVector2D(0, 0);
+            m_state = eSearch;
+        }
     }
+    m_dir = CVector2D(0, 0);
 }
 
 void Enemy01::Search()
@@ -133,23 +141,16 @@ void Enemy01::Search()
     }
     Task*t = TaskManager::FindObject(ePlayer);
     Player*p = dynamic_cast<Player*>(t);
-    m_dir = p->GetPos() - m_pos;
-    length = m_dir.Length();
-    if (length < IMAGE_SIZE) {
-        m_dir = m_dir.GetNormalize();
-        m_state = eMove;
+    if (p != nullptr) {
+        m_dir = p->GetPos() - m_pos;
+        if (m_dir.Length() < IMAGE_SIZE) {
+            m_dir = m_dir.GetNormalize();
+            m_state = eMove;
+        }
     }
 }
 
-void Enemy01::Attack()
-{
-    m_img.ChangeAnimation(eEAttack03, false);
 
-    if (m_img.CheckAnimationEnd()) {
-        m_state = eSearch;
-    }
-       
-}
 void Enemy01::Damage()
 {
 	m_vec.x = 0;

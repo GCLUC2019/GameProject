@@ -3,6 +3,7 @@
 #include "../Character/Player.h"
 #include "../CollitionBase.h"
 #include "../GameData/GameData.h"
+#include "../Resource/Sound/Sound.h"
 
 Item::Item(int _m_item_type, CVector2D _m_pos) : Task(CharacterData::eItem),
 m_item_type(_m_item_type),
@@ -69,7 +70,7 @@ void Item::Update()
 
 void Item::Draw()
 {
-	m_img.SetPos(m_pos - CVector2D(g_game_data.m_scroll.x,0));
+	m_img.SetPos(m_pos - CVector2D(0,0));
 	m_img.Draw();
 }
 
@@ -81,6 +82,7 @@ void Item::HitCheck()
 	if (n != nullptr) {
 		n->ItemGet(m_item_type);
 		SetKill();
+		SOUND("cursor3")->Play();
 	}
 	
 }

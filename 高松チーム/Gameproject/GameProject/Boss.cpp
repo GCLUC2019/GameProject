@@ -42,7 +42,7 @@ BossHead::BossHead(const CVector2D &player_pos, const int state) :EnemyBase(eBos
 	}
 	else if (m_state == eFireAttackDown || m_state == eHeadAttackDown) {
 		m_img = COPY_RESOURCE("Boss", CAnimImage*);
-		m_pos = CVector2D((1280 - BOSS_X_SIZE / 3) + 100, 0);
+		m_pos = CVector2D((1280 - BOSS_X_SIZE / 3) + 100, -20);
 		m_shadow_y = m_pos.y;
 		m_shadow_x = 0;
 	}
@@ -106,11 +106,11 @@ void BossHead::Idle()
 		CollitionBase::CollisionCheckRectANDY(this, CharacterData::ePEffectLongAttack, 50.0f))
 	{
 		SOUND("punch-middle2")->Play();
-		g_game_data.m_boss_hp -= 0.05f;
+		g_game_data.m_boss_hp -= 0.06f;
 	}
 	if (CollitionBase::CollisionCheckRect(this, CharacterData::ePlayerSpecial)) {
 		SOUND("punch-middle2")->Play();
-		g_game_data.m_boss_hp -= 20;
+		g_game_data.m_boss_hp -= 30;
 	}
 	if (g_game_data.m_boss_hp <= 0) SetKill();
 }
@@ -324,7 +324,7 @@ BossRightHand::BossRightHand(const CVector2D &player_pos, const int state) :Enem
 		m_center = CVector2D(m_pos.x + m_r, m_pos.y);
 	}
 	if (m_state == eDownAttack) {
-		m_pos = CVector2D(1280 - BOSS_X_SIZE + 150, 0);
+		m_pos = CVector2D(1280 - BOSS_X_SIZE + 150, -20);
 	}
 
 	m_idle_cnt = 0;
@@ -477,7 +477,7 @@ BossLeftHand::BossLeftHand(const CVector2D & player_pos, const int state) :Enemy
 		m_center = CVector2D(m_pos.x + m_r, m_pos.y);
 	}
 	if (m_state == eDownAttack) {
-		m_pos = CVector2D(1280 - BOSS_X_SIZE + 200, 0);
+		m_pos = CVector2D(1280 - BOSS_X_SIZE + 200, -20);
 		m_shadow_y = m_pos.y;
 		m_shadow_x = 0;
 	}
@@ -494,7 +494,7 @@ BossLeftHand::BossLeftHand(const CVector2D & player_pos, const int state) :Enemy
 BossLeftHand::~BossLeftHand()
 {
 	Task * p = TaskManager::GetInstance()->FindObject(eGameTitle);
-	if (p == nullptr&&m_hp>0)TaskManager::GetInstance()->AddTask(new BossManager());
+	if (p == nullptr&&g_game_data.m_boss_hp > 0)TaskManager::GetInstance()->AddTask(new BossManager());
 }
 
 void BossLeftHand::Idle()
@@ -660,7 +660,7 @@ BossTail::BossTail(const CVector2D & player_pos, const int state) :EnemyBase(eBo
 		m_shadow = COPY_RESOURCE("Shadow", CImage*);
 		m_img.SetCenter(BOSS_X_SIZE / 4, BOSS_Y_SIZE / 4);
 		m_tail_img.SetCenter(BOSS_X_SIZE / 4, BOSS_Y_SIZE / 4);
-		m_pos = CVector2D(player_pos.x + 50, 0);
+		m_pos = CVector2D(player_pos.x + 50, -20);
 		m_shadow_y = m_pos.y;
 		m_shadow_x = -100;
 
@@ -705,7 +705,6 @@ void BossTail::Update()
 
 	if (g_game_data.m_boss_hp <= 0) SetKill();
 
-	//m_img.ChangeAnimation(Motion2::eBossTailAnim);
 	m_img.ChangeAnimation(Motion1::eBossTailAttackMotion);
 	m_img.UpdateAnimation();
 	m_img2.UpdateAnimation();
@@ -744,7 +743,7 @@ void BossTail::UpMove()
 
 void BossTail::DownMove()
 {
-	m_rect = CRect(-80, -100, 80, 10);
+	m_rect = CRect(-80, -100, 20, 10);
 	m_shadow_y = m_player_pos.y - 25;
 
 	if (m_pos.y < m_player_pos.y) {
@@ -791,28 +790,31 @@ void BossTail::Draw()
 		break;
 	case Tail::eUp:
 		m_tail_img.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
-		m_shadow.SetSize((SHADOW_X_SIZE * 1.5 - m_shadow_size), SHADOW_Y_SIZE);
-		m_shadow.SetPos(m_pos.x - 150 + m_shadow_x, m_shadow_y - g_game_data.m_scroll.y / 3);
+		m_shadow.SetSize((SHADOW_X_SIZE / 1.5 - m_shadow_size), SHADOW_Y_SIZE);
+		m_shadow.SetPos(m_pos.x - 100 + m_shadow_x, m_shadow_y - g_game_data.m_scroll.y / 3);
 		m_tail_img.Draw();
+		m_shadow.Draw();
 		break;
 	case Tail::eDown:
 		m_tail_img.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
-		m_shadow.SetSize((SHADOW_X_SIZE / 1.5 + m_shadow_size), SHADOW_Y_SIZE);
-		m_shadow.SetPos(m_pos.x - 200 - m_shadow_x, m_shadow_y - g_game_data.m_scroll.y / 3);
+		m_shadow.SetSize((SHADOW_X_SIZE /12.5 + m_shadow_size), SHADOW_Y_SIZE);
+		m_shadow.SetPos(m_pos.x - 150 - m_shadow_x, m_shadow_y - g_game_data.m_scroll.y / 3);
 		m_tail_img.Draw();
+		m_shadow.Draw();
 		break;
 	case Tail::eTailAttack:
 		m_img.SetPos(m_pos.x, m_pos.y - g_game_data.m_scroll.y / 3);
-		m_shadow.SetSize((SHADOW_X_SIZE * 1.5 - m_shadow_size), SHADOW_Y_SIZE);
-		m_shadow.SetPos(m_pos.x - 150, m_shadow_y - g_game_data.m_scroll.y / 3);
+		m_shadow.SetSize((SHADOW_X_SIZE/1.5 - m_shadow_size), SHADOW_Y_SIZE);
+		m_shadow.SetPos(m_pos.x - 100, m_shadow_y - g_game_data.m_scroll.y / 3);
 		m_attack_flag = true;
 		m_img.Draw();
+		m_shadow.Draw();
 		break;
 	default:
 		break;
 	}
 
-	m_shadow.Draw();
+	//m_shadow.Draw();
 
 }
 

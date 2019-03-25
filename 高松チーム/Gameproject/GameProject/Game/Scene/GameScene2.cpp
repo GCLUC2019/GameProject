@@ -21,7 +21,7 @@ GameScene2::GameScene2() : Task(eGameScene2)
 
 GameScene2::~GameScene2()
 {
-	
+	SOUND("n32")->Stop();
 }
 
 void GameScene2::Update()

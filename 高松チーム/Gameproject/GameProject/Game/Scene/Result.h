@@ -15,5 +15,21 @@ public:
 	~GameClear();
 	void Update();
 	void Draw();
-
+	CVector2D GetPos() {
+		return  CVector2D(0, 800);
+	}
+};
+class GameOver :public Task {
+private:
+    CImage m_main_img;
+    CImage m_restart_img;
+    CImage m_totitle_img;
+    CImage m_img_icon;
+    CVector2D m_icon_pos;
+    int m_choice;
+public:
+    GameOver();
+    ~GameOver();
+    void Update();
+    void Draw();
 };

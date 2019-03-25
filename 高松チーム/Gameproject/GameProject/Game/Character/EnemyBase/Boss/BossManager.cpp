@@ -65,14 +65,14 @@ void BossManager::Attack()
 		Task * p = TaskManager::GetInstance()->FindObject(ePlayer);
 		if (p == nullptr)return;
 		m_player_pos = p->GetPos();
-		m_boss_attack_type = rand() % 100;
+		m_boss_attack_type = rand() % 1000;
 	}
-	int a = 3;
-	if (m_boss_attack_type > 80) m_boss_attack_type = 1;
-	else if (m_boss_attack_type <= 80 && m_boss_attack_type > 60) m_boss_attack_type = 2;
-	else if (m_boss_attack_type <= 60 && m_boss_attack_type > 40) m_boss_attack_type = 3;
-	else if (m_boss_attack_type <= 40 && m_boss_attack_type > 20) m_boss_attack_type = 4;
-	else if (m_boss_attack_type <= 20 && m_boss_attack_type > 0) m_boss_attack_type = 5;
+	int a = 5;
+	if (m_boss_attack_type > 800) m_boss_attack_type = 1;
+	else if (m_boss_attack_type <= 800 && m_boss_attack_type > 600) m_boss_attack_type = 2;
+	else if (m_boss_attack_type <= 600 && m_boss_attack_type > 400) m_boss_attack_type = 3;
+	else if (m_boss_attack_type <= 400 && m_boss_attack_type > 200) m_boss_attack_type = 4;
+	else if (m_boss_attack_type <= 200 && m_boss_attack_type > 0) m_boss_attack_type = 5;
 
 
 	switch (m_boss_attack_type) {
@@ -88,7 +88,7 @@ void BossManager::Attack()
 
 	case 3:
 		TaskManager::GetInstance()->AddTask(new BossTail(m_player_pos, Manager::eAttackDown));
-		m_state = Manager::eNothing;
+		m_state = Manager::eNothing;//ok
 		break;
 
 	case 4:

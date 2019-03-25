@@ -36,8 +36,8 @@ void PlayerEffectLongAttack::Draw()
 	//サイズ指定と描画
 	m_img.SetSize(70,70);
 	m_img.SetCenter(70 / 2, 70 / 2);
-	m_rect = CRect(-60 - g_game_data.m_scroll.x, -120, -20 - g_game_data.m_scroll.x, -40);
-	m_img.SetPos(m_pos-CVector2D(g_game_data.m_scroll.x,70));
+	m_rect = CRect(-60, -120, -20, -40);
+	m_img.SetPos(m_pos-CVector2D(0,70));
 	m_img.SetFlipH(m_flip);
 	m_img.Draw();
 }
@@ -45,7 +45,7 @@ void PlayerEffectLongAttack::Draw()
 void PlayerEffectLongAttack::MoveControl()
 {
 
-	if (m_pos.x < SCREEN_MIN_SIZE_X + g_game_data.m_scroll.x || m_pos.x > SCREEN_MAX_SIZE_X + g_game_data.m_scroll.x)
+	if (m_pos.x < SCREEN_MIN_SIZE_X|| m_pos.x > SCREEN_MAX_SIZE_X)
 		SetKill();
 	if (m_pos.y < SCREEN_MIN_SIZE_Y || m_pos.y > SCREEN_MAX_SIZE_Y)
 		SetKill();
@@ -68,7 +68,7 @@ void PlayerEffectShortAttack01::Update()
 	if (m_flip == true)
 	{
 		m_vec.x = 0;
-		m_rect = CRect(60 - g_game_data.m_scroll.x, -120, 20 - g_game_data.m_scroll.x, -40);
+		m_rect = CRect(60, -120, 20 , -40);
 	}
 	else m_vec.x = -0.01f;
 
@@ -103,7 +103,7 @@ void PlayerEffectShortAttack02::Update()
 {
 	if (m_flip == true) {
 		m_vec.x = 0;
-		m_rect = CRect(60 - g_game_data.m_scroll.x, -120, 20 - g_game_data.m_scroll.x, -40);
+		m_rect = CRect(60 , -120, 20 , -40);
 	}
 	else m_vec.x = -0.01f;
 
@@ -137,7 +137,7 @@ void PlayerEffectShortAttack03::Update()
 {
 	if (m_flip == true) {
 		m_vec.x = 0;
-		m_rect = CRect(60 - g_game_data.m_scroll.x, -120, 20 - g_game_data.m_scroll.x, -40);
+		m_rect = CRect(60, -120, 20 , -40);
 	}
 	else m_vec.x = -0.01f;
 
@@ -152,7 +152,7 @@ void PlayerEffectShortAttack03::Draw()
 	//サイズ指定と描画
 	m_img.SetSize(120, 120);
 	m_img.SetCenter(120 / 2, 120 / 2);
-	m_img.SetPos(m_pos-CVector2D(g_game_data.m_scroll.x,90));
+	m_img.SetPos(m_pos-CVector2D(0,90));
 	m_img.SetFlipH(m_flip);
 	m_img.Draw();
 }

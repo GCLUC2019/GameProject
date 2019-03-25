@@ -50,6 +50,8 @@ public:
 		ADD_RESOURCE("PEffectShortAttack", CAnimImage::LoadImage("../data/Image/motion_effect.png", PlayerEffectAnimData, 512, 512));
 		ADD_RESOURCE("PEffectLongAttack", CAnimImage::LoadImage("../data/Image/item_matome_1.png", PlayerEffectAnimData, 128, 128));
 		ADD_RESOURCE("PESpecialAttack", CAnimImage::LoadImage("../data/Image/pipo-mapeffect013a-1.png", PlayerEffectAnimData, 400, 400));
+		ADD_RESOURCE("PESpecialAttackFire", CAnimImage::LoadImage("../data/Image/fire_effect.png", PlayerEffectAnimData, 204, 245));
+		ADD_RESOURCE("MagicCircle", CImage::LoadImage("../data/Image/mahoujin_image.png"));
 
 		//•KŽE‚Ì‚à‚ë‚à‚ë
 		ADD_RESOURCE("Curtain", CImage::LoadImage("../data/Image/curtain.png"));
@@ -76,6 +78,7 @@ public:
 		ADD_RESOURCE("PEffectLongAttack", CAnimImage::LoadImage("../data/Image/item_matome_1.png", PlayerEffectAnimData, 128, 128));
 		ADD_RESOURCE("PESpecialAttack", CAnimImage::LoadImage("../data/Image/pipo-mapeffect013a-1.png", PlayerEffectAnimData, 400, 400));
 		ADD_RESOURCE("PEGetDamage", CAnimImage::LoadImage("../data/Image/Effect_p020.png", PlayerEffectAnimData, 200, 200));
+		ADD_RESOURCE("PESpecialAttackFire", CAnimImage::LoadImage("../data/Image/fire_effect.png", PlayerEffectAnimData, 204, 245));
 
 		//•KŽE‚Ì‚à‚ë‚à‚ë
 		ADD_RESOURCE("Curtain", CImage::LoadImage("../data/Image/curtain.png"));

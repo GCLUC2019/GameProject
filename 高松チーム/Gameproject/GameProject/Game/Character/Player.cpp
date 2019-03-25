@@ -9,6 +9,7 @@
 #include"../CollitionBase.h"
 #include "../GameProject/Game/CollitionBase.h"
 #include "../GameProject/Game/Stage/CollisionBox.h"
+#include "../../Game/Scene/Result.h"
 #define GRAVITY -0.5//èdóÕ
 #define DEP_N 540//âúçsèdêŒ
 #define JUMP_SPD 15
@@ -30,7 +31,7 @@ m_state_old(m_state),
 m_HP(100),
 m_special(0)
 {
-	m_pos = CVector2D(1280/2, 540);
+	m_pos = CVector2D(100, 540);
 	m_img = COPY_RESOURCE("Player",CAnimImage*);
 	m_shadow= COPY_RESOURCE("Shadow", CImage*);
 	m_depth = (m_pos.y - DEP_N)/3.5;
@@ -151,7 +152,7 @@ void Player::Jump()
 
 		m_pos.y -= jump_vec_pow;
 		jump_vec_pow += GRAVITY;
-
+		g_game_data.m_scroll.y -= jump_vec_pow;
 		if (jump_vec_pow < 0) {
 			m_state = PlayerState::eJumpDown;
 			if (m_pos_old.y < 520) {
@@ -171,6 +172,7 @@ void Player::Jump()
 			}
 		}
 		if (m_pos.y >= m_pos_old.y) {
+			g_game_data.m_scroll.y = 0;
 			m_jump_flg = false;
 			m_jump2_flg = false;
 			m_pos.y = m_pos_old.y; 
@@ -327,8 +329,8 @@ void Player::Special()
 	m_special = 0;
 	if (time == 300) {
 		TaskManager::GetInstance()->AddTask(new PlayerEffectSpecialAttack(m_pos));
-		/*for (int i = 0; i < 5; i++)
-		TaskManager::GetInstance()->AddTask(new PlayerEffectSpecialAttackFire(CVector2D(rand() / 28, Utility::Rand(300, 580))));*/
+		for (int i = 0; i < 5; i++)
+		TaskManager::GetInstance()->AddTask(new PlayerEffectSpecialAttackFire(CVector2D(rand() / 28, Utility::Rand(300, 580))));
 		TaskManager::GetInstance()->AddTask(new SpecialEvent);
 		m_state = eSpecial;
 		SetAnim();
@@ -442,15 +444,15 @@ void Player::Update()
 			m_pos.y -= m_speed;
 			m_pos_old.y = 720;
 		}
-		if (m_pos_old.x < 0 + g_game_data.m_scroll.x)
+		if (m_pos_old.x < 0)
 		{
 			m_pos.x += m_speed;
-			m_pos_old.x = 0 + g_game_data.m_scroll.x;
+			m_pos_old.x = 0 ;
 		}
-		if (m_pos_old.x > 1280 + g_game_data.m_scroll.x)
+		if (m_pos_old.x > 1280 )
 		{
 			m_pos.x -= m_speed;
-			m_pos_old.x = 1280 + g_game_data.m_scroll.x;
+			m_pos_old.x = 1280 ;
 		}
 	}
 	else if (m_jump2_flg) {
@@ -459,7 +461,7 @@ void Player::Update()
 			m_jump_flg = true;
 	}
 	else{
-		if (m_pos.x < 0 + g_game_data.m_scroll.x || m_pos.x > 1280 + g_game_data.m_scroll.x)
+		if (m_pos.x < 0  || m_pos.x > 1280 )
 			m_pos.x = m_pos_old.x;
 		if (m_pos.y < 480 || m_pos.y > 720)
 			m_pos.y = m_pos_old.y;
@@ -489,7 +491,10 @@ void Player::DamageState()
 }
 void Player::Death()
 {
+
 	static int time = 300;
+    if (TaskManager::FindObject(eGameOver) != nullptr)
+        return;
 	if (time == 299) {
 		Attack();
 		Jump();
@@ -499,7 +504,7 @@ void Player::Death()
 	if (time <= 0)
 	{
 		TaskManager::GetInstance()->KillAll();
-		TaskManager::GetInstance()->AddTask(new Title());
+		TaskManager::GetInstance()->AddTask(new GameOver());
 		time = 300;
 	}
 }
@@ -531,16 +536,16 @@ void Player::Draw()
 	
 	m_img.SetSize(SAIZE + m_depth, SAIZE + m_depth);
 	m_img.SetCenter((SAIZE + m_depth) / 2, (SAIZE + m_depth));
-	m_img.SetPos(m_pos - CVector2D(g_game_data.m_scroll.x,0));
+	m_img.SetPos(m_pos - CVector2D(0,0));
 	m_img.SetFlipH(m_flip);
 	m_shadow.SetSize(SAIZE_SD + m_depth + m_jump_vec / 5, SAIZE_SD - 70 );
 	m_shadow.SetCenter((SAIZE_SD + m_depth + m_jump_vec / 5) / 2, (SAIZE_SD - 70 ) / 2);
 	if (m_jump2_flg)
 		m_shadow.SetPos(m_pos);
 	else if (m_jump_flg)
-		m_shadow.SetPos(m_pos.x - g_game_data.m_scroll.x, m_pos_old.y - g_game_data.m_scroll.y / 3);
+		m_shadow.SetPos(m_pos.x, m_pos_old.y - g_game_data.m_scroll.y / 3);
 	else
-		m_shadow.SetPos(m_pos.x - g_game_data.m_scroll.x, m_pos.y - g_game_data.m_scroll.y / 3);
+		m_shadow.SetPos(m_pos.x , m_pos.y - g_game_data.m_scroll.y / 3);
 	
 
 	m_shadow.Draw();

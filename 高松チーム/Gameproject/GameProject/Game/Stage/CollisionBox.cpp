@@ -4,11 +4,11 @@ CollisionBox::CollisionBox(const CVector2D &_pos, const CRect &_rect):Task(eColl
 {
     m_pos = _pos;
     m_rect = _rect;
+	m_pos_org = m_pos;
 }
 
 void CollisionBox::Update()
 {
-
 }
 
 void CollisionBox::Draw()

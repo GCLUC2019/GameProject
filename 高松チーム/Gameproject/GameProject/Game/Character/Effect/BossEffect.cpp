@@ -135,7 +135,7 @@ BossSlashEffect::BossSlashEffect(const CVector2D &pos) : Task(eBossLazerEffectc)
 
 	//m_pos = pos;
 
-	m_pos = CVector2D(pos.x, m_player_pos.y);
+	m_pos = CVector2D(pos.x, m_player_pos.y - 50);
 
 	m_flip = false;
 
@@ -146,7 +146,6 @@ BossSlashEffect::BossSlashEffect(const CVector2D &pos) : Task(eBossLazerEffectc)
 
 void BossSlashEffect::Update()
 {
-	printf("Effect     %f             %f\n", m_pos.x, m_pos.y);
 	m_img.ChangeAnimation(eBossSlashEffect, false);
 	m_img.UpdateAnimation();
 	m_img.CheckAnimationEnd();

@@ -40,5 +40,7 @@ public:
 	}
     
 	void ThisSort();
-
+	virtual void Scroll(const CVector2D& _vec) {
+		return;
+	}
 };
