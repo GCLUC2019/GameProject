@@ -14,7 +14,7 @@ E2Effect::E2Effect(const CVector2D&pos) :Task(eE2AttackEffect)
 {
     m_img = COPY_RESOURCE("Enemy2Effect", CAnimImage*);
     m_pos = pos;
-    m_rect = CRect(-EFFECT_SIZE / 2, -EFFECT_SIZE / 4-g_game_data.m_scroll.y/3, EFFECT_SIZE / 2, EFFECT_SIZE / 4 - g_game_data.m_scroll.y / 3);
+    m_rect = CRect(-EFFECT_SIZE / 2, -EFFECT_SIZE / 5 - g_game_data.m_scroll.y / 3, EFFECT_SIZE / 2, EFFECT_SIZE / 4 - g_game_data.m_scroll.y / 3);
 }
 
 void E2Effect::Update()

@@ -12,12 +12,10 @@ private:
     enum Enemy01State{
         eMove,
         eSearch,
-        eAttack,
         eDamage,
     };
     CVector2D m_dir;
     float m_hover;//浮遊を表現するための変数
-    float length ;
     bool m_search_flg;//プレイヤーを見つけたかどうかのフラグ
     
     
@@ -28,7 +26,6 @@ public:
 	void Draw();
     void Move();//プレイヤー発見時の動き
     void Search();//探索中の動き
-    void Attack();//攻撃
     void Damage();//ダメージ
     void MoveControl();
     void HitCheck();
