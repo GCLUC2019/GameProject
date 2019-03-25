@@ -4,9 +4,11 @@
 #include "../../Game/UI/UI.h"
 #include "../GameProject/Game/Stage/BossStage.h"
 #include "../GameProject/Game/Scene/Result.h"
+#include "../GameProject/Game/GameData/GameData.h"
 
 GameScene2::GameScene2() : Task(eGameScene2)
 {
+	g_game_data.m_scroll = CVector2D(0, 0);
 	new GameSceneResourse2();
 	TaskManager::GetInstance()->AddTask(new BossStage());
 	TaskManager::GetInstance()->AddTask(new BossManager());

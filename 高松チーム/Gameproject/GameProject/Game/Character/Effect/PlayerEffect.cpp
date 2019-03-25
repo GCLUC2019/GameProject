@@ -214,3 +214,25 @@ void PlayerEffectGetDamage::Draw()
 	m_img.SetPos(m_pos - CVector2D(0,80));
 	m_img.Draw();
 }
+
+PlayerEffectSpecialAttackFire::PlayerEffectSpecialAttackFire(const CVector2D & pos) : Task(ePlayerEffectSpecialAttackFire)
+{
+	m_cnt = 0;
+	m_pos = pos;
+	m_img = COPY_RESOURCE("PESpecialAttackFire", CAnimImage*);
+}
+
+void PlayerEffectSpecialAttackFire::Update()
+{
+	m_cnt++;
+	m_img.ChangeAnimation(PlayerEffectAnim::ePESpecialAttackEffectFire);
+	if (m_cnt >= 300) SetKill();
+	m_img.UpdateAnimation();
+}
+
+void PlayerEffectSpecialAttackFire::Draw()
+{
+	m_img.SetSize(120, 150);
+	m_img.SetPos(m_pos);
+	m_img.Draw();
+}

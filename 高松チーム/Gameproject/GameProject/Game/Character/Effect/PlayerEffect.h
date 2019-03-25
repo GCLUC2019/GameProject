@@ -83,6 +83,17 @@ public:
 	void Draw();
 };
 
+class PlayerEffectSpecialAttackFire : public Task {
+private:
+	int m_cnt;
+	CAnimImage m_img;
+	CVector2D m_pos;
+public:
+	PlayerEffectSpecialAttackFire(const CVector2D & pos);
+	void Update();
+	void Draw();
+};
+
 class PlayerEffectGetDamage : public Task {
 private:
 	CAnimImage m_img;

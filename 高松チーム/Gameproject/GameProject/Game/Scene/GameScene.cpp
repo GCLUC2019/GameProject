@@ -52,11 +52,13 @@ void GameScene::Update()
 
 	if (g_game_data.m_dead_cnt >= 10 && m_player_pos_x.x >= 1280)
 			g_game_data.m_scroll.x += 10;
-	if (g_game_data.m_scroll.x >= 1280)
-		g_game_data.m_scroll.x = 1280;
+	if (g_game_data.m_scroll.x >= 1280) g_game_data.m_scroll.x = 1280;
 
 
-	if (m_player_pos_x.x >= 1270 && g_game_data.m_dead_cnt >= 20) {
+	if (g_game_data.m_dead_cnt >= 20)
+		TaskManager::GetInstance()->AddTask(new GuidanceUI());
+
+	if (g_game_data.m_dead_cnt >= 20 && m_player_pos_x.x - g_game_data.m_scroll.x >= 1280) {
 
 		TaskManager::KillAll();
 		TaskManager::GetInstance()->AddTask(new GameScene2());

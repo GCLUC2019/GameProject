@@ -327,6 +327,8 @@ void Player::Special()
 	m_special = 0;
 	if (time == 300) {
 		TaskManager::GetInstance()->AddTask(new PlayerEffectSpecialAttack(m_pos));
+		/*for (int i = 0; i < 5; i++)
+		TaskManager::GetInstance()->AddTask(new PlayerEffectSpecialAttackFire(CVector2D(rand() / 28, Utility::Rand(300, 580))));*/
 		TaskManager::GetInstance()->AddTask(new SpecialEvent);
 		m_state = eSpecial;
 		SetAnim();

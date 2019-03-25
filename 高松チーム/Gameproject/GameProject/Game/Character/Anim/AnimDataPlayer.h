@@ -23,6 +23,7 @@ enum PlayerEffectAnim {
 	ePEShortAttack03,
 	ePESpecialAttack,
 	ePEGetDamage,
+	ePESpecialAttackEffectFire,
 };
 
 extern TexAnimData PlayerAnimData[];

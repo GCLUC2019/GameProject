@@ -38,6 +38,7 @@ const enum CharacterData{
 	ePEffectSpecialAttack,
 	ePEffectGetDamage,
 	ePlayerSpecial,
+	ePlayerEffectSpecialAttackFire,
 	
 	eE1AttackEffect,
 	eE2AttackEffect,

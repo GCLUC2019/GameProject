@@ -127,6 +127,7 @@ public:
 		ADD_RESOURCE("PEffectLongAttack", CAnimImage::LoadImage("../data/Image/item_matome_1.png", PlayerEffectAnimData, 128, 128));
 		ADD_RESOURCE("PESpecialAttack", CAnimImage::LoadImage("../data/Image/pipo-mapeffect013a-1.png", PlayerEffectAnimData, 400, 400));
 		ADD_RESOURCE("PEGetDamage", CAnimImage::LoadImage("../data/Image/Effect_p020.png", PlayerEffectAnimData, 200, 200));
+		ADD_RESOURCE("PESpecialAttackFire", CAnimImage::LoadImage("../data/Image/fire_effect.png", PlayerEffectAnimData, 204, 245));
 
 		//•KŽE‚Ì‚à‚ë‚à‚ë
 		ADD_RESOURCE("Curtain", CImage::LoadImage("../data/Image/curtain.png"));
@@ -166,7 +167,7 @@ public:
 		//
 		ADD_RESOURCE("Boss", CAnimImage::LoadImage("../data/Image/moton_jaryu2.png", BossAnimData, 768, 768));
 		ADD_RESOURCE("Boss2", CAnimImage::LoadImage("../data/Image/moton_jaryu3.png", BossAnimData2, 768, 768));
-		ADD_RESOURCE("GameClear", CImage::LoadImage("../data/Image/push start.png"));
+		ADD_RESOURCE("GameClear", CImage::LoadImage("../data/Image/GameClear.png"));
 
 		ADD_RESOURCE("SkyRed", CImage::LoadImage("../data/Image/bg_sky_02.png"));
 		ADD_RESOURCE("BossLazer", CAnimImage::LoadImage("../data/Image/pipo-btleffect141.png", BossLazerEffectAnimData, 640, 480));
