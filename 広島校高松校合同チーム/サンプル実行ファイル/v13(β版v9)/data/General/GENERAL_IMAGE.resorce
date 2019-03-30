@@ -1,0 +1,89 @@
+BASE_FILE_PATH: General/
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Stage_Background_0_Bot LOAD_IMAGE_FILE_PATH: stage_background_0_bot.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Stage_Background_0_Top LOAD_IMAGE_FILE_PATH: stage_background_0_top.png
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Stage_Background_0_Boss_Bot LOAD_IMAGE_FILE_PATH: stage_background_0_boss_bot.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Stage_Background_0_Boss_Top LOAD_IMAGE_FILE_PATH: stage_background_0_boss_top.png
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Boss_HP_Bar_Frame LOAD_IMAGE_FILE_PATH: boss_hp_bar_frame.png
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Bullet LOAD_IMAGE_FILE_PATH: bullet.png
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Shadow LOAD_IMAGE_FILE_PATH: shadow.png
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: HP_Bar LOAD_IMAGE_FILE_PATH: hp_bar.png
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: HP_Bar_Fix LOAD_IMAGE_FILE_PATH: hp_bar_fix.png
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: HP_Bar_Frame LOAD_IMAGE_FILE_PATH: hp_bar_frame.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Enemy_HP_Bar_Frame LOAD_IMAGE_FILE_PATH: enemy_hp_bar_frame.png
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Boss_HP_Bar LOAD_IMAGE_FILE_PATH: boss_hp_bar.png
+
+
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Weapon_Bar_Frame LOAD_IMAGE_FILE_PATH: weapon_bar_frame.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Weapon_Bar LOAD_IMAGE_FILE_PATH: weapon_bar.png
+
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: IconSpear LOAD_IMAGE_FILE_PATH: IconSpear.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: IconAxe LOAD_IMAGE_FILE_PATH: IconAxe.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: IconGun LOAD_IMAGE_FILE_PATH: IconGun.png
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Flag LOAD_IMAGE_FILE_PATH: Flag.png
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Guide_How_To_Forward LOAD_IMAGE_FILE_PATH: guide_how_to_forward.png
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Guide_How_To_Start_Game LOAD_IMAGE_FILE_PATH: guide_how_to_start_game.png
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Guide_How_To_Input_Player LOAD_IMAGE_FILE_PATH: guide_how_to_input_player.png
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Guide_How_To_End_Guide LOAD_IMAGE_FILE_PATH: guide_how_to_end_guide.png
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: TutorialText-MoveRight LOAD_IMAGE_FILE_PATH: TutorialText-MoveRight.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: TutorialText-MoveLeft LOAD_IMAGE_FILE_PATH: TutorialText-MoveLeft.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: TutorialText-MoveUp LOAD_IMAGE_FILE_PATH: TutorialText-MoveUp.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: TutorialText-MoveDown LOAD_IMAGE_FILE_PATH: TutorialText-MoveDown.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: TutorialText-Jump LOAD_IMAGE_FILE_PATH: TutorialText-Jump.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: TutorialText-Success LOAD_IMAGE_FILE_PATH: TutorialText-Success.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: TutorialText-ComboAttack LOAD_IMAGE_FILE_PATH: TutorialText-ComboAttack.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: TutorialText-Evasion LOAD_IMAGE_FILE_PATH: TutorialText-Evasion.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: TutorialText-Dash LOAD_IMAGE_FILE_PATH: TutorialText-Dash.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: TutorialText-TakeWeapon LOAD_IMAGE_FILE_PATH: TutorialText-TakeWeapon.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: TutorialText-WeaponAttack LOAD_IMAGE_FILE_PATH: TutorialText-WeaponAttack.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: TutorialText-WeaponDestory LOAD_IMAGE_FILE_PATH: TutorialText-WeaponDestory.png
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: TutorialText-TakeKibidango LOAD_IMAGE_FILE_PATH: TutorialText-TakeKibidango.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: TutorialText-End LOAD_IMAGE_FILE_PATH: TutorialText-End.png
+
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: TutorialText-Attack LOAD_IMAGE_FILE_PATH: TutorialText-Attack.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: TutorialText-VerticalAttack LOAD_IMAGE_FILE_PATH: TutorialText-VerticalAttack.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: TutorialText-SideAttack LOAD_IMAGE_FILE_PATH: TutorialText-SideAttack.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: TutorialText-JumpAttack LOAD_IMAGE_FILE_PATH: TutorialText-JumpAttack.png
+
+
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: TutorialText-1 LOAD_IMAGE_FILE_PATH: TutorialText-1.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: TutorialText-2 LOAD_IMAGE_FILE_PATH: TutorialText-2.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: TutorialText-3 LOAD_IMAGE_FILE_PATH: TutorialText-3.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: TutorialText-4 LOAD_IMAGE_FILE_PATH: TutorialText-4.png
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Skip_Tutorial LOAD_IMAGE_FILE_PATH: skip_tutorial.png
+
+
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: DropItem_Flag LOAD_IMAGE_FILE_PATH: DropItem_Flag.png
+
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Peach LOAD_IMAGE_FILE_PATH: Peach.png
+
+
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Back LOAD_IMAGE_FILE_PATH: Back.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Start_By_Space LOAD_IMAGE_FILE_PATH: start_by_space.png
+
+LOAD_RESORCE_IMAGE: IMAGE_NAME: GameOver LOAD_IMAGE_FILE_PATH: GameOver.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Continue LOAD_IMAGE_FILE_PATH: Continue.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Return LOAD_IMAGE_FILE_PATH: Return.png
