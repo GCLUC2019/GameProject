@@ -11,6 +11,9 @@ enum {
 	eEffectBite,
 	eEffectRash,
 	eEffectJump,
+	eEffectSpear,
+	eEffectAxeSlash,
+	eEffectAxeStun,
 };
 
 class  CDamageEffect :public CObject

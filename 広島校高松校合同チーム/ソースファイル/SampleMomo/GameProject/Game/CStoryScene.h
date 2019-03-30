@@ -1,17 +1,17 @@
-#pragma once
+ï»¿#pragma once
 #include "CObject.h"
 #include "../Global.h"
 
-//”z—ñ‚ÌÅ‘å”
-#define MAX_TEXT_ARRAY 15
-#define MAX_STORY_ARRAY 2
-#define MAX_SENTENSE_SIZE 20
-#define ARRAY_SIZE 15
+//é…åˆ—ã®æœ€å¤§æ•°
+#define MAX_TEXT_ARRAY 50
+#define MAX_STORY_ARRAY 50
+#define MAX_SENTENSE_SIZE 50
+#define ARRAY_SIZE 50
 
-//ƒeƒLƒXƒg‚Ì•¶š”	
+//ãƒ†ã‚­ã‚¹ãƒˆã®æ–‡å­—æ•°	
 #define CHAR_NUM 30
 
-//“Y‚¦š
+//æ·»ãˆå­—
 #define SUB0 0
 #define SUB1 1
 #define SUB2 2
@@ -25,31 +25,35 @@
 #define SUB10 10
 #define SUB11 11
 
-//†Å‹ƒTƒCƒY‚ÆÀ•W
-#define STORY_SIZE  CVector2D(1000,600)
-#define STORY_POSISHON  CVector2D(140,20)
-//ƒeƒLƒXƒgƒ{ƒbƒNƒXƒTƒCƒY‚ÆÀ•W
+//ç´™èŠå±…ã‚µã‚¤ã‚ºã¨åº§æ¨™
+//#define STORY_SIZE  CVector2D(1000,600)
+//#define STORY_POSITION  CVector2D(140,20)
+
+#define STORY_SIZE  CVector2D(1000,550)
+#define STORY_POSITION  CVector2D(140,45)
+
+//ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ã‚µã‚¤ã‚ºã¨åº§æ¨™
 #define BOX_SIZE CVector2D(1100,70)
 #define BOX_POSISHON CVector2D(100, 630)
-//ƒeƒLƒXƒgƒTƒCƒY‚ÆÀ•W‹y‚Ñ‰ŠúØ‚èæ‚èƒTƒCƒY
+//ãƒ†ã‚­ã‚¹ãƒˆã‚µã‚¤ã‚ºã¨åº§æ¨™åŠã³åˆæœŸåˆ‡ã‚Šå–ã‚Šã‚µã‚¤ã‚º
 #define TEXT_SIZE CVector2D(1100,70)
 #define TEXT_POSISHON CVector2D(130, 635)
 #define TEXT_DEF_SIZE CVector2D(30,50)
-//ƒeƒLƒXƒgØ‚èæ‚èƒTƒCƒY
+//ãƒ†ã‚­ã‚¹ãƒˆåˆ‡ã‚Šå–ã‚Šã‚µã‚¤ã‚º
 #define RECTSIZE_X 30
 #define RECTSIZE_Y 40
-//ƒAƒCƒRƒ“ƒTƒCƒY‚ÆÀ•W
+//ã‚¢ã‚¤ã‚³ãƒ³ã‚µã‚¤ã‚ºã¨åº§æ¨™
 #define ICON_POSISHON CVector2D(1100,660)
 #define ICON_SIZE CVector2D(30,30)
-//ƒTƒCƒYÅ¬’l
+//ã‚µã‚¤ã‚ºæœ€å°å€¤
 #define MIN 0
-//ƒTƒCƒYÅ‘å’l
+//ã‚µã‚¤ã‚ºæœ€å¤§å€¤
 #define MAX_X 4093
 #define MAX_Y 2894
-//•\¦ƒTƒCƒYÅ¬’l‚ÆÅ‘å’l
+//è¡¨ç¤ºã‚µã‚¤ã‚ºæœ€å°å€¤ã¨æœ€å¤§å€¤
 #define DRAW_MAX_X 1020
 #define DRAW_MAX_Y 600
-//•\¦ˆÊ’u‚ÌÅ‘å’l‚ÆÅ¬’l
+//è¡¨ç¤ºä½ç½®ã®æœ€å¤§å€¤ã¨æœ€å°å€¤
 #define POS_MAX_X 750
 #define POS_MAX_Y 320
 #define POS_MIN_X 130
@@ -57,6 +61,9 @@
 
 class CStoryScene : public CObject {
 protected:
+	CImage* m_while_screen_p = new CImage();
+	CImage* m_frame_p = new CImage();
+
 	CImage m_s_img;
 	CImage m_text_box;
 	CImage m_text;
@@ -67,8 +74,9 @@ protected:
 	short int sentence_num;
 	double draw_cnt;
 	short int subscript;
-	short int num_decison;
+	int num_decison;
 	double scene_change_cnt;
+	int m_story_image_num = 0;
 
 	struct rect_pos_size {
 		int top_x;
@@ -84,6 +92,13 @@ protected:
 	bool complete_flg;
 	char name[MAX_STORY_ARRAY][MAX_SENTENSE_SIZE];
 	char t_name[MAX_TEXT_ARRAY][MAX_SENTENSE_SIZE];
+
+	CImage* m_guide_text_p = nullptr;
+	double guide_draw_cnt = 0.0;
+
+	bool m_is_show_white_screen = true;
+
+	bool m_is_fade_effect = true;
 public:
 	CStoryScene();
 	~CStoryScene();
@@ -100,39 +115,41 @@ public:
 	void SetSentense(int repite, char name_a[][MAX_SENTENSE_SIZE], 
 		                         char name_b[][MAX_SENTENSE_SIZE]);
 	void SetAll(int sent_num);
-	//”z—ñ”’ló‚¯“n‚µŠÖ”
+	//é…åˆ—æ•°å€¤å—ã‘æ¸¡ã—é–¢æ•°
 	void DelValue(int _sub, CVector4D rect, CVector4D size_pos);
-	//Ÿ‚Ì‰æ‘œ‚ğ•\¦‚·‚éŠÖ”
+	//æ¬¡ã®ç”»åƒã‚’è¡¨ç¤ºã™ã‚‹é–¢æ•°
 	void NextStory(char story_name[][MAX_SENTENSE_SIZE],int sub, rect_pos_size values);
-	//Ÿ‚ÌƒeƒLƒXƒg‚ğ•\¦‚·‚éŠÖ”
+	//æ¬¡ã®ãƒ†ã‚­ã‚¹ãƒˆã‚’è¡¨ç¤ºã™ã‚‹é–¢æ•°
 	void NextText(char text_name[][MAX_SENTENSE_SIZE]);
-	//•\¦‚µ‚½‚¢•¶Í‚Ì•¶š”‚Æ•¶Í”
+	//è¡¨ç¤ºã—ãŸã„æ–‡ç« ã®æ–‡å­—æ•°ã¨æ–‡ç« æ•°
 	void UpdateText(int word,int limit);
-	//Œ»İ‚Ì\‘¢‘Ì‚ÆŸ‚Ì\‘¢‘Ì
+	//ç¾åœ¨ã®æ§‹é€ ä½“ã¨æ¬¡ã®æ§‹é€ ä½“
 	void UpdateStory(rect_pos_size& pos_now,rect_pos_size& pos_next);
-	//ˆø”‚ğŸ‚Ì†Å‹‚ğ•\¦‚·‚éƒ^ƒCƒ~ƒ“ƒO‚ÆÀ•W“™‚Ìƒf[ƒ^‚ğ“ü‚ê‚½“Y‚¦š
+	//å¼•æ•°ã‚’æ¬¡ã®ç´™èŠå±…ã‚’è¡¨ç¤ºã™ã‚‹ã‚¿ã‚¤ãƒŸãƒ³ã‚°ã¨åº§æ¨™ç­‰ã®ãƒ‡ãƒ¼ã‚¿ã‚’å…¥ã‚ŒãŸæ·»ãˆå­—
 	void UpdateStory2(int change, int next_array);
-	//•ÏX‚Ü‚Æ‚ßŠÖ”
+	//å¤‰æ›´ã¾ã¨ã‚é–¢æ•°
 	void ChangeAll(rect_pos_size& pos_a, rect_pos_size& pos_b);
-	//Ø‚èæ‚èˆÊ’u•ÏXŠÖ”(ˆø”‚ÍŒ»İ‚ÆŸ‚Ì’l‚Æ•Ï‰»’lj
+	//åˆ‡ã‚Šå–ã‚Šä½ç½®å¤‰æ›´é–¢æ•°(å¼•æ•°ã¯ç¾åœ¨ã¨æ¬¡ã®å€¤ã¨å¤‰åŒ–å€¤ï¼‰
 	int ChangeRect(int& now, int& next);
-	//À•W‹y‚ÑƒTƒCƒY•ÏXŠÖ”
+	//åº§æ¨™åŠã³ã‚µã‚¤ã‚ºå¤‰æ›´é–¢æ•°
 	CVector2D ChangeVector(CVector2D& now, CVector2D& next);
-	//ƒAƒCƒRƒ“‚ğ“_–Å‚³‚¹‚Ä•\¦‚·‚é
+	//ã‚¢ã‚¤ã‚³ãƒ³ã‚’ç‚¹æ»…ã•ã›ã¦è¡¨ç¤ºã™ã‚‹
 	void IconDraw();
-	//•`ÊŠÖ˜A‚Ü‚Æ‚ßŠÖ”
+	//æå†™é–¢é€£ã¾ã¨ã‚é–¢æ•°
 	void AllDraw();
 	void RectUp();
-	//Ÿ‚ÌƒV[ƒ“‚É•ÏXŠÖ”(ˆø”‚Í•\¦‚·‚é•¶Í”j
+	//æ¬¡ã®ã‚·ãƒ¼ãƒ³ã«å¤‰æ›´é–¢æ•°(å¼•æ•°ã¯è¡¨ç¤ºã™ã‚‹æ–‡ç« æ•°ï¼‰
 	void ChangeScene(int sent_num);
+
+	void SetIsFadeEffect(bool _is) { m_is_fade_effect = _is; }
 };
 
 /*
-‚Q‚O‚P‚X/3/11 ƒXƒg[ƒŠ[ƒV[ƒ“ƒNƒ‰ƒX@ì¬@¼ì
-†Å‹‚ÌÀ•WEƒTƒCƒYİ’èŠÖ”
-ƒeƒLƒXƒgƒ{ƒbƒNƒX‚ÌÀ•WEƒTƒCƒYİ’èŠÖ”
-ƒeƒLƒXƒg‚ÌÀ•WEƒTƒCƒYİ’èŠÖ”
-’Ç‰Á
-2019/3/13 ƒXƒg[ƒŠ[ƒV[ƒ“ƒNƒ‰ƒX@Š®¬@ì¬@¼ì
-ã‹L‚ÌŠÖ”‚ğ’Ç‰Á
+ï¼’ï¼ï¼‘ï¼™/3/11 ã‚¹ãƒˆãƒ¼ãƒªãƒ¼ã‚·ãƒ¼ãƒ³ã‚¯ãƒ©ã‚¹ã€€ä½œæˆã€€æ¾å·
+ç´™èŠå±…ã®åº§æ¨™ãƒ»ã‚µã‚¤ã‚ºè¨­å®šé–¢æ•°
+ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ã®åº§æ¨™ãƒ»ã‚µã‚¤ã‚ºè¨­å®šé–¢æ•°
+ãƒ†ã‚­ã‚¹ãƒˆã®åº§æ¨™ãƒ»ã‚µã‚¤ã‚ºè¨­å®šé–¢æ•°
+è¿½åŠ 
+2019/3/13 ã‚¹ãƒˆãƒ¼ãƒªãƒ¼ã‚·ãƒ¼ãƒ³ã‚¯ãƒ©ã‚¹ã€€å®Œæˆã€€ä½œæˆã€€æ¾å·
+ä¸Šè¨˜ã®é–¢æ•°ã‚’è¿½åŠ 
 */

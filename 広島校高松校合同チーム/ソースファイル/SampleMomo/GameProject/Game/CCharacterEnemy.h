@@ -29,8 +29,8 @@ class CBar;
 #define ENEMY_GUN_ATTACK_LENGTH CVector3D(1000.0f,150.0f,50.0f)
 #define ENEMY_GUN_MOVE_END_LENGTH CVector3D(800.0f,150.0f,50.0f)
 #define ENEMY_GUN_ATTACK_POWER (1.0)
-#define ENEMY_GUN_ATTACK_HIT_START_FRAME (60.0)
-#define ENEMY_GUN_ATTACK_HIT_END_FRAME (61.0)
+#define ENEMY_GUN_ATTACK_HIT_START_FRAME (5.0)
+#define ENEMY_GUN_ATTACK_HIT_END_FRAME (35.0)
 #define ENEMY_GUN_RECEIVE_DAMAGE_FRAME (50.0)
 #define ENEMY_GUN_SPACE_LENGTH CVector3D(300,0,50)
 
@@ -96,6 +96,8 @@ private:
 	bool m_is_receive_damage_now = false;
 	double m_receive_damage_frame;
 	double m_receive_damage_count;
+
+	bool m_is_play_attack_se = false;
 
 
 public:

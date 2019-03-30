@@ -129,5 +129,16 @@ LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Vertical_Attack_Anim_1 LOAD_IMAGE_FILE_PA
 LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Vertical_Attack_Anim_2 LOAD_IMAGE_FILE_PATH: momotaro_vertical_attack_2.png
 LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Vertical_Attack_Anim_3 LOAD_IMAGE_FILE_PATH: momotaro_vertical_attack_3.png
 
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Run_Anim_0_Right LOAD_IMAGE_FILE_PATH: momotaro_run_anim_0_r.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Run_Anim_1_Right LOAD_IMAGE_FILE_PATH: momotaro_run_anim_1_r.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Run_Anim_2_Right LOAD_IMAGE_FILE_PATH: momotaro_run_anim_2_r.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Run_Anim_3_Right LOAD_IMAGE_FILE_PATH: momotaro_run_anim_3_r.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Run_Anim_4_Right LOAD_IMAGE_FILE_PATH: momotaro_run_anim_4_r.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Run_Anim_5_Right LOAD_IMAGE_FILE_PATH: momotaro_run_anim_5_r.png
 
-
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Run_Anim_0_Left LOAD_IMAGE_FILE_PATH: momotaro_run_anim_0_l.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Run_Anim_1_Left LOAD_IMAGE_FILE_PATH: momotaro_run_anim_1_l.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Run_Anim_2_Left LOAD_IMAGE_FILE_PATH: momotaro_run_anim_2_l.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Run_Anim_3_Left LOAD_IMAGE_FILE_PATH: momotaro_run_anim_3_l.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Run_Anim_4_Left LOAD_IMAGE_FILE_PATH: momotaro_run_anim_4_l.png
+LOAD_RESORCE_IMAGE: IMAGE_NAME: Player_Run_Anim_5_Left LOAD_IMAGE_FILE_PATH: momotaro_run_anim_5_l.png

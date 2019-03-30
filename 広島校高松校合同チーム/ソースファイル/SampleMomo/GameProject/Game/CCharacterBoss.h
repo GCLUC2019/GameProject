@@ -49,7 +49,7 @@
 //攻撃時間
 #define BITE_TIME 30.0
 #define BARK_TIME 90.0
-#define RASH_TIME 250.0
+#define RASH_TIME 240.0
 
 //吠える攻撃の硬直時間
 #define BARK_FREEZE_TIME 90.0

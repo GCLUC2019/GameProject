@@ -278,15 +278,8 @@ void CCharacterEnemy::EnemyAttack()
 		}
 	}
 
-
-	switch (m_enemy_id) {
-	case eEnemyIdAxe:
-		CSound::GetInstance()->GetSound("SE_Slash1")->Play();
-		break;
-	case eEnemyIdSpear:
-		CSound::GetInstance()->GetSound("SE_Slash1")->Play();
-		break;
-	}
+	m_is_play_attack_se = false;
+	
 }
 
 void CCharacterEnemy::Attacking()
@@ -301,6 +294,20 @@ void CCharacterEnemy::Attacking()
 		return;
 	}
 
+
+	//攻撃判定フレームでなおかつSEを再生したことがないならSEを再生
+	if (m_attacking_count <= m_attack_frame - m_attacking_hit_start_frame && m_attacking_count >= m_attack_frame - m_attacking_hit_end_frame
+		&& m_is_play_attack_se == false) {
+		m_is_play_attack_se = true;
+		switch (m_enemy_id) {
+		case eEnemyIdAxe:
+			CSound::GetInstance()->GetSound("SE_Slash1")->Play();
+			break;
+		case eEnemyIdSpear:
+			CSound::GetInstance()->GetSound("SE_Slash1")->Play();
+			break;
+		}
+	}
 
 	//ターゲットが無敵か取得
 	bool enemy_invincible = m_target_p->GetInvincible();
@@ -341,18 +348,30 @@ void CCharacterEnemy::Attacking()
 
 	m_anim_p->SetWillPlayAnim(eEnemyAnimIdAttack);
 
+
+
+	if (m_attacking_count <= m_attack_frame - m_attacking_hit_start_frame && m_attacking_count >= m_attack_frame - m_attacking_hit_end_frame
+		&& m_is_range == true) {
+		m_anim_p->SetWillPlayAnim(eEnemyAnimIdShot);
+	}
+	/*
 	//相手が無敵でなく、もし遠距離かつ攻撃完了しているなら発射モーション再生
 	if (m_is_range == true && m_is_hit_attack == true) {
 		m_anim_p->SetWillPlayAnim(eEnemyAnimIdShot);
 		
 	}
+	*/
 	
 }
 
 void CCharacterEnemy::DropItem()
 {
-	//出現率3分の1
-	int rand = Utility::Rand(0,3);
+	//テスト用
+	//CGameScene::GetInstance()->AddGameSceneObject(new CItem(m_pos + CVector3D(0, 100, 0), eItemFlag));
+	//return;
+
+	//出現率2分の1
+	int rand = Utility::Rand(0,2);
 	if (rand != 0) return;
 
 
@@ -360,9 +379,7 @@ void CCharacterEnemy::DropItem()
 	rand = Utility::Rand(0, 2);
 
 	
-	//テスト用
-	CGameScene::GetInstance()->AddGameSceneObject(new CItem(m_pos + CVector3D(0, 100, 0), eItemFlag));
-	return;
+	
 
 	switch (rand) {
 	case 0: {

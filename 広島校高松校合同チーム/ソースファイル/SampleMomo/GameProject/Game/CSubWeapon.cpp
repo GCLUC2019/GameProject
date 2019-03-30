@@ -1,8 +1,11 @@
-#include "../Game/CSubWeapon.h"
+ï»¿#include "../Game/CSubWeapon.h"
 #include "CCharacterPlayer.h"
 #include "CGameScene.h"
 
 bool CSubWeaponItem::m_get_flag = true;
+
+static bool s_is_refresh_state = false;
+static bool s_is_take_item_now = false;
 
 CSubWeaponItem::CSubWeaponItem(CVector3D pos, int weapon_num) :CGameSceneObject(eTaskIdDropItem, 0)
 {
@@ -25,13 +28,13 @@ CSubWeaponItem::CSubWeaponItem(CVector3D pos, int weapon_num) :CGameSceneObject(
 	SetShadowSize(CVector2D(60, 15));
 	SetDrawAdjPos(CVector2D(0, -68.0f));
 
-	//“–‚½‚è”»’è‚Ì—Dæ“x
+	//å½“ãŸã‚Šåˆ¤å®šã®å„ªå…ˆåº¦
 	SetCollisionPriority(5);
 
 	m_anim_p->SetWillPlayAnim(eItemAnimIdIdle);
 
 
-	//‘¼‚ÌƒIƒuƒWƒFƒNƒg‚Ì•Ç‚É‚Í‚È‚ç‚È‚¢
+	//ä»–ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å£ã«ã¯ãªã‚‰ãªã„
 	SetIsCollisionOthers(false);
 }
 
@@ -62,20 +65,29 @@ void CSubWeaponItem::LoadAnimImage()
 
 }
 
+void CSubWeaponItem::GameSceneObjectBeforeUpdate()
+{
+	s_is_refresh_state = false;
+}
+
 void CSubWeaponItem::GameSceneObjectUpdate()
 {
+	
+
 	CCharacterPlayer * player_p = CCharacterPlayer::GetInstance();
 	if (player_p == nullptr) {
-		printf("ƒvƒŒƒCƒ„[‚¢‚Ü‚¹‚ñI SubWeapon\n");
+		printf("ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã„ã¾ã›ã‚“ï¼ SubWeapon\n");
 		return;
 	}
 
-	if (CInput::GetState(0, CInput::ePush, CInput::eButton4) ){
+	if (CInput::GetState(0, CInput::ePush, CInput::eButton1) ){
 		CVector3D player_pos = player_p->GetPos();
 		float x = m_pos.x - player_pos.x;
 		float z = m_pos.z - player_pos.z;
 		
 		if (m_get_flag && abs(x) < 100 && abs(z) < 100) {
+			s_is_take_item_now = true;
+			s_is_refresh_state = true;
 			m_get_flag = false;
 			PlayerGetItem();
 			SetIsDelete();
@@ -84,10 +96,24 @@ void CSubWeaponItem::GameSceneObjectUpdate()
 	}
 }
 
-//‚±‚±‚ÅƒvƒŒƒCƒ„[‚É•Ší‚ÌŽí—Þ‚ÆŽc‚èŽg—p‰ñ”‚ð—^‚¦‚Ä‚â‚é‚Æ—Ç‚¢‚ÆŽv‚¢‚Ü‚·
+void CSubWeaponItem::GameSceneObjectAfterUpdate()
+{
+	if (s_is_refresh_state == false) {
+		s_is_take_item_now = false;
+		s_is_refresh_state = true;
+	}
+}
+
+//ã“ã“ã§ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«æ­¦å™¨ã®ç¨®é¡žã¨æ®‹ã‚Šä½¿ç”¨å›žæ•°ã‚’ä¸Žãˆã¦ã‚„ã‚‹ã¨è‰¯ã„ã¨æ€ã„ã¾ã™
 void CSubWeaponItem::PlayerGetItem()
 {
 	CSound::GetInstance()->GetSound("SE_Take")->Play();
 	m_get_flag = false;
 	CCharacterPlayer::GetInstance()->PlayerGainEquip(m_weapon_id,m_endurance);
 }
+
+bool CSubWeaponItem::GetIsTakeItemNow()
+{
+	return s_is_take_item_now;
+}
+

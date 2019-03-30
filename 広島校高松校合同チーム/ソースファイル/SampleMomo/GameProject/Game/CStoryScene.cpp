@@ -1,5 +1,6 @@
-#include "CStoryScene.h"
+ï»¿#include "CStoryScene.h"
 #include "string.h"
+#include "CFade.h"
 
 
 CStoryScene::CStoryScene() : CObject(0, 0)
@@ -9,6 +10,8 @@ CStoryScene::CStoryScene() : CObject(0, 0)
 
 CStoryScene::~CStoryScene()
 {
+	delete m_while_screen_p;
+	delete m_frame_p;
 }
 
 void CStoryScene::Update()
@@ -32,10 +35,10 @@ void CStoryScene::SetParam()
 
 void CStoryScene::SetSubSentense(int sent)
 {
-	scene_change_cnt = 0; //‰æ–Ê‘JˆÚƒJƒEƒ“ƒg
-	num_decison = 1;//”»’è—p”š
-	subscript = 0;//“Y‚¦š
-	sentence_num = sent;//•¶Í”
+	scene_change_cnt = 0; //ç”»é¢é·ç§»ã‚«ã‚¦ãƒ³ãƒˆ
+	num_decison = 1;//åˆ¤å®šç”¨æ•°å­—
+	subscript = 0;//æ·»ãˆå­—
+	sentence_num = sent;//æ–‡ç« æ•°
 }
 
 void CStoryScene::SetTextBox()
@@ -43,6 +46,9 @@ void CStoryScene::SetTextBox()
 	m_text_box = COPY_RESOURCE("Textbox", CImage*);
 	m_text_box.SetSize(BOX_SIZE);
 	m_text_box.SetPos(BOX_POSISHON);
+
+
+	
 }
 
 void CStoryScene::SetIcon()
@@ -55,24 +61,88 @@ void CStoryScene::SetIcon()
 void CStoryScene::SetStory(char story_name[], rect_pos_size values)
 {
 	m_s_img= COPY_RESOURCE(story_name, CImage*);
+ 	//printf("story_name%s\n", story_name);
  	SetStory2(values);
 }
 
 void CStoryScene::SetStory2(rect_pos_size value)
 {
-	//Ø‚èæ‚èˆÊ’u‚Ìİ’è
+	//åˆ‡ã‚Šå–ã‚Šä½ç½®ã®è¨­å®š
 	m_s_img.SetRect(value.top_x, value.top_y,
 		value.bottom_x, value.bottom_y);
-	//ƒTƒCƒY‚ÆÀ•W‚Ì‰Šú’l‚ğİ’è
-	m_s_img.SetPos(value.pos);
-	m_s_img.SetSize(value.size);
+	//ã‚µã‚¤ã‚ºã¨åº§æ¨™ã®åˆæœŸå€¤ã‚’è¨­å®š
+	//m_s_img.SetPos(value.pos);
+	//m_s_img.SetSize(value.size);
+
+
+	//å‰²åˆã˜ã‚ƒã¡ã‚‡ã£ã¨ã‚ã‚Œã ãª
+
+	
+	//CVector2D draw_size = value.size * 1.25;
+	CVector2D draw_size = CVector2D(value.bottom_x - value.top_x, value.bottom_y - value.top_y);
+	
+
+	//ç¸®å°ºã‚’ç¶­æŒã—ã¦ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°
+
+	bool is_scaling_x = false;
+	bool is_scaling_y = false;
+
+	double mult_x = 0.0;
+	double mult_y = 0.0;
+
+	if (draw_size.x >= STORY_SIZE.x) {
+		mult_x = STORY_SIZE.x / draw_size.x;
+		is_scaling_x = true;
+	}
+	if (draw_size.y >= STORY_SIZE.y) {
+		mult_y = STORY_SIZE.y / draw_size.y;
+		is_scaling_y = true;
+	}
+
+	double mult;
+	if (is_scaling_x == true || is_scaling_y == true) {
+
+		if (is_scaling_x == true && is_scaling_y == true) {
+			if (mult_x < mult_y) mult = mult_x;
+			else mult = mult_y;
+		}
+		else if(is_scaling_x == true) mult = mult_x;
+		else if (is_scaling_y == true) mult = mult_y;
+
+		draw_size *= mult;
+	}
+
+
+
+	//if (draw_size.x >= STORY_SIZE.x) draw_size.x = STORY_SIZE.x;
+	//if (draw_size.y >= STORY_SIZE.y) draw_size.y = STORY_SIZE.y;
+
+	m_s_img.SetSize(draw_size);
+
+	CVector2D draw_pos = STORY_POSITION + ((STORY_SIZE - draw_size) / 2.0);
+
+	m_s_img.SetPos(draw_pos);
+
+
+
+	const CVector2D frame_size = CVector2D(20, 20);
+
+	m_frame_p->SetColor(0, 0, 0, 2.55);
+	
+	/*
+	m_frame_p->SetPos(draw_pos + (draw_size - draw_size* 1.05) / 2.0);
+	
+	m_frame_p->SetSize(draw_size * 1.05);
+	*/
+	m_frame_p->SetPos(draw_pos + (draw_size - (draw_size + frame_size)) / 2.0);
+	m_frame_p->SetSize(draw_size + frame_size);
 }
 
 void CStoryScene::SetText(char text_name[])
 {
 	m_text= COPY_RESOURCE(text_name, CImage*);
 	m_text.SetPos(TEXT_POSISHON);
-	//Ø‚èæ‚è‰ŠúˆÊ’u
+	//åˆ‡ã‚Šå–ã‚ŠåˆæœŸä½ç½®
 	m_text.SetRect(0,0, RECTSIZE_X, RECTSIZE_Y);
 	m_text.SetSize(TEXT_DEF_SIZE);
 }
@@ -119,42 +189,54 @@ void CStoryScene::DelValue(int _sub, CVector4D rect, CVector4D size_pos)
 void CStoryScene::NextStory(char story_name[][MAX_SENTENSE_SIZE],
 	                        int sub, rect_pos_size values)
 {
+	//char* story_name_ad = story_name[0] + sub;
+
+	//char* story_ad = story_name[sub];
+
+	//printf("story_ad  %s sub %d\n", story_ad, sub);
+	
 	SetStory(story_name[sub],values);
 }
 
 void CStoryScene::NextText(char text_name[][MAX_SENTENSE_SIZE])
 {
-	//•Ï”‚Ì‰Šú‰»
+	if (m_is_fade_effect == true) {
+		CFade::GetInstance()->SetFadeOut(0);
+		CFade::GetInstance()->SetFadeIn(25);
+	}
+	//å¤‰æ•°ã®åˆæœŸåŒ–
 	SetParam();
 	SetText(text_name[subscript]);
 }
 
 void CStoryScene::UpdateText(int word,int limit)
 {
-	//•¶šo—ÍŠ®—¹‚µ‚Ä‚¢‚È‚¢‚È‚çA
+	//æ–‡å­—å‡ºåŠ›å®Œäº†ã—ã¦ã„ãªã„ãªã‚‰ã€
 	if (complete_flg == false) {
 		if (dis_cnt >= 4&& rect_cnt <= lim * word) {
 			RectUp();
 			rect_cnt += RECTSIZE_X;
 			dis_cnt = 0;
 		}
-		//ƒXƒy[ƒXƒ{ƒ^ƒ“‚Å•¶š‚ğo—ÍŠ®—¹‚É
-		if (CInput::GetState(0, CInput::ePush, CInput::eButton1)) {
+		//ã‚¹ãƒšãƒ¼ã‚¹ãƒœã‚¿ãƒ³ã§æ–‡å­—ã‚’å‡ºåŠ›å®Œäº†ã«
+		if (CInput::GetState(0, CInput::ePush, CInput::eButton2) || CInput::GetState(0, CInput::ePush, CInput::eButton10)) {
+			m_guide_text_p = nullptr;
 			rect_cnt = lim * word;
 			RectUp();
 			complete_flg = true;
 			dis_cnt = 0;
 		}
-		//w’è‚µ‚½•¶š‚ğo—Í‚ğI‚¦‚½ê‡
+		//æŒ‡å®šã—ãŸæ–‡å­—ã‚’å‡ºåŠ›ã‚’çµ‚ãˆãŸå ´åˆ
 		if (rect_cnt >= lim * word) {
 			complete_flg = true;
 			dis_cnt = 0;
 		}
 	}
 
-	//•¶Í‚ğ•\¦‚µI‚¦‚½ŒãƒXƒy[ƒXƒL[‚ÅŸ‚Ì•¶Í‚Ö
+	//æ–‡ç« ã‚’è¡¨ç¤ºã—çµ‚ãˆãŸå¾Œã‚¹ãƒšãƒ¼ã‚¹ã‚­ãƒ¼ã§æ¬¡ã®æ–‡ç« ã¸
 	if (subscript<sentence_num-1&&dis_cnt >= 15&&complete_flg == true) {
-		if (CInput::GetState(0, CInput::ePush, CInput::eButton1)) {
+		if (CInput::GetState(0, CInput::ePush, CInput::eButton2) || CInput::GetState(0, CInput::ePush, CInput::eButton10)) {
+			m_guide_text_p = nullptr;
 			subscript++;
 			NextText(t_name);
 		}
@@ -171,9 +253,16 @@ void CStoryScene::UpdateStory(rect_pos_size& pos_now, rect_pos_size& pos_next)
 void CStoryScene::UpdateStory2(int change, int next_array)
 {
 	if (subscript == num_decison) {
-		UpdateStory(pos_array[subscript - 1], pos_array[subscript]);
+		
 		num_decison++;
-		if (num_decison == change)NextStory(name, 1, pos_array[next_array]);
+
+		//printf("name %s\n", name);
+		//printf("num_decison %d\n", num_decison);
+		if (num_decison % change == 0) {
+ 			NextStory(name, (1 + m_story_image_num++), pos_array[next_array]);
+		}
+
+		UpdateStory(pos_array[subscript - 1], pos_array[subscript]);
 	}
 }
 
@@ -190,11 +279,11 @@ void CStoryScene::ChangeAll(rect_pos_size & pos_a, rect_pos_size & pos_b)
 int CStoryScene::ChangeRect(int & now, int & next)
 {
 	int range = 100;
-	//Œ»İ‚Ì’l‚ªŸ‚Ì’l‚æ‚è‘å‚«‚¢‚È‚ç¶‚É‚¸‚ç‚·
+	//ç¾åœ¨ã®å€¤ãŒæ¬¡ã®å€¤ã‚ˆã‚Šå¤§ãã„ãªã‚‰å·¦ã«ãšã‚‰ã™
 	if( now > next+range)return -30;
-	//Œ»İ‚Ì’l‚ªŸ‚Ì’l‚æ‚è¬‚³‚¢‚È‚ç‰E‚É‚¸‚ç‚·
+	//ç¾åœ¨ã®å€¤ãŒæ¬¡ã®å€¤ã‚ˆã‚Šå°ã•ã„ãªã‚‰å³ã«ãšã‚‰ã™
 	if ( now < next-range)return 30;
-	//‚»‚êˆÈŠO‚È‚ç‚O‚ğ•Ô‚·
+	//ãã‚Œä»¥å¤–ãªã‚‰ï¼ã‚’è¿”ã™
 	else return 0;
 }
 
@@ -202,10 +291,10 @@ CVector2D CStoryScene::ChangeVector(CVector2D & now, CVector2D & next)
 {
 	int x=0, y=0;
 	int range = 12;
-	//Œ»İ‚Ì’l‚ªŸ‚Ì’l‚æ‚è‘å‚«‚¢‚È‚ç¶‚É‚¸‚ç‚·
+	//ç¾åœ¨ã®å€¤ãŒæ¬¡ã®å€¤ã‚ˆã‚Šå¤§ãã„ãªã‚‰å·¦ã«ãšã‚‰ã™
 	if (now.x > next.x+ range)x = -3;
 	if (now.y > next.y+ range)y = -3;
-	//Œ»İ‚Ì’l‚ªŸ‚Ì’l‚æ‚è¬‚³‚¢‚È‚ç‰E‚É‚¸‚ç‚·
+	//ç¾åœ¨ã®å€¤ãŒæ¬¡ã®å€¤ã‚ˆã‚Šå°ã•ã„ãªã‚‰å³ã«ãšã‚‰ã™
 	if (now.x < next.x-range)x = 3;
 	if (now.y < next.y- range)y = 3;
 	return CVector2D(x,y);
@@ -214,16 +303,39 @@ CVector2D CStoryScene::ChangeVector(CVector2D & now, CVector2D & next)
 void CStoryScene::IconDraw()
 {
 	draw_cnt += CFPS::GetDeltaTime() * GAME_BASE_FPS;
-	if (draw_cnt <= 30) m_icon.Draw();
+	if (draw_cnt <= 30) {
+		m_icon.Draw();
+	}
 	else if (draw_cnt > 60) draw_cnt = 0;
 }
 
 void CStoryScene::AllDraw()
 {
+	m_while_screen_p->SetColor(2.55, 2.55, 2.55,2.55);
+	m_while_screen_p->SetSize(1280, 720);
+	m_while_screen_p->SetPos(0, 0);
+	if(m_is_show_white_screen == true) m_while_screen_p->Draw();
+
+	
+	m_frame_p->Draw();
+
 	m_s_img.Draw();
 	m_text_box.Draw();
 	m_text.Draw();
+
+
+	guide_draw_cnt += CFPS::GetDeltaTime() * GAME_BASE_FPS;
+
+	if (guide_draw_cnt <= 150) {
+		if (m_guide_text_p != nullptr) m_guide_text_p->Draw();//ä¸€æ—¦ã‚¬ã‚¤ãƒ‰ã‚‚ã“ã“ã§æç”»
+	}
+	if (guide_draw_cnt >= 180) guide_draw_cnt = 0;
+	
+
 	IconDraw();
+	
+	
+
 }
 
 void CStoryScene::RectUp()

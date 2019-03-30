@@ -146,6 +146,7 @@
     <ClInclude Include="Game\CGameScene.h" />
     <ClInclude Include="Game\CGameSceneBossUI.h" />
     <ClInclude Include="Game\CGameSceneObject.h" />
+    <ClInclude Include="Game\CGameSceneTutorial.h" />
     <ClInclude Include="Game\CGameSceneUI.h" />
     <ClInclude Include="Game\CItem.h" />
     <ClInclude Include="Game\CLoadResorce.h" />
@@ -180,6 +181,7 @@
     <ClCompile Include="Game\CGameScene.cpp" />
     <ClCompile Include="Game\CGameSceneBossUI.cpp" />
     <ClCompile Include="Game\CGameSceneObject.cpp" />
+    <ClCompile Include="Game\CGameSceneTutorial.cpp" />
     <ClCompile Include="Game\CGameSceneUI.cpp" />
     <ClCompile Include="Game\CGameSceneWave.cpp" />
     <ClCompile Include="Game\CItem.cpp" />

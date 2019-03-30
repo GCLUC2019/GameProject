@@ -70,6 +70,27 @@ void Init(void)
 	CFPS::SetFPS(FPS);
 	//フレーム制御初期化
 	CFPS::Init();
+
+	//ボタンの設定
+	CInput::Init();
+	CInput::Init();
+	CInput::SetButton(0, CInput::eButton1, 'X');
+	CInput::SetButton(0, CInput::eButton2, VK_SPACE);
+	CInput::SetButton(0, CInput::eButton3, VK_SHIFT);
+	CInput::SetButton(0, CInput::eButton4, 'Z');
+	
+	
+	CInput::SetButton(0, CInput::eButton8, 'C');
+	CInput::SetButton(0, CInput::eButton10, VK_RETURN);
+
+	CInput::SetButton(0, CInput::eUp, VK_UP);
+	CInput::SetButton(0, CInput::eDown, VK_DOWN);
+	CInput::SetButton(0, CInput::eLeft, VK_LEFT);
+	CInput::SetButton(0, CInput::eRight, VK_RIGHT);
+	CInput::SetButton(0, CInput::eMouseL, VK_LBUTTON);
+	CInput::SetButton(0, CInput::eMouseR, VK_RBUTTON);
+	CInput::SetButton(0, CInput::eMouseC, VK_MBUTTON);
+	/*
 	//ボタンの設定
 	CInput::Init();
 	CInput::Init();
@@ -85,7 +106,7 @@ void Init(void)
 	CInput::SetButton(0, CInput::eMouseL, VK_LBUTTON);
 	CInput::SetButton(0, CInput::eMouseR, VK_RBUTTON);
 	CInput::SetButton(0, CInput::eMouseC, VK_MBUTTON);
-
+	*/
 	CInput::SetMouseInside(true); 
 	CInput::UpDate();
 	CInput::UpDate();

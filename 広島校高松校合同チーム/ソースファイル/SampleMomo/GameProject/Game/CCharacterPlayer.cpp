@@ -215,7 +215,7 @@ void CCharacterPlayer::InputDestroyWeapon()
 {
 	if (m_is_knock_back == true) return;
 	if (m_is_freeze == true) return;
-	if (CInput::GetState(0, CInput::ePush, CInput::eButton10) && m_equip_weapon_id != -1) {
+	if (CInput::GetState(0, CInput::ePush, CInput::eButton8) && m_equip_weapon_id != -1) {
 		PlayerDestroyEquip();
 	}
 }
@@ -238,7 +238,7 @@ void CCharacterPlayer::InputAttack()
 {
 	
 
-	if (CInput::GetState(0, CInput::ePush, CInput::eButton2) || m_is_early_input_attack == true) {
+	if (CInput::GetState(0, CInput::ePush, CInput::eButton4) || m_is_early_input_attack == true) {
 		ClearEarlyInput();
 		m_is_early_input_attack = true;
 		if (m_is_knock_back == true) return;
@@ -307,6 +307,8 @@ void CCharacterPlayer::InputAttack()
 				m_anim_p->SetWillPlayAnim(ePlayerAnimIdSpearAttack);
 				m_is_weapon_attacking = true;
 				m_equip_endurance -= WEAPON_USE_ENDURANCE_DAMAGE;
+				CSound::GetInstance()->GetSound("SE_Slash1")->Play();
+				CGameScene::GetInstance()->AddGameSceneObject(new CDamageEffect(&m_pos, CVector2D(-50, -290), CVector2D(500, 500), 30, eEffectSpear, m_is_flip, CVector2D(120, 0)));
 				break;
 			case eWeaponAxe:
 				m_attack_hit_frame_start = PLAYER_AXE_ATTACK_HIT_FRAME_START;
@@ -317,6 +319,8 @@ void CCharacterPlayer::InputAttack()
 				m_anim_p->SetWillPlayAnim(ePlayerAnimIdAxeAttack);
 				m_is_weapon_attacking = true;
 				m_equip_endurance -= WEAPON_USE_ENDURANCE_DAMAGE;
+				CSound::GetInstance()->GetSound("SE_Slash1")->Play();
+				CGameScene::GetInstance()->AddGameSceneObject(new CDamageEffect(&m_pos, CVector2D(-160, -140), CVector2D(400, 400), 30, eEffectAxeSlash, m_is_flip, CVector2D(120, 0)));
 				break;
 			case eWeaponGun:
 				m_attack_hit_frame_start = PLAYER_GUN_ATTACK_HIT_FRAME_START;
@@ -344,6 +348,7 @@ void CCharacterPlayer::InputAttack()
 				m_attack_power = PLAYER_ATTACK_POWER;
 				m_attack_length = PLAYER_ATTACK_LENGTH;
 				CGameScene::GetInstance()->AddGameSceneObject(new CDamageEffect(&m_pos, CVector2D(-200, -180), CVector2D(400, 400), 30, eEffectSlashY,m_is_flip,CVector2D(120,0)));
+				CSound::GetInstance()->GetSound("SE_Slash1")->Play();
 				break;
 			case 1:
 				m_attack_hit_frame_start = PLAYER_SIDE_ATTACK_HIT_FRAME_START;
@@ -352,6 +357,7 @@ void CCharacterPlayer::InputAttack()
 				m_attack_power = PLAYER_SIDE_ATTACK_POWER;
 				m_attack_length = PLAYER_SIDE_ATTACK_LENGTH;
 				CGameScene::GetInstance()->AddGameSceneObject(new CDamageEffect(&m_pos, CVector2D(-200, -210), CVector2D(400, 400), 30, eEffectSlashX, m_is_flip, CVector2D(0, 0)));
+				CSound::GetInstance()->GetSound("SE_Slash1")->Play();
 				break;
 			case 2:
 				m_attack_hit_frame_start = PLAYER_FINISH_ATTACK_HIT_FRAME_START;
@@ -379,8 +385,12 @@ void CCharacterPlayer::InputAttack()
 		}
 
 		
-		if (m_is_range_attack == false) CSound::GetInstance()->GetSound("SE_Slash1")->Play();
-		else if (m_is_range_attack == true) {
+		/*
+		if (m_is_range_attack == false) {
+			CSound::GetInstance()->GetSound("SE_Slash1")->Play();
+		} 
+		*/
+		if (m_is_range_attack == true) {
 			CGameScene::GetInstance()->AddGameSceneObject(new CBullet(GET_RESOURCE("Bullet", CImage*),eTaskIdEnemy,m_pos,CVector2D(50,-5),CVector2D(15,15), m_is_flip, m_attack_power, PLAYER_BULLET_ATTACK_LENGTH, PLAYER_GUN_BULLET_DESTROY_LENGTH,20.0, GET_RESOURCE("Shadow", CImage*), CVector2D(-20, 170), CVector2D(30,30)));
 			CSound::GetInstance()->GetSound("SE_Shot1")->Play();
 		}
@@ -401,6 +411,8 @@ void CCharacterPlayer::CharacterBeforeUpdate()
 
 void CCharacterPlayer::CharacterUpdate()
 {
+	m_is_end_attack_frame = false;
+
 	//DEBUG_PRINT("x %lf y %lf z %lf\n", m_pos.x, m_pos.y, m_pos.z);
 	
 	
@@ -521,7 +533,15 @@ void CCharacterPlayer::InputMove()
 	}
 
 	if (m_is_move == true) {
-		if (m_is_dashing == true) m_anim_p->SetWillPlayAnim(ePlayerAnimIdRun);
+		if (m_is_dashing == true) {
+			if (m_is_flip == false) {
+				m_anim_p->SetWillPlayAnim(ePlayerAnimIdRunRight);
+			}
+			else {
+				m_anim_p->SetWillPlayAnim(ePlayerAnimIdRunLeft);
+			}
+			//m_anim_p->SetWillPlayAnim(ePlayerAnimIdRun);
+		}
 		else {
 			if (m_is_flip == false) {
 				m_anim_p->SetWillPlayAnim(ePlayerAnimIdMoveRight);
@@ -544,7 +564,7 @@ void CCharacterPlayer::InputJump()
 	if (m_is_down == true) return;
 	if (m_is_freeze == true) return;
 
-	if (CInput::GetState(0, CInput::ePush, CInput::eButton1) && m_is_jumping == false && m_is_landing == true) {
+	if (CInput::GetState(0, CInput::ePush, CInput::eButton2) && m_is_jumping == false && m_is_landing == true) {
 		ClearEarlyInput();
 		
 		//m_anim_p->SetWillPlayAnim(ePlayerAnimIdJump);
@@ -930,7 +950,7 @@ void CCharacterPlayer::Attacking()
 	//空中にいてなおかつフィニッシュ攻撃なら着地するまでは攻撃判定を継続させる
 	if (m_is_landing == false && m_attack_combo_count == 2) {
 		m_keep_final_attack_timeout -= CFPS::GetDeltaTime() * GAME_BASE_FPS;
-		printf("time_out %lf\n", m_keep_final_attack_timeout);
+		//printf("time_out %lf\n", m_keep_final_attack_timeout);
 		
 		if (m_keep_final_attack_timeout <= 0.0) {
 			SetPos(CGameScene::GetInstance()->GetCheckPoint() - CVector3D(0,50,0));
@@ -941,6 +961,9 @@ void CCharacterPlayer::Attacking()
 	}
 
 	if (m_attacking_count < 0 && is_keep_finish_attack == false) {
+		
+		//初期化
+		m_attacking_count = 0.0;
 
 		for (int i = 0; i < m_memory_hit_attacked_enemy_num; i++) {
 			m_memory_hit_attacked_enemy_p[i] = nullptr;
@@ -948,6 +971,8 @@ void CCharacterPlayer::Attacking()
 		m_memory_hit_attacked_enemy_num = 0;
 		
 		m_is_attacking = false;
+
+		m_is_end_attack_frame = true;
 
 		m_attack_reserve_count = PLAYER_ATTACK_RESERVE_ANIM_FRAME;
 		switch (m_attack_combo_count) {
@@ -989,6 +1014,7 @@ void CCharacterPlayer::Attacking()
 		if (m_is_show_attack_effect == false && m_attack_combo_count == 2 && m_is_weapon_attacking == false) {
 			m_is_show_attack_effect = true;
 			CGameScene::GetInstance()->AddGameSceneObject(new CDamageEffect(&m_pos, CVector2D(-200, -250), CVector2D(400, 400), 30, eEffectSlashFinish, m_is_flip,CVector2D(100,0)));
+			CSound::GetInstance()->GetSound("SE_Slash1")->Play();
 		}
 	}
 	

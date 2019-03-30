@@ -1,19 +1,27 @@
-#pragma once
+ï»¿#pragma once
 #include "CObject.h"
 #include "../Global.h"
 
 /*
-ƒXƒg[ƒŠ[ƒp[ƒgŒã‚ÉŒÄ‚Î‚ê‚éƒXƒe[ƒWƒNƒŠƒA‰‰o
+ã‚¹ãƒˆãƒ¼ãƒªãƒ¼ãƒ‘ãƒ¼ãƒˆå¾Œã«å‘¼ã°ã‚Œã‚‹ã‚¹ãƒ†ãƒ¼ã‚¸ã‚¯ãƒªã‚¢æ¼”å‡º
 */
+
+class CAnimation;
 
 class  CStageClear:public CObject
 {
 private:
-	CImage* m_stage_clear_logo_p = nullptr;
+	CImage * m_stage_clear_back_ground_p = nullptr;
+	CAnimation * m_stage_logo_p = nullptr;
+	CAnimation * m_island_bright_effect_p = nullptr;
+	CAnimation * m_bright_effect_p = nullptr;
+
 	double m_draw_cnt = 0;
 	double m_change_cnt = 0;
 	int m_clear_stage_id = -1;
 	bool m_is_fade_out = false;
+
+
 public:
 	CStageClear(int _clear_stage_id);
 	~CStageClear();

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "CObject.h"
 #include "../Global.h"
 
@@ -10,6 +10,7 @@
 class CCharacterPlayer;
 
 enum {
+	eTutorial,
 	eStage1,
 	eStage1Boss,
 };
@@ -22,14 +23,16 @@ private:
 	int m_now_scene = -1;
 
 	int m_next_scene = -1;
-	float m_next_scene_pos = 0;//‚±‚Ì’n“_‚Ü‚Å“’B‚·‚é‚ÆƒV[ƒ“‘JˆÚ
+	float m_next_scene_pos = 0;//ã“ã®åœ°ç‚¹ã¾ã§åˆ°é”ã™ã‚‹ã¨ã‚·ãƒ¼ãƒ³é·ç§»
 	CCharacterPlayer* m_player_object_p = nullptr;
 
 	int m_last_wave = -1;
 	CVector3D m_check_point;
 
-	//c‹@‚Ì”
+	//æ®‹æ©Ÿã®æ•°
 	int m_reserve_num = 0;
+
+	bool m_is_ended_tutorial = false;
 
 public:
 	CGameScene();
@@ -50,7 +53,7 @@ public:
 
 	void EraseGameSceneObject(Task* _object);
 
-	//ƒEƒF[ƒu‚ªŠ®—¹‚µ‚½‚çŒÄ‚Î‚ê‚é
+	//ã‚¦ã‚§ãƒ¼ãƒ–ãŒå®Œäº†ã—ãŸã‚‰å‘¼ã°ã‚Œã‚‹
 	void WaveDone(int _next_wave);
 
 	void Update();

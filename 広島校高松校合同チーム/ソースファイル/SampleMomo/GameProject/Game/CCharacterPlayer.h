@@ -54,7 +54,7 @@
 #define PLAYER_SPEAR_ATTACK_POWER (1.5)
 
 
-#define PLAYER_AXE_ATTACK_LENGTH CVector3D(150,500,300)
+#define PLAYER_AXE_ATTACK_LENGTH CVector3D(200,500,300)
 #define PLAYER_AXE_ATTACK_POWER (2.0)
 
 
@@ -172,6 +172,8 @@ enum {
 	ePlayerAnimIdEvasionReserveLeft,
 	ePlayerAnimIdVerticalAttack,
 	ePlayerAnimIdVerticalAttackReserve,
+	ePlayerAnimIdRunRight,
+	ePlayerAnimIdRunLeft,
 	ePlayerAnimIdMax,
 };
 
@@ -331,6 +333,14 @@ private:
 
 	bool m_is_show_attack_effect = false;
 
+	//bool m_is_play_attack_se = false;
+
+
+	//外部からの取得用
+	bool m_is_end_attack_frame = false;
+
+	bool m_is_take_item_now = false;
+
 public:
 	CCharacterPlayer(CVector3D _pos);
 	~CCharacterPlayer();
@@ -420,10 +430,21 @@ public:
 	//チュートリアル用フラグ用入手
 	bool GetIsMoving() { return m_is_move; };
 	bool GetIsEvasion() { return m_is_evasion; };
-	bool GetIsJumping() { return m_is_jumping; };
+	bool GetIsJumping() {
+		//if (m_jumping_count > 0) return true;
+		//return false;
+		return m_is_jumping; 
+	};
 	bool GetIsAttacking() { return m_is_attacking; };
 	bool GetIsDashing() { return m_is_dashing; };
 	bool GetIsWeaponAttacking() { return m_is_weapon_attacking; };
+	int GetComboCount() { return m_attack_combo_count; };
+	int GetAttackCount() { return m_attacking_count; };
+
+	bool GetIsAfterAttackFrame() { return m_is_end_attack_frame; };
+
+
+	bool GetIsLanding() { return m_is_landing; };
 
 };
 

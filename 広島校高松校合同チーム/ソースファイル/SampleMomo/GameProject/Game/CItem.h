@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../Game/CGameSceneObject.h"
 #include "CAnimation.h"
 #include "../Global.h"
@@ -17,12 +17,14 @@ public:
 	CItem(CVector3D pos, int _item_id);
 	~CItem();
 
-	void LoadAnimImage();			//ƒAƒjƒ[ƒVƒ‡ƒ““Ç‚İ‚İ
+	void LoadAnimImage();			//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³èª­ã¿è¾¼ã¿
 
-	void GameSceneObjectUpdate();	//XVˆ—
+	void GameSceneObjectUpdate();	//æ›´æ–°å‡¦ç†
 
-	void PlayerGetItem();	//ƒvƒŒƒCƒ„[‚ÉE‚í‚ê‚½‚ÉŒÄ‚Î‚ê‚é
+	void PlayerGetItem();	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«æ‹¾ã‚ã‚ŒãŸæ™‚ã«å‘¼ã°ã‚Œã‚‹
 
-
+	void GameSceneObjectBeforeUpdate();
+	void GameSceneObjectAfterUpdate();
+	static bool GetIsTakeItemNow();
 };
 

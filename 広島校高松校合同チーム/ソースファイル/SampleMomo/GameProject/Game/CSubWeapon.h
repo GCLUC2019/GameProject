@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../Game/CGameSceneObject.h"
 #include "CAnimation.h"
 #include "../Global.h"
@@ -7,40 +7,41 @@ class CCharacterPlayer;
 
 #define ENDURANCE_MAX 30.0f
 
-enum {	//ƒAƒjƒ[ƒVƒ‡ƒ“‚Ìí—Ş‚Ì”Ô†
+enum {	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ç¨®é¡ã®ç•ªå·
 	eItemAnimIdIdle,
 	eItemyAnimIdMax,
 };
 
-enum {	//ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì‰æ‘œ‚ğ“ü‚ê‚é”Ô†
+enum {	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ç”»åƒã‚’å…¥ã‚Œã‚‹ç•ªå·
 	eItemAnimIdle1,
 	eEnemyAnimMax,
 };
 
-enum {  //ƒTƒu•Ší‚Ìƒ^ƒCƒv
-	eWeaponSpear,	//‘„
-	eWeaponAxe,		//•€
-	eWeaponGun,		//e
+enum {  //ã‚µãƒ–æ­¦å™¨ã®ã‚¿ã‚¤ãƒ—
+	eWeaponSpear,	//æ§
+	eWeaponAxe,		//æ–§
+	eWeaponGun,		//éŠƒ
 	eWeaponMax,
 };
 
 class CSubWeaponItem : public CGameSceneObject {
 private:
 	
-	//bool m_equip_flag;		//ƒvƒŒƒCƒ„[‚ª‚±‚Ì•Ší‚ğ‘•”õ‚µ‚Ä‚¢‚é‚©‚Ìƒtƒ‰ƒO
-	int m_weapon_id;		//•Ší‚Ìí—Ş
-	float m_endurance;	//•Ší‚Ì‘Ï‹v’l
-	static bool m_get_flag;	//•Ší‚ğE‚¦‚é‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO(d‚È‚Á‚½•Ší‚ğ“¯‚ÉE‚¦‚È‚¢‚æ‚¤‚É‚·‚éƒtƒ‰ƒO)
+	//bool m_equip_flag;		//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒã“ã®æ­¦å™¨ã‚’è£…å‚™ã—ã¦ã„ã‚‹ã‹ã®ãƒ•ãƒ©ã‚°
+	int m_weapon_id;		//æ­¦å™¨ã®ç¨®é¡
+	float m_endurance;	//æ­¦å™¨ã®è€ä¹…å€¤
+	static bool m_get_flag;	//æ­¦å™¨ã‚’æ‹¾ãˆã‚‹ã‹ã©ã†ã‹ã®ãƒ•ãƒ©ã‚°(é‡ãªã£ãŸæ­¦å™¨ã‚’åŒæ™‚ã«æ‹¾ãˆãªã„ã‚ˆã†ã«ã™ã‚‹ãƒ•ãƒ©ã‚°)
 public:
 	CSubWeaponItem(CVector3D pos, int weapon_id);
 	~CSubWeaponItem();
 
-	void LoadAnimImage();			//ƒAƒjƒ[ƒVƒ‡ƒ““Ç‚İ‚İ
+	void LoadAnimImage();			//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³èª­ã¿è¾¼ã¿
 
-	void GameSceneObjectUpdate();	//XVˆ—
+	void GameSceneObjectUpdate();	//æ›´æ–°å‡¦ç†
+	void PlayerGetItem();	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«æ‹¾ã‚ã‚ŒãŸæ™‚ã«å‘¼ã°ã‚Œã‚‹
 
-	void PlayerGetItem();	//ƒvƒŒƒCƒ„[‚ÉE‚í‚ê‚½‚ÉŒÄ‚Î‚ê‚é
-
-
+	void GameSceneObjectBeforeUpdate();
+	void GameSceneObjectAfterUpdate();
+	static bool GetIsTakeItemNow();
 };
 

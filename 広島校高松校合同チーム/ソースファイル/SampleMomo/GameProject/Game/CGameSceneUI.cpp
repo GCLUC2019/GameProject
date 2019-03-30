@@ -1,11 +1,13 @@
-#include "CGameSceneUI.h"
+﻿#include "CGameSceneUI.h"
 #include "CCharacterPlayer.h"
 #include "CBar.h"
 #include "CSubWeapon.h"
 #include "CGameScene.h"
 
 /*
-�ǂ���������CImage�𓯎��g�p�����ꍇ�ʒu���ꂪ�����邱�Ƃ�����悤���H�H�H
+どうも複数のCImageを同時使用した場合位置ずれがおこることがあるようだ？？？
+とりあえず用途が別な場合は同じ画像でも分けることで問題が回避できるようだ。
+(コピー元リソースの初期化関係？）
 */
 
 CGameSceneUI::CGameSceneUI() :CObject(0, DP_UI)
@@ -17,7 +19,7 @@ CGameSceneUI::CGameSceneUI() :CObject(0, DP_UI)
 	//m_weapon_frame_image_p = GET_RESOURCE("Weapon_Bar_Frame", CImage*);
 	m_reserve_image_p = GET_RESOURCE("Flag", CImage*);
 
-	//���X�g�ɒǉ�����قǂł��Ȃ��̂�
+	//リストに追加するほどでもないので
 	m_hp_bar_p = new CBar(GET_RESOURCE("HP_Bar_Fix", CImage*), CCharacterPlayer::GetInstance()->GetHitPointPointer(), CCharacterPlayer::GetInstance()->GetHitPointMax(), m_ui_pos + CVector2D(160, 95.5) * 0.8, CVector2D(330, 25) * 0.8);
 	
 
@@ -25,7 +27,8 @@ CGameSceneUI::CGameSceneUI() :CObject(0, DP_UI)
 
 	m_weapon_id_p = CCharacterPlayer::GetInstance()->GetPlayerEquipWeaponIdPointer();
 
-	
+	m_guide_input_p = GET_RESOURCE("Guide_How_To_Input_Player", CImage*);
+	m_guide_how_to_end_guide_p = GET_RESOURCE("Guide_How_To_End_Guide", CImage*);
 
 	m_reserve_num_p = CGameScene::GetInstance()->GetReserveNumPointer();
 
@@ -56,6 +59,13 @@ void CGameSceneUI::Update()
 {
 	m_hp_bar_p->Update();
 	m_weapon_bar_p->Update();
+
+	if (CInput::GetState(0, CInput::ePush, CInput::eButton10) && m_is_begin_frame == false) {
+		m_is_show_guide = false;
+	}
+
+	m_is_begin_frame = false;
+
 }
 
 void CGameSceneUI::Draw()
@@ -72,8 +82,13 @@ void CGameSceneUI::Draw()
 	m_weapon_bar_p->Draw();
 
 
+
+
 	for (int i = 0; i < *m_reserve_num_p; i++) {
-		m_reserve_image_p->SetPos(m_ui_pos + CVector2D(i * 20 + 110, 22));
+		CVector2D draw_reserve_pos = m_ui_pos + CVector2D(i * 20 + 110, 22);
+		//printf("描画位置 x %lf y %lf z %lf\n", draw_reserve_pos.x, draw_reserve_pos.y);
+		//m_reserve_image_p->SetRect(0, 0, 200, 200);
+		m_reserve_image_p->SetPos(draw_reserve_pos);
 		m_reserve_image_p->SetSize(50, 50);
 		m_reserve_image_p->Draw();
 	}
@@ -96,5 +111,14 @@ void CGameSceneUI::Draw()
 		}
 		
 	}
-	
+
+	if (m_is_show_guide == true) {
+		m_guide_input_p->SetPos(780 - 5, 0);
+		m_guide_input_p->SetSize(500, 200);
+		m_guide_input_p->Draw();
+
+		m_guide_how_to_end_guide_p->SetPos(787 - 5, 190);
+		m_guide_how_to_end_guide_p->SetSize(490, 36);
+		m_guide_how_to_end_guide_p->Draw();
+	}
 }

@@ -1,4 +1,4 @@
-#include "CLoadResorce.h"
+ï»¿#include "CLoadResorce.h"
 #include "../Global.h"
 
 CLoadResorce * s_instance_p = nullptr;
@@ -40,6 +40,7 @@ void CLoadResorce::LoadResorce()
 	ReadResorceFile("BossDog/DOG_ANIM_IMAGE.resorce");
 
 	ReadResorceFile("Effect/EFFECT_ANIM_IMAGE.resorce");
+	ReadResorceFile("StageClear/STAGE_CLEAR_IMAGE.resorce");
 
 	CSound::GetInstance()->GetSound("BGM_Boss")->Load("Sound/boss_bgm.wav", 1);
 	CSound::GetInstance()->GetSound("BGM_Stage_Clear")->Load("Sound/stage_clear_bgm.wav", 1);
@@ -56,6 +57,7 @@ void CLoadResorce::LoadResorce()
 	CSound::GetInstance()->GetSound("SE_Down")->Load("Sound/down.wav", 10);
 	CSound::GetInstance()->GetSound("SE_Take")->Load("Sound/take.wav", 10);
 	CSound::GetInstance()->GetSound("SE_Damage")->Load("Sound/damage.wav", 10);
+	CSound::GetInstance()->GetSound("SE_Success")->Load("Sound/success.wav", 10);
 
 	CSound::GetInstance()->GetSound("BGM_Stage_Clear_Screen")->Load("Sound/stage_clear_screen.wav", 10);
 	
@@ -188,7 +190,7 @@ void CLoadResorce::ReadResorceFile(char * _file_path)
 	FILE* fp;
 	int ret = fopen_s(&fp, _file_path, "r");
 	if (ret != 0) return;
-	//printf("“Ç‚İ‚ñ‚¾\n");
+	//printf("èª­ã¿è¾¼ã‚“ã \n");
 	char file_data[20240] = "";
 	char file_read[1024];
 	while (fgets(file_read, 1024, fp) != NULL) {
@@ -214,7 +216,7 @@ void CLoadResorce::ReadResorceFile(char * _file_path)
 	}
 
 
-	//ID‚É‰æ‘œ‚ğŠ„‚è“–‚Ä
+	//IDã«ç”»åƒã‚’å‰²ã‚Šå½“ã¦
 	while (true) {
 		if (str_ad = strstr(str_ad, "LOAD_RESORCE_IMAGE:")) {
 			//printf("str_ad %s\n", str_ad);
@@ -240,12 +242,12 @@ void CLoadResorce::ReadResorceFile(char * _file_path)
 				memset(load_image_file_path, 0, sizeof(load_image_file_path));
 				strcat_s(load_image_file_path,file_base_path);
 				strcat_s(load_image_file_path,image_file_path);
-				//printf("image_name y%szimage_path y%sz\n", image_name, load_image_file_path);
+				//printf("image_name ã€%sã€‘image_path ã€%sã€‘\n", image_name, load_image_file_path);
 				ADD_RESOURCE(image_name, CImage::LoadImage((char*)load_image_file_path));
 
 			}
 			else {
-				//printf("image_name y%szimage_path y%sz\n", image_name, image_file_path);
+				//printf("image_name ã€%sã€‘image_path ã€%sã€‘\n", image_name, image_file_path);
 				ADD_RESOURCE(image_name, CImage::LoadImage((char*)image_file_path));
 			}
 			str_ad += strlen("LOAD_RESORCE_IMAGE:");

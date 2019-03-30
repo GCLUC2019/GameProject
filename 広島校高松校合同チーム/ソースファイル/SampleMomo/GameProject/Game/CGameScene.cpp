@@ -15,6 +15,7 @@
 #include "CGameSceneWave.h"
 #include "CGameSceneBossUI.h"
 #include "CSubWeapon.h"
+#include "CGameSceneTutorial.h"
 
 
 static CGameScene* s_instance_p = nullptr;
@@ -30,6 +31,7 @@ CGameScene::~CGameScene()
 
 void CGameScene::Init()
 {
+	m_is_ended_tutorial = false;
 	for (int i = 0; i < GAME_SCENE_OBJECT_MAX; i++) {
 		m_game_scene_object_p[i] = nullptr;
 	}
@@ -38,7 +40,16 @@ void CGameScene::Init()
 void CGameScene::Setup()
 {
 	m_reserve_num = RESERVE_DEFAULT;
+	
+	//m_now_scene = eStage1Boss;
+	
 	m_now_scene = eStage1;
+	if (m_is_ended_tutorial == false) {
+		m_now_scene = eTutorial;
+		m_is_ended_tutorial = true;
+	}
+	
+	
 	SetCheckPoint(CVector3D(300, -220, 550));
 	m_last_wave = -1;
 	PopPlayer();
@@ -165,10 +176,25 @@ void CGameScene::SetupScene()
 	*/
 	
 
-	AddGameSceneObject(new CGameSceneUI());
+	CGameSceneUI* game_scene_ui = nullptr;
+	AddGameSceneObject(game_scene_ui = new CGameSceneUI());
 
 	switch (m_now_scene) {
+	case eTutorial:
+		CSound::GetInstance()->StopAll();
+		CSound::GetInstance()->GetSound("BGM_Title")->Play(true);
+		for (int i = 0; i < 2; i++) {
+			//床張り(役割は単純なので処理の軽い汎用オブジェクトで代用)
+			AddGameSceneObject(new CCommonObject(nullptr, CVector3D(1280.0f * i, 10000.0f, 0.0f), CVector2D(0, 0), CVector3D(1280.0f, 1.0f + 10000.0f, 720.0f)));
+			AddGameSceneObject(new CObjectImage(GET_RESOURCE("Stage_Background_0_Bot", CImage*), CVector3D(1280 * i, 0, 0), CVector2D(1280, 720), -1));
+			AddGameSceneObject(new CObjectImage(GET_RESOURCE("Stage_Background_0_Top", CImage*), CVector3D(1280 * i, -720, 0), CVector2D(1280, 720), -1));
+		}
+		SetGameSceneLimitPosMin(CVector3D(100.0f, 0.0f, 340.0f));
+		SetGameSceneLimitPosMax(CVector3D(1280.0f * 2, 720.0f, 720.0f));
+		AddGameSceneObject(new CTutorial());
+		break;
 	case eStage1:
+		game_scene_ui->SetIsShowGuide(true);
 		CSound::GetInstance()->StopAll();
 		CSound::GetInstance()->GetSound("BGM_Title")->Play(true);
 		//CSound::GetInstance()->StopAll();
@@ -201,7 +227,9 @@ void CGameScene::SetupScene()
 		m_next_scene_pos = 1280 * 5 - 100;
 
 		//テスト用銃
-		//AddGameSceneObject(new CSubWeaponItem(CVector3D(300,-100,500),eWeaponGun));
+		AddGameSceneObject(new CSubWeaponItem(CVector3D(600, -100, 500), eWeaponSpear));
+		AddGameSceneObject(new CSubWeaponItem(CVector3D(800, -100, 500), eWeaponAxe));
+		AddGameSceneObject(new CSubWeaponItem(CVector3D(1000,-100,500),eWeaponGun));
 		break;
 	case eStage1Boss:
 		CSound::GetInstance()->StopAll();

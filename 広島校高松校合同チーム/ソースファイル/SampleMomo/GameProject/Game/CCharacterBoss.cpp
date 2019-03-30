@@ -94,6 +94,8 @@ void CCharacterBoss::ModeCount()
 	if (m_ex_state == eEnemyBossStateDamage) {
 		s_boss_mode.boss_damage += CFPS::GetDeltaTime() * GAME_BASE_FPS;
 	}
+
+	printf("e:%f\n", s_boss_mode.boss_rush);
 }
 
 void CCharacterBoss::ChangeDist()
@@ -153,6 +155,8 @@ void CCharacterBoss::ChangeState()
 		m_hit_count = 0;
 	}
 
+	printf("state:%d\n", m_boss_state);
+	printf("Ex:%d\n", m_ex_state);
 }
 
 void CCharacterBoss::ChengeStateIdleOrAway()
@@ -256,7 +260,7 @@ void CCharacterBoss::Attack1()
 	ChangeAttackState(eEnemyAnimBossIdBite, BITE_TIME);
 
 	if (m_hit_point < 10.0f) {
-		CGameScene::GetInstance()->AddGameSceneObject(new CDamageEffect(&m_pos, CVector2D(-200, -180), CVector2D(400, 400), 30, eEffectBite, m_is_flip, CVector2D(120, 0)));
+		CGameScene::GetInstance()->AddGameSceneObject(new CDamageEffect(&m_pos, CVector2D(-220, -150), CVector2D(300, 300), 15, eEffectBite, m_is_flip, CVector2D(120, 0)));
 	}
 	//プレイヤーが範囲内にいるとダメージを与える
 	if (float length = CheckAttackRange() <= ATTACK1_RANGE_BITE) {
@@ -294,6 +298,7 @@ void CCharacterBoss::Attack2()
 
 void CCharacterBoss::SpecialAttack1()
 {
+	SetIsBlindDraw(false);
 	if (m_ex_state != eEnemyBossStateRush)return;
 
 	CVector3D draw_pos = CVector3D(0, 0, 0);
@@ -336,15 +341,15 @@ void CCharacterBoss::SpecialAttack1()
 		if (s_boss_mode.boss_rush < RASH_STEP3_TIME) {
 			m_anim_p->SetWillPlayAnim(eEnemyAnimBossIdRush);
 			m_pos.x += RASH_SPEED;
-			//if (float length = CheckAttackRange() <= EX1_RANGE_RASH && m_is_attack == true  ) {
-			if (float length = CheckAttackRange() <= EX1_RANGE_RASH) {
+			
+			if (float length = CheckAttackRange() <= EX1_RANGE_RASH && m_is_attack == true) {
 				m_is_attack = false;
 				m_player_p->HitPointGainValue(-RASH_ATTACK);
 				m_player_p->ReceiveKnockBack(m_pos, 5.0);
 				m_player_p->ReceiveAttack();
 			}
 		}
-		else if (s_boss_mode.boss_rush > RASH_STEP3_TIME) {
+		else if (s_boss_mode.boss_rush >= RASH_STEP3_TIME ) {
 			m_ex_attack_state = eExRashStep4;
 		}
 		break;
@@ -356,6 +361,7 @@ void CCharacterBoss::SpecialAttack1()
 		m_ex_attack_state = eExStepStart;
 		break;
 	default:
+		/*m_boss_state = eEnemyBossStateIdle;*/
 		break;
 	}
 }
